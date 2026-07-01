@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Weekly Quiz 2026 05 19 — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/weekly-quiz-2026-05-19.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>SportsStack – Quiz of the Week</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TL0NM71G5M');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--blue:#2563eb;--blue-light:#3b82f6;--green:#22c55e;--green-glow:rgba(34,197,94,.35);--red:#ef4444;--red-glow:rgba(239,68,68,.35);--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);overflow:hidden;font-family:'Barlow',sans-serif;color:var(--text)}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease}
+.screen.active{opacity:1;pointer-events:all}
+
+/* LOADING */
+#title-screen{background:var(--bg)}
+.title-logo-wrap{margin-bottom:20px}
+.title-logo-wrap img{display:block;border-radius:8px}
+.title-brand{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,32px);font-weight:900;font-style:italic;letter-spacing:.06em;color:var(--gold);margin-bottom:6px}
+.title-tagline{font-family:'Barlow Condensed',sans-serif;font-size:clamp(12px,2.5vw,16px);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:40px}
+.title-tagline span{color:var(--gold)}
+.start-btn{font-family:'Barlow Condensed',sans-serif;font-size:clamp(15px,3vw,20px);font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;padding:16px 52px;border-radius:50px;cursor:pointer;transition:all .2s}
+.start-btn:hover{transform:translateY(-2px)}
+
+/* QUIZ */
+#quiz-screen{padding:0;align-items:stretch;justify-content:stretch}
+.quiz-inner{display:flex;flex-direction:column;width:100%;height:100%;max-width:760px;margin:0 auto}
+.quiz-topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px;flex-shrink:0;border-bottom:1px solid var(--border)}
+.topbar-brand{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.progress-wrap{flex:1;margin:0 16px;display:flex;flex-direction:column;gap:4px}
+.progress-label{font-size:11px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.progress-bar-outer{height:4px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+.progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.score-badge{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--gold);letter-spacing:.06em}
+
+/* Full-width single-column layout */
+.quiz-body{flex:1;display:flex;flex-direction:column;padding:16px 20px 10px;gap:12px;overflow:hidden;min-height:0}
+.q-num{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim)}
+.q-text-box{background:var(--surface);border:1px solid var(--border-bright);border-radius:var(--radius);padding:18px 20px}
+.q-text{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2.8vw,24px);font-weight:700;line-height:1.3;color:var(--text)}
+.q-answers{display:flex;flex-direction:column;gap:10px;flex:1}
+.ans-btn{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:var(--radius);cursor:pointer;transition:all .2s;text-align:left;width:100%}
+.ans-btn:hover:not(.answered-wrong):not(.answered-correct):not(.locked){background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2)}
+.ans-btn.answered-correct{background:var(--green-glow);border-color:var(--green)}
+.ans-btn.answered-wrong{background:var(--red-glow);border-color:var(--red)}
+.ans-btn.reveal-correct{background:var(--green-glow);border-color:var(--green)}
+.ans-btn.locked{cursor:default;pointer-events:none}
+.ans-label{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,2.2vw,18px);font-weight:900;color:var(--text-dim);flex-shrink:0;min-width:28px}
+.ans-btn.answered-correct .ans-label,.ans-btn.reveal-correct .ans-label{color:var(--green)}
+.ans-btn.answered-wrong .ans-label{color:var(--red)}
+.ans-text{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:700;line-height:1.3;color:var(--text)}
+
+.quiz-nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:8px 16px 12px;flex-shrink:0;border-top:1px solid var(--border)}
+.nav-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--border-bright);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.nav-btn:hover{background:rgba(255,255,255,.15)}
+.nav-btn:disabled{opacity:.25;cursor:default}
+.nav-btn svg{width:18px;height:18px;fill:var(--text)}
+.nav-dots{display:flex;gap:5px;flex-wrap:wrap;max-width:280px;justify-content:center}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .2s;cursor:pointer}
+.nav-dot.current{background:var(--text);transform:scale(1.2)}
+.nav-dot.done-correct{background:var(--green)}
+.nav-dot.done-wrong{background:var(--red)}
+
+/* SCORE */
+#score-screen{background:var(--bg)}
+.score-logo{display:block;border-radius:6px;margin-bottom:14px}
+.score-brand{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;font-style:italic;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.score-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,2.5vw,18px);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.score-number{font-family:'Barlow Condensed',sans-serif;font-size:clamp(60px,15vw,100px);font-weight:900;line-height:1;margin-bottom:4px}
+.score-denom{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,36px);font-weight:700;color:var(--text-dim);margin-bottom:16px}
+.score-msg{font-size:clamp(14px,2.5vw,18px);color:var(--text-muted);margin-bottom:32px;max-width:360px;text-align:center;line-height:1.5}
+.score-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.score-share-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;padding:14px 36px;border-radius:50px;cursor:pointer;transition:all .2s}
+.score-replay-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:var(--text);border:1.5px solid var(--border-bright);padding:14px 36px;border-radius:50px;cursor:pointer;transition:all .2s}
+.copied-msg{font-size:13px;color:var(--green);margin-top:10px;min-height:18px;text-align:center}
+nav{position:sticky;top
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div class="screen active" id="title-screen">
+  <div class="title-logo-wrap">
+    <img src="logo.png" alt="SportsStack" width="80" height="80" style="border-radius:10px;display:block"/>
+  </div>
+  <div class="title-brand">SportsStack</div>
+  <div class="title-tagline"><span>Quiz</span> of the Week</div>
+  <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div class="screen" id="quiz-screen">
+  <div class="quiz-inner">
+    <div class="quiz-topbar">
+      <div class="topbar-brand">SportsStack</div>
+      <div class="progress-wrap">
+        <div class="progress-label" id="prog-label">Question 1 of 20</div>
+        <div class="progress-bar-outer"><div class="progress-bar-inner" id="prog-bar" style="width:5%"></div></div>
+      </div>
+      <div class="score-badge" id="live-score">0 / 0</div>
+    </div>
+    <div class="quiz-body">
+      <div class="q-num" id="q-num">Question 1</div>
+      <div class="q-text-box">
+        <div class="q-text" id="q-text">Loading…</div>
+      </div>
+      <div class="q-answers" id="q-answers">
+        <button class="ans-btn" id="ans-a" onclick="selectAnswer(0)">
+          <span class="ans-label">A)</span>
+          <span class="ans-text" id="ans-a-text">Answer A</span>
+        </button>
+        <button class="ans-btn" id="ans-b" onclick="selectAnswer(1)">
+          <span class="ans-label">B)</span>
+          <span class="ans-text" id="ans-b-text">Answer B</span>
+        </button>
+        <button class="ans-btn" id="ans-c" onclick="selectAnswer(2)">
+          <span class="ans-label">C)</span>
+          <span class="ans-text" id="ans-c-text">Answer C</span>
+        </button>
+      </div>
+    </div>
+    <div class="quiz-nav">
+      <button class="nav-btn" id="nav-prev" onclick="goTo(currentQ-1)" disabled>
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="nav-dots" id="nav-dots"></div>
+      <button class="nav-btn" id="nav-next" onclick="goTo(currentQ+1)" disabled>
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SCORE SCREEN -->
+<div class="screen" id="score-screen">
+  <img src="logo.png" alt="SportsStack" width="60" height="60" class="score-logo"/>
+  <div class="score-brand">SportsStack</div>
+  <div class="score-title">Quiz of the Week</div>
+  <div class="score-number" id="score-number">0</div>
+  <div class="score-denom" id="score-denom">/ 20</div>
+  <div class="score-msg" id="score-msg"></div>
+  <div class="score-btns">
+    <button class="score-share-btn" onclick="shareScore()">📤 Share Score</button>
+    <button class="score-replay-btn" onclick="restartQuiz()">Play Again</button>
+  </div>
+  <div class="copied-msg" id="copied-msg"></div>
+</div>
+
+<script>
+
+const QUESTIONS = [
+  { image:"", q:"Who scored the third goal in Liverpool's famous 2005 Champions League Final comeback?", a:"Steven Gerrard", b:"Vladimir Smicer", c:"Xabi Alonso", correct:2 },
+  { image:"", q:"In which year did Leicester City win the Premier League?", a:"2014", b:"2016", c:"2018", correct:1 },
+  { image:"", q:"Which country has won the most FIFA World Cups?", a:"Germany", b:"Argentina", c:"Brazil", correct:2 },
+  { image:"", q:"Who holds the all-time record for most Premier League goals?", a:"Wayne Rooney", b:"Andrew Cole", c:"Alan Shearer", correct:2 },
+  { image:"", q:"Which driver leads the 2026 F1 Drivers' Championship heading into this weekend's Canadian Grand Prix?", a:"Lando Norris", b:"George Russell", c:"Kimi Antonelli", correct:2 },
+  { image:"", q:"Who was the NBA Finals MVP in 2023?", a:"Nikola Jokic", b:"LeBron James", c:"Jimmy Butler", correct:0 },
+  { image:"", q:"Which manager is set to replace Pep Guardiola at Manchester City?", a:"Hansi Flick", b:"Enzo Maresca", c:"Ruben Amorim", correct:1 },
+  { image:"", q:"Which club has won the most UEFA Champions League titles?", a:"Barcelona", b:"AC Milan", c:"Real Madrid", correct:2 },
+  { image:"", q:"Southampton were expelled from the Championship play-offs this week for spying on opponents' training. How many clubs did they admit to filming?", a:"Two", b:"Three", c:"Four", correct:1 },
+  { image:"", q:"Who won the 2024 Masters Tournament at Augusta?", a:"Rory McIlroy", b:"Scottie Scheffler", c:"Jon Rahm", correct:1 },
+  { image:"", q:"Which country hosted the 2022 FIFA World Cup?", a:"UAE", b:"Saudi Arabia", c:"Qatar", correct:2 },
+  { image:"", q:"Who holds the record for most Grand Slam tennis titles (men's)?", a:"Rafael Nadal", b:"Novak Djokovic", c:"Roger Federer", correct:1 },
+  { image:"", q:"Which club did Erling Haaland play for before joining Manchester City?", a:"RB Salzburg", b:"Borussia Dortmund", c:"Ajax", correct:1 },
+  { image:"", q:"How many points is a touchdown worth in the NFL?", a:"7", b:"5", c:"6", correct:2 },
+  { image:"", q:"Which team did LeBron James win his first NBA championship with?", a:"Cleveland Cavaliers", b:"Miami Heat", c:"Los Angeles Lakers", correct:1 },
+  { image:"", q:"What is the maximum break in snooker?", a:"142", b:"147", c:"155", correct:1 },
+  { image:"", q:"Jannik Sinner won the 2026 Italian Open, completing the career Golden Masters. Who did he beat in the final?", a:"Carlos Alcaraz", b:"Casper Ruud", c:"Daniil Medvedev", correct:1 },
+  { image:"", q:"Who is the all-time top scorer in international men's football?", a:"Cristiano Ronaldo", b:"Ali Daei", c:"Lionel Messi", correct:0 },
+  { image:"", q:"How many rings does the Olympic flag have?", a:"4", b:"6", c:"5", correct:2 },
+  { image:"", q:"Bruno Fernandes equalled the Premier League single-season assists record in 2025-26. How many assists did he register to equal the mark set by Thierry Henry and Kevin De Bruyne?", a:"18", b:"22", c:"20", correct:2 },
+];
+
+const MSGS = [
+  [0,4,  "Tough week! \uD83D\uDCAA Keep practising!"],
+  [5,9,  "Not bad! A few slipped away there..."],
+  [10,14,"Solid effort! You know your sport! \uD83C\uDFC6"],
+  [15,18,"Excellent! You're nearly perfect! \uD83D\uDD25"],
+  [19,20,"PERFECT SCORE! You're a sports genius! \uD83C\uDF89"],
+];
+
+let currentQ = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+let score = 0;
+let answered = 0;
+
+function buildDots(){
+  const c = document.getElementById('nav-dots');
+  c.innerHTML = '';
+  QUESTIONS.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'nav-dot' + (i===0?' current':'');
+    d.onclick = ()=>{ if(answers[i]!==null || i<=answered) goTo(i); };
+    c.appendChild(d);
+  });
+}
+
+function startQuiz(){
+  answers = new Array(QUESTIONS.length).fill(null);
+  score = 0; answered = 0; currentQ = 0;
+  buildDots();
+  showScreen('quiz-screen');
+  renderQ(0);
+}
+
+function restartQuiz(){
+  answers = new Array(QUESTIONS.length).fill(null);
+  score = 0; answered = 0; currentQ = 0;
+  buildDots();
+  showScreen('title-screen');
+}
+
+function renderQ(i){
+  const q = QUESTIONS[i];
+  const done = answers[i] !== null;
+  document.getElementById('prog-label').textContent = `Question ${i+1} of ${QUESTIONS.length}`;
+  document.getElementById('prog-bar').style.width = ((i+1)/QUESTIONS.length*100)+'%';
+  document.getElementById('live-score').textContent = score + ' / ' + answered;
+
+  document.getElementById('q-num').textContent = 'Question ' + (i+1);
+  document.getElementById('q-text').textContent = q.q;
+  const labels = ['ans-a','ans-b','ans-c'];
+  const texts  = ['ans-a-text','ans-b-text','ans-c-text'];
+  const opts   = [q.a, q.b, q.c];
+  labels.forEach((id,j)=>{
+    const btn = document.getElementById(id);
+    document.getElementById(texts[j]).textContent = opts[j];
+    btn.className = 'ans-btn';
+    if(done){
+      btn.classList.add('locked');
+      if(j === q.correct) btn.classList.add(answers[i]===q.correct ? 'answered-correct' : 'reveal-correct');
+      if(j === answers[i] && answers[i] !== q.correct) btn.classList.add('answered-wrong');
+    }
+  });
+  document.getElementById('nav-prev').disabled = (i===0);
+  document.getElementById('nav-next').disabled = !done && (i >= QUESTIONS.length-1);
+  if(done && i < QUESTIONS.length-1) document.getElementById('nav-next').disabled = false;
+  document.querySelectorAll('.nav-dot').forEach((d,j)=>{
+    d.className = 'nav-dot';
+    if(j===i) d.classList.add('current');
+    else if(answers[j]!==null){
+      d.classList.add(answers[j]===QUESTIONS[j].correct ? 'done-correct' : 'done-wrong');
+    }
+  });
+}
+
+function selectAnswer(choice){
+  if(answers[currentQ] !== null) return;
+  const q = QUESTIONS[currentQ];
+  answers[currentQ] = choice;
+  answered++;
+  if(choice === q.correct) score++;
+  renderQ(currentQ);
+  setTimeout(()=>{
+    if(currentQ < QUESTIONS.length-1){
+      goTo(currentQ+1);
+    } else {
+      const allDone = answers.every(a=>a!==null);
+      if(allDone) setTimeout(showScore, 600);
+    }
+  }, 1500);
+}
+
+function goTo(i){
+  if(i<0 || i>=QUESTIONS.length) return;
+  if(i > answered && answers[i]===null) return;
+  currentQ = i;
+  renderQ(i);
+}
+
+function showScore(){
+  var numEl=document.getElementById('score-number');
+  var msgEl=document.getElementById('score-msg');
+  var copEl=document.getElementById('copied-msg');
+  if(numEl){numEl.textContent=score;numEl.style.color=score>=18?'var(--gold)':score>=12?'#86efac':score>=8?'var(--text)':'#fca5a5';}
+  var denomEl=document.getElementById('score-denom');
+  if(denomEl)denomEl.textContent='/ '+QUESTIONS.length;
+  var msg=MSGS.find(function(m){return score>=m[0]&&score<=m[1];});
+  if(msgEl)msgEl.textContent=msg?msg[2]:'Well done!';
+  if(copEl)copEl.textContent='';
+  saveResult('weekly-quiz-2026-05-19','Quiz of the Week #1',score,QUESTIONS.length,score===QUESTIONS.length);
+  showScreen('score-screen');
+}
+
+function shareScore(){
+  const emojiStr = answers.map((a,i)=>a===null?'\u2B1C':a===QUESTIONS[i].correct?'\uD83D\uDFE9':'\uD83D\uDFE5').join('');
+  const line1 = emojiStr.slice(0,20);
+  const line2 = emojiStr.slice(20,40);
+  const txt = `SportsStack \u2013 Quiz of the Week \uD83C\uDFC6\nScore: ${score}/20\n\n${line1}\n${line2}\n\nsportsstackquiz.com`;
+  copyText(txt, ()=>{
+    document.getElementById('copied-msg').textContent = '\u2713 Copied to clipboard \u2014 paste into any app!';
+    setTimeout(()=>document.getElementById('copied-msg').textContent='', 3500);
+  });
+}
+
+function copyText(txt, cb){
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(cb).catch(()=>fallbackCopy(txt,cb));
+  } else { fallbackCopy(txt,cb); }
+}
+function fallbackCopy(txt,cb){
+  const ta=document.createElement('textarea');
+  ta.value=txt; ta.style.cssText='position:fixed;top:-9999px;left:-9999px';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try{document.execCommand('copy');if(cb)cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+}
+
+buildDots();
+
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Mlb Cy Young Quiz — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/mlb-cy-young-quiz.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>MLB Cy Young Winners Since 2000 Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
+  --blue:#2563eb;--blue-light:#3b82f6;
+  --gold:#f5c842;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.07);--red-border:rgba(239,68,68,.4);
+  --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;
+  --border:#0d2040;--border-bright:#1a3a6a;
+  --radius:10px;--radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:1040px;margin:0 auto;padding:22px 14px 56px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,4vw,34px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.stats-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 20px;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:72px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--gold)}
+.stat-val.urgent{color:var(--red);animation:pulse .8s infinite}
+.stat-val.green{color:var(--green)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;height:38px;background:var(--border-bright);flex-shrink:0}
+.prog-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.input-wrap{position:relative;margin-bottom:16px}
+.guess-input{width:100%;font-size:16px;padding:13px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.guess-input::placeholder{color:var(--text-dim)}
+.guess-input:disabled{opacity:.4;cursor:not-allowed}
+.suggestions{position:absolute;top:100%;left:0;right:0;background:var(--surface2);border:1px solid var(--gold);border-radius:var(--radius);z-index:99;margin-top:3px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.suggestion-label{font-size:11px;color:var(--gold);padding:7px 14px 3px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-bottom:1px solid var(--border)}
+.suggestion-item{padding:10px 14px;font-size:14px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .12s}
+.suggestion-item:hover{background:var(--surface3)}
+.sug-badge{font-size:10px;color:var(--gold);background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.25);border-radius:4px;padding:2px 7px;font-weight:700;flex-shrink:0}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:640px){.team-grid{grid-template-columns:repeat(3,1fr);gap:6px}}
+@media(max-width:400px){.team-grid{grid-template-columns:repeat(2,1fr);gap:5px}}
+.team-card{aspect-ratio:1/1;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px 4px;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;cursor:default}
+.team-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.06),transparent 70%);pointer-events:none}
+.card-year{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,3vw,24px);font-weight:900;color:var(--text-dim);line-height:1;margin-bottom:2px}
+.card-league{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.5vw,12px);font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.card-league.al{color:#60a5fa}
+.card-league.nl{color:#f87171}
+.card-team-hint{font-size:clamp(7px,1.2vw,10px);color:var(--text-dim);letter-spacing:.04em;line-height:1.2;margin-bottom:3px;padding:0 2px}
+.card-dots{display:flex;gap:3px;justify-content:center;margin-top:2px}
+.card-dot{width:4px;height:4px;border-radius:50%;background:var(--text-dim)}
+.team-card.found{background:var(--green-bg);border-color:var(--green-border);box-shadow:0 0 14px rgba(34,197,94,.12)}
+.team-card.found::before{background:radial-gradient(ellipse at 50% 0%,rgba(34,197,94,.08),transparent 70%)}
+.card-year-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,1.4vw,11px);font-weight:700;color:#4ade80;letter-spacing:.06em;margin-bottom:1px}
+.card-name-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.75vw,13px);font-weight:800;color:#86efac;letter-spacing:.02em;line-height:1.2;margin-bottom:1px}
+.card-detail-found{font-size:clamp(6px,1.1vw,9px);color:#4ade80;letter-spacing:.04em;line-height:1.3}
+.team-card.revealed{background:var(--red-bg);border-color:var(--red-border)}
+.card-year-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,1.4vw,11px);font-weight:700;color:rgba(239,68,68,.7);letter-spacing:.06em;margin-bottom:1px}
+.card-name-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.75vw,13px);font-weight:800;color:var(--red);letter-spacing:.02em;line-height:1.2;margin-bottom:1px}
+.card-detail-revealed{font-size:clamp(6px,1.1vw,9px);color:rgba(239,68,68,.7);letter-spacing:.04em;line-height:1.3}
+.modal-backdrop{position:fixed;inset:0;background:rgba(4,8,15,.85);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:999;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-backdrop.show{opacity:1;pointer-events:all}
+.modal{background:var(--surface2);border:1px solid var(--border-bright);border-radius:var(--radius-lg);padding:32px 28px;max-width:420px;width:90%;text-align:center}
+.modal.win{border-color:var(--green-border);background:rgba(34,197,94,.05)}
+.modal.lose{border-color:var(--red-border);background:var(--red-bg)}
+.modal-icon{font-size:48px;margin-bottom:12px}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.modal.win .modal-title{color:#86efac}
+.modal.lose .modal-title{color:#fca5a5}
+.modal-score{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);margin-bottom:12px}
+.modal-msg{font-size:15px;color:var(--text-muted);line-height:1.65;margin-bottom:20px}
+.modal-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.modal-btn{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:12px 28px;border-radius:50px;cursor:pointer;border:none;transition:all .2s}
+.modal-btn.primary{background:var(--gold);color:var(--bg)}
+.modal-btn.primary:hover{background:#ffd700;transform:translateY(-1px)}
+.modal-btn.secondary{background:transparent;color:var(--text);border:1.5px solid var(--border-bright)}
+.modal-btn.secondary:hover{background:rgba(255,255,255,.06)}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TL0NM71G5M');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="page">
+  <header class="site-header">
+    <div class="game-title">MLB <span class="hl">Cy Young</span> Winners Since 2000</div>
+    <div class="game-subtitle">Both AL &amp; NL · 52 awards · typing a name reveals all their wins · year, league &amp; team shown · 7 minutes</div>
+  </header>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val green" id="found-count">0</div><div class="stat-label">Found</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="remain-count">52</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="timer-display">7:00</div><div class="stat-label">Time Left</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  <div class="input-wrap">
+    <input class="guess-input" id="guess-input" type="text" placeholder="Type a pitcher's name and press Enter…" autocomplete="off"/>
+    <div class="suggestions" id="suggestions" style="display:none"></div>
+  </div>
+  <div class="team-grid" id="team-grid"></div>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal">
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-score" id="modal-score"></div>
+    <div class="modal-msg" id="modal-msg"></div>
+    <div class="modal-btns">
+      <button class="modal-btn primary" onclick="resetQuiz()">Play Again</button>
+      <button class="modal-btn secondary" onclick="closeModal()">See Results</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Both AL and NL Cy Young winners 2000–2025 (52 total).
+// Multi-winners: typing once reveals ALL their cards.
+// Cards display year + league (AL/NL) + team as hints.
+// accepted[]: last name ✓ | full name ✓ | iconic nicknames/first names ✓
+const ENTRIES = [
+  // 2000
+  { id:1,  year:2000, lg:"AL", team:"Boston Red Sox",       name:"Pedro Martinez",
+    accepted:["martinez","pedro martinez","pedro"] },
+  { id:2,  year:2000, lg:"NL", team:"Arizona Diamondbacks", name:"Randy Johnson",
+    accepted:["johnson","randy johnson","big unit","the big unit"] },
+  // 2001
+  { id:3,  year:2001, lg:"AL", team:"New York Yankees",     name:"Roger Clemens",
+    accepted:["clemens","roger clemens","rocket","the rocket"] },
+  { id:4,  year:2001, lg:"NL", team:"Arizona Diamondbacks", name:"Randy Johnson",
+    accepted:["johnson","randy johnson","big unit","the big unit"] },
+  // 2002
+  { id:5,  year:2002, lg:"AL", team:"Oakland Athletics",    name:"Barry Zito",
+    accepted:["zito","barry zito"] },
+  { id:6,  year:2002, lg:"NL", team:"Arizona Diamondbacks", name:"Randy Johnson",
+    accepted:["johnson","randy johnson","big unit","the big unit"] },
+  // 2003
+  { id:7,  year:2003, lg:"AL", team:"Toronto Blue Jays",    name:"Roy Halladay",
+    accepted:["halladay","roy halladay","doc","doc halladay"] },
+  { id:8,  year:2003, lg:"NL", team:"Los Angeles Dodgers",  name:"Eric Gagne",
+    accepted:["gagne","eric gagne","game over"] },
+  // 2004
+  { id:9,  year:2004, lg:"AL", team:"Minnesota Twins",      name:"Johan Santana",
+    accepted:["santana","johan santana","johan"] },
+    // "Johan" distinctive in MLB — always refers to Santana in this era
+  { id:10, year:2004, lg:"NL", team:"Houston Astros",        name:"Roger Clemens",
+    accepted:["clemens","roger clemens","rocket","the rocket"] },
+  // 2005
+  { id:11, year:2005, lg:"AL", team:"Los Angeles Angels",   name:"Bartolo Colon",
+    accepted:["colon","bartolo colon","bartolo","big sexy"] },
+    // "Bartolo" globally iconic and unique
+  { id:12, year:2005, lg:"NL", team:"St. Louis Cardinals",  name:"Chris Carpenter",
+    accepted:["carpenter","chris carpenter"] },
+  // 2006
+  { id:13, year:2006, lg:"AL", team:"Minnesota Twins",      name:"Johan Santana",
+    accepted:["santana","johan santana","johan"] },
+  { id:14, year:2006, lg:"NL", team:"Arizona Diamondbacks", name:"Brandon Webb",
+    accepted:["webb","brandon webb"] },
+  // 2007
+  { id:15, year:2007, lg:"AL", team:"Cleveland Indians",    name:"CC Sabathia",
+    accepted:["sabathia","cc sabathia","cc"] },
+  { id:16, year:2007, lg:"NL", team:"San Diego Padres",     name:"Jake Peavy",
+    accepted:["peavy","jake peavy"] },
+  // 2008
+  { id:17, year:2008, lg:"AL", team:"Cleveland Indians",    name:"Cliff Lee",
+    accepted:["lee","cliff lee"] },
+  { id:18, year:2008, lg:"NL", team:"San Francisco Giants", name:"Tim Lincecum",
+    accepted:["lincecum","tim lincecum","the freak","freak","timmy"] },
+  // 2009
+  { id:19, year:2009, lg:"AL", team:"Kansas City Royals",   name:"Zack Greinke",
+    accepted:["greinke","zack greinke","zack"] },
+  { id:20, year:2009, lg:"NL", team:"San Francisco Giants", name:"Tim Lincecum",
+    accepted:["lincecum","tim lincecum","the freak","freak","timmy"] },
+  // 2010
+  { id:21, year:2010, lg:"AL", team:"Seattle Mariners",     name:"Felix Hernandez",
+    accepted:["hernandez","felix hernandez","king felix","felix"] },
+    // "Felix" iconic for King Felix era
+  { id:22, year:2010, lg:"NL", team:"Philadelphia Phillies",name:"Roy Halladay",
+    accepted:["halladay","roy halladay","doc","doc halladay"] },
+  // 2011
+  { id:23, year:2011, lg:"AL", team:"Detroit Tigers",       name:"Justin Verlander",
+    accepted:["verlander","justin verlander","jv"] },
+  { id:24, year:2011, lg:"NL", team:"Los Angeles Dodgers",  name:"Clayton Kershaw",
+    accepted:["kershaw","clayton kershaw","kersh"] },
+  // 2012
+  { id:25, year:2012, lg:"AL", team:"Tampa Bay Rays",       name:"David Price",
+    accepted:["price","david price"] },
+  { id:26, year:2012, lg:"NL", team:"New York Mets",        name:"R.A. Dickey",
+    accepted:["dickey","r.a. dickey","ra dickey","r a dickey"] },
+  // 2013
+  { id:27, year:2013, lg:"AL", team:"Detroit Tigers",       name:"Max Scherzer",
+    accepted:["scherzer","max scherzer","mad max","max"] },
+    // "Max" distinctive — Mad Max is iconic nickname
+  { id:28, year:2013, lg:"NL", team:"Los Angeles Dodgers",  name:"Clayton Kershaw",
+    accepted:["kershaw","clayton kershaw","kersh"] },
+  // 2014
+  { id:29, year:2014, lg:"AL", team:"Cleveland Indians",    name:"Corey Kluber",
+    accepted:["kluber","corey kluber","klubot"] },
+  { id:30, year:2014, lg:"NL", team:"Los Angeles Dodgers",  name:"Clayton Kershaw",
+    accepted:["kershaw","clayton kershaw","kersh"] },
+  // 2015
+  { id:31, year:2015, lg:"AL", team:"Houston Astros",       name:"Dallas Keuchel",
+    accepted:["keuchel","dallas keuchel","dallas"] },
+    // "Dallas" distinctive enough for MLB
+  { id:32, year:2015, lg:"NL", team:"Chicago Cubs",         name:"Jake Arrieta",
+    accepted:["arrieta","jake arrieta"] },
+  // 2016
+  { id:33, year:2016, lg:"AL", team:"Boston Red Sox",       name:"Rick Porcello",
+    accepted:["porcello","rick porcello"] },
+  { id:34, year:2016, lg:"NL", team:"Washington Nationals", name:"Max Scherzer",
+    accepted:["scherzer","max scherzer","mad max","max"] },
+  // 2017
+  { id:35, year:2017, lg:"AL", team:"Cleveland Indians",    name:"Corey Kluber",
+    accepted:["kluber","corey kluber","klubot"] },
+  { id:36, year:2017, lg:"NL", team:"Washington Nationals", name:"Max Scherzer",
+    accepted:["scherzer","max scherzer","mad max","max"] },
+  // 2018
+  { id:37, year:2018, lg:"AL", team:"Tampa Bay Rays",       name:"Blake Snell",
+    accepted:["snell","blake snell"] },
+  { id:38, year:2018, lg:"NL", team:"New York Mets",        name:"Jacob deGrom",
+    accepted:["degrom","de grom","jacob degrom","jacob de grom"] },
+  // 2019
+  { id:39, year:2019, lg:"AL", team:"Houston Astros",       name:"Justin Verlander",
+    accepted:["verlander","justin verlander","jv"] },
+  { id:40, year:2019, lg:"NL", team:"New York Mets",        name:"Jacob deGrom",
+    accepted:["degrom","de grom","jacob degrom","jacob de grom"] },
+  // 2020
+  { id:41, year:2020, lg:"AL", team:"Cleveland Indians",    name:"Shane Bieber",
+    accepted:["bieber","shane bieber"] },
+  { id:42, year:2020, lg:"NL", team:"Cincinnati Reds",      name:"Trevor Bauer",
+    accepted:["bauer","trevor bauer"] },
+  // 2021
+  { id:43, year:2021, lg:"AL", team:"Toronto Blue Jays",    name:"Robbie Ray",
+    accepted:["ray","robbie ray"] },
+  { id:44, year:2021, lg:"NL", team:"Milwaukee Brewers",    name:"Corbin Burnes",
+    accepted:["burnes","corbin burnes"] },
+  // 2022
+  { id:45, year:2022, lg:"AL", team:"Houston Astros",       name:"Justin Verlander",
+    accepted:["verlander","justin verlander","jv"] },
+  { id:46, year:2022, lg:"NL", team:"Miami Marlins",        name:"Sandy Alcantara",
+    accepted:["alcantara","sandy alcantara","sandy"] },
+    // "Sandy" distinctive in modern MLB
+  // 2023
+  { id:47, year:2023, lg:"AL", team:"New York Yankees",     name:"Gerrit Cole",
+    accepted:["cole","gerrit cole","gerrit"] },
+    // "Gerrit" distinctive enough
+  { id:48, year:2023, lg:"NL", team:"San Diego Padres",     name:"Blake Snell",
+    accepted:["snell","blake snell"] },
+  // 2024
+  { id:49, year:2024, lg:"AL", team:"Detroit Tigers",       name:"Tarik Skubal",
+    accepted:["skubal","tarik skubal","tarik"] },
+    // "Tarik" distinctive
+  { id:50, year:2024, lg:"NL", team:"Atlanta Braves",       name:"Chris Sale",
+    accepted:["sale","chris sale"] },
+  // 2025
+  { id:51, year:2025, lg:"AL", team:"Detroit Tigers",       name:"Tarik Skubal",
+    accepted:["skubal","tarik skubal","tarik"] },
+  { id:52, year:2025, lg:"NL", team:"Pittsburgh Pirates",   name:"Paul Skenes",
+    accepted:["skenes","paul skenes"] },
+];
+
+const TOTAL = ENTRIES.length;
+const TOTAL_SECS = 420; // 7 minutes for 52 cards
+let secsLeft = TOTAL_SECS, timer = null, foundIds = new Set(), gameActive = false;
+
+// Unique players — typing once reveals ALL their cards
+const UNIQUE_PLAYERS = [];
+const seenNames = new Set();
+for(const e of ENTRIES){
+  if(!seenNames.has(e.name)){ seenNames.add(e.name); UNIQUE_PLAYERS.push({name:e.name, accepted:e.accepted}); }
+}
+
+function norm(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();
+}
+function levenshtein(a, b){
+  const m=a.length, n=b.length;
+  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+function isExactMatch(val, p){
+  const nv = norm(val);
+  return p.accepted.map(norm).some(a => a === nv);
+}
+function isPlayerFullyFound(playerName){
+  return ENTRIES.filter(e => e.name === playerName).every(e => foundIds.has(e.id));
+}
+function winsLabel(name){
+  const wins = ENTRIES.filter(e => e.name === name).length;
+  return wins === 1 ? '1 Cy Young' : wins + ' Cy Youngs';
+}
+function getFuzzySuggestions(val){
+  if(val.length < 2) return [];
+  const nv = norm(val);
+  const results = [];
+  for(const p of UNIQUE_PLAYERS){
+    if(isPlayerFullyFound(p.name)) continue;
+    const minDist = Math.min(...p.accepted.map(a => levenshtein(nv, norm(a))));
+    if(minDist >= 1 && minDist <= 2) results.push({p, dist: minDist});
+  }
+  return results.sort((a,b) => a.dist - b.dist).slice(0,1).map(r => r.p);
+}
+
+function cardInner(e, state){
+  const lgClass = e.lg === 'AL' ? 'al' : 'nl';
+  if(state==='found'){
+    return `<div class="card-year-found">${e.year} · ${e.lg}</div>
+      <div class="card-name-found">${e.name}</div>
+      <div class="card-detail-found">${e.team}</div>`;
+  }
+  if(state==='revealed'){
+    return `<div class="card-year-revealed">${e.year} · ${e.lg}</div>
+      <div class="card-name-revealed">${e.name}</div>
+      <div class="card-detail-revealed">${e.team}</div>`;
+  }
+  return `<div class="card-year">${e.year}</div>
+    <div class="card-league ${lgClass}">${e.lg}</div>
+    <div class="card-team-hint">${e.team}</div>
+    <div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>`;
+}
+
+function renderGrid(){
+  const grid = document.getElementById('team-grid');
+  grid.innerHTML = '';
+  for(const e of ENTRIES){
+    const isFound = foundIds.has(e.id);
+    const card = document.createElement('div');
+    card.className = 'team-card' + (isFound ? ' found' : '');
+    card.id = 'card-' + e.id;
+    card.innerHTML = cardInner(e, isFound ? 'found' : 'hidden');
+    grid.appendChild(card);
+  }
+}
+function revealPlayerCards(playerName){
+  for(const e of ENTRIES){
+    if(e.name === playerName){
+      foundIds.add(e.id);
+      const card = document.getElementById('card-' + e.id);
+      if(card){ card.className = 'team-card found'; card.innerHTML = cardInner(e, 'found'); }
+    }
+  }
+}
+function revealAllMissed(){
+  for(const e of ENTRIES){
+    if(!foundIds.has(e.id)){
+      const card = document.getElementById('card-' + e.id);
+      if(!card) continue;
+      card.className = 'team-card revealed';
+      card.innerHTML = cardInner(e, 'revealed');
+    }
+  }
+}
+
+function updateHUD(){
+  document.getElementById('found-count').textContent = foundIds.size;
+  document.getElementById('remain-count').textContent = TOTAL - foundIds.size;
+  document.getElementById('prog-bar').style.width = (foundIds.size / TOTAL * 100) + '%';
+  const m = Math.floor(secsLeft/60), s = secsLeft % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = m + ':' + String(s).padStart(2,'0');
+  el.className = 'stat-val' + (secsLeft <= 30 ? ' urgent' : '');
+}
+
+function hideSuggestions(){ document.getElementById('suggestions').style.display = 'none'; }
+function showSuggestions(matches){
+  const box = document.getElementById('suggestions');
+  if(!matches.length){ hideSuggestions(); return; }
+  box.innerHTML = '<div class="suggestion-label">Did you mean…</div>';
+  matches.forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'suggestion-item';
+    item.innerHTML = `<span>${p.name}</span><span class="sug-badge">${winsLabel(p.name)}</span>`;
+    item.onmousedown = ev => { ev.preventDefault(); acceptSuggestion(p); };
+    box.appendChild(item);
+  });
+  box.style.display = 'block';
+}
+function acceptSuggestion(p){
+  hideSuggestions();
+  document.getElementById('guess-input').value = '';
+  if(!isPlayerFullyFound(p.name) && gameActive){ revealPlayerCards(p.name); updateHUD(); checkWin(); }
+}
+
+function startTimer(){
+  clearInterval(timer);
+  timer = setInterval(() => { secsLeft--; updateHUD(); if(secsLeft <= 0){ clearInterval(timer); timeUp(); } }, 1000);
+}
+function timeUp(){
+  gameActive = false;
+  document.getElementById('guess-input').disabled = true;
+  hideSuggestions(); revealAllMissed(); showModal(false);
+}
+function checkWin(){
+  if(foundIds.size === TOTAL){ clearInterval(timer); gameActive = false; document.getElementById('guess-input').disabled = true; showModal(true); }
+}
+function showModal(won){
+  const elapsed = TOTAL_SECS - secsLeft;
+  const mins = Math.floor(elapsed/60), secs = elapsed % 60;
+  const timeStr = mins > 0 ? mins+' minute'+(mins!==1?'s':'')+' and '+secs+' second'+(secs!==1?'s':'') : secs+' second'+(secs!==1?'s':'');
+  const modal = document.getElementById('modal');
+  modal.className = 'modal ' + (won ? 'win' : 'lose');
+  document.getElementById('modal-icon').textContent = won ? '🎉' : '⏰';
+  document.getElementById('modal-title').textContent = won ? 'Quiz Complete!' : "Time's Up!";
+  document.getElementById('modal-score').textContent = foundIds.size + ' / ' + TOTAL + ' found';
+  document.getElementById('modal-msg').innerHTML = won
+    ? 'Congratulations — you completed the quiz in <strong>'+timeStr+'</strong>!<br>You named every MLB Cy Young winner from 2000 to 2025!'
+    : 'Better luck next time!<br>You revealed <strong>'+foundIds.size+'</strong> of '+TOTAL+' awards. Missing names are shown in <span style="color:var(--red)">red</span>.';
+  document.getElementById('modal-backdrop').classList.add('show');
+}
+function closeModal(){ document.getElementById('modal-backdrop').classList.remove('show'); }
+function resetQuiz(){
+  closeModal(); clearInterval(timer);
+  foundIds.clear(); secsLeft = TOTAL_SECS; gameActive = true;
+  document.getElementById('guess-input').disabled = false;
+  document.getElementById('guess-input').value = '';
+  hideSuggestions(); renderGrid(); updateHUD(); startTimer();
+  document.getElementById('guess-input').focus();
+}
+
+const inputEl = document.getElementById('guess-input');
+inputEl.addEventListener('keydown', e => {
+  if(e.key === 'Enter'){
+    const val = inputEl.value.trim(); if(!val || !gameActive) return;
+    hideSuggestions();
+    let matched = null;
+    for(const p of UNIQUE_PLAYERS){
+      if(!isPlayerFullyFound(p.name) && isExactMatch(val, p)){ matched = p; break; }
+    }
+    if(matched){ revealPlayerCards(matched.name); inputEl.value = ''; updateHUD(); checkWin(); }
+    else{
+      const sugs = getFuzzySuggestions(val);
+      if(sugs.length) showSuggestions(sugs);
+      else{ inputEl.style.borderColor='var(--red)'; setTimeout(()=>inputEl.style.borderColor='',600); }
+    }
+  } else if(e.key === 'Escape') hideSuggestions();
+});
+inputEl.addEventListener('input', () => { hideSuggestions(); });
+document.addEventListener('click', e => { if(!e.target.closest('.input-wrap')) hideSuggestions(); });
+
+renderGrid(); updateHUD(); gameActive = true; startTimer();
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

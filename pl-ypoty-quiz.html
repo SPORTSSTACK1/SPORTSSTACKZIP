@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Pl Ypoty Quiz — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/pl-ypoty-quiz.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>PL Young Player of the Year Since 2000 – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
+  --blue:#2563eb;--blue-light:#3b82f6;
+  --gold:#f5c842;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.07);--red-border:rgba(239,68,68,.4);
+  --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;
+  --border:#0d2040;--border-bright:#1a3a6a;
+  --radius:10px;--radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:960px;margin:0 auto;padding:22px 14px 56px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,4vw,34px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.stats-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 20px;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:72px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--gold)}
+.stat-val.urgent{color:var(--red);animation:pulse .8s infinite}
+.stat-val.green{color:var(--green)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;height:38px;background:var(--border-bright);flex-shrink:0}
+.prog-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.input-wrap{position:relative;margin-bottom:16px}
+.guess-input{width:100%;font-size:16px;padding:13px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.guess-input::placeholder{color:var(--text-dim)}
+.guess-input:disabled{opacity:.4;cursor:not-allowed}
+.suggestions{position:absolute;top:100%;left:0;right:0;background:var(--surface2);border:1px solid var(--gold);border-radius:var(--radius);z-index:99;margin-top:3px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.suggestion-label{font-size:11px;color:var(--gold);padding:7px 14px 3px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-bottom:1px solid var(--border)}
+.suggestion-item{padding:10px 14px;font-size:14px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .12s}
+.suggestion-item:hover{background:var(--surface3)}
+.sug-badge{font-size:10px;color:var(--gold);background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.25);border-radius:4px;padding:2px 7px;font-weight:700;flex-shrink:0}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+@media(max-width:640px){.team-grid{grid-template-columns:repeat(3,1fr);gap:7px}}
+@media(max-width:400px){.team-grid{grid-template-columns:repeat(2,1fr);gap:6px}}
+.team-card{aspect-ratio:1/1;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 6px;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;cursor:default}
+.team-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.06),transparent 70%);pointer-events:none}
+.card-year{font-family:'Barlow Condensed',sans-serif;font-size:clamp(20px,4vw,30px);font-weight:900;color:var(--text-dim);line-height:1;margin-bottom:5px}
+.card-trophy{font-size:clamp(18px,3.5vw,24px);opacity:.18;margin-bottom:3px}
+.card-dots{display:flex;gap:3px;justify-content:center;margin-top:4px}
+.card-dot{width:5px;height:5px;border-radius:50%;background:var(--text-dim)}
+.team-card.found{background:var(--green-bg);border-color:var(--green-border);box-shadow:0 0 16px rgba(34,197,94,.12)}
+.team-card.found::before{background:radial-gradient(ellipse at 50% 0%,rgba(34,197,94,.08),transparent 70%)}
+.card-year-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.6vw,12px);font-weight:700;color:#4ade80;letter-spacing:.08em;margin-bottom:2px}
+.card-name-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.9vw,14px);font-weight:800;color:#86efac;letter-spacing:.03em;line-height:1.2;margin-bottom:2px}
+.card-detail-found{font-size:clamp(7px,1.2vw,10px);color:#4ade80;letter-spacing:.05em;line-height:1.3}
+.card-trophy-found{font-size:clamp(12px,2vw,16px);margin-bottom:3px}
+.team-card.revealed{background:var(--red-bg);border-color:var(--red-border)}
+.card-year-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.6vw,12px);font-weight:700;color:rgba(239,68,68,.7);letter-spacing:.08em;margin-bottom:2px}
+.card-name-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.9vw,14px);font-weight:800;color:var(--red);letter-spacing:.03em;line-height:1.2;margin-bottom:2px}
+.card-detail-revealed{font-size:clamp(7px,1.2vw,10px);color:rgba(239,68,68,.7);letter-spacing:.05em;line-height:1.3}
+.modal-backdrop{position:fixed;inset:0;background:rgba(4,8,15,.85);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:999;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-backdrop.show{opacity:1;pointer-events:all}
+.modal{background:var(--surface2);border:1px solid var(--border-bright);border-radius:var(--radius-lg);padding:32px 28px;max-width:420px;width:90%;text-align:center}
+.modal.win{border-color:var(--green-border);background:rgba(34,197,94,.05)}
+.modal.lose{border-color:var(--red-border);background:var(--red-bg)}
+.modal-icon{font-size:48px;margin-bottom:12px}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.modal.win .modal-title{color:#86efac}
+.modal.lose .modal-title{color:#fca5a5}
+.modal-score{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);margin-bottom:12px}
+.modal-msg{font-size:15px;color:var(--text-muted);line-height:1.65;margin-bottom:20px}
+.modal-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.modal-btn{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:12px 28px;border-radius:50px;cursor:pointer;border:none;transition:all .2s}
+.modal-btn.primary{background:var(--gold);color:var(--bg)}
+.modal-btn.primary:hover{background:#ffd700;transform:translateY(-1px)}
+.modal-btn.secondary{background:transparent;color:var(--text);border:1.5px solid var(--border-bright)}
+.modal-btn.secondary:hover{background:rgba(255,255,255,.06)}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}r.push(arguments);}
+  gtag('js', new Date()); gtag('config', 'G-TL0NM71G5M');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="page">
+  <header class="site-header">
+    <div class="game-title">PL Young Player <span class="hl">of the Year Since 2000</span></div>
+    <div class="game-subtitle">Name every PFA PL Young Player of the Year since 2000 · 26 winners · 5 minutes</div>
+  </header>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val green" id="found-count">0</div><div class="stat-label">Found</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="remain-count">26</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="timer-display">5:00</div><div class="stat-label">Time Left</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  <div class="input-wrap">
+    <input class="guess-input" id="guess-input" type="text" placeholder="Type a name and press Enter…" autocomplete="off"/>
+    <div class="suggestions" id="suggestions" style="display:none"></div>
+  </div>
+  <div class="team-grid" id="team-grid"></div>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal">
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-score" id="modal-score"></div>
+    <div class="modal-msg" id="modal-msg"></div>
+    <div class="modal-btns">
+      <button class="modal-btn primary" onclick="resetQuiz()">Play Again</button>
+      <button class="modal-btn secondary" onclick="closeModal()">See Results</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ENTRIES = [
+  {id:1, year:2000, name:"Harry Kewell", accepted:["kewell","harry kewell"], club:"Leeds Utd"},
+  {id:2, year:2001, name:"Steven Gerrard", accepted:["gerrard","steven gerrard"]},
+  {id:3, year:2002, name:"Craig Bellamy", accepted:["bellamy","craig bellamy"], club:"Arsenal"},
+  {id:4, year:2003, name:"Jermaine Jenas", accepted:["jenas","jermaine jenas"]},
+  {id:5, year:2004, name:"Scott Parker", accepted:["parker","scott parker"], club:"Arsenal"},
+  {id:6, year:2005, name:"Wayne Rooney", accepted:["rooney","wayne rooney"]},
+  {id:7, year:2006, name:"Wayne Rooney", accepted:["rooney","wayne rooney"], club:"Tottenham"},
+  {id:8, year:2007, name:"Cristiano Ronaldo", accepted:["ronaldo","cristiano ronaldo"]},
+  {id:9, year:2008, name:"Cesc Fabregas", accepted:["fabregas","cesc fabregas"], club:"Aston Villa"},
+  {id:10, year:2009, name:"Ashley Young", accepted:["young","ashley young"]},
+  {id:11, year:2010, name:"James Milner", accepted:["milner","james milner"], club:"Arsenal"},
+  {id:12, year:2011, name:"Jack Wilshere", accepted:["wilshere","jack wilshere"]},
+  {id:13, year:2012, name:"Kyle Walker", accepted:["walker","kyle walker"], club:"Man City"},
+  {id:14, year:2013, name:"Gareth Bale", accepted:["bale","gareth bale"]},
+  {id:15, year:2014, name:"Eden Hazard", accepted:["hazard","eden hazard"], club:"Liverpool"},
+  {id:16, year:2015, name:"Harry Kane", accepted:["kane","harry kane"]},
+  {id:17, year:2016, name:"Dele Alli", accepted:["alli","dele alli"], club:"Tottenham"},
+  {id:18, year:2017, name:"Dele Alli", accepted:["alli","dele alli"]},
+  {id:19, year:2018, name:"Leroy Sane", accepted:["sane","leroy sane"], club:"Man City"},
+  {id:20, year:2019, name:"Raheem Sterling", accepted:["sterling","raheem sterling"]},
+  {id:21, year:2020, name:"Trent Alexander-Arnold", accepted:["trent","alexander-arnold","trent alexander-arnold"], club:"Man Utd"},
+  {id:22, year:2021, name:"Phil Foden", accepted:["foden","phil foden"]},
+  {id:23, year:2022, name:"Phil Foden", accepted:["foden","phil foden"], club:"Arsenal"},
+  {id:24, year:2023, name:"Bukayo Saka", accepted:["saka","bukayo saka"]},
+  {id:25, year:2024, name:"Cole Palmer", accepted:["palmer","cole palmer"], club:"Arsenal"},
+  {id:26, year:2025, name:"Lamine Yamal", accepted:["yamal","lamine yamal"]},
+];
+
+
+const TOTAL = ENTRIES.length;
+const TOTAL_SECS = 300;
+let secsLeft = TOTAL_SECS, timer = null, foundIds = new Set(), gameActive = false;
+
+function norm(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();
+}
+function levenshtein(a, b){
+  const m=a.length, n=b.length;
+  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+function isExactMatch(val, p){
+  const nv = norm(val);
+  return p.accepted.map(norm).some(a => a === nv);
+}
+
+// Fuzzy: Levenshtein <= 2 against any accepted string. Max 1 suggestion.
+function getFuzzySuggestions(val){
+  if(val.length < 2) return [];
+  const nv = norm(val);
+  const results = [];
+  for(const p of ENTRIES){
+    if(foundIds.has(p.id)) continue;
+    const minDist = Math.min(...p.accepted.map(a => levenshtein(nv, norm(a))));
+    if(minDist >= 1 && minDist <= 2) results.push({p, dist: minDist});
+  }
+  return results.sort((a,b) => a.dist - b.dist).slice(0,1).map(r => r.p);
+}
+
+function cardInner(e, state){
+  if(state==='found'){
+    return `<div class="card-trophy-found">🏆</div>
+      <div class="card-year-found">${e.year}</div>
+      <div class="card-name-found">${e.name}</div>
+      <div class="card-detail-found">${e.club||""}</div>`;
+  }
+  if(state==='revealed'){
+    return `<div class="card-trophy" style="opacity:.22;font-size:clamp(12px,2vw,16px)">🏆</div>
+      <div class="card-year-revealed">${e.year}</div>
+      <div class="card-name-revealed">${e.name}</div>
+      <div class="card-detail-revealed">${e.club||""}</div>`;
+  }
+  return `<div class="card-trophy">🏆</div>
+    <div class="card-year">${e.year}</div>
+    <div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>`;
+}
+
+function renderGrid(){
+  const grid = document.getElementById('team-grid');
+  grid.innerHTML = '';
+  for(const e of ENTRIES){
+    const isFound = foundIds.has(e.id);
+    const card = document.createElement('div');
+    card.className = 'team-card' + (isFound ? ' found' : '');
+    card.id = 'card-' + e.id;
+    card.innerHTML = cardInner(e, isFound ? 'found' : 'hidden');
+    grid.appendChild(card);
+  }
+}
+function revealCard(e){
+  const card = document.getElementById('card-' + e.id);
+  if(!card) return;
+  card.className = 'team-card found';
+  card.innerHTML = cardInner(e, 'found');
+}
+function revealAllMissed(){
+  for(const e of ENTRIES){
+    if(!foundIds.has(e.id)){
+      const card = document.getElementById('card-' + e.id);
+      if(!card) continue;
+      card.className = 'team-card revealed';
+      card.innerHTML = cardInner(e, 'revealed');
+    }
+  }
+}
+
+function updateHUD(){
+  document.getElementById('found-count').textContent = foundIds.size;
+  document.getElementById('remain-count').textContent = TOTAL - foundIds.size;
+  document.getElementById('prog-bar').style.width = (foundIds.size / TOTAL * 100) + '%';
+  const m = Math.floor(secsLeft/60), s = secsLeft % 60;
+  const el = document.getElementById('timer-display');
+  el.textContent = m + ':' + String(s).padStart(2,'0');
+  el.className = 'stat-val' + (secsLeft <= 30 ? ' urgent' : '');
+}
+
+function hideSuggestions(){ document.getElementById('suggestions').style.display = 'none'; }
+function showSuggestions(matches){
+  const box = document.getElementById('suggestions');
+  if(!matches.length){ hideSuggestions(); return; }
+  box.innerHTML = '<div class="suggestion-label">Did you mean…</div>';
+  matches.forEach(e => {
+    const item = document.createElement('div');
+    item.className = 'suggestion-item';
+    item.innerHTML = `<span>${e.name}</span><span class="sug-badge">${e.year} · ${e.team}</span>`;
+    item.onmousedown = ev => { ev.preventDefault(); acceptSuggestion(e); };
+    box.appendChild(item);
+  });
+  box.style.display = 'block';
+}
+function acceptSuggestion(e){
+  hideSuggestions();
+  document.getElementById('guess-input').value = '';
+  if(!foundIds.has(e.id) && gameActive){ foundIds.add(e.id); revealCard(e); updateHUD(); checkWin(); }
+}
+
+function startTimer(){
+  clearInterval(timer);
+  timer = setInterval(() => { secsLeft--; updateHUD(); if(secsLeft <= 0){ clearInterval(timer); timeUp(); } }, 1000);
+}
+function timeUp(){
+  gameActive = false;
+  document.getElementById('guess-input').disabled = true;
+  hideSuggestions(); revealAllMissed(); showModal(false);
+}
+function checkWin(){
+  if(foundIds.size === TOTAL){ clearInterval(timer); gameActive = false; document.getElementById('guess-input').disabled = true; showModal(true); }
+}
+function showModal(won){
+  const elapsed = TOTAL_SECS - secsLeft;
+  const mins = Math.floor(elapsed/60), secs = elapsed % 60;
+  const timeStr = mins > 0 ? mins+' minute'+(mins!==1?'s':'')+' and '+secs+' second'+(secs!==1?'s':'') : secs+' second'+(secs!==1?'s':'');
+  const modal = document.getElementById('modal');
+  modal.className = 'modal ' + (won ? 'win' : 'lose');
+  document.getElementById('modal-icon').textContent = won ? '🎉' : '⏰';
+  document.getElementById('modal-title').textContent = won ? 'Quiz Complete!' : "Time's Up!";
+  document.getElementById('modal-score').textContent = foundIds.size + ' / ' + TOTAL + ' found';
+  document.getElementById('modal-msg').innerHTML = won
+    ? 'Congratulations — you completed the quiz in <strong>'+timeStr+'</strong>!<br>You named every AP NFL Defensive Rookie of the Year since 2000!'
+    : 'Better luck next time!<br>You found <strong>'+foundIds.size+'</strong> of '+TOTAL+' winners. Missing names are shown in <span style="color:var(--red)">red</span>.';
+  document.getElementById('modal-backdrop').classList.add('show');
+}
+function closeModal(){ document.getElementById('modal-backdrop').classList.remove('show'); }
+function resetQuiz(){
+  closeModal(); clearInterval(timer);
+  foundIds.clear(); secsLeft = TOTAL_SECS; gameActive = true;
+  document.getElementById('guess-input').disabled = false;
+  document.getElementById('guess-input').value = '';
+  hideSuggestions(); renderGrid(); updateHUD(); startTimer();
+  document.getElementById('guess-input').focus();
+}
+
+const inputEl = document.getElementById('guess-input');
+inputEl.addEventListener('keydown', e => {
+  if(e.key === 'Enter'){
+    const val = inputEl.value.trim(); if(!val || !gameActive) return;
+    hideSuggestions();
+    const matched = ENTRIES.filter(p => !foundIds.has(p.id) && isExactMatch(val, p));
+    if(matched.length){ matched.forEach(p => { foundIds.add(p.id); revealCard(p); }); inputEl.value = ''; updateHUD(); checkWin(); }
+    else{
+      const sugs = getFuzzySuggestions(val);
+      if(sugs.length) showSuggestions(sugs);
+      else{ inputEl.style.borderColor='var(--red)'; setTimeout(()=>inputEl.style.borderColor='',600); }
+    }
+  } else if(e.key === 'Escape') hideSuggestions();
+});
+inputEl.addEventListener('input', () => { hideSuggestions(); });
+document.addEventListener('click', e => { if(!e.target.closest('.input-wrap')) hideSuggestions(); });
+
+renderGrid(); updateHUD(); gameActive = true; startTimer();
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

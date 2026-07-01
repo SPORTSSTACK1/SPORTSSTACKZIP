@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Sportsman Us — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/sportsman-us.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>The Sportsman: US</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
+  --blue:#2563eb;--blue-light:#3b82f6;
+  --gold:#f5c842;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,.09);--amber-border:rgba(245,158,11,.42);
+  --orange:#f97316;--orange-bg:rgba(249,115,22,.09);--orange-border:rgba(249,115,22,.42);
+  --grey:#4b5563;--grey-bg:rgba(75,85,99,.1);--grey-border:rgba(75,85,99,.4);
+  --red:#ef4444;
+  --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;
+  --border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:20px}
+.game-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,5vw,42px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1;color:var(--text)}
+.game-name .hl{color:var(--gold)}
+.game-sub{font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.att-badge{display:block;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 16px;border-radius:20px;background:var(--surface2);color:var(--text-muted);border:1px solid var(--border-bright);margin-bottom:14px;width:fit-content;margin-left:auto;margin-right:auto}
+.legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted)}
+.dot{width:8px;height:8px;border-radius:50%}
+.col-hdr{font-size:10px;font-weight:700;color:var(--text-muted);text-align:center;padding:2px 0;text-transform:uppercase;letter-spacing:.06em}
+.tile{border-radius:var(--radius);padding:7px 4px;text-align:center;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--border-bright);background:var(--surface2);transition:background .25s,border-color .25s}
+.tile .tv{font-size:11px;font-weight:600;line-height:1.3;color:var(--text)}
+.tile .ti{font-size:10px;color:var(--text-muted);margin-top:2px;line-height:1.2}
+.tile.g{background:var(--green-bg);border-color:var(--green-border)}.tile.g .tv{color:#86efac}.tile.g .ti{color:#4ade80}
+.tile.a{background:var(--amber-bg);border-color:var(--amber-border)}.tile.a .tv{color:#fcd34d}.tile.a .ti{color:#fbbf24}
+.tile.o{background:var(--orange-bg);border-color:var(--orange-border)}.tile.o .tv{color:#fdba74}.tile.o .ti{color:#fb923c}
+.tile.gr{background:var(--grey-bg);border-color:var(--grey-border)}.tile.gr .tv{color:#9ca3af}.tile.gr .ti{color:#6b7280}
+.tile.empty{background:var(--surface);border:1px dashed var(--border-bright)}
+.input-area{margin-top:14px;display:flex;gap:8px;position:relative}
+.input-area input{flex:1;font-size:15px;padding:11px 16px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.input-area input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.input-area input::placeholder{color:var(--text-dim)}
+.dropdown{position:absolute;top:100%;left:0;right:80px;background:var(--surface2);border:1.5px solid var(--border-bright);border-radius:var(--radius);z-index:99;max-height:260px;overflow-y:auto;margin-top:3px;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.dd-item{padding:9px 13px;font-size:14px;color:var(--text);cursor:pointer;border-bottom:1px solid var(--border)}
+.dd-item:last-child{border-bottom:none}
+.dd-item:hover,.dd-item.hl{background:var(--surface3)}
+.dd-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+.btn{padding:11px 18px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;background:var(--gold);color:var(--bg);white-space:nowrap;transition:all .2s;flex-shrink:0}
+.btn:hover{background:#ffd700;transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.result-banner{border-radius:var(--radius-lg);padding:1.1rem 1.25rem;text-align:center;margin-top:14px;border:1px solid}
+.result-banner.win{border-color:var(--green-border);background:var(--green-bg)}
+.result-banner.lose{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.06)}
+.rb-icon{font-size:32px;margin-bottom:6px}
+.rb-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-banner.win .rb-title{color:#86efac}
+.result-banner.lose .rb-title{color:#fca5a5}
+.rb-player{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:4px}
+.rb-sub{font-size:13px;color:var(--text-muted);margin-bottom:2px}
+.share-btn{margin-top:10px;display:inline-block;padding:9px 22px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+.msg{font-size:13px;color:#fca5a5;margin-top:6px;min-height:18px}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TL0NM71G5M');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="page">
+<header class="site-header">
+  <div class="game-name">The Sportsman: <span class="hl">US</span></div>
+  <div class="game-sub">Guess today's mystery player · 8 attempts</div>
+</header>
+
+<span class="att-badge" id="att-badge">8 attempts remaining</span>
+<div class="legend">
+  <span class="leg"><span class="dot" style="background:#22c55e"></span>Correct</span>
+  <span class="leg"><span class="dot" style="background:#f59e0b"></span>Close</span>
+  <span class="leg"><span class="dot" style="background:#f97316"></span>Same conference</span>
+  <span class="leg"><span class="dot" style="background:#4b5563"></span>Wrong</span>
+  <span class="leg" style="font-size:11px;color:var(--text-muted)">↑↓ age</span>
+</div>
+
+<div style="overflow-x:auto"><div style="min-width:340px">
+<div style="display:grid;grid-template-columns:28px repeat(5,1fr);gap:4px;margin-bottom:4px">
+  <div></div>
+  <div class="col-hdr">Sport</div>
+  <div class="col-hdr">Position</div>
+  <div class="col-hdr">Division</div>
+  <div class="col-hdr">Team</div>
+  <div class="col-hdr">Age</div>
+</div>
+<div id="rows"></div>
+</div></div>
+
+<div class="input-area" id="input-area">
+  <input type="text" id="guess-input" placeholder="Type a player name..." autocomplete="off"/>
+  <div class="dropdown" id="dropdown" style="display:none"></div>
+  <button class="btn" onclick="submitGuess()">Guess</button>
+</div>
+<div class="msg" id="msg"></div>
+<div id="result"></div>
+</div>
+
+<script>
+const DIVISION_MAP = {
+  "Kansas City Chiefs":"AFC West","Las Vegas Raiders":"AFC West","Los Angeles Chargers":"AFC West","Denver Broncos":"AFC West",
+  "Baltimore Ravens":"AFC North","Pittsburgh Steelers":"AFC North","Cleveland Browns":"AFC North","Cincinnati Bengals":"AFC North",
+  "Buffalo Bills":"AFC East","Miami Dolphins":"AFC East","New York Jets":"AFC East","New England Patriots":"AFC East",
+  "Houston Texans":"AFC South","Jacksonville Jaguars":"AFC South","Tennessee Titans":"AFC South","Indianapolis Colts":"AFC South",
+  "Philadelphia Eagles":"NFC East","Dallas Cowboys":"NFC East","New York Giants":"NFC East","Washington Commanders":"NFC East",
+  "San Francisco 49ers":"NFC West","Seattle Seahawks":"NFC West","Los Angeles Rams":"NFC West","Arizona Cardinals":"NFC West",
+  "Green Bay Packers":"NFC North","Minnesota Vikings":"NFC North","Chicago Bears":"NFC North","Detroit Lions":"NFC North",
+  "Tampa Bay Buccaneers":"NFC South","New Orleans Saints":"NFC South","Atlanta Falcons":"NFC South","Carolina Panthers":"NFC South",
+  "Boston Celtics":"Atlantic","Brooklyn Nets":"Atlantic","New York Knicks":"Atlantic","Philadelphia 76ers":"Atlantic","Toronto Raptors":"Atlantic",
+  "Chicago Bulls":"Central","Cleveland Cavaliers":"Central","Detroit Pistons":"Central","Indiana Pacers":"Central","Milwaukee Bucks":"Central",
+  "Atlanta Hawks":"Southeast","Charlotte Hornets":"Southeast","Miami Heat":"Southeast","Orlando Magic":"Southeast","Washington Wizards":"Southeast",
+  "Denver Nuggets":"Northwest","Minnesota Timberwolves":"Northwest","Oklahoma City Thunder":"Northwest","Portland Trail Blazers":"Northwest","Utah Jazz":"Northwest",
+  "Golden State Warriors":"Pacific","Los Angeles Clippers":"Pacific","Los Angeles Lakers":"Pacific","Phoenix Suns":"Pacific","Sacramento Kings":"Pacific",
+  "Dallas Mavericks":"Southwest","Houston Rockets":"Southwest","Memphis Grizzlies":"Southwest","New Orleans Pelicans":"Southwest","San Antonio Spurs":"Southwest",
+  "New York Yankees":"AL East","Boston Red Sox":"AL East","Toronto Blue Jays":"AL East","Baltimore Orioles":"AL East","Tampa Bay Rays":"AL East",
+  "Chicago White Sox":"AL Central","Cleveland Guardians":"AL Central","Detroit Tigers":"AL Central","Kansas City Royals":"AL Central","Minnesota Twins":"AL Central",
+  "Houston Astros":"AL West","Los Angeles Angels":"AL West","Oakland Athletics":"AL West","Seattle Mariners":"AL West","Texas Rangers":"AL West",
+  "Atlanta Braves":"NL East","Miami Marlins":"NL East","New York Mets":"NL East","Philadelphia Phillies":"NL East","Washington Nationals":"NL East",
+  "Chicago Cubs":"NL Central","Cincinnati Reds":"NL Central","Milwaukee Brewers":"NL Central","Pittsburgh Pirates":"NL Central","St. Louis Cardinals":"NL Central",
+  "Arizona Diamondbacks":"NL West","Colorado Rockies":"NL West","Los Angeles Dodgers":"NL West","San Diego Padres":"NL West","San Francisco Giants":"NL West",
+};
+const CONFERENCE_MAP = {
+  "AFC West":"AFC","AFC North":"AFC","AFC East":"AFC","AFC South":"AFC",
+  "NFC West":"NFC","NFC North":"NFC","NFC East":"NFC","NFC South":"NFC",
+  "Atlantic":"East","Central":"East","Southeast":"East",
+  "Northwest":"West","Pacific":"West","Southwest":"West",
+  "AL East":"AL","AL Central":"AL","AL West":"AL",
+  "NL East":"NL","NL Central":"NL","NL West":"NL",
+};
+function getDivision(team){ return DIVISION_MAP[team]||''; }
+function getConference(team){ return CONFERENCE_MAP[getDivision(team)]||''; }
+
+const ALL_PLAYERS = [
+  /* ══ NFL ══ */
+  {name:"Patrick Mahomes",       aliases:["mahomes","pat mahomes"],           sport:"NFL",pos:"QB",team:"Kansas City Chiefs",      age:29},
+  {name:"Lamar Jackson",         aliases:["lamar"],                           sport:"NFL",pos:"QB",team:"Baltimore Ravens",         age:28},
+  {name:"Josh Allen",            aliases:["josh allen"],                      sport:"NFL",pos:"QB",team:"Buffalo Bills",            age:29},
+  {name:"Jalen Hurts",           aliases:["hurts"],                           sport:"NFL",pos:"QB",team:"Philadelphia Eagles",      age:26},
+  {name:"Joe Burrow",            aliases:["burrow","joey b"],                 sport:"NFL",pos:"QB",team:"Cincinnati Bengals",       age:28},
+  {name:"Dak Prescott",          aliases:["dak"],                             sport:"NFL",pos:"QB",team:"Dallas Cowboys",           age:31},
+  {name:"Tua Tagovailoa",        aliases:["tua"],                             sport:"NFL",pos:"QB",team:"Miami Dolphins",           age:27},
+  {name:"C.J. Stroud",           aliases:["cj stroud","stroud"],              sport:"NFL",pos:"QB",team:"Houston Texans",           age:23},
+  {name:"Brock Purdy",           aliases:["purdy"],                           sport:"NFL",pos:"QB",team:"San Francisco 49ers",      age:25},
+  {name:"Justin Herbert",        aliases:["herbert"],                         sport:"NFL",pos:"QB",team:"Los Angeles Chargers",     age:27},
+  {name:"Jordan Love",           aliases:["love","jordan love"],              sport:"NFL",pos:"QB",team:"Green Bay Packers",        age:26},
+  {name:"Caleb Williams",        aliases:["caleb"],                           sport:"NFL",pos:"QB",team:"Chicago Bears",            age:23},
+  {name:"Sam Darnold",           aliases:["darnold"],                         sport:"NFL",pos:"QB",team:"Seattle Seahawks",         age:27},
+  {name:"Drake Maye",            aliases:["maye","drake maye"],               sport:"NFL",pos:"QB",team:"New England Patriots",     age:23},
+  {name:"Jared Goff",            aliases:["goff"],                            sport:"NFL",pos:"QB",team:"Detroit Lions",            age:31},
+  {name:"Trevor Lawrence",       aliases:["trevor","tlaw"],                   sport:"NFL",pos:"QB",team:"Jacksonville Jaguars",     age:26},
+  {name:"Kyler Murray",          aliases:["kyler"],                           sport:"NFL",pos:"QB",team:"Arizona Cardinals",        age:27},
+  {name:"Kirk Cousins",          aliases:["cousins","kirk"],                  sport:"NFL",pos:"QB",team:"Atlanta Falcons",          age:37},
+  {name:"Tyreek Hill",           aliases:["tyreek","cheetah"],                sport:"NFL",pos:"WR",team:"Miami Dolphins",           age:31},
+  {name:"Davante Adams",         aliases:["davante"],                         sport:"NFL",pos:"WR",team:"New York Jets",            age:32},
+  {name:"Justin Jefferson",      aliases:["jefferson","jj"],                  sport:"NFL",pos:"WR",team:"Minnesota Vikings",        age:25},
+  {name:"A.J. Brown",            aliases:["aj brown"],                        sport:"NFL",pos:"WR",team:"Philadelphia Eagles",      age:27},
+  {name:"Ja'Marr Chase",         aliases:["jamarr","chase"],                  sport:"NFL",pos:"WR",team:"Cincinnati Bengals",       age:25},
+  {name:"CeeDee Lamb",           aliases:["ceedee","lamb"],                   sport:"NFL",pos:"WR",team:"Dallas Cowboys",           age:26},
+  {name:"Amon-Ra St. Brown",     aliases:["amon-ra","st brown"],              sport:"NFL",pos:"WR",team:"Detroit Lions",            age:25},
+  {name:"Puka Nacua",            aliases:["puka"],                            sport:"NFL",pos:"WR",team:"Los Angeles Rams",         age:23},
+  {name:"Garrett Wilson",        aliases:["garrett wilson"],                  sport:"NFL",pos:"WR",team:"New York Jets",            age:24},
+  {name:"Deebo Samuel",          aliases:["deebo"],                           sport:"NFL",pos:"WR",team:"San Francisco 49ers",      age:29},
+  {name:"Brandon Aiyuk",         aliases:["aiyuk"],                           sport:"NFL",pos:"WR",team:"San Francisco 49ers",      age:27},
+  {name:"Jaylen Waddle",         aliases:["waddle"],                          sport:"NFL",pos:"WR",team:"Miami Dolphins",           age:26},
+  {name:"Drake London",          aliases:["london","drake london"],           sport:"NFL",pos:"WR",team:"Atlanta Falcons",          age:24},
+  {name:"George Pickens",        aliases:["pickens","george pickens"],        sport:"NFL",pos:"WR",team:"Pittsburgh Steelers",      age:24},
+  {name:"Ladd McConkey",         aliases:["mcconkey"],                        sport:"NFL",pos:"WR",team:"Los Angeles Chargers",     age:23},
+  {name:"Malik Nabers",          aliases:["nabers"],                          sport:"NFL",pos:"WR",team:"New York Giants",          age:22},
+  {name:"Travis Kelce",          aliases:["kelce"],                           sport:"NFL",pos:"TE",team:"Kansas City Chiefs",       age:35},
+  {name:"Sam LaPorta",           aliases:["laporta"],                         sport:"NFL",pos:"TE",team:"Detroit Lions",            age:24},
+  {name:"Trey McBride",          aliases:["mcbride"],                         sport:"NFL",pos:"TE",team:"Arizona Cardinals",        age:24},
+  {name:"Dallas Goedert",        aliases:["goedert"],                         sport:"NFL",pos:"TE",team:"Philadelphia Eagles",      age:29},
+  {name:"Mark Andrews",          aliases:["andrews","mark andrews"],          sport:"NFL",pos:"TE",team:"Baltimore Ravens",         age:29},
+  {name:"Derrick Henry",         aliases:["henry","king henry"],              sport:"NFL",pos:"RB",team:"Baltimore Ravens",         age:31},
+  {name:"Christian McCaffrey",   aliases:["mccaffrey","cmc"],                 sport:"NFL",pos:"RB",team:"San Francisco 49ers",      age:28},
+  {name:"Saquon Barkley",        aliases:["saquon","barkley"],                sport:"NFL",pos:"RB",team:"Philadelphia Eagles",      age:28},
+  {name:"Josh Jacobs",           aliases:["jacobs"],                          sport:"NFL",pos:"RB",team:"Green Bay Packers",        age:26},
+  {name:"De'Von Achane",         aliases:["achane"],                          sport:"NFL",pos:"RB",team:"Miami Dolphins",           age:23},
+  {name:"James Cook",            aliases:["cook","james cook"],               sport:"NFL",pos:"RB",team:"Buffalo Bills",            age:25},
+  {name:"Tony Pollard",          aliases:["pollard"],                         sport:"NFL",pos:"RB",team:"Tennessee Titans",         age:28},
+  {name:"Micah Parsons",         aliases:["parsons"],                         sport:"NFL",pos:"LB",team:"Dallas Cowboys",           age:25},
+  {name:"Fred Warner",           aliases:["warner"],                          sport:"NFL",pos:"LB",team:"San Francisco 49ers",      age:28},
+  {name:"T.J. Watt",             aliases:["tj watt","watt"],                  sport:"NFL",pos:"LB",team:"Pittsburgh Steelers",      age:30},
+  {name:"Roquan Smith",          aliases:["roquan"],                          sport:"NFL",pos:"LB",team:"Baltimore Ravens",         age:28},
+  {name:"Myles Garrett",         aliases:["myles garrett"],                   sport:"NFL",pos:"DE",team:"Cleveland Browns",         age:29},
+  {name:"Nick Bosa",             aliases:["bosa"],                            sport:"NFL",pos:"DE",team:"San Francisco 49ers",      age:27},
+  {name:"Maxx Crosby",           aliases:["crosby","maxx"],                   sport:"NFL",pos:"DE",team:"Las Vegas Raiders",        age:27},
+  {name:"Will Anderson Jr.",     aliases:["will anderson"],                   sport:"NFL",pos:"DE",team:"Houston Texans",           age:23},
+  {name:"Aidan Hutchinson",      aliases:["hutchinson"],                      sport:"NFL",pos:"DE",team:"Detroit Lions",            age:25},
+  {name:"Brian Burns",           aliases:["burns","brian burns"],             sport:"NFL",pos:"DE",team:"New York Giants",          age:27},
+  {name:"Cameron Jordan",        aliases:["cam jordan"],                      sport:"NFL",pos:"DE",team:"New Orleans Saints",       age:35},
+  {name:"Jalen Ramsey",          aliases:["ramsey"],                          sport:"NFL",pos:"CB",team:"Los Angeles Rams",         age:30},
+  {name:"Sauce Gardner",         aliases:["sauce","gardner"],                 sport:"NFL",pos:"CB",team:"New York Jets",            age:24},
+  {name:"Patrick Surtain II",    aliases:["surtain"],                         sport:"NFL",pos:"CB",team:"Denver Broncos",           age:24},
+  {name:"Trevon Diggs",          aliases:["trevon"],                          sport:"NFL",pos:"CB",team:"Dallas Cowboys",           age:26},
+  {name:"Kyle Hamilton",         aliases:["hamilton","kyle"],                 sport:"NFL",pos:"S", team:"Baltimore Ravens",         age:24},
+  {name:"Derwin James",          aliases:["derwin"],                          sport:"NFL",pos:"S", team:"Los Angeles Chargers",     age:29},
+  {name:"Harrison Smith",        aliases:["harrison smith"],                  sport:"NFL",pos:"S", team:"Minnesota Vikings",        age:36},
+  /* ── NFL additions ── */
+  {name:"Jayden Daniels",        aliases:["daniels","jayden daniels"],         sport:"NFL",pos:"QB",team:"Washington Commanders",    age:24},
+  {name:"Bo Nix",                aliases:["nix","bo nix"],                     sport:"NFL",pos:"QB",team:"Denver Broncos",           age:25},
+  {name:"Baker Mayfield",        aliases:["baker"],                            sport:"NFL",pos:"QB",team:"Tampa Bay Buccaneers",      age:30},
+  {name:"Bijan Robinson",        aliases:["bijan"],                            sport:"NFL",pos:"RB",team:"Atlanta Falcons",           age:23},
+  {name:"Breece Hall",           aliases:["hall","breece"],                    sport:"NFL",pos:"RB",team:"New York Jets",            age:24},
+  {name:"Jonathan Taylor",       aliases:["taylor","jt"],                      sport:"NFL",pos:"RB",team:"Indianapolis Colts",       age:26},
+  {name:"Jahmyr Gibbs",          aliases:["gibbs","jahmyr"],                   sport:"NFL",pos:"RB",team:"Detroit Lions",            age:23},
+  {name:"Rashee Rice",           aliases:["rice","rashee"],                    sport:"NFL",pos:"WR",team:"Kansas City Chiefs",       age:24},
+  {name:"Chris Olave",           aliases:["olave"],                            sport:"NFL",pos:"WR",team:"New Orleans Saints",       age:24},
+  {name:"DJ Moore",              aliases:["dj moore"],                         sport:"NFL",pos:"WR",team:"Chicago Bears",            age:27},
+  {name:"Zay Flowers",           aliases:["flowers","zay"],                    sport:"NFL",pos:"WR",team:"Baltimore Ravens",         age:24},
+  {name:"Michael Pittman Jr.",   aliases:["pittman","michael pittman"],        sport:"NFL",pos:"WR",team:"Indianapolis Colts",       age:27},
+  {name:"Terry McLaurin",        aliases:["mclaurin","scary terry"],           sport:"NFL",pos:"WR",team:"Washington Commanders",    age:29},
+  {name:"Jordan Addison",        aliases:["addison","jordan addison"],         sport:"NFL",pos:"WR",team:"Minnesota Vikings",        age:23},
+  {name:"Kyle Pitts",            aliases:["pitts"],                            sport:"NFL",pos:"TE",team:"Atlanta Falcons",           age:24},
+  {name:"Evan Engram",           aliases:["engram"],                           sport:"NFL",pos:"TE",team:"Jacksonville Jaguars",      age:30},
+  {name:"Chris Jones",           aliases:["jones","chris jones"],              sport:"NFL",pos:"DT",team:"Kansas City Chiefs",       age:30},
+  {name:"Quinnen Williams",      aliases:["quinnen"],                          sport:"NFL",pos:"DT",team:"New York Jets",            age:27},
+  {name:"Jalen Carter",          aliases:["carter","jalen carter"],            sport:"NFL",pos:"DT",team:"Philadelphia Eagles",      age:23},
+  {name:"Danielle Hunter",       aliases:["hunter","danielle hunter"],         sport:"NFL",pos:"DE",team:"Houston Texans",           age:30},
+  /* ── NFL additions 2 ── */
+  {name:"Aaron Rodgers",         aliases:["rodgers","a rod","a-rod"],          sport:"NFL",pos:"QB",team:"New York Jets",            age:41},
+  {name:"Matthew Stafford",      aliases:["stafford"],                         sport:"NFL",pos:"QB",team:"Los Angeles Rams",         age:37},
+  {name:"Mike Evans",            aliases:["evans","mike evans"],               sport:"NFL",pos:"WR",team:"Tampa Bay Buccaneers",      age:31},
+  {name:"Cooper Kupp",           aliases:["kupp"],                             sport:"NFL",pos:"WR",team:"Los Angeles Rams",         age:31},
+  {name:"Jaxon Smith-Njigba",    aliases:["jsn","jaxon","smith-njigba"],       sport:"NFL",pos:"WR",team:"Seattle Seahawks",         age:22},
+  {name:"Marvin Harrison Jr.",   aliases:["marvin harrison","mhj"],            sport:"NFL",pos:"WR",team:"Arizona Cardinals",        age:22},
+  {name:"Rome Odunze",           aliases:["odunze","rome"],                    sport:"NFL",pos:"WR",team:"Chicago Bears",            age:22},
+  {name:"Brian Thomas Jr.",      aliases:["brian thomas","btj"],               sport:"NFL",pos:"WR",team:"Jacksonville Jaguars",      age:23},
+  {name:"Keon Coleman",          aliases:["coleman","keon"],                   sport:"NFL",pos:"WR",team:"Buffalo Bills",            age:22},
+  {name:"Chris Godwin",          aliases:["godwin"],                           sport:"NFL",pos:"WR",team:"Tampa Bay Buccaneers",      age:29},
+  {name:"Isiah Pacheco",         aliases:["pacheco"],                          sport:"NFL",pos:"RB",team:"Kansas City Chiefs",       age:25},
+  {name:"Najee Harris",          aliases:["najee"],                            sport:"NFL",pos:"RB",team:"Los Angeles Chargers",     age:27},
+  {name:"Nick Chubb",            aliases:["chubb"],                            sport:"NFL",pos:"RB",team:"Cleveland Browns",         age:29},
+  {name:"Aaron Jones",           aliases:["jones","aaron jones"],              sport:"NFL",pos:"RB",team:"Minnesota Vikings",        age:30},
+  {name:"Javonte Williams",      aliases:["javonte"],                          sport:"NFL",pos:"RB",team:"Denver Broncos",           age:25},
+  {name:"Khalil Mack",           aliases:["mack","khalil"],                    sport:"NFL",pos:"LB",team:"Los Angeles Chargers",     age:34},
+  {name:"Tremaine Edmunds",      aliases:["edmunds","tremaine"],               sport:"NFL",pos:"LB",team:"Chicago Bears",            age:27},
+  {name:"Xavier McKinney",       aliases:["mckinney","xavier"],                sport:"NFL",pos:"S", team:"Green Bay Packers",        age:26},
+  {name:"Jessie Bates III",      aliases:["bates","jessie bates"],             sport:"NFL",pos:"S", team:"Atlanta Falcons",           age:28},
+  {name:"DeMarcus Lawrence",     aliases:["demarcus lawrence","tank"],         sport:"NFL",pos:"DE",team:"Dallas Cowboys",           age:33},
+  /* ══ NBA ══ */
+  {name:"LeBron James",          aliases:["lebron","lbj","king james"],       sport:"NBA",pos:"SF",team:"Los Angeles Lakers",       age:40},
+  {name:"Stephen Curry",         aliases:["steph","chef curry"],              sport:"NBA",pos:"PG",team:"Golden State Warriors",    age:37},
+  {name:"Kevin Durant",          aliases:["kd","durant"],                     sport:"NBA",pos:"SF",team:"Phoenix Suns",             age:36},
+  {name:"Giannis Antetokounmpo", aliases:["giannis","greek freak"],           sport:"NBA",pos:"PF",team:"Milwaukee Bucks",          age:30},
+  {name:"Nikola Jokic",          aliases:["jokic","joker"],                   sport:"NBA",pos:"C", team:"Denver Nuggets",           age:30},
+  {name:"Luka Doncic",           aliases:["luka","doncic"],                   sport:"NBA",pos:"PG",team:"Los Angeles Lakers",       age:26},
+  {name:"Jayson Tatum",          aliases:["tatum","jt"],                      sport:"NBA",pos:"SF",team:"Boston Celtics",           age:27},
+  {name:"Joel Embiid",           aliases:["embiid","the process"],            sport:"NBA",pos:"C", team:"Philadelphia 76ers",       age:31},
+  {name:"Devin Booker",          aliases:["booker","book"],                   sport:"NBA",pos:"SG",team:"Phoenix Suns",             age:28},
+  {name:"Damian Lillard",        aliases:["dame","dame time"],                sport:"NBA",pos:"PG",team:"Milwaukee Bucks",          age:34},
+  {name:"Donovan Mitchell",      aliases:["spida","mitchell"],                sport:"NBA",pos:"SG",team:"Cleveland Cavaliers",      age:28},
+  {name:"Kyrie Irving",          aliases:["kyrie","uncle drew"],              sport:"NBA",pos:"PG",team:"Dallas Mavericks",         age:33},
+  {name:"Ja Morant",             aliases:["ja"],                              sport:"NBA",pos:"PG",team:"Memphis Grizzlies",        age:25},
+  {name:"Zion Williamson",       aliases:["zion"],                            sport:"NBA",pos:"PF",team:"New Orleans Pelicans",     age:24},
+  {name:"Anthony Davis",         aliases:["ad","the brow"],                   sport:"NBA",pos:"C", team:"Los Angeles Lakers",       age:32},
+  {name:"Trae Young",            aliases:["trae","ice trae"],                 sport:"NBA",pos:"PG",team:"Atlanta Hawks",            age:26},
+  {name:"Karl-Anthony Towns",    aliases:["kat","towns"],                     sport:"NBA",pos:"C", team:"New York Knicks",          age:29},
+  {name:"Jaylen Brown",          aliases:["jb"],                              sport:"NBA",pos:"SG",team:"Boston Celtics",           age:28},
+  {name:"Shai Gilgeous-Alexander",aliases:["sga","shai"],                    sport:"NBA",pos:"PG",team:"Oklahoma City Thunder",    age:26},
+  {name:"Tyrese Haliburton",     aliases:["haliburton"],                      sport:"NBA",pos:"PG",team:"Indiana Pacers",           age:25},
+  {name:"Victor Wembanyama",     aliases:["wemby"],                           sport:"NBA",pos:"C", team:"San Antonio Spurs",        age:21},
+  {name:"Cade Cunningham",       aliases:["cade"],                            sport:"NBA",pos:"PG",team:"Detroit Pistons",          age:23},
+  {name:"Paolo Banchero",        aliases:["paolo"],                           sport:"NBA",pos:"PF",team:"Orlando Magic",            age:22},
+  {name:"Anthony Edwards",       aliases:["ant","ant man"],                   sport:"NBA",pos:"SG",team:"Minnesota Timberwolves",   age:23},
+  {name:"Jalen Brunson",         aliases:["brunson"],                         sport:"NBA",pos:"PG",team:"New York Knicks",          age:28},
+  {name:"Darius Garland",        aliases:["garland"],                         sport:"NBA",pos:"PG",team:"Cleveland Cavaliers",      age:25},
+  {name:"Evan Mobley",           aliases:["mobley"],                          sport:"NBA",pos:"C", team:"Cleveland Cavaliers",      age:23},
+  {name:"Jaren Jackson Jr.",     aliases:["jjj","jaren jackson"],             sport:"NBA",pos:"C", team:"Memphis Grizzlies",        age:25},
+  {name:"Draymond Green",        aliases:["draymond"],                        sport:"NBA",pos:"PF",team:"Golden State Warriors",    age:35},
+  {name:"Jimmy Butler",          aliases:["jimmy","jimmy buckets"],           sport:"NBA",pos:"SF",team:"Golden State Warriors",    age:35},
+  {name:"Kristaps Porzingis",    aliases:["porzingis","kp"],                  sport:"NBA",pos:"C", team:"Boston Celtics",           age:29},
+  {name:"Kawhi Leonard",         aliases:["kawhi","the klaw"],                sport:"NBA",pos:"SF",team:"Los Angeles Clippers",     age:33},
+  {name:"De'Aaron Fox",          aliases:["fox","de aaron fox"],              sport:"NBA",pos:"PG",team:"Sacramento Kings",         age:27},
+  {name:"Mikal Bridges",         aliases:["mikal"],                           sport:"NBA",pos:"SF",team:"New York Knicks",          age:28},
+  {name:"Franz Wagner",          aliases:["franz"],                           sport:"NBA",pos:"SF",team:"Orlando Magic",            age:23},
+  {name:"Alperen Sengun",        aliases:["sengun"],                          sport:"NBA",pos:"C", team:"Houston Rockets",          age:22},
+  {name:"Scottie Barnes",        aliases:["scottie"],                         sport:"NBA",pos:"PF",team:"Toronto Raptors",          age:24},
+  {name:"Rudy Gobert",           aliases:["gobert","stifle tower"],           sport:"NBA",pos:"C", team:"Minnesota Timberwolves",   age:32},
+  {name:"Bam Adebayo",           aliases:["bam"],                             sport:"NBA",pos:"C", team:"Miami Heat",               age:27},
+  {name:"Pascal Siakam",         aliases:["siakam","spacho"],                 sport:"NBA",pos:"PF",team:"Indiana Pacers",           age:31},
+  {name:"Fred VanVleet",         aliases:["fvv","vanvleet"],                  sport:"NBA",pos:"PG",team:"Houston Rockets",          age:31},
+  {name:"CJ McCollum",           aliases:["cj","mccollum"],                   sport:"NBA",pos:"SG",team:"New Orleans Pelicans",     age:33},
+  {name:"Zach LaVine",           aliases:["lavine","zach"],                   sport:"NBA",pos:"SG",team:"Sacramento Kings",         age:30},
+  {name:"LaMelo Ball",           aliases:["lamelo","melo ball"],              sport:"NBA",pos:"PG",team:"Charlotte Hornets",        age:23},
+  {name:"DeMar DeRozan",         aliases:["derozan"],                         sport:"NBA",pos:"SF",team:"Chicago Bulls",            age:35},
+  {name:"Deandre Ayton",         aliases:["ayton"],                           sport:"NBA",pos:"C", team:"Portland Trail Blazers",   age:26},
+  {name:"Miles Bridges",         aliases:["miles bridges"],                   sport:"NBA",pos:"PF",team:"Charlotte Hornets",        age:27},
+  {name:"Jordan Poole",          aliases:["poole"],                           sport:"NBA",pos:"SG",team:"Washington Wizards",       age:26},
+  {name:"Bennedict Mathurin",    aliases:["mathurin"],                        sport:"NBA",pos:"SG",team:"Indiana Pacers",           age:23},
+  {name:"Immanuel Quickley",     aliases:["iq","quickley"],                   sport:"NBA",pos:"PG",team:"Toronto Raptors",          age:26},
+  {name:"Andrew Wiggins",        aliases:["wiggins"],                         sport:"NBA",pos:"SF",team:"Golden State Warriors",    age:30},
+  {name:"Klay Thompson",         aliases:["klay","splash brother"],           sport:"NBA",pos:"SG",team:"Dallas Mavericks",         age:35},
+  {name:"RJ Barrett",            aliases:["rj"],                              sport:"NBA",pos:"SG",team:"Toronto Raptors",          age:25},
+  {name:"Dejounte Murray",       aliases:["dejounte"],                        sport:"NBA",pos:"SG",team:"New Orleans Pelicans",     age:28},
+  {name:"Brook Lopez",           aliases:["brook"],                           sport:"NBA",pos:"C", team:"Milwaukee Bucks",          age:36},
+  {name:"Jarrett Allen",         aliases:["jarrett","allen"],                 sport:"NBA",pos:"C", team:"Cleveland Cavaliers",      age:27},
+  {name:"Bogdan Bogdanovic",     aliases:["bogdan","bogi"],                   sport:"NBA",pos:"SG",team:"Atlanta Hawks",            age:32},
+  {name:"Nikola Vucevic",        aliases:["vuc","vucevic"],                   sport:"NBA",pos:"C", team:"Chicago Bulls",            age:34},
+  {name:"Tyrese Maxey",          aliases:["maxey"],                           sport:"NBA",pos:"PG",team:"Philadelphia 76ers",       age:24},
+  {name:"Jrue Holiday",          aliases:["jrue"],                            sport:"NBA",pos:"SG",team:"Boston Celtics",           age:35},
+  {name:"Al Horford",            aliases:["al","horford"],                    sport:"NBA",pos:"C", team:"Boston Celtics",           age:39},
+  {name:"Khris Middleton",       aliases:["middleton"],                       sport:"NBA",pos:"SF",team:"Milwaukee Bucks",          age:33},
+  {name:"Marcus Smart",          aliases:["marcus","smart"],                  sport:"NBA",pos:"PG",team:"Memphis Grizzlies",        age:31},
+  /* ── NBA additions ── */
+  {name:"Chet Holmgren",         aliases:["chet","holmgren"],                  sport:"NBA",pos:"C", team:"Oklahoma City Thunder",    age:23},
+  {name:"Jalen Williams",        aliases:["jalen williams","jw"],              sport:"NBA",pos:"SG",team:"Oklahoma City Thunder",    age:23},
+  {name:"OG Anunoby",            aliases:["og","anunoby"],                     sport:"NBA",pos:"SF",team:"New York Knicks",          age:27},
+  {name:"Julius Randle",         aliases:["randle","julius"],                  sport:"NBA",pos:"PF",team:"Minnesota Timberwolves",   age:30},
+  {name:"Brandon Ingram",        aliases:["ingram","bi"],                      sport:"NBA",pos:"SF",team:"New Orleans Pelicans",     age:27},
+  {name:"Josh Giddey",           aliases:["giddey","josh giddey"],             sport:"NBA",pos:"SG",team:"Chicago Bulls",            age:22},
+  {name:"Coby White",            aliases:["coby","white"],                     sport:"NBA",pos:"SG",team:"Chicago Bulls",            age:24},
+  {name:"Lauri Markkanen",       aliases:["markkanen","lauri"],                sport:"NBA",pos:"PF",team:"Utah Jazz",                age:28},
+  {name:"Scoot Henderson",       aliases:["scoot","henderson"],                sport:"NBA",pos:"PG",team:"Portland Trail Blazers",   age:21},
+  {name:"Amen Thompson",         aliases:["amen","amen thompson"],             sport:"NBA",pos:"SF",team:"Houston Rockets",          age:22},
+  {name:"Ausar Thompson",        aliases:["ausar","ausar thompson"],           sport:"NBA",pos:"SF",team:"Detroit Pistons",          age:22},
+  {name:"Derrick White",         aliases:["derrick white","d white"],          sport:"NBA",pos:"SG",team:"Boston Celtics",           age:31},
+  {name:"Malik Monk",            aliases:["monk","malik monk"],                sport:"NBA",pos:"PG",team:"Sacramento Kings",         age:27},
+  {name:"Naz Reid",              aliases:["naz","reid"],                       sport:"NBA",pos:"C", team:"Minnesota Timberwolves",   age:25},
+  {name:"Walker Kessler",        aliases:["kessler","walker"],                 sport:"NBA",pos:"C", team:"Utah Jazz",                age:23},
+  {name:"Isaiah Hartenstein",    aliases:["hartenstein","isaiah"],             sport:"NBA",pos:"C", team:"Oklahoma City Thunder",    age:27},
+  {name:"Brandon Miller",        aliases:["miller","brandon miller"],          sport:"NBA",pos:"SF",team:"Charlotte Hornets",        age:22},
+  {name:"Jabari Smith Jr.",      aliases:["jabari","jabari smith"],            sport:"NBA",pos:"PF",team:"Houston Rockets",          age:22},
+  {name:"Dyson Daniels",         aliases:["dyson","daniels"],                  sport:"NBA",pos:"SG",team:"Atlanta Hawks",            age:22},
+  {name:"Keldon Johnson",        aliases:["keldon","johnson"],                 sport:"NBA",pos:"SF",team:"San Antonio Spurs",        age:25},
+  /* ── NBA additions 2 ── */
+  {name:"Paul George",           aliases:["pg","pg13","paul george"],          sport:"NBA",pos:"SF",team:"Philadelphia 76ers",       age:35},
+  {name:"Bradley Beal",          aliases:["beal","brad"],                      sport:"NBA",pos:"SG",team:"Phoenix Suns",             age:32},
+  {name:"Tyler Herro",           aliases:["herro","tyler"],                    sport:"NBA",pos:"SG",team:"Miami Heat",               age:25},
+  {name:"Domantas Sabonis",      aliases:["sabonis","dom"],                    sport:"NBA",pos:"C", team:"Sacramento Kings",         age:29},
+  {name:"Jonathan Kuminga",      aliases:["kuminga","jk"],                     sport:"NBA",pos:"SF",team:"Golden State Warriors",    age:22},
+  {name:"Cam Thomas",            aliases:["cam thomas","cameron thomas"],      sport:"NBA",pos:"SG",team:"Brooklyn Nets",            age:22},
+  {name:"Anfernee Simons",       aliases:["simons","anfernee"],                sport:"NBA",pos:"SG",team:"Portland Trail Blazers",   age:26},
+  {name:"Jerami Grant",          aliases:["grant","jerami"],                   sport:"NBA",pos:"PF",team:"Portland Trail Blazers",   age:31},
+  {name:"Norman Powell",         aliases:["powell","norm"],                    sport:"NBA",pos:"SG",team:"Los Angeles Clippers",     age:32},
+  {name:"Ivica Zubac",           aliases:["zubac","ivica"],                    sport:"NBA",pos:"C", team:"Los Angeles Clippers",     age:28},
+  {name:"Gary Trent Jr.",        aliases:["gary trent","gtj"],                 sport:"NBA",pos:"SG",team:"Milwaukee Bucks",          age:26},
+  {name:"Dillon Brooks",         aliases:["brooks","dillon"],                  sport:"NBA",pos:"SF",team:"Houston Rockets",          age:29},
+  {name:"Jaime Jaquez Jr.",      aliases:["jaquez","jaime jaquez"],            sport:"NBA",pos:"SF",team:"Miami Heat",               age:24},
+  {name:"Josh Hart",             aliases:["hart","josh hart"],                 sport:"NBA",pos:"PF",team:"New York Knicks",          age:30},
+  {name:"Donte DiVincenzo",      aliases:["divincenzo","donte"],               sport:"NBA",pos:"SG",team:"New York Knicks",          age:28},
+  {name:"Jordan Clarkson",       aliases:["clarkson","jordan c"],              sport:"NBA",pos:"SG",team:"Utah Jazz",                age:33},
+  {name:"Collin Sexton",         aliases:["sexton","collin"],                  sport:"NBA",pos:"PG",team:"Utah Jazz",                age:27},
+  {name:"Gradey Dick",           aliases:["gradey","dick"],                    sport:"NBA",pos:"SG",team:"Toronto Raptors",          age:21},
+  {name:"Jaden Ivey",            aliases:["ivey","jaden"],                     sport:"NBA",pos:"PG",team:"Detroit Pistons",          age:23},
+  {name:"Bobby Portis",          aliases:["portis","bobby"],                   sport:"NBA",pos:"PF",team:"Milwaukee Bucks",          age:30},
+  /* ══ MLB ══ */
+  {name:"Aaron Judge",           aliases:["judge","all rise"],                sport:"MLB",pos:"RF",team:"New York Yankees",         age:33},
+  {name:"Mookie Betts",          aliases:["mookie"],                          sport:"MLB",pos:"SS",team:"Los Angeles Dodgers",      age:32},
+  {name:"Freddie Freeman",       aliases:["freddie"],                         sport:"MLB",pos:"1B",team:"Los Angeles Dodgers",      age:35},
+  {name:"Shohei Ohtani",         aliases:["ohtani","sho-time"],               sport:"MLB",pos:"DH",team:"Los Angeles Dodgers",      age:31},
+  {name:"Ronald Acuna Jr.",      aliases:["acuna","ronald acuna"],            sport:"MLB",pos:"RF",team:"Atlanta Braves",           age:27},
+  {name:"Yordan Alvarez",        aliases:["yordan"],                          sport:"MLB",pos:"DH",team:"Houston Astros",           age:27},
+  {name:"Trea Turner",           aliases:["trea"],                            sport:"MLB",pos:"SS",team:"Philadelphia Phillies",    age:32},
+  {name:"Pete Alonso",           aliases:["alonso","polar bear"],             sport:"MLB",pos:"1B",team:"New York Mets",            age:30},
+  {name:"Gerrit Cole",           aliases:["cole"],                            sport:"MLB",pos:"SP",team:"New York Yankees",         age:34},
+  {name:"Corbin Burnes",         aliases:["burnes"],                          sport:"MLB",pos:"SP",team:"Baltimore Orioles",        age:30},
+  {name:"Spencer Strider",       aliases:["strider"],                         sport:"MLB",pos:"SP",team:"Atlanta Braves",           age:26},
+  {name:"Zack Wheeler",          aliases:["wheeler"],                         sport:"MLB",pos:"SP",team:"Philadelphia Phillies",    age:35},
+  {name:"Sandy Alcantara",       aliases:["alcantara"],                       sport:"MLB",pos:"SP",team:"Miami Marlins",            age:29},
+  {name:"Julio Rodriguez",       aliases:["j-rod","julio"],                   sport:"MLB",pos:"CF",team:"Seattle Mariners",         age:24},
+  {name:"Gunnar Henderson",      aliases:["gunnar"],                          sport:"MLB",pos:"SS",team:"Baltimore Orioles",        age:23},
+  {name:"Elly De La Cruz",       aliases:["elly","de la cruz"],               sport:"MLB",pos:"SS",team:"Cincinnati Reds",          age:22},
+  {name:"Bobby Witt Jr.",        aliases:["bobby witt","witt"],               sport:"MLB",pos:"SS",team:"Kansas City Royals",       age:24},
+  {name:"Francisco Lindor",      aliases:["lindor"],                          sport:"MLB",pos:"SS",team:"New York Mets",            age:31},
+  {name:"Jose Ramirez",          aliases:["ramirez","jose"],                  sport:"MLB",pos:"3B",team:"Cleveland Guardians",      age:32},
+  {name:"Nolan Arenado",         aliases:["arenado"],                         sport:"MLB",pos:"3B",team:"St. Louis Cardinals",      age:34},
+  {name:"Vladimir Guerrero Jr.", aliases:["vlad jr","vladdy"],                sport:"MLB",pos:"1B",team:"Toronto Blue Jays",        age:26},
+  {name:"Juan Soto",             aliases:["soto"],                            sport:"MLB",pos:"RF",team:"New York Mets",            age:26},
+  {name:"Mike Trout",            aliases:["trout"],                           sport:"MLB",pos:"CF",team:"Los Angeles Angels",       age:33},
+  {name:"Bryce Harper",          aliases:["harper"],                          sport:"MLB",pos:"1B",team:"Philadelphia Phillies",    age:32},
+  {name:"Cody Bellinger",        aliases:["bellinger"],                       sport:"MLB",pos:"CF",team:"Chicago Cubs",             age:29},
+  {name:"Fernando Tatis Jr.",    aliases:["tatis","el nino"],                 sport:"MLB",pos:"SS",team:"San Diego Padres",         age:26},
+  {name:"Jose Altuve",           aliases:["altuve"],                          sport:"MLB",pos:"2B",team:"Houston Astros",           age:34},
+  {name:"Manny Machado",         aliases:["machado"],                         sport:"MLB",pos:"3B",team:"San Diego Padres",         age:32},
+  {name:"Corey Seager",          aliases:["seager"],                          sport:"MLB",pos:"SS",team:"Texas Rangers",            age:31},
+  {name:"Marcus Semien",         aliases:["semien"],                          sport:"MLB",pos:"2B",team:"Texas Rangers",            age:34},
+  {name:"Adley Rutschman",       aliases:["rutschman","adley"],               sport:"MLB",pos:"C", team:"Baltimore Orioles",        age:27},
+  {name:"J.T. Realmuto",         aliases:["realmuto","jt"],                   sport:"MLB",pos:"C", team:"Philadelphia Phillies",    age:34},
+  {name:"Kyle Tucker",           aliases:["tucker"],                          sport:"MLB",pos:"RF",team:"Chicago Cubs",             age:28},
+  {name:"Jazz Chisholm Jr.",     aliases:["jazz","chisholm"],                 sport:"MLB",pos:"3B",team:"New York Yankees",         age:27},
+  {name:"Riley Greene",          aliases:["riley","greene"],                  sport:"MLB",pos:"LF",team:"Detroit Tigers",           age:24},
+  {name:"Jackson Holliday",      aliases:["holliday","jackson"],              sport:"MLB",pos:"2B",team:"Baltimore Orioles",        age:21},
+  {name:"Dylan Cease",           aliases:["cease"],                           sport:"MLB",pos:"SP",team:"San Diego Padres",         age:29},
+  {name:"Logan Webb",            aliases:["webb","logan"],                    sport:"MLB",pos:"SP",team:"San Francisco Giants",     age:28},
+  {name:"Tarik Skubal",          aliases:["skubal"],                          sport:"MLB",pos:"SP",team:"Detroit Tigers",           age:28},
+  {name:"Paul Skenes",           aliases:["skenes"],                          sport:"MLB",pos:"SP",team:"Pittsburgh Pirates",       age:23},
+  {name:"Yoshinobu Yamamoto",    aliases:["yamamoto"],                        sport:"MLB",pos:"SP",team:"Los Angeles Dodgers",      age:26},
+  {name:"Garrett Crochet",       aliases:["crochet"],                         sport:"MLB",pos:"SP",team:"Boston Red Sox",           age:25},
+  {name:"Max Fried",             aliases:["fried"],                           sport:"MLB",pos:"SP",team:"New York Yankees",         age:31},
+  {name:"Ketel Marte",           aliases:["ketel"],                           sport:"MLB",pos:"2B",team:"Arizona Diamondbacks",     age:31},
+  {name:"Christian Yelich",      aliases:["yelich","yeli"],                   sport:"MLB",pos:"LF",team:"Milwaukee Brewers",        age:33},
+  {name:"Austin Riley",          aliases:["riley austin"],                    sport:"MLB",pos:"3B",team:"Atlanta Braves",           age:27},
+  {name:"Cal Raleigh",           aliases:["raleigh","big dumper"],            sport:"MLB",pos:"C", team:"Seattle Mariners",         age:28},
+  {name:"Kevin Gausman",         aliases:["gausman"],                         sport:"MLB",pos:"SP",team:"Toronto Blue Jays",        age:34},
+  {name:"Ozzie Albies",          aliases:["albies"],                          sport:"MLB",pos:"2B",team:"Atlanta Braves",           age:28},
+  {name:"Matt Olson",            aliases:["olson"],                           sport:"MLB",pos:"1B",team:"Atlanta Braves",           age:31},
+  {name:"Willy Adames",          aliases:["adames"],                          sport:"MLB",pos:"SS",team:"San Francisco Giants",     age:29},
+  {name:"Luis Castillo",         aliases:["castillo"],                        sport:"MLB",pos:"SP",team:"Seattle Mariners",         age:32},
+  {name:"Framber Valdez",        aliases:["framber","valdez"],                sport:"MLB",pos:"SP",team:"Houston Astros",           age:30},
+  {name:"Michael Harris II",     aliases:["michael harris","harris"],         sport:"MLB",pos:"CF",team:"Atlanta Braves",           age:24},
+  {name:"Seiya Suzuki",          aliases:["suzuki","seiya"],                  sport:"MLB",pos:"RF",team:"Chicago Cubs",             age:30},
+  /* ── MLB additions ── */
+  {name:"Rafael Devers",         aliases:["devers","raffy"],                   sport:"MLB",pos:"3B",team:"Boston Red Sox",           age:28},
+  {name:"Anthony Volpe",         aliases:["volpe","anthony volpe"],            sport:"MLB",pos:"SS",team:"New York Yankees",         age:24},
+  {name:"Giancarlo Stanton",     aliases:["stanton","giancarlo"],              sport:"MLB",pos:"DH",team:"New York Yankees",         age:35},
+  {name:"Xander Bogaerts",       aliases:["bogaerts","xander"],               sport:"MLB",pos:"SS",team:"San Diego Padres",         age:32},
+  {name:"Ha-Seong Kim",          aliases:["kim","ha-seong"],                   sport:"MLB",pos:"SS",team:"San Diego Padres",         age:29},
+  {name:"Luis Arraez",           aliases:["arraez","luis arraez"],             sport:"MLB",pos:"2B",team:"San Diego Padres",         age:27},
+  {name:"Bo Bichette",           aliases:["bichette","bo"],                    sport:"MLB",pos:"SS",team:"Toronto Blue Jays",        age:27},
+  {name:"Daulton Varsho",        aliases:["varsho","daulton"],                 sport:"MLB",pos:"LF",team:"Toronto Blue Jays",        age:28},
+  {name:"Corbin Carroll",        aliases:["carroll","corbin"],                 sport:"MLB",pos:"LF",team:"Arizona Diamondbacks",     age:24},
+  {name:"Will Smith",            aliases:["will smith","catcher"],             sport:"MLB",pos:"C", team:"Los Angeles Dodgers",      age:30},
+  {name:"Grayson Rodriguez",     aliases:["rodriguez","grayson"],              sport:"MLB",pos:"SP",team:"Baltimore Orioles",        age:25},
+  {name:"Logan Gilbert",         aliases:["gilbert","logan gilbert"],          sport:"MLB",pos:"SP",team:"Seattle Mariners",         age:27},
+  {name:"Hunter Brown",          aliases:["brown","hunter brown"],             sport:"MLB",pos:"SP",team:"Houston Astros",           age:26},
+  {name:"José Berríos",          aliases:["berrios","jose berrios"],           sport:"MLB",pos:"SP",team:"Toronto Blue Jays",        age:31},
+  {name:"Luis Gil",              aliases:["gil","luis gil"],                   sport:"MLB",pos:"SP",team:"New York Yankees",         age:26},
+  {name:"Chris Sale",            aliases:["sale","chris sale"],                sport:"MLB",pos:"SP",team:"Atlanta Braves",           age:36},
+  {name:"Tanner Bibee",          aliases:["bibee","tanner"],                   sport:"MLB",pos:"SP",team:"Cleveland Guardians",      age:26},
+  {name:"Jarren Duran",          aliases:["duran","jarren"],                   sport:"MLB",pos:"LF",team:"Boston Red Sox",           age:28},
+  {name:"Evan Carter",           aliases:["carter","evan carter"],             sport:"MLB",pos:"LF",team:"Texas Rangers",            age:22},
+  {name:"Nathaniel Lowe",        aliases:["lowe","nathaniel"],                 sport:"MLB",pos:"1B",team:"Texas Rangers",            age:29},
+];
+
+const seen=new Set();
+const PLAYERS=ALL_PLAYERS.filter(p=>{if(seen.has(p.name))return false;seen.add(p.name);return true;});
+
+function getDayIndex(){
+  const nfl=PLAYERS.filter(p=>p.sport==='NFL');
+  const nba=PLAYERS.filter(p=>p.sport==='NBA');
+  const mlb=PLAYERS.filter(p=>p.sport==='MLB');
+  const rotation=[];
+  const maxLen=Math.max(nfl.length,nba.length,mlb.length);
+  for(let i=0;i<maxLen;i++){
+    if(i<nfl.length)rotation.push(nfl[i]);
+    if(i<nba.length)rotation.push(nba[i]);
+    if(i<mlb.length)rotation.push(mlb[i]);
+  }
+  const epoch=new Date('2026-01-01');
+  return rotation[Math.floor((new Date()-epoch)/86400000)%rotation.length];
+}
+const TARGET=getDayIndex();
+const MAX=8;
+let attempts=0,done=false,guesses=[],ddHighlight=-1,ddItems=[];
+
+function normalise(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();
+}
+function findPlayer(val){
+  const nv=normalise(val);
+  return PLAYERS.find(p=>normalise(p.name)===nv||p.aliases.some(a=>normalise(a)===nv))
+    ||PLAYERS.find(p=>normalise(p.name).includes(nv)||p.aliases.some(a=>normalise(a).includes(nv)));
+}
+
+function scoreDivision(g){
+  const td=getDivision(TARGET.team),gd=getDivision(g.team);
+  const tc=getConference(TARGET.team),gc=getConference(g.team);
+  if(gd===td)return 'g';
+  if(gc===tc&&gc!=='')return 'o';
+  return 'gr';
+}
+function scoreGuess(g){
+  const t=TARGET,diff=Math.abs(g.age-t.age);
+  return{
+    sport:g.sport===t.sport?'g':'gr',
+    pos:  g.pos===t.pos?'g':'gr',
+    div:  scoreDivision(g),
+    team: g.team===t.team?'g':(getDivision(g.team)===getDivision(t.team)?'a':'gr'),
+    age:  g.age===t.age?'g':diff<=2?'a':'gr',
+  };
+}
+function ageArrow(g){return g.age===TARGET.age?'':g.age<TARGET.age?' ↑':' ↓';}
+
+function renderRows(){
+  const c=document.getElementById('rows');c.innerHTML='';
+  for(let i=0;i<MAX;i++){
+    const wrap=document.createElement('div');
+    wrap.style.cssText='display:grid;grid-template-columns:28px repeat(5,1fr);gap:4px;margin-bottom:2px';
+    const lbl=document.createElement('div');
+    lbl.style.cssText='font-size:11px;color:var(--text-muted);text-align:right;padding-right:4px;display:flex;align-items:center;justify-content:flex-end;font-family:"Barlow Condensed",sans-serif;font-weight:700';
+    lbl.textContent=i+1;wrap.appendChild(lbl);
+    if(i<guesses.length){
+      const g=guesses[i],s=scoreGuess(g),arrow=ageArrow(g);
+      const div=getDivision(g.team)||g.sport;
+      [{cat:'sport',val:g.sport,sub:''},{cat:'pos',val:g.pos,sub:''},
+       {cat:'div',val:div,sub:getConference(g.team)||''},
+       {cat:'team',val:g.team,sub:''},
+       {cat:'age',val:g.age+(arrow||''),sub:''}].forEach(def=>{
+        const tile=document.createElement('div');tile.className='tile '+s[def.cat];
+        const tv=document.createElement('div');tv.className='tv';tv.textContent=def.val;tile.appendChild(tv);
+        if(def.sub){const ti=document.createElement('div');ti.className='ti';ti.textContent=def.sub;tile.appendChild(ti);}
+        wrap.appendChild(tile);
+      });
+      c.appendChild(wrap);
+      const nr=document.createElement('div');
+      nr.style.cssText='display:grid;grid-template-columns:28px 1fr;gap:4px;margin-bottom:6px';
+      nr.innerHTML='<div></div><div style="font-size:11px;color:var(--text-muted);padding-left:2px;font-style:italic">'+g.name+'</div>';
+      c.appendChild(nr);
+    } else {
+      for(let j=0;j<5;j++){const t=document.createElement('div');t.className='tile empty';wrap.appendChild(t);}
+      c.appendChild(wrap);
+    }
+  }
+}
+
+function getFiltered(q){
+  if(!q||q.length<2)return[];
+  const nq=normalise(q);
+  return PLAYERS.filter(p=>normalise(p.name).includes(nq)||p.aliases.some(a=>normalise(a).includes(nq))).slice(0,10);
+}
+
+const input=document.getElementById('guess-input'),dd=document.getElementById('dropdown');
+function renderDD(items,hl=-1){
+  ddItems=items;
+  if(!items.length){dd.style.display='none';return;}
+  dd.innerHTML='';
+  items.forEach((p,i)=>{
+    const item=document.createElement('div');
+    item.className='dd-item'+(i===hl?' hl':'');
+    item.innerHTML='<div>'+p.name+'</div><div class="dd-meta">'+p.sport+' · '+p.pos+' · '+p.team+'</div>';
+    item.onmousedown=e=>{e.preventDefault();input.value=p.name;dd.style.display='none';ddHighlight=-1;input.focus();};
+    dd.appendChild(item);
+  });
+  dd.style.display='block';
+}
+input.addEventListener('input',()=>{ddHighlight=-1;renderDD(getFiltered(input.value));});
+input.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'){e.preventDefault();ddHighlight=Math.min(ddHighlight+1,ddItems.length-1);renderDD(ddItems,ddHighlight);}
+  else if(e.key==='ArrowUp'){e.preventDefault();ddHighlight=Math.max(ddHighlight-1,0);renderDD(ddItems,ddHighlight);}
+  else if(e.key==='Enter'){ddHighlight>=0&&ddItems[ddHighlight]?(input.value=ddItems[ddHighlight].name,dd.style.display='none',ddHighlight=-1):submitGuess();}
+  else if(e.key==='Escape')dd.style.display='none';
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.input-area'))dd.style.display='none';});
+
+function submitGuess(){
+  if(done)return;
+  const val=input.value.trim();
+  if(!val){document.getElementById('msg').textContent='Type a player name first.';return;}
+  const player=findPlayer(val);
+  if(!player){document.getElementById('msg').textContent='"'+val+'" not found — try a different spelling or pick from the dropdown.';return;}
+  if(guesses.find(g=>g.name===player.name)){document.getElementById('msg').textContent='Already guessed '+player.name+'!';return;}
+  document.getElementById('msg').textContent='';
+  guesses.push(player);attempts++;
+  renderRows();
+  document.getElementById('att-badge').textContent=(MAX-attempts)+' attempt'+(MAX-attempts!==1?'s':'')+' remaining';
+  input.value='';dd.style.display='none';
+  if(player.name===TARGET.name){done=true;showResult(true);}
+  else if(attempts>=MAX){done=true;showResult(false);}
+}
+
+function showResult(won){
+  document.getElementById('input-area').style.display='none';
+  document.getElementById('att-badge').style.display='none';
+  const r=document.getElementById('result');
+  const attWord=attempts===1?'1 attempt':attempts+' attempts';
+  r.innerHTML='<div class="result-banner '+(won?'win':'lose')+'">'
+    +'<div class="rb-icon">'+(won?'🎉':'😔')+'</div>'
+    +'<div class="rb-title">'+(won?'Congratulations!':'Unlucky!')+'</div>'
+    +'<div class="rb-player">'+TARGET.name+'</div>'
+    +'<div class="rb-sub">'+TARGET.pos+' · '+TARGET.team+' · '+TARGET.sport+'</div>'
+    +'<div class="rb-sub" style="margin-top:4px">'+(won?'Guessed correctly in '+attWord:'Better luck tomorrow!')+'</div>'
+    +'<button class="share-btn" onclick="copyShare()">Share result</button></div>';
+}
+
+function copyShare(){
+  const e={g:'🟩',a:'🟨',o:'🟧',gr:'⬜'};
+  const cats=['sport','pos','div','team','age'];
+  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  const won=done&&guesses.length&&guesses[guesses.length-1].name===TARGET.name;
+  let txt='The Sportsman: US — '+today+'\n'+(won?attempts:'X')+'/'+MAX+'\n\n';
+  guesses.forEach(g=>{const s=scoreGuess(g);txt+=cats.map(c=>e[s[c]]).join('')+'\n';});
+  const b=document.querySelector('.share-btn');
+  const finish=()=>{b.textContent='Copied!';setTimeout(()=>b.textContent='Share result',2000);};
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(finish).catch(()=>fbCopy(txt,finish));
+  } else { fbCopy(txt,finish); }
+}
+function fbCopy(txt,cb){
+  const ta=document.createElement('textarea');ta.value=txt;
+  ta.style.cssText='position:fixed;top:-9999px;left:-9999px';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');if(cb)cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+renderRows();
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

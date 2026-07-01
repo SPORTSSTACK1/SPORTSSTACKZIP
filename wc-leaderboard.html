@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>World Cup Leaderboard — SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=Barlow:wght@400;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--s2:#0d1a2e;--border:#0d2040;--gold:#f5c842;--text:#e8f0fe;--muted:#3a5a7a;--red:#ef4444;--green:#22c55e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;font-style:italic;color:var(--gold)}
+.nav-links{display:flex;gap:8px}
+.nav-links a{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--text);background:var(--s2);padding:6px 12px;border-radius:6px;text-decoration:none;border:1px solid var(--border)}
+
+.page-head{padding:24px 20px 16px;text-align:center}
+.page-head h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,5vw,48px);font-weight:900;font-style:italic;color:var(--gold)}
+.page-head p{color:var(--muted);font-size:14px;margin-top:6px}
+
+
+/* Tabs */
+.tabs{display:flex;max-width:600px;margin:0 auto;padding:0 16px 16px;gap:8px}
+.tab{flex:1;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);cursor:pointer;text-align:center;transition:all .15s}
+.tab.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+.content{max-width:600px;margin:0 auto;padding:0 16px 60px}
+
+/* Your rank */
+.your-rank{background:var(--surface);border:1.5px solid rgba(245,200,66,.3);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.yr-label{font-size:13px;color:var(--muted)}
+.yr-data{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--gold)}
+
+/* Leaderboard table */
+.lb-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;transition:border-color .15s}
+.lb-row:hover{border-color:var(--muted)}
+.lb-row.you{border-color:rgba(245,200,66,.4);background:rgba(245,200,66,.04)}
+.lb-row.top3{border-color:rgba(245,200,66,.25)}
+.rank-num{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--muted);width:32px;flex-shrink:0;text-align:right}
+.rank-1{color:#f5c842}
+.rank-2{color:#94a3b8}
+.rank-3{color:#cd7f32}
+.medal{font-size:18px;width:28px;text-align:center;flex-shrink:0}
+.player-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.player-detail{font-size:12px;color:var(--muted);margin-top:1px}
+.pts-display{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--gold);flex-shrink:0;text-align:right}
+.pts-unit{font-size:12px;font-weight:400;color:var(--muted)}
+
+.loading{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+.empty{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+
+/* Predictor breakdown (on hover/expand) */
+.pred-breakdown{font-size:11px;color:var(--muted);text-align:right;margin-top:2px}
+
+.refresh-btn{display:flex;align-items:center;justify-content:flex-end;margin-bottom:12px}
+.btn-refresh{background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer}
+.btn-refresh:hover{color:var(--text)}
+
+.updated{font-size:11px;color:var(--muted);text-align:center;margin-bottom:8px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0"><img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/></a>
+  <div class="nav-links">
+    <a href="wc-bracket.html">Bracket</a>
+    <a href="wc-predictor.html">Predictor</a>
+  </div>
+</nav>
+
+<div class="page-head">
+  <h1>🏆 World Cup Leaderboard</h1>
+  
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" id="tab-bracket" onclick="switchTab('bracket')">🗂 Bracket</button>
+  <button class="tab" id="tab-predictor" onclick="switchTab('predictor')">🎯 Predictor</button>
+</div>
+
+<div class="content">
+  <div id="your-rank-wrap"></div>
+  <div class="refresh-btn">
+    <button class="btn-refresh" onclick="loadData()">↻ Refresh</button>
+  </div>
+  <div class="updated" id="updated-at"></div>
+  <div id="lb-container"><div class="loading">Loading…</div></div>
+</div>
+
+<script src="sportstack-member.js?v=4"></script>
+<script>
+let activeTab='bracket',currentUser=null;
+
+async function init(){
+  try{
+    const keys=Object.keys(localStorage).filter(k=>k.includes('supabase')&&k.includes('auth'));
+    if(keys.length){
+      const s=JSON.parse(localStorage.getItem(keys[0]));
+      currentUser=s?.user||s?.session?.user;
+    }
+  }catch(e){}
+  await loadData();
+}
+
+function switchTab(tab){
+  activeTab=tab;
+  document.getElementById('tab-bracket').className='tab'+(tab==='bracket'?' active':'');
+  document.getElementById('tab-predictor').className='tab'+(tab==='predictor'?' active':'');
+  loadData();
+}
+
+async function loadData(){
+  document.getElementById('lb-container').innerHTML='<div class="loading">Loading…</div>';
+  if(activeTab==='bracket') await loadBracket();
+  else await loadPredictor();
+}
+
+async function loadBracket(){
+  try{
+    // Get bracket picks with scores, join with profiles for usernames
+    const r=await fetch(`${SS_URL}/rest/v1/wc_bracket_picks?select=user_id,score,motm_final,first_goal_minute,submitted_at&order=score.desc`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
+    const data=await r.json();
+    if(!Array.isArray(data)||!data.length){
+      document.getElementById('lb-container').innerHTML='<div class="empty">No bracket entries yet — be the first!</div>';
+      return;
+    }
+    // Fetch usernames from profiles
+    const uids=data.map(d=>d.user_id);
+    const profR=await fetch(`${SS_URL}/rest/v1/profiles?id=in.(${uids.join(',')})&select=user_id,username`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
+    const profiles=await profR.json();
+    const nameMap={};
+    if(Array.isArray(profiles)) profiles.forEach(p=>nameMap[p.user_id]=p.username||'Anonymous');
+
+    // Sort: score desc → motm_correct desc → minute_closeness asc → submitted_at asc
+    // We can't know actual motm/minute here without fetching wc_matches,
+    // but we sort by submitted_at as final fallback; admin recalc handles score
+    const sorted = data.sort((a,b)=>{
+      if((b.score||0)!==(a.score||0)) return (b.score||0)-(a.score||0);
+      return new Date(a.submitted_at)-new Date(b.submitted_at);
+    });
+    renderLeaderboard(sorted.map((d,i)=>({
+      rank:i+1,
+      userId:d.user_id,
+      name:nameMap[d.user_id]||'Member',
+      score:d.score||0,
+      detail:d.motm_final?`MOTM: ${d.motm_final}${d.first_goal_minute!=null?' · '+d.first_goal_minute+'min':''}` :'',
+      sub:d.submitted_at
+    })));
+  }catch(e){
+    document.getElementById('lb-container').innerHTML='<div class="empty">Error loading — please refresh</div>';
+  }
+}
+
+async function loadPredictor(){
+  try{
+    // Aggregate predictor picks by user
+    const r=await fetch(`${SS_URL}/rest/v1/wc_predictor_picks?select=user_id,points`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
+    const data=await r.json();
+    if(!Array.isArray(data)||!data.length){
+      document.getElementById('lb-container').innerHTML='<div class="empty">No predictions yet — add yours!</div>';
+      return;
+    }
+    // Aggregate
+    const agg={};
+    data.forEach(p=>{
+      if(!agg[p.user_id]) agg[p.user_id]={userId:p.user_id,score:0,preds:0};
+      agg[p.user_id].score+=(p.points||0);
+      agg[p.user_id].preds++;
+    });
+    const sorted=Object.values(agg).sort((a,b)=>b.score-a.score||b.preds-a.preds);
+    sorted.forEach((e,i)=>e.rank=i+1);
+
+    // Fetch usernames
+    const uids=sorted.map(d=>d.userId);
+    const profR=await fetch(`${SS_URL}/rest/v1/profiles?id=in.(${uids.join(',')})&select=user_id,username`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
+    const profiles=await profR.json();
+    const nameMap={};
+    if(Array.isArray(profiles)) profiles.forEach(p=>nameMap[p.user_id]=p.username||'Anonymous');
+
+    renderLeaderboard(sorted.map(d=>({
+      rank:d.rank,userId:d.userId,
+      name:nameMap[d.userId]||'Member',
+      score:d.score,
+      detail:`${d.preds} prediction${d.preds!==1?'s':''}`,
+    })));
+  }catch(e){
+    document.getElementById('lb-container').innerHTML='<div class="empty">Error loading — please refresh</div>';
+  }
+}
+
+function renderLeaderboard(rows){
+  const medals=['🥇','🥈','🥉'];
+  // Your rank
+  const yourRow=currentUser?rows.find(r=>r.userId===currentUser.id):null;
+  const yrWrap=document.getElementById('your-rank-wrap');
+  if(yourRow){
+    yrWrap.innerHTML=`<div class="your-rank"><div><div class="yr-label">Your rank</div><div class="yr-data">#${yourRow.rank} of ${rows.length}</div></div><div><div class="yr-label">Your score</div><div class="yr-data">${yourRow.score} pts</div></div></div>`;
+  } else {
+    yrWrap.innerHTML='';
+  }
+
+  const con=document.getElementById('lb-container');
+  con.innerHTML='';
+  rows.forEach(r=>{
+    const isYou=currentUser&&r.userId===currentUser.id;
+    const div=document.createElement('div');
+    div.className='lb-row'+(isYou?' you':r.rank<=3?' top3':'');
+    const rankClass=r.rank===1?' rank-1':r.rank===2?' rank-2':r.rank===3?' rank-3':'';
+    div.innerHTML=
+      `<div class="rank-num${rankClass}">${r.rank}</div>`+
+      `<div class="medal">${medals[r.rank-1]||''}</div>`+
+      `<div style="flex:1;overflow:hidden"><div class="player-name">${r.name}${isYou?' <span style="font-size:11px;color:var(--gold)">(you)</span>':''}</div>${r.detail?`<div class="player-detail">${r.detail}</div>`:''}</div>`+
+      `<div style="text-align:right"><div class="pts-display">${r.score}<span class="pts-unit"> pts</span></div></div>`;
+    con.appendChild(div);
+  });
+  document.getElementById('updated-at').textContent='Updated: '+new Date().toLocaleTimeString();
+}
+
+init();
+</script>
+</body>
+</html>

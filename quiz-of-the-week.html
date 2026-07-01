@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Quiz of the Week Quizzes — SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=Barlow:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--s2:#0d1a2e;--border:#0d2040;--gold:#f5c842;--text:#e8f0fe;--muted:#3a5a7a;--sport:#f5c842}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sport-pill-nav{display:flex;gap:6px;overflow-x:auto;padding:10px 16px 6px;scrollbar-width:none;border-bottom:1px solid var(--border)}
+.sport-pill-nav::-webkit-scrollbar{display:none}
+.sport-pill{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.15);color:var(--text);text-decoration:none;white-space:nowrap;background:var(--s2);transition:border-color .15s,color .15s}
+.sport-pill:hover,.sport-pill.active{border-color:var(--pc);color:var(--pc)}
+.sport-hero{padding:28px 20px 20px;text-align:center;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.6) 100%)}
+.sport-hero .emoji{font-size:42px;margin-bottom:8px}
+.sport-hero h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,7vw,60px);font-weight:900;font-style:italic;color:var(--sport);line-height:1}
+.sport-hero p{color:var(--muted);font-size:14px;margin-top:6px}
+.sport-section{max-width:1200px;margin:0 auto;padding:24px 16px 8px}
+.subsection-header{margin-bottom:14px}
+.subsection-header h2{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--sport);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em}
+.subsection-desc{font-size:13px;color:var(--muted);font-style:italic}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:8px}
+.quiz-card{display:block;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;transition:border-color .15s,background .15s;line-height:1.3}
+.quiz-card:hover{border-color:var(--sport);background:var(--s2)}
+.back-link{display:inline-block;margin:20px 16px 32px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--muted);text-decoration:none}
+.back-link:hover{color:var(--text)}
+@media(max-width:500px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;padding:6px 12px;border-radius:6px;color:var(--text);background:var(--s2);border:1px solid var(--border);text-decoration:none">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="sport-pill-nav">
+  <a href="football.html" class="sport-pill" style="--pc:#22c55e">Football</a>
+    <a href="nfl.html" class="sport-pill" style="--pc:#ef4444">NFL</a>
+    <a href="nba.html" class="sport-pill" style="--pc:#f97316">NBA</a>
+    <a href="mlb.html" class="sport-pill" style="--pc:#3b82f6">MLB</a>
+    <a href="quiz-of-the-week.html" class="sport-pill" style="--pc:#f5c842">Quiz of the Week</a>
+</div>
+<div class="sport-hero">
+  <div class="emoji">📅</div>
+  <h1>Quiz of the Week</h1>
+  <p>A new 20-question quiz every week covering sport from around the world</p>
+</div>
+
+  <section class="sport-section">
+    <div class="subsection-header">
+      <h2>All Weekly Quizzes</h2>
+      <p class="subsection-desc">A new quiz every Monday — test yourself on the week's biggest sports stories</p>
+    </div>
+    <div class="grid">
+      <a class="quiz-card" href="weekly-quiz-2026-06-23.html">Quiz of the Week #4</a>
+        <a class="quiz-card" href="weekly-quiz-2026-06-16.html">Quiz of the Week #3</a>
+        <a class="quiz-card" href="weekly-quiz-2026-06-10.html">Quiz of the Week #2</a>
+        <a class="quiz-card" href="weekly-quiz-2026-05-19.html">Quiz of the Week #1</a>
+    </div>
+  </section>
+<a href="index.html" class="back-link">← Back to all sports</a>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

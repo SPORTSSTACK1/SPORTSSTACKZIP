@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Leaderboard — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/leaderboard.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>Leaderboard – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--text:#e8f0fe;--muted:#6b8abf;--dim:#1e3355;--border:#0d2040;--bright:#1a3a6a}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
+nav{background:rgba(4,8,15,.95);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:54px;position:sticky;top:0;z-index:10}
+.nav-brand{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:20px;text-transform:uppercase;color:var(--gold);text-decoration:none;line-height:.9}
+.nav-right{display:flex;gap:8px;align-items:center}
+.nav-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:7px;text-decoration:none;border:1px solid var(--bright);color:var(--muted)}
+.page{max-width:760px;margin:0 auto;padding:32px 16px 60px}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,6vw,44px);font-weight:900;font-style:italic;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.page-sub{font-size:13px;color:var(--muted);margin-bottom:28px}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px}
+.tab{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:10px 18px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.search-wrap{position:relative;margin-bottom:16px}
+.search-input{width:100%;background:var(--surface2);border:1px solid var(--bright);border-radius:10px;padding:11px 40px 11px 14px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none}
+.search-input:focus{border-color:var(--gold)}
+.lb-table{width:100%;border-collapse:collapse}
+.lb-table th{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);background:var(--surface2)}
+.lb-table td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:middle}
+.lb-table tr:last-child td{border-bottom:none}
+.lb-table tr:hover td{background:var(--surface2)}
+.rank{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--dim);width:32px}
+.rank.top1{color:#ffd700;font-size:20px}
+.rank.top2{color:#c0c0c0;font-size:18px}
+.rank.top3{color:#cd7f32;font-size:17px}
+.player{display:flex;align-items:center;gap:10px}
+.player-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#f5c842,#e6a800);color:var(--bg);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;flex-shrink:0}
+.player-name{font-weight:500;color:var(--text)}
+.score-cell{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--gold)}
+.badge-cell{font-size:18px}
+.empty{text-align:center;padding:48px;color:var(--muted);font-size:14px}
+.quiz-select{width:100%;background:var(--surface2);border:1px solid var(--bright);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:16px}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="index.html">Sports<br>Stack</a>
+  <div class="nav-right">
+    <a class="nav-btn" href="profile.html">My Profile</a>
+    <a class="nav-btn" href="index.html">Quizzes</a>
+  </div>
+</nav>
+<div class="page">
+  <div class="page-title">Leaderboard</div>
+  <div class="page-sub">Top scores across the SportsStack community</div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('global')">Overall Rankings</div>
+    <div class="tab" onclick="switchTab('quiz')">Quiz Scores</div>
+  </div>
+
+  <!-- Global leaderboard -->
+  <div id="panel-global">
+    <table class="lb-table">
+      <thead><tr>
+        <th>#</th><th>Player</th>
+        <th class="score-cell">⭐ Points</th>
+        <th>Quizzes</th>
+      </tr></thead>
+      <tbody id="global-body"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody>
+    </table>
+  </div>
+
+  <!-- Per-quiz leaderboard -->
+  <div id="panel-quiz" style="display:none">
+    <select class="quiz-select" id="quiz-select" onchange="loadQuizLb()">
+      <option value="">Select a quiz…</option>
+    </select>
+    <table class="lb-table">
+      <thead><tr>
+        <th>#</th><th>Player</th>
+        <th>Score</th>
+        <th>Status</th>
+      </tr></thead>
+      <tbody id="quiz-body"><tr><td colspan="4" class="empty">Select a quiz to see scores</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>const ALL_QUIZ_LIST = [
+  {slug:'afl-800-goals-quiz',name:'AFL/VFL 800-Goal Club Quiz'},
+  {slug:'afl-appearances-quiz',name:'AFL All-Time Appearances Quiz'},
+  {slug:'afl-club-goalkickers-quiz',name:'AFL All-Time Leading Goalkicker Per Club Quiz'},
+  {slug:'afl-coleman-medal-quiz',name:'AFL Coleman Medal Since 2000 Quiz'},
+  {slug:'afl-highest-paid-2026-quiz',name:'AFL Highest Paid Players 2026 Quiz'},
+  {slug:'afl-norm-smith-quiz',name:'AFL Norm Smith Medal Since 2000 Quiz'},
+  {slug:'afl-premiership-coaches-quiz',name:'AFL Premiership Coaches Since 2000 Quiz'},
+  {slug:'afl-teams-quiz',name:'Name Every AFL Team Quiz'},
+  {slug:'al-cy-young-quiz',name:'AL Cy Young Winners Since 2000 Quiz'},
+  {slug:'al-mvp-quiz',name:'AL MVP Winners Since 2000 Quiz'},
+  {slug:'ballon-dor-quiz',name:"Ballon d'Or Winners Since 2000"},
+  {slug:'big-bash-teams-quiz',name:'Big Bash Teams'},
+  {slug:'county-cricket-teams-quiz',name:'County Cricket Teams'},
+  {slug:'expensive-transfers-quiz',name:'Football Most Expensive Transfers'},
+  {slug:'ipl-most-expensive-quiz',name:'IPL Most Expensive Signings'},
+  {slug:'ipl-teams-quiz',name:'IPL Teams'},
+  {slug:'mlb-300-wins-quiz',name:'MLB 300-Win Club Quiz'},
+  {slug:'mlb-active-hr-leaders-quiz',name:'Top 20 Active MLB HR Leaders Quiz'},
+  {slug:'mlb-cy-young-quiz',name:'MLB Cy Young Winners Since 2000 Quiz'},
+  {slug:'mlb-hr-leaders-quiz',name:'MLB All-Time HR Leaders Quiz'},
+  {slug:'mlb-number-1-picks-quiz',name:'MLB #1 Draft Picks Since 2000 Quiz'},
+  {slug:'mlb-stadiums-quiz',name:'MLB Home Stadiums Quiz'},
+  {slug:'mlb-teams-quiz',name:'Name Every MLB Team Quiz'},
+  {slug:'nba-3point-leaders-quiz',name:'NBA All-Time 3-Point Leaders'},
+  {slug:'nba-50point-games-quiz',name:'NBA Most 50-Point Games'},
+  {slug:'nba-block-leaders-quiz',name:'NBA All-Time Block Leaders'},
+  {slug:'nba-finals-mvp-quiz',name:'NBA Finals MVP Quiz'},
+  {slug:'nba-franchise-leading-scorers-quiz',name:'NBA Franchise Leading Scorers Quiz'},
+  {slug:'nba-highest-paid-quiz',name:'NBA Highest Paid Players 2025-26'},
+  {slug:'nba-home-arenas-quiz',name:'NBA Home Arenas Quiz'},
+  {slug:'nba-mvp-since-2000-quiz',name:'NBA MVP Since 2000 Quiz'},
+  {slug:'nba-number-1-picks-quiz',name:'NBA #1 Draft Picks Since 2000 Quiz'},
+  {slug:'nba-rebound-leaders-quiz',name:'NBA All-Time Rebound Leaders'},
+  {slug:'nba-roty-quiz',name:'NBA Rookie of the Year Since 2000 Quiz'},
+  {slug:'nba-teams-quiz',name:'Name Every NBA Team Quiz'},
+  {slug:'nba-top-20-assists-quiz',name:'NBA All-Time Assists Leaders Quiz'},
+  {slug:'nba-top-20-scorers-quiz',name:'NBA All-Time Top 20 Scorers Quiz'},
+  {slug:'nfl-100-receiving-td-quiz',name:'NFL 100+ Receiving Touchdowns'},
+  {slug:'nfl-dpoty-quiz',name:'NFL Defensive Player of the Year Since 2000'},
+  {slug:'nfl-droy-quiz',name:'NFL Defensive Rookie of the Year Quiz'},
+  {slug:'nfl-franchise-passing-quiz',name:'NFL Franchise Passing Yards Leaders'},
+  {slug:'nfl-franchise-td-leaders-quiz',name:'NFL Franchise All-Time TD Leaders Quiz'},
+  {slug:'nfl-highest-paid-position-quiz',name:'NFL Highest Paid at Each Position'},
+  {slug:'nfl-highest-paid-quiz',name:'NFL 10 Highest Paid Players'},
+  {slug:'nfl-interception-leaders-quiz',name:'NFL All-Time Interception Leaders'},
+  {slug:'nfl-mvp-quiz',name:'NFL MVP Since 2000'},
+  {slug:'nfl-number-1-picks-quiz',name:'NFL #1 Draft Picks Since 2000'},
+  {slug:'nfl-opoy-quiz',name:'NFL Offensive Player of the Year Quiz'},
+  {slug:'nfl-oroy-quiz',name:'NFL Offensive Rookie of the Year Quiz'},
+  {slug:'nfl-qb-super-bowls-quiz',name:'NFL QBs With Multiple Super Bowls'},
+  {slug:'nfl-sack-leaders-quiz',name:'NFL All-Time Sack Leaders'},
+  {slug:'nfl-sb-coaches-quiz',name:'Super Bowl Winning Coaches Since 2000'},
+  {slug:'nfl-stadiums-quiz',name:'NFL Stadiums'},
+  {slug:'nfl-superbowl-mvp-quiz',name:'Super Bowl MVP Since 2000'},
+  {slug:'nfl-teams-quiz',name:'Name Every NFL Team'},
+  {slug:'nl-cy-young-quiz',name:'NL Cy Young Winners Since 2000 Quiz'},
+  {slug:'nl-mvp-quiz',name:'NL MVP Winners Since 2000 Quiz'},
+  {slug:'nrl-dally-m-quiz',name:'NRL Dally M Medal Winners Since 2000'},
+  {slug:'nrl-teams-quiz',name:'NRL Teams'},
+  {slug:'nrl-tryscorers-quiz',name:'NRL All-Time Try Scorers'},
+  {slug:'odi-run-scorers-quiz',name:'ODI Cricket All-Time Run Scorers'},
+  {slug:'odi-wicket-takers-quiz',name:'ODI Cricket All-Time Wicket Takers'},
+  {slug:'pl-100-club-quiz',name:'PL 100 Club'},
+  {slug:'pl-golden-boot-quiz',name:'Premier League Golden Boot'},
+  {slug:'pl-highest-paid-quiz',name:'Premier League Highest Paid 2025/26'},
+  {slug:'pl-live',name:'Premier League Live'},
+  {slug:'pl-managers-quiz',name:'Premier League Winning Managers'},
+  {slug:'pl-poty-quiz',name:'PL Player of the Year Since 2000'},
+  {slug:'pl-teams-quiz',name:'Premier League All Clubs'},
+  {slug:'pl-top-assisters-quiz',name:'Premier League Top Assisters'},
+  {slug:'pl-tots-1990-1991',name:'First Division Team of the Season 1990/91'},
+  {slug:'pl-tots-1991-1992',name:'First Division Team of the Season 1991/92'},
+  {slug:'pl-tots-1992-1993',name:'PL Team of the Season 1992/93'},
+  {slug:'pl-tots-1993-1994',name:'PL Team of the Season 1993/94'},
+  {slug:'pl-tots-1994-1995',name:'PL Team of the Season 1994/95'},
+  {slug:'pl-tots-1995-1996',name:'PL Team of the Season 1995/96'},
+  {slug:'pl-tots-1996-1997',name:'PL Team of the Season 1996/97'},
+  {slug:'pl-tots-1997-1998',name:'PL Team of the Season 1997/98'},
+  {slug:'pl-tots-1998-1999',name:'PL Team of the Season 1998/99'},
+  {slug:'pl-tots-1999-2000',name:'PL Team of the Season 1999/00'},
+  {slug:'pl-tots-2000-2001',name:'PL Team of the Season 2000/01'},
+  {slug:'pl-tots-2001-2002',name:'PL Team of the Season 2001/02'},
+  {slug:'pl-tots-2002-2003',name:'PL Team of the Season 2002/03'},
+  {slug:'pl-tots-2003-2004',name:'PL Team of the Season 2003/04'},
+  {slug:'pl-tots-2004-2005',name:'PL Team of the Season 2004/05'},
+  {slug:'pl-tots-2005-2006',name:'PL Team of the Season 2005/06'},
+  {slug:'pl-tots-2006-2007',name:'PL Team of the Season 2006/07'},
+  {slug:'pl-tots-2007-2008',name:'PL Team of the Season 2007/08'},
+  {slug:'pl-tots-2008-2009',name:'PL Team of the Season 2008/09'},
+  {slug:'pl-tots-2009-2010',name:'PL Team of the Season 2009/10'},
+  {slug:'pl-tots-2010-2011',name:'PL Team of the Season 2010/11'},
+  {slug:'pl-tots-2011-2012',name:'PL Team of the Season 2011/12'},
+  {slug:'pl-tots-2012-2013',name:'PL Team of the Season 2012/13'},
+  {slug:'pl-tots-2013-2014',name:'PL Team of the Season 2013/14'},
+  {slug:'pl-tots-2014-2015',name:'PL Team of the Season 2014/15'},
+  {slug:'pl-tots-2015-2016',name:'PL Team of the Season 2015/16'},
+  {slug:'pl-tots-2016-2017',name:'PL Team of the Season 2016/17'},
+  {slug:'pl-tots-2017-2018',name:'PL Team of the Season 2017/18'},
+  {slug:'pl-tots-2018-2019',name:'PL Team of the Season 2018/19'},
+  {slug:'pl-tots-2019-2020',name:'PL Team of the Season 2019/20'},
+  {slug:'pl-tots-2020-2021',name:'PL Team of the Season 2020/21'},
+  {slug:'pl-tots-2021-2022',name:'PL Team of the Season 2021/22'},
+  {slug:'pl-tots-2022-2023',name:'PL Team of the Season 2022/23'},
+  {slug:'pl-tots-2023-2024',name:'PL Team of the Season 2023/24'},
+  {slug:'pl-tots-2024-2025',name:'PL Team of the Season 2024/25'},
+  {slug:'pl-toty-appearances-quiz',name:'PL TOTY Most Appearances'},
+  {slug:'pl-ypoty-quiz',name:'PL Young Player of the Year Since 2000'},
+  {slug:'prem-rugby-teams-quiz',name:'Premiership Rugby Teams'},
+  {slug:'quiz-hub',name:'SportsStack – Quiz Hub'},
+  {slug:'state-of-origin-tryscorers-quiz',name:'State of Origin Top Try Scorers'},
+  {slug:'super-league-teams-quiz',name:'Super League Teams'},
+  {slug:'super-rugby-teams-quiz',name:'Super Rugby Pacific Teams'},
+  {slug:'t20i-fastest-hundreds-quiz',name:'T20I Fastest Centuries'},
+  {slug:'t20i-run-scorers-quiz',name:'T20I Cricket All-Time Run Scorers'},
+  {slug:'t20i-wicket-takers-quiz',name:'T20I Cricket All-Time Wicket Takers'},
+  {slug:'test-run-scorers-quiz',name:'Test Cricket All-Time Run Scorers'},
+  {slug:'test-wicket-takers-quiz',name:'Test Cricket All-Time Wicket Takers'},
+  {slug:'the-hundred-teams-quiz',name:'The Hundred Teams'},
+  {slug:'ucl-final-cities-quiz',name:'Champions League Final Host Cities Since 2000'},
+  {slug:'ucl-top-scorers-quiz',name:'Champions League All-Time Top Scorers'},
+  {slug:'ucl-tots-2001',name:'UEFA Team of the Year 2001'},
+  {slug:'ucl-tots-2002',name:'UEFA Team of the Year 2002'},
+  {slug:'ucl-tots-2003',name:'UEFA Team of the Year 2003'},
+  {slug:'ucl-tots-2004',name:'UEFA Team of the Year 2004'},
+  {slug:'ucl-tots-2005',name:'UEFA Team of the Year 2005'},
+  {slug:'ucl-tots-2006',name:'UEFA Team of the Year 2006'},
+  {slug:'ucl-tots-2007',name:'UEFA Team of the Year 2007'},
+  {slug:'ucl-tots-2008',name:'UEFA Team of the Year 2008'},
+  {slug:'ucl-tots-2009',name:'UEFA Team of the Year 2009'},
+  {slug:'ucl-tots-2010',name:'UEFA Team of the Year 2010'},
+  {slug:'ucl-tots-2011',name:'UEFA Team of the Year 2011'},
+  {slug:'ucl-tots-2012',name:'UEFA Team of the Year 2012'},
+  {slug:'ucl-tots-2013',name:'UEFA Team of the Year 2013'},
+  {slug:'ucl-tots-2014',name:'UEFA Team of the Year 2014'},
+  {slug:'ucl-tots-2015',name:'UEFA Team of the Year 2015'},
+  {slug:'ucl-tots-2016',name:'UEFA Team of the Year 2016'},
+  {slug:'ucl-tots-2017',name:'UEFA Team of the Year 2017'},
+  {slug:'ucl-tots-2018',name:'UEFA Team of the Year 2018'},
+  {slug:'ucl-tots-2019',name:'UEFA Team of the Year 2019'},
+  {slug:'ucl-tots-2020-21',name:'UCL Team of the Season 2020/21'},
+  {slug:'ucl-tots-2020',name:'UEFA Team of the Year 2020'},
+  {slug:'ucl-tots-2021-22',name:'UCL Team of the Season 2021/22'},
+  {slug:'ucl-tots-2022-23',name:'UCL Team of the Season 2022/23'},
+  {slug:'ucl-tots-2023-24',name:'UCL Team of the Season 2023/24'},
+  {slug:'ucl-tots-2024-25',name:'UCL Team of the Season 2024/25'},
+  {slug:'ucl-winners-quiz',name:'Champions League Winners'},
+  {slug:'ucl-winning-managers-quiz',name:'Champions League Winning Managers Since 2000'},
+  {slug:'urc-teams-quiz',name:'United Rugby Championship Teams'},
+  {slug:'wc-final-scorers-quiz',name:'World Cup Final Goalscorers Since 1990'},
+  {slug:'wc-finalists-quiz',name:'World Cup Finalist Nations'},
+  {slug:'wc-top-scorers-quiz',name:'World Cup All-Time Top Scorers'},
+  {slug:'wc-winners-quiz',name:'World Cup Winning Nations'},
+  {slug:'weekly-quiz-2026-05-19',name:'SportsStack – Quiz of the Week'},
+  {slug:'world-series-mvp-quiz',name:'World Series MVP Since 2000 Quiz'},
+  {slug:'ws-mvp-quiz',name:'World Series MVP Since 2000 Quiz'}
+];
+
+
+const client = supabase.createClient('https://syntfyfsyjiuowclarpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig');
+
+function switchTab(t) {
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',(i===0&&t==='global')||(i===1&&t==='quiz')));
+  document.getElementById('panel-global').style.display = t==='global'?'block':'none';
+  document.getElementById('panel-quiz').style.display   = t==='quiz'?'block':'none';
+}
+
+function rankIcon(i) {
+  if(i===0) return '<span class="rank top1">🥇</span>';
+  if(i===1) return '<span class="rank top2">🥈</span>';
+  if(i===2) return '<span class="rank top3">🥉</span>';
+  return `<span class="rank">${i+1}</span>`;
+}
+
+function av(name) {
+  const init = (name||'?').split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+  return `<div class="player-av">${init}</div>`;
+}
+
+function fmtTime(secs) {
+  if (!secs && secs !== 0) return '—';
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return m > 0 ? `${m}m ${s}s` : `${s}s`;
+}
+
+// Fetch all profiles once — avoids relying on foreign key join
+async function getProfiles() {
+  const {data, error} = await client.from('profiles').select('id, username');
+  const map = {};
+  (data || []).forEach(p => { map[p.id] = p.username || 'Unknown'; });
+  return map;
+}
+
+// ── GLOBAL LEADERBOARD ─────────────────────────────────────────────────
+async function loadGlobal() {
+  var el = document.getElementById('global-body');
+  el.innerHTML = '<tr><td colspan="4" class="empty">Loading…</td></tr>';
+  try {
+    var pRes = await client.from('profiles').select('id, username');
+    if (pRes.error) throw new Error('profiles: ' + pRes.error.message);
+    var profiles = pRes.data || [];
+    if (!profiles.length) { el.innerHTML = '<tr><td colspan="4" class="empty">No members yet</td></tr>'; return; }
+
+    var rRes = await client.from('quiz_results').select('user_id, score, total').eq('completed', true);
+    var results = rRes.data || [];
+
+    var pts = {};
+    results.forEach(function(r) {
+      var s = (r.total && r.score > r.total) ? r.total : (r.score || 0);
+      if (!pts[r.user_id]) pts[r.user_id] = {points:0, quizzes:0};
+      pts[r.user_id].points  += s;
+      pts[r.user_id].quizzes += 1;
+    });
+
+    var members = profiles.map(function(p) {
+      return {name: p.username || 'Member', points: pts[p.id] ? pts[p.id].points : 0, quizzes: pts[p.id] ? pts[p.id].quizzes : 0};
+    });
+    members.sort(function(a,b){ return b.points - a.points || a.name.localeCompare(b.name); });
+
+    el.innerHTML = members.map(function(u,i) {
+      return '<tr><td>'+rankIcon(i)+'</td><td><div class="player">'+av(u.name)+'<span class="player-name">'+u.name+'</span></div></td><td class="score-cell">'+u.points.toLocaleString()+'</td><td style="color:var(--muted);font-size:13px">'+(u.quizzes?u.quizzes+' quiz'+(u.quizzes!==1?'zes':''):'No quizzes yet')+'</td></tr>';
+    }).join('');
+  } catch(err) {
+    el.innerHTML = '<tr><td colspan="4" class="empty" style="color:#ef4444">Error: ' + (err.message||String(err)) + '</td></tr>';
+  }
+}
+
+
+// ── QUIZ SELECT ────────────────────────────────────────────────────────
+function populateQuizSelect() {
+  const sel = document.getElementById('quiz-select');
+  ALL_QUIZ_LIST.forEach(q => {
+    const opt = document.createElement('option');
+    opt.value = q.slug;
+    opt.textContent = q.name;
+    sel.appendChild(opt);
+  });
+}
+
+// ── INDIVIDUAL QUIZ LEADERBOARD // ── INDIVIDUAL QUIZ LEADERBOARD ────────────────────────────────────────
+async function loadQuizLb() {
+  const slug = document.getElementById('quiz-select').value;
+  if (!slug) return;
+  const el = document.getElementById('quiz-body');
+  el.innerHTML = '<tr><td colspan="5" class="empty">Loading…</td></tr>';
+
+  const [profileMap, {data, error}] = await Promise.all([
+    getProfiles(),
+    client.from('quiz_results')
+      .select('user_id, score, total, time_seconds, completed')
+      .eq('quiz_slug', slug)
+      .eq('completed', true)
+      .order('score',        {ascending: false})
+      .order('time_seconds', {ascending: true})
+      .limit(100)
+  ]);
+
+  if (error || !data || !data.length) {
+    el.innerHTML = '<tr><td colspan="5" class="empty">No scores yet for this quiz</td></tr>';
+    return;
+  }
+
+  // Check if top scores are tied (all perfect) — time is the differentiator
+  const topScore = data[0] ? data[0].score : 0;
+  const topTotal = data[0] ? data[0].total : 0;
+  const timeTiebreaker = topScore === topTotal && data.filter(r => r.score === topTotal).length > 1;
+
+  el.innerHTML = data.map((r,i) => {
+    const name    = profileMap[r.user_id] || 'Member';
+    const perfect = r.score === r.total;
+    const pct     = r.total ? Math.round(r.score / r.total * 100) : 0;
+    const badge   = perfect ? '\uD83E\uDD47 Perfect' : pct + '%';
+    const timeStr = fmtTime(r.time_seconds);
+    const timeCell = perfect
+      ? `<td style="color:#f5c842;font-size:13px;font-weight:700">\u23F1 ${timeStr}${timeTiebreaker ? ' <span style=\"color:#6b8abf;font-size:11px;font-weight:400\">(tiebreaker)</span>' : ''}</td>`
+      : `<td style="color:var(--muted);font-size:13px">${timeStr}</td>`;
+    return `<tr>
+      <td>${rankIcon(i)}</td>
+      <td><div class="player">${av(name)}<span class="player-name">${name}</span></div></td>
+      <td class="score-cell" style="${perfect ? 'color:#f5c842' : ''}">${r.score}/${r.total}</td>
+      ${timeCell}
+      <td class="badge-cell">${badge}</td>
+    </tr>`;
+  }).join('');
+}
+
+loadGlobal();
+populateQuizSelect();
+</script>
+</body>
+</html>

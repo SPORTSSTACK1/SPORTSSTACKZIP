@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>38-0 Player Ratings</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#04080f;color:#e8f0fe;font-family:'Courier New',monospace;font-size:13px;padding:20px}
+h1{font-family:sans-serif;color:#f5c842;font-size:22px;margin-bottom:20px;letter-spacing:.1em}
+.club{margin-bottom:32px}
+.club-name{font-family:sans-serif;font-size:16px;font-weight:900;color:#f5c842;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid #1a3a6a;padding-bottom:6px;margin-bottom:12px}
+.era{margin-bottom:14px}
+.era-label{font-family:sans-serif;font-size:11px;font-weight:700;color:#6b8abf;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+.player{display:flex;gap:10px;padding:3px 0;border-bottom:1px solid #080f1c}
+.r{min-width:30px;color:#f5c842;font-weight:bold}
+.pos-GK{color:#a78bfa;min-width:36px}
+.pos-DEF{color:#60a5fa;min-width:36px}
+.pos-MID{color:#34d399;min-width:36px}
+.pos-FWD{color:#f87171;min-width:36px}
+.name{color:#e8f0fe}
+</style>
+</head>
+<body>
+<h1>38-0 — Full Player Ratings</h1>
+
+<div class="club"><div class="club-name">Manchester United</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">97</span><span class="pos-GK">GK</span><span class="name">Peter Schmeichel</span></div>
+<div class="player"><span class="r">95</span><span class="pos-FWD">FWD</span><span class="name">Eric Cantona</span></div>
+<div class="player"><span class="r">94</span><span class="pos-MID">MID</span><span class="name">Ryan Keane</span></div>
+<div class="player"><span class="r">90</span><span class="pos-DEF">DEF</span><span class="name">Gary Pallister</span></div>
+<div class="player"><span class="r">88</span><span class="pos-DEF">DEF</span><span class="name">Denis Irwin</span></div>
+<div class="player"><span class="r">88</span><span class="pos-MID">MID</span><span class="name">Paul Scholes</span></div>
+<div class="player"><span class="r">88</span><span class="pos-FWD">FWD</span><span class="name">Andy Cole</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Gary Neville</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">97</span><span class="pos-FWD">FWD</span><span class="name">Cristiano Ronaldo</span></div>
+<div class="player"><span class="r">94</span><span class="pos-DEF">DEF</span><span class="name">Rio Ferdinand</span></div>
+<div class="player"><span class="r">93</span><span class="pos-FWD">FWD</span><span class="name">Wayne Rooney</span></div>
+<div class="player"><span class="r">92</span><span class="pos-DEF">DEF</span><span class="name">Nemanja Vidic</span></div>
+<div class="player"><span class="r">91</span><span class="pos-GK">GK</span><span class="name">Edwin van der Sar</span></div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">Paul Scholes</span></div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">Roy Keane</span></div>
+<div class="player"><span class="r">83</span><span class="pos-DEF">DEF</span><span class="name">Wes Brown</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">93</span><span class="pos-GK">GK</span><span class="name">David De Gea</span></div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Robin van Persie</span></div>
+<div class="player"><span class="r">88</span><span class="pos-DEF">DEF</span><span class="name">Patrice Evra</span></div>
+<div class="player"><span class="r">87</span><span class="pos-FWD">FWD</span><span class="name">Wayne Rooney</span></div>
+<div class="player"><span class="r">87</span><span class="pos-FWD">FWD</span><span class="name">Zlatan Ibrahimovic</span></div>
+<div class="player"><span class="r">86</span><span class="pos-MID">MID</span><span class="name">Michael Carrick</span></div>
+<div class="player"><span class="r">83</span><span class="pos-DEF">DEF</span><span class="name">Jonny Evans</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">91</span><span class="pos-DEF">DEF</span><span class="name">Lisandro Martinez</span></div>
+<div class="player"><span class="r">88</span><span class="pos-GK">GK</span><span class="name">David De Gea</span></div>
+<div class="player"><span class="r">88</span><span class="pos-MID">MID</span><span class="name">Bruno Fernandes</span></div>
+<div class="player"><span class="r">87</span><span class="pos-MID">MID</span><span class="name">Casemiro</span></div>
+<div class="player"><span class="r">84</span><span class="pos-DEF">DEF</span><span class="name">Luke Shaw</span></div>
+<div class="player"><span class="r">83</span><span class="pos-FWD">FWD</span><span class="name">Marcus Rashford</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Arsenal</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">94</span><span class="pos-FWD">FWD</span><span class="name">Dennis Bergkamp</span></div>
+<div class="player"><span class="r">92</span><span class="pos-DEF">DEF</span><span class="name">Tony Adams</span></div>
+<div class="player"><span class="r">92</span><span class="pos-MID">MID</span><span class="name">Patrick Vieira</span></div>
+<div class="player"><span class="r">91</span><span class="pos-GK">GK</span><span class="name">David Seaman</span></div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Ian Wright</span></div>
+<div class="player"><span class="r">87</span><span class="pos-MID">MID</span><span class="name">Marc Overmars</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Nigel Winterburn</span></div>
+<div class="player"><span class="r">84</span><span class="pos-DEF">DEF</span><span class="name">Lee Dixon</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">98</span><span class="pos-FWD">FWD</span><span class="name">Thierry Henry</span></div>
+<div class="player"><span class="r">94</span><span class="pos-MID">MID</span><span class="name">Patrick Vieira</span></div>
+<div class="player"><span class="r">93</span><span class="pos-DEF">DEF</span><span class="name">Ashley Cole</span></div>
+<div class="player"><span class="r">92</span><span class="pos-DEF">DEF</span><span class="name">Sol Campbell</span></div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">Robert Pires</span></div>
+<div class="player"><span class="r">90</span><span class="pos-GK">GK</span><span class="name">Jens Lehmann</span></div>
+<div class="player"><span class="r">86</span><span class="pos-MID">MID</span><span class="name">Freddie Ljungberg</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Lauren</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Alexis Sanchez</span></div>
+<div class="player"><span class="r">89</span><span class="pos-MID">MID</span><span class="name">Cesc Fabregas</span></div>
+<div class="player"><span class="r">88</span><span class="pos-DEF">DEF</span><span class="name">Laurent Koscielny</span></div>
+<div class="player"><span class="r">88</span><span class="pos-MID">MID</span><span class="name">Mesut Ozil</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Per Mertesacker</span></div>
+<div class="player"><span class="r">84</span><span class="pos-DEF">DEF</span><span class="name">Nacho Monreal</span></div>
+<div class="player"><span class="r">83</span><span class="pos-GK">GK</span><span class="name">Wojciech Szczesny</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">93</span><span class="pos-FWD">FWD</span><span class="name">Bukayo Saka</span></div>
+<div class="player"><span class="r">91</span><span class="pos-DEF">DEF</span><span class="name">William Saliba</span></div>
+<div class="player"><span class="r">89</span><span class="pos-MID">MID</span><span class="name">Martin Odegaard</span></div>
+<div class="player"><span class="r">88</span><span class="pos-DEF">DEF</span><span class="name">Gabriel Magalhaes</span></div>
+<div class="player"><span class="r">88</span><span class="pos-MID">MID</span><span class="name">Declan Rice</span></div>
+<div class="player"><span class="r">87</span><span class="pos-DEF">DEF</span><span class="name">Ben White</span></div>
+<div class="player"><span class="r">86</span><span class="pos-FWD">FWD</span><span class="name">Gabriel Martinelli</span></div>
+<div class="player"><span class="r">84</span><span class="pos-GK">GK</span><span class="name">Aaron Ramsdale</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Chelsea</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">93</span><span class="pos-FWD">FWD</span><span class="name">Gianfranco Zola</span></div>
+<div class="player"><span class="r">90</span><span class="pos-DEF">DEF</span><span class="name">Marcel Desailly</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Frank Leboeuf</span></div>
+<div class="player"><span class="r">83</span><span class="pos-DEF">DEF</span><span class="name">Dan Petrescu</span></div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Dennis Wise</span></div>
+<div class="player"><span class="r">80</span><span class="pos-GK">GK</span><span class="name">Ed de Goey</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">94</span><span class="pos-DEF">DEF</span><span class="name">John Terry</span></div>
+<div class="player"><span class="r">94</span><span class="pos-MID">MID</span><span class="name">Frank Lampard</span></div>
+<div class="player"><span class="r">94</span><span class="pos-FWD">FWD</span><span class="name">Didier Drogba</span></div>
+<div class="player"><span class="r">93</span><span class="pos-GK">GK</span><span class="name">Petr Cech</span></div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">Claude Makelele</span></div>
+<div class="player"><span class="r">89</span><span class="pos-DEF">DEF</span><span class="name">Ricardo Carvalho</span></div>
+<div class="player"><span class="r">89</span><span class="pos-FWD">FWD</span><span class="name">Arjen Robben</span></div>
+<div class="player"><span class="r">87</span><span class="pos-DEF">DEF</span><span class="name">William Gallas</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">95</span><span class="pos-FWD">FWD</span><span class="name">Eden Hazard</span></div>
+<div class="player"><span class="r">93</span><span class="pos-MID">MID</span><span class="name">N'Golo Kante</span></div>
+<div class="player"><span class="r">92</span><span class="pos-GK">GK</span><span class="name">Thibaut Courtois</span></div>
+<div class="player"><span class="r">87</span><span class="pos-DEF">DEF</span><span class="name">John Terry</span></div>
+<div class="player"><span class="r">87</span><span class="pos-DEF">DEF</span><span class="name">Branislav Ivanovic</span></div>
+<div class="player"><span class="r">87</span><span class="pos-FWD">FWD</span><span class="name">Diego Costa</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">David Luiz</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">N'Golo Kante</span></div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Cole Palmer</span></div>
+<div class="player"><span class="r">89</span><span class="pos-DEF">DEF</span><span class="name">Thiago Silva</span></div>
+<div class="player"><span class="r">89</span><span class="pos-DEF">DEF</span><span class="name">Reece James</span></div>
+<div class="player"><span class="r">86</span><span class="pos-GK">GK</span><span class="name">Edouard Mendy</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Cesar Azpilicueta</span></div>
+<div class="player"><span class="r">82</span><span class="pos-MID">MID</span><span class="name">Mason Mount</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Liverpool</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Robbie Fowler</span></div>
+<div class="player"><span class="r">88</span><span class="pos-DEF">DEF</span><span class="name">Sami Hyypia</span></div>
+<div class="player"><span class="r">87</span><span class="pos-FWD">FWD</span><span class="name">Michael Owen</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Jamie Carragher</span></div>
+<div class="player"><span class="r">84</span><span class="pos-GK">GK</span><span class="name">David James</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Steve McManaman</span></div>
+<div class="player"><span class="r">82</span><span class="pos-MID">MID</span><span class="name">Jamie Redknapp</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">94</span><span class="pos-MID">MID</span><span class="name">Steven Gerrard</span></div>
+<div class="player"><span class="r">93</span><span class="pos-FWD">FWD</span><span class="name">Fernando Torres</span></div>
+<div class="player"><span class="r">90</span><span class="pos-DEF">DEF</span><span class="name">Jamie Carragher</span></div>
+<div class="player"><span class="r">89</span><span class="pos-MID">MID</span><span class="name">Xabi Alonso</span></div>
+<div class="player"><span class="r">88</span><span class="pos-GK">GK</span><span class="name">Pepe Reina</span></div>
+<div class="player"><span class="r">87</span><span class="pos-DEF">DEF</span><span class="name">Sami Hyypia</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">96</span><span class="pos-FWD">FWD</span><span class="name">Luis Suarez</span></div>
+<div class="player"><span class="r">89</span><span class="pos-MID">MID</span><span class="name">Philippe Coutinho</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Daniel Agger</span></div>
+<div class="player"><span class="r">85</span><span class="pos-FWD">FWD</span><span class="name">Daniel Sturridge</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Jordan Henderson</span></div>
+<div class="player"><span class="r">83</span><span class="pos-DEF">DEF</span><span class="name">Glen Johnson</span></div>
+<div class="player"><span class="r">82</span><span class="pos-DEF">DEF</span><span class="name">Martin Skrtel</span></div>
+<div class="player"><span class="r">79</span><span class="pos-GK">GK</span><span class="name">Simon Mignolet</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">96</span><span class="pos-DEF">DEF</span><span class="name">Virgil van Dijk</span></div>
+<div class="player"><span class="r">96</span><span class="pos-FWD">FWD</span><span class="name">Mohamed Salah</span></div>
+<div class="player"><span class="r">94</span><span class="pos-GK">GK</span><span class="name">Alisson Becker</span></div>
+<div class="player"><span class="r">92</span><span class="pos-DEF">DEF</span><span class="name">Trent Alexander-Arnold</span></div>
+<div class="player"><span class="r">91</span><span class="pos-DEF">DEF</span><span class="name">Andrew Robertson</span></div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Sadio Mane</span></div>
+<div class="player"><span class="r">88</span><span class="pos-MID">MID</span><span class="name">Fabinho</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Manchester City</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Georgi Kinkladze</span></div>
+<div class="player"><span class="r">76</span><span class="pos-DEF">DEF</span><span class="name">Richard Dunne</span></div>
+<div class="player"><span class="r">76</span><span class="pos-FWD">FWD</span><span class="name">Uwe Rosler</span></div>
+<div class="player"><span class="r">75</span><span class="pos-DEF">DEF</span><span class="name">Terry Phelan</span></div>
+<div class="player"><span class="r">73</span><span class="pos-GK">GK</span><span class="name">Nicky Weaver</span></div>
+<div class="player"><span class="r">73</span><span class="pos-FWD">FWD</span><span class="name">Paul Dickov</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">83</span><span class="pos-FWD">FWD</span><span class="name">Nicolas Anelka</span></div>
+<div class="player"><span class="r">82</span><span class="pos-GK">GK</span><span class="name">Joe Hart</span></div>
+<div class="player"><span class="r">81</span><span class="pos-DEF">DEF</span><span class="name">Richard Dunne</span></div>
+<div class="player"><span class="r">81</span><span class="pos-MID">MID</span><span class="name">Shaun Wright-Phillips</span></div>
+<div class="player"><span class="r">79</span><span class="pos-DEF">DEF</span><span class="name">Sylvain Distin</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">97</span><span class="pos-FWD">FWD</span><span class="name">Sergio Aguero</span></div>
+<div class="player"><span class="r">96</span><span class="pos-MID">MID</span><span class="name">Kevin De Bruyne</span></div>
+<div class="player"><span class="r">94</span><span class="pos-MID">MID</span><span class="name">David Silva</span></div>
+<div class="player"><span class="r">93</span><span class="pos-DEF">DEF</span><span class="name">Vincent Kompany</span></div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">Yaya Toure</span></div>
+<div class="player"><span class="r">87</span><span class="pos-GK">GK</span><span class="name">Joe Hart</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Pablo Zabaleta</span></div>
+<div class="player"><span class="r">84</span><span class="pos-DEF">DEF</span><span class="name">Joleon Lescott</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">98</span><span class="pos-FWD">FWD</span><span class="name">Erling Haaland</span></div>
+<div class="player"><span class="r">95</span><span class="pos-MID">MID</span><span class="name">Kevin De Bruyne</span></div>
+<div class="player"><span class="r">93</span><span class="pos-DEF">DEF</span><span class="name">Ruben Dias</span></div>
+<div class="player"><span class="r">91</span><span class="pos-GK">GK</span><span class="name">Ederson</span></div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">Bernardo Silva</span></div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">Phil Foden</span></div>
+<div class="player"><span class="r">88</span><span class="pos-DEF">DEF</span><span class="name">Joao Cancelo</span></div>
+<div class="player"><span class="r">87</span><span class="pos-DEF">DEF</span><span class="name">Kyle Walker</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Tottenham</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Jurgen Klinsmann</span></div>
+<div class="player"><span class="r">90</span><span class="pos-DEF">DEF</span><span class="name">Sol Campbell</span></div>
+<div class="player"><span class="r">89</span><span class="pos-MID">MID</span><span class="name">David Ginola</span></div>
+<div class="player"><span class="r">87</span><span class="pos-FWD">FWD</span><span class="name">Teddy Sheringham</span></div>
+<div class="player"><span class="r">78</span><span class="pos-GK">GK</span><span class="name">Ian Walker</span></div>
+<div class="player"><span class="r">77</span><span class="pos-DEF">DEF</span><span class="name">Justin Edinburgh</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">92</span><span class="pos-DEF">DEF</span><span class="name">Ledley King</span></div>
+<div class="player"><span class="r">87</span><span class="pos-FWD">FWD</span><span class="name">Dimitar Berbatov</span></div>
+<div class="player"><span class="r">83</span><span class="pos-GK">GK</span><span class="name">Paul Robinson</span></div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Michael Carrick</span></div>
+<div class="player"><span class="r">82</span><span class="pos-DEF">DEF</span><span class="name">Michael Dawson</span></div>
+<div class="player"><span class="r">82</span><span class="pos-FWD">FWD</span><span class="name">Robbie Keane</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">94</span><span class="pos-FWD">FWD</span><span class="name">Gareth Bale</span></div>
+<div class="player"><span class="r">93</span><span class="pos-FWD">FWD</span><span class="name">Harry Kane</span></div>
+<div class="player"><span class="r">91</span><span class="pos-GK">GK</span><span class="name">Hugo Lloris</span></div>
+<div class="player"><span class="r">91</span><span class="pos-DEF">DEF</span><span class="name">Toby Alderweireld</span></div>
+<div class="player"><span class="r">90</span><span class="pos-DEF">DEF</span><span class="name">Jan Vertonghen</span></div>
+<div class="player"><span class="r">90</span><span class="pos-FWD">FWD</span><span class="name">Heung-min Son</span></div>
+<div class="player"><span class="r">89</span><span class="pos-MID">MID</span><span class="name">Christian Eriksen</span></div>
+<div class="player"><span class="r">87</span><span class="pos-DEF">DEF</span><span class="name">Kyle Walker</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Dele Alli</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">93</span><span class="pos-FWD">FWD</span><span class="name">Harry Kane</span></div>
+<div class="player"><span class="r">89</span><span class="pos-DEF">DEF</span><span class="name">Cristian Romero</span></div>
+<div class="player"><span class="r">89</span><span class="pos-FWD">FWD</span><span class="name">Heung-min Son</span></div>
+<div class="player"><span class="r">86</span><span class="pos-GK">GK</span><span class="name">Hugo Lloris</span></div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Pierre-Emile Hojbjerg</span></div>
+<div class="player"><span class="r">82</span><span class="pos-DEF">DEF</span><span class="name">Ben Davies</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Blackburn Rovers</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">97</span><span class="pos-FWD">FWD</span><span class="name">Alan Shearer</span></div>
+<div class="player"><span class="r">89</span><span class="pos-DEF">DEF</span><span class="name">Colin Hendry</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Graeme Le Saux</span></div>
+<div class="player"><span class="r">85</span><span class="pos-GK">GK</span><span class="name">Tim Flowers</span></div>
+<div class="player"><span class="r">85</span><span class="pos-FWD">FWD</span><span class="name">Chris Sutton</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">David Batty</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">86</span><span class="pos-GK">GK</span><span class="name">Brad Friedel</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Damien Duff</span></div>
+<div class="player"><span class="r">83</span><span class="pos-FWD">FWD</span><span class="name">Andy Cole</span></div>
+<div class="player"><span class="r">82</span><span class="pos-DEF">DEF</span><span class="name">Lucas Neill</span></div>
+<div class="player"><span class="r">82</span><span class="pos-FWD">FWD</span><span class="name">Mark Viduka</span></div>
+<div class="player"><span class="r">79</span><span class="pos-DEF">DEF</span><span class="name">Craig Short</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Newcastle United</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">96</span><span class="pos-FWD">FWD</span><span class="name">Alan Shearer</span></div>
+<div class="player"><span class="r">88</span><span class="pos-GK">GK</span><span class="name">Shay Given</span></div>
+<div class="player"><span class="r">88</span><span class="pos-FWD">FWD</span><span class="name">Les Ferdinand</span></div>
+<div class="player"><span class="r">87</span><span class="pos-MID">MID</span><span class="name">Peter Beardsley</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Philippe Albert</span></div>
+<div class="player"><span class="r">86</span><span class="pos-MID">MID</span><span class="name">David Ginola</span></div>
+<div class="player"><span class="r">83</span><span class="pos-DEF">DEF</span><span class="name">Steve Howey</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">90</span><span class="pos-FWD">FWD</span><span class="name">Alan Shearer</span></div>
+<div class="player"><span class="r">87</span><span class="pos-GK">GK</span><span class="name">Shay Given</span></div>
+<div class="player"><span class="r">82</span><span class="pos-FWD">FWD</span><span class="name">Craig Bellamy</span></div>
+<div class="player"><span class="r">81</span><span class="pos-MID">MID</span><span class="name">Kieron Dyer</span></div>
+<div class="player"><span class="r">79</span><span class="pos-DEF">DEF</span><span class="name">Aaron Hughes</span></div>
+<div class="player"><span class="r">75</span><span class="pos-DEF">DEF</span><span class="name">Titus Bramble</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">84</span><span class="pos-DEF">DEF</span><span class="name">Fabricio Coloccini</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Yohan Cabaye</span></div>
+<div class="player"><span class="r">82</span><span class="pos-GK">GK</span><span class="name">Tim Krul</span></div>
+<div class="player"><span class="r">81</span><span class="pos-FWD">FWD</span><span class="name">Papiss Cisse</span></div>
+<div class="player"><span class="r">81</span><span class="pos-FWD">FWD</span><span class="name">Demba Ba</span></div>
+<div class="player"><span class="r">75</span><span class="pos-DEF">DEF</span><span class="name">Mike Williamson</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Alexander Isak</span></div>
+<div class="player"><span class="r">90</span><span class="pos-DEF">DEF</span><span class="name">Kieran Trippier</span></div>
+<div class="player"><span class="r">89</span><span class="pos-MID">MID</span><span class="name">Bruno Guimaraes</span></div>
+<div class="player"><span class="r">87</span><span class="pos-GK">GK</span><span class="name">Nick Pope</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Fabian Schar</span></div>
+<div class="player"><span class="r">83</span><span class="pos-FWD">FWD</span><span class="name">Callum Wilson</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Aston Villa</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">89</span><span class="pos-DEF">DEF</span><span class="name">Paul McGrath</span></div>
+<div class="player"><span class="r">88</span><span class="pos-FWD">FWD</span><span class="name">Dwight Yorke</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Gareth Southgate</span></div>
+<div class="player"><span class="r">84</span><span class="pos-GK">GK</span><span class="name">Mark Bosnich</span></div>
+<div class="player"><span class="r">80</span><span class="pos-FWD">FWD</span><span class="name">Dean Saunders</span></div>
+<div class="player"><span class="r">78</span><span class="pos-MID">MID</span><span class="name">Andy Townsend</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">84</span><span class="pos-GK">GK</span><span class="name">Peter Schmeichel</span></div>
+<div class="player"><span class="r">82</span><span class="pos-DEF">DEF</span><span class="name">Olof Mellberg</span></div>
+<div class="player"><span class="r">82</span><span class="pos-DEF">DEF</span><span class="name">Gareth Barry</span></div>
+<div class="player"><span class="r">79</span><span class="pos-FWD">FWD</span><span class="name">Juan Pablo Angel</span></div>
+<div class="player"><span class="r">77</span><span class="pos-FWD">FWD</span><span class="name">Darius Vassell</span></div>
+<div class="player"><span class="r">76</span><span class="pos-MID">MID</span><span class="name">Lee Hendrie</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">87</span><span class="pos-MID">MID</span><span class="name">Jack Grealish</span></div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Ashley Young</span></div>
+<div class="player"><span class="r">83</span><span class="pos-FWD">FWD</span><span class="name">Christian Benteke</span></div>
+<div class="player"><span class="r">81</span><span class="pos-GK">GK</span><span class="name">Brad Guzan</span></div>
+<div class="player"><span class="r">80</span><span class="pos-DEF">DEF</span><span class="name">Ron Vlaar</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">91</span><span class="pos-GK">GK</span><span class="name">Emiliano Martinez</span></div>
+<div class="player"><span class="r">91</span><span class="pos-FWD">FWD</span><span class="name">Jack Grealish</span></div>
+<div class="player"><span class="r">88</span><span class="pos-FWD">FWD</span><span class="name">Ollie Watkins</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Ezri Konsa</span></div>
+<div class="player"><span class="r">84</span><span class="pos-DEF">DEF</span><span class="name">Matty Cash</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Douglas Luiz</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Leicester City</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">81</span><span class="pos-FWD">FWD</span><span class="name">Emile Heskey</span></div>
+<div class="player"><span class="r">79</span><span class="pos-DEF">DEF</span><span class="name">Matt Elliott</span></div>
+<div class="player"><span class="r">79</span><span class="pos-FWD">FWD</span><span class="name">Stan Collymore</span></div>
+<div class="player"><span class="r">78</span><span class="pos-GK">GK</span><span class="name">Ian Walker</span></div>
+<div class="player"><span class="r">77</span><span class="pos-MID">MID</span><span class="name">Muzzy Izzet</span></div>
+<div class="player"><span class="r">75</span><span class="pos-DEF">DEF</span><span class="name">Frank Sinclair</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">93</span><span class="pos-FWD">FWD</span><span class="name">Riyad Mahrez</span></div>
+<div class="player"><span class="r">92</span><span class="pos-FWD">FWD</span><span class="name">Jamie Vardy</span></div>
+<div class="player"><span class="r">91</span><span class="pos-MID">MID</span><span class="name">N'Golo Kante</span></div>
+<div class="player"><span class="r">88</span><span class="pos-GK">GK</span><span class="name">Kasper Schmeichel</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Wes Morgan</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Robert Huth</span></div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Danny Drinkwater</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">87</span><span class="pos-FWD">FWD</span><span class="name">James Maddison</span></div>
+<div class="player"><span class="r">86</span><span class="pos-FWD">FWD</span><span class="name">Jamie Vardy</span></div>
+<div class="player"><span class="r">85</span><span class="pos-GK">GK</span><span class="name">Kasper Schmeichel</span></div>
+<div class="player"><span class="r">85</span><span class="pos-MID">MID</span><span class="name">Wilfred Ndidi</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Youri Tielemans</span></div>
+<div class="player"><span class="r">83</span><span class="pos-DEF">DEF</span><span class="name">Caglar Soyuncu</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Everton</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">88</span><span class="pos-GK">GK</span><span class="name">Neville Southall</span></div>
+<div class="player"><span class="r">85</span><span class="pos-MID">MID</span><span class="name">Andrei Kanchelskis</span></div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Gary Speed</span></div>
+<div class="player"><span class="r">83</span><span class="pos-FWD">FWD</span><span class="name">Duncan Ferguson</span></div>
+<div class="player"><span class="r">81</span><span class="pos-DEF">DEF</span><span class="name">David Unsworth</span></div>
+<div class="player"><span class="r">80</span><span class="pos-DEF">DEF</span><span class="name">Andy Hinchcliffe</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">86</span><span class="pos-FWD">FWD</span><span class="name">Wayne Rooney</span></div>
+<div class="player"><span class="r">85</span><span class="pos-MID">MID</span><span class="name">Mikel Arteta</span></div>
+<div class="player"><span class="r">83</span><span class="pos-GK">GK</span><span class="name">Nigel Martyn</span></div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Tim Cahill</span></div>
+<div class="player"><span class="r">81</span><span class="pos-DEF">DEF</span><span class="name">Joseph Yobo</span></div>
+<div class="player"><span class="r">79</span><span class="pos-DEF">DEF</span><span class="name">Alan Stubbs</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">89</span><span class="pos-FWD">FWD</span><span class="name">Romelu Lukaku</span></div>
+<div class="player"><span class="r">86</span><span class="pos-DEF">DEF</span><span class="name">Leighton Baines</span></div>
+<div class="player"><span class="r">85</span><span class="pos-GK">GK</span><span class="name">Tim Howard</span></div>
+<div class="player"><span class="r">84</span><span class="pos-DEF">DEF</span><span class="name">Phil Jagielka</span></div>
+<div class="player"><span class="r">82</span><span class="pos-MID">MID</span><span class="name">Ross Barkley</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">85</span><span class="pos-GK">GK</span><span class="name">Jordan Pickford</span></div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Jarrad Branthwaite</span></div>
+<div class="player"><span class="r">84</span><span class="pos-FWD">FWD</span><span class="name">Dominic Calvert-Lewin</span></div>
+<div class="player"><span class="r">83</span><span class="pos-FWD">FWD</span><span class="name">Richarlison</span></div>
+<div class="player"><span class="r">80</span><span class="pos-MID">MID</span><span class="name">Andre Gomes</span></div>
+<div class="player"><span class="r">79</span><span class="pos-DEF">DEF</span><span class="name">Michael Keane</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">Leeds United</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">85</span><span class="pos-DEF">DEF</span><span class="name">Lucas Radebe</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Gary Speed</span></div>
+<div class="player"><span class="r">83</span><span class="pos-DEF">DEF</span><span class="name">Tony Dorigo</span></div>
+<div class="player"><span class="r">83</span><span class="pos-MID">MID</span><span class="name">Gary McAllister</span></div>
+<div class="player"><span class="r">79</span><span class="pos-GK">GK</span><span class="name">John Lukic</span></div>
+<div class="player"><span class="r">79</span><span class="pos-FWD">FWD</span><span class="name">Lee Chapman</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">91</span><span class="pos-DEF">DEF</span><span class="name">Rio Ferdinand</span></div>
+<div class="player"><span class="r">86</span><span class="pos-MID">MID</span><span class="name">Harry Kewell</span></div>
+<div class="player"><span class="r">84</span><span class="pos-GK">GK</span><span class="name">Nigel Martyn</span></div>
+<div class="player"><span class="r">84</span><span class="pos-FWD">FWD</span><span class="name">Mark Viduka</span></div>
+<div class="player"><span class="r">82</span><span class="pos-DEF">DEF</span><span class="name">Ian Harte</span></div>
+<div class="player"><span class="r">81</span><span class="pos-FWD">FWD</span><span class="name">Alan Smith</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">87</span><span class="pos-FWD">FWD</span><span class="name">Raphinha</span></div>
+<div class="player"><span class="r">84</span><span class="pos-MID">MID</span><span class="name">Kalvin Phillips</span></div>
+<div class="player"><span class="r">80</span><span class="pos-DEF">DEF</span><span class="name">Luke Ayling</span></div>
+<div class="player"><span class="r">80</span><span class="pos-DEF">DEF</span><span class="name">Liam Cooper</span></div>
+<div class="player"><span class="r">80</span><span class="pos-FWD">FWD</span><span class="name">Patrick Bamford</span></div>
+<div class="player"><span class="r">79</span><span class="pos-GK">GK</span><span class="name">Illan Meslier</span></div>
+</div></div>
+
+<div class="club"><div class="club-name">West Ham</div>
+<div class="era"><div class="era-label">90s</div>
+<div class="player"><span class="r">84</span><span class="pos-FWD">FWD</span><span class="name">Ian Wright</span></div>
+<div class="player"><span class="r">82</span><span class="pos-DEF">DEF</span><span class="name">Julian Dicks</span></div>
+<div class="player"><span class="r">80</span><span class="pos-GK">GK</span><span class="name">Ludek Miklosko</span></div>
+<div class="player"><span class="r">79</span><span class="pos-DEF">DEF</span><span class="name">Marc Rieper</span></div>
+<div class="player"><span class="r">79</span><span class="pos-FWD">FWD</span><span class="name">John Hartson</span></div>
+<div class="player"><span class="r">74</span><span class="pos-MID">MID</span><span class="name">John Moncur</span></div>
+</div>
+<div class="era"><div class="era-label">00s</div>
+<div class="player"><span class="r">89</span><span class="pos-FWD">FWD</span><span class="name">Carlos Tevez</span></div>
+<div class="player"><span class="r">80</span><span class="pos-MID">MID</span><span class="name">Scott Parker</span></div>
+<div class="player"><span class="r">78</span><span class="pos-DEF">DEF</span><span class="name">Anton Ferdinand</span></div>
+<div class="player"><span class="r">77</span><span class="pos-GK">GK</span><span class="name">Roy Carroll</span></div>
+<div class="player"><span class="r">75</span><span class="pos-DEF">DEF</span><span class="name">Christian Dailly</span></div>
+</div>
+<div class="era"><div class="era-label">10s</div>
+<div class="player"><span class="r">90</span><span class="pos-MID">MID</span><span class="name">Dimitri Payet</span></div>
+<div class="player"><span class="r">83</span><span class="pos-DEF">DEF</span><span class="name">Aaron Cresswell</span></div>
+<div class="player"><span class="r">81</span><span class="pos-DEF">DEF</span><span class="name">Winston Reid</span></div>
+<div class="player"><span class="r">79</span><span class="pos-GK">GK</span><span class="name">Adrian</span></div>
+<div class="player"><span class="r">78</span><span class="pos-FWD">FWD</span><span class="name">Andy Carroll</span></div>
+</div>
+<div class="era"><div class="era-label">20s</div>
+<div class="player"><span class="r">90</span><span class="pos-MID">MID</span><span class="name">Declan Rice</span></div>
+<div class="player"><span class="r">85</span><span class="pos-FWD">FWD</span><span class="name">Jarrod Bowen</span></div>
+<div class="player"><span class="r">81</span><span class="pos-GK">GK</span><span class="name">Lukasz Fabianski</span></div>
+<div class="player"><span class="r">81</span><span class="pos-DEF">DEF</span><span class="name">Aaron Cresswell</span></div>
+<div class="player"><span class="r">81</span><span class="pos-FWD">FWD</span><span class="name">Michail Antonio</span></div>
+<div class="player"><span class="r">80</span><span class="pos-DEF">DEF</span><span class="name">Craig Dawson</span></div>
+</div></div>
+
+</body>
+</html>

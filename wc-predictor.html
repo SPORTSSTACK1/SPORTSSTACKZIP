@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>World Cup Predictor — SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=Barlow:wght@400;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--s2:#0d1a2e;--border:#0d2040;--gold:#f5c842;--text:#e8f0fe;--muted:#3a5a7a;--red:#ef4444;--green:#22c55e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;font-style:italic;color:var(--gold)}
+.nav-links{display:flex;gap:8px}
+.nav-links a{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--text);background:var(--s2);padding:6px 12px;border-radius:6px;text-decoration:none;border:1px solid var(--border)}
+.nav-links a.gold{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+.page-head{padding:24px 20px 8px;text-align:center}
+.page-head h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(26px,5vw,44px);font-weight:900;font-style:italic;color:var(--gold)}
+.page-head p{color:var(--muted);font-size:14px;margin-top:6px}
+
+.score-bar{display:flex;justify-content:center;gap:20px;padding:16px 20px}
+.sb-item{text-align:center}
+.sb-num{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--gold)}
+.sb-lbl{font-size:11px;color:var(--muted);margin-top:-2px;text-transform:uppercase;letter-spacing:.08em}
+
+.round-nav{display:flex;gap:6px;padding:0 16px 12px;overflow-x:auto}
+.round-btn{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.round-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+.content{max-width:680px;margin:0 auto;padding:0 16px 60px}
+
+.section-hdr{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;padding:12px 0 8px;border-bottom:1px solid var(--border);margin-bottom:12px}
+
+/* Match prediction card */
+.pred-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+.pred-card.has-pred{border-color:rgba(245,200,66,.35)}
+.pred-card.result-correct{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.03)}
+.pred-card.result-partial{border-color:rgba(245,200,66,.3)}
+.pred-card.result-wrong{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.02)}
+.pred-card.locked{opacity:.8}
+
+.pred-top{display:flex;align-items:center;gap:8px;padding:12px 14px}
+.team-name{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;flex:1}
+.team-name.right{text-align:right}
+.score-input{width:52px;height:44px;padding:0;background:var(--s2);border:2px solid var(--border);border-radius:8px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;text-align:center;flex-shrink:0}
+.score-input:focus{outline:none;border-color:var(--gold)}
+.score-input:disabled{opacity:.5;cursor:default}
+.vs-dash{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--muted);width:20px;text-align:center;flex-shrink:0}
+
+.pred-bottom{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-top:1px solid var(--border);background:rgba(255,255,255,.01)}
+.kickoff{font-size:12px;color:var(--muted)}
+.btn-pred{padding:7px 18px;background:var(--gold);color:#04080f;border:none;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;cursor:pointer}
+.btn-pred:hover{opacity:.85}
+.btn-pred:disabled{opacity:.4;cursor:default}
+
+.result-display{font-size:12px;font-weight:600;padding:4px 10px;border-radius:5px}
+.result-display.correct{background:rgba(34,197,94,.15);color:var(--green)}
+.result-display.partial{background:rgba(245,200,66,.12);color:var(--gold)}
+.result-display.wrong{background:rgba(239,68,68,.1);color:var(--red)}
+.result-display.pending{color:var(--muted)}
+
+.points-chip{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;padding:4px 12px;border-radius:6px}
+.pts-3{background:rgba(34,197,94,.15);color:var(--green)}
+.pts-1{background:rgba(245,200,66,.12);color:var(--gold)}
+.pts-0{background:rgba(239,68,68,.1);color:var(--red)}
+
+.locked-chip{font-size:11px;font-weight:700;color:var(--muted);background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:3px 8px}
+
+/* Scoring guide */
+.guide{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px;display:flex;gap:16px;flex-wrap:wrap}
+.guide-item{text-align:center;flex:1;min-width:80px}
+.guide-pts{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--gold)}
+.guide-lbl{font-size:11px;color:var(--muted);margin-top:-2px}
+
+.empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
+
+.auth-banner{background:var(--surface);border:1.5px solid rgba(245,200,66,.3);border-radius:10px;padding:16px;text-align:center;margin-bottom:20px}
+.auth-banner h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:6px}
+.auth-banner p{font-size:13px;color:var(--muted);margin-bottom:12px}
+.btn-auth{background:var(--gold);color:#04080f;border:none;border-radius:7px;padding:9px 22px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;cursor:pointer}
+
+.toast{position:fixed;bottom:24px;right:20px;background:var(--green);color:#04080f;padding:10px 18px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<nav> <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0"><img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/></a> <div class="nav-links"> <a href="wc-leaderboard.html" class="gold">Leaderboard</a> </div>
+</nav> <div class="page-head"> <h1>🎯 Match Predictor</h1> <p>Predict every knockout score — lock in before kick-off</p>
+</div> <div class="score-bar" id="score-bar"> <div class="sb-item"><div class="sb-num" id="total-pts">0</div><div class="sb-lbl">Total Points</div></div> <div class="sb-item"><div class="sb-num" id="pred-made">0</div><div class="sb-lbl">Predictions</div></div> <div class="sb-item"><div class="sb-num" id="rank-disp">—</div><div class="sb-lbl">Rank</div></div>
+</div> <div class="round-nav" id="round-nav"></div> <div class="content"> <!-- Scoring guide --> <div class="guide"> <div class="guide-item"><div class="guide-pts">3</div><div class="guide-lbl">Exact score</div></div> <div class="guide-item"><div class="guide-pts">1</div><div class="guide-lbl">Correct winner</div></div> <div class="guide-item"><div class="guide-pts">0</div><div class="guide-lbl">Wrong result</div></div> </div> <div id="auth-banner-wrap"></div> <div id="matches-container"></div>
+</div> <div class="toast" id="toast"></div> <script src="sportstack-member.js?v=4"></script>
+<script>
+let matches=[],userPreds={},currentUser=null,accessToken=null,activeRound='R32';
+const ROUNDS=['R32','R16','QF','SF','3RD','FINAL'];
+const ROUND_LABELS={R32:'Round of 32',R16:'Round of 16',QF:'Quarter-Finals',SF:'Semi-Finals','3RD':'3rd Place',FINAL:'Final'};
+
+async function init(){
+  await loadMatches();
+  await loadSession();
+  buildRoundNav();
+  renderMatches();
+  updateScoreBar();
+}
+
+async function loadMatches(){
+  try{
+    const r=await fetch(`${SS_URL}/rest/v1/wc_matches?select=*&order=id`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
+    matches=await r.json();
+    if(!Array.isArray(matches)) matches=[];
+  }catch(e){matches=[];}
+}
+
+async function loadSession(){
+  try{
+    // Use ssClient from sportstack-member.js
+    if(typeof ssClient !== 'undefined'){
+      const {data:{session}} = await ssClient.auth.getSession();
+      if(session){currentUser=session.user;accessToken=session.access_token;}
+    }
+    if(!currentUser && typeof ssUser !== 'undefined' && ssUser){
+      currentUser=ssUser;
+      if(typeof ssClient !== 'undefined'){
+        try{ const {data:{session}}=await ssClient.auth.getSession(); if(session) accessToken=session.access_token; }catch(e){}
+      }
+    }
+    // Fallback: scan localStorage for any supabase session key
+    if(!currentUser){
+      const keys=Object.keys(localStorage).filter(k=>k.startsWith('sb-')||( k.includes('supabase')&&k.includes('auth')));
+      for(const k of keys){ try{ const s=JSON.parse(localStorage.getItem(k)); const u=s?.user||s?.session?.user; if(u){currentUser=u;accessToken=s?.access_token||s?.session?.access_token;break;} }catch(e){} }
+    }
+    if(!currentUser) return;
+    const r=await fetch(`${SS_URL}/rest/v1/wc_predictor_picks?user_id=eq.${currentUser.id}&select=*`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
+    const d=await r.json();
+    if(Array.isArray(d)) d.forEach(p=>userPreds[p.match_id]=p);
+  }catch(e){}
+}
+
+function buildRoundNav(){
+  const nav=document.getElementById('round-nav');
+  nav.innerHTML='';
+  ROUNDS.forEach(r=>{
+    const ms=matches.filter(m=>m.round===r);
+    if(!ms.length) return;
+    const btn=document.createElement('button');
+    btn.className='round-btn'+(r===activeRound?' active':'');
+    btn.textContent=r;
+    btn.onclick=()=>{activeRound=r;buildRoundNav();renderMatches();};
+    nav.appendChild(btn);
+  });
+}
+
+function renderMatches(){
+  const con=document.getElementById('matches-container');
+  con.innerHTML='';
+
+  // Auth banner if not logged in
+  const ab=document.getElementById('auth-banner-wrap');
+  ab.innerHTML='';
+  if(!currentUser){
+    ab.innerHTML='<div class="auth-banner"><h3>Sign in to predict</h3><p>Members track points across all knockout matches</p><button class="btn-auth" onclick="document.dispatchEvent(new CustomEvent(\'ss:showSignIn\'))">Sign In / Join Free</button></div>';
+  }
+
+  const ms=matches.filter(m=>m.round===activeRound);
+  if(!ms.length){con.innerHTML='<div class="empty">No matches yet — check back soon</div>';return;}
+
+  ms.forEach(m=>{
+    const pred=userPreds[m.id];
+    const isComplete=m.status==='complete';
+    const isLocked=isComplete||(m.kickoff_at&&new Date(m.kickoff_at)<new Date());
+    const hasTba=m.team_a==='TBA'||m.team_b==='TBA';
+
+    // Points calc
+    let pts=0,resultClass='',resultTxt='';
+    if(isComplete&&pred){
+      const predWinner=pred.pred_a>pred.pred_b?m.team_a:pred.pred_b>pred.pred_a?m.team_b:null;
+      const exactScore=pred.pred_a===m.score_a&&pred.pred_b===m.score_b;
+      if(exactScore){pts=3;resultClass='correct';resultTxt='Exact score!';}
+      else if(predWinner===m.winner){pts=1;resultClass='partial';resultTxt='Correct winner';}
+      else{pts=0;resultClass='wrong';resultTxt='Wrong result';}
+    }
+
+    let cardClass='pred-card';
+    if(pred&&!isComplete) cardClass+=' has-pred';
+    if(isComplete&&pred){
+      if(pts===3) cardClass+=' result-correct';
+      else if(pts===1) cardClass+=' result-partial';
+      else cardClass+=' result-wrong';
+    }
+    if(isLocked) cardClass+=' locked';
+
+    const card=document.createElement('div');
+    card.className=cardClass;
+    card.id='pc-'+m.id;
+
+    const pa=pred?.pred_a??'';
+    const pb=pred?.pred_b??'';
+    const ko=m.kickoff_at?new Date(m.kickoff_at).toLocaleString('en-GB',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+
+    const scoreHtml=isComplete?
+      `<span style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text)">${m.score_a} – ${m.score_b}</span>`:
+      `<input class="score-input" id="sa-${m.id}" type="number" min="0" max="20" value="${pa}" placeholder="0" ${isLocked||hasTba?'disabled':''}/> <div class="vs-dash">–</div> <input class="score-input" id="sb-${m.id}" type="number" min="0" max="20" value="${pb}" placeholder="0" ${isLocked||hasTba?'disabled':''}/>`;
+
+    let bottomRight='';
+    if(isComplete&&pred){
+      bottomRight=`<span class="points-chip pts-${pts}">${pts} pt${pts!==1?'s':''}</span>`;
+    } else if(isLocked){
+      bottomRight=`<span class="locked-chip">🔒 Locked</span>`;
+    } else {
+      bottomRight=`<button class="btn-pred" id="btn-${m.id}" onclick="savePred(${m.id})" ${!currentUser||hasTba?'disabled':''}>Predict</button>`;
+    }
+
+    const resultHtml=isComplete&&pred?`<div class="result-display ${resultClass}">${resultTxt}</div>`:`<div class="result-display pending">${ko||'Date TBC'}</div>`;
+
+    card.innerHTML=
+      `<div class="pred-top"> <div class="team-name">${m.team_a||'TBA'}</div>
+        ${scoreHtml} <div class="team-name right">${m.team_b||'TBA'}</div> </div> <div class="pred-bottom">${resultHtml}${bottomRight}</div>`;
+    con.appendChild(card);
+  });
+}
+
+async function savePred(mid){
+  if(!currentUser && typeof ssClient !== 'undefined'){
+    try{ const {data:{session}}=await ssClient.auth.getSession(); if(session){currentUser=session.user;accessToken=session.access_token;} }catch(e){}
+  }
+  if(!currentUser && typeof ssUser !== 'undefined' && ssUser) currentUser=ssUser;
+  if(!currentUser){showToast('Sign in first');return;}
+  const a=parseInt(document.getElementById('sa-'+mid)?.value??'');
+  const b=parseInt(document.getElementById('sb-'+mid)?.value??'');
+  if(isNaN(a)||isNaN(b)||a<0||b<0){showToast('Enter valid scores');return;}
+  try{
+    const r=await fetch(`${SS_URL}/rest/v1/wc_predictor_picks`,{
+      method:'POST',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+accessToken,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},
+      body:JSON.stringify({user_id:currentUser.id,match_id:mid,pred_a:a,pred_b:b})
+    });
+    if(r.ok){
+      userPreds[mid]={match_id:mid,pred_a:a,pred_b:b,points:0};
+      renderMatches();updateScoreBar();showToast('✓ Prediction saved');
+    } else showToast('Error — try again');
+  }catch(e){showToast('Error — try again');}
+}
+
+function updateScoreBar(){
+  const total=Object.values(userPreds).reduce((s,p)=>s+(p.points||0),0);
+  const n=Object.keys(userPreds).length;
+  document.getElementById('total-pts').textContent=total;
+  document.getElementById('pred-made').textContent=n;
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.className='toast show';
+  setTimeout(()=>t.className='toast',2500);
+}
+
+init();
+setTimeout(function(){
+  if(typeof ssClient !== 'undefined'){
+    ssClient.auth.onAuthStateChange(function(_e,session){
+      if(session && !currentUser){
+        currentUser=session.user; accessToken=session.access_token;
+        loadSession();
+      }
+    });
+  }
+},100);
+</script>
+</body>
+</html>

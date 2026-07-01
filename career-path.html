@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Career Path — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/career-path.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>Career Path – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#04080f;--sf:#080f1c;--sf2:#0d1829;--gold:#f5c842;--text:#e8f0fe;--mut:#6b8abf;--dim:#1e3355;--bd:#0d2040;--brt:#1a3a6a;--green:#22c55e;--gbg:rgba(34,197,94,.12);--gbd:rgba(34,197,94,.4);--rbg:rgba(239,68,68,.08);--rbd:rgba(239,68,68,.3)}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:520px;margin:0 auto;padding:20px 16px 80px}
+.hdr{text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--bd)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+.ttl{font-family:'Barlow Condensed',sans-serif;font-size:clamp(32px,8vw,52px);font-weight:900;text-transform:uppercase;color:var(--gold)}
+.date-lbl{font-size:12px;color:var(--dim);margin-top:3px}
+.path-wrap{margin-bottom:18px}
+.path-item{display:flex;align-items:stretch;margin-bottom:0}
+.path-left{display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0}
+.path-dot{width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);flex-shrink:0;margin-top:18px;z-index:1}
+.path-dot.dim{background:var(--dim);border-color:var(--dim)}
+.path-line{flex:1;width:2px;background:var(--brt);margin:0 auto}
+.path-line.dim{background:var(--dim);opacity:.3}
+.path-card{flex:1;background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:11px 14px;margin:6px 0 6px 8px;transition:all .3s}
+.path-card.on{border-color:var(--brt);animation:sIn .3s ease}
+.path-card.off{opacity:.35;border-style:dashed}
+.club-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;color:var(--text);margin-bottom:2px}
+.club-years{font-size:13px;color:var(--mut)}
+.path-card.off .club-name{color:var(--dim);font-size:13px;font-weight:500}
+@keyframes sIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.status{font-size:11px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;text-align:center}
+.guesses{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.grow{display:flex;align-items:center;gap:10px;padding:8px 13px;border-radius:8px;border:1px solid;animation:pop .18s ease}
+.grow.ok{background:var(--gbg);border-color:var(--gbd)}.grow.no{background:var(--rbg);border-color:var(--rbd)}
+.gico{font-size:13px}.gnm{font-size:14px;font-weight:600}
+.grow.ok .gnm{color:#86efac}.grow.no .gnm{color:#fca5a5}
+@keyframes pop{from{transform:translateX(-5px);opacity:0}to{transform:translateX(0);opacity:1}}
+.pips{display:flex;justify-content:center;gap:7px;margin-bottom:14px}
+.pip{width:10px;height:10px;border-radius:50%;background:var(--dim);transition:background .25s}
+.pip.ok{background:var(--green)}.pip.no{background:#ef4444}
+.iwrap{position:relative}
+.ginput{width:100%;font-family:'Barlow',sans-serif;font-size:16px;font-weight:500;padding:12px 16px;border:2px solid var(--brt);border-radius:12px;background:var(--sf2);color:var(--text);outline:none;transition:border-color .2s}
+.ginput:focus{border-color:var(--gold)}.ginput:disabled{opacity:.38;cursor:not-allowed}
+.sbox{position:absolute;top:100%;left:0;right:0;z-index:50;background:var(--sf);border:1px solid var(--brt);border-radius:10px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.si{padding:9px 15px;font-size:14px;font-weight:500;color:var(--text);cursor:pointer;border-bottom:1px solid var(--bd)}
+.si:last-child{border-bottom:none}.si:hover{background:var(--sf2);color:var(--gold)}
+.rbox{border-radius:14px;padding:20px;text-align:center;margin-top:16px;border:1px solid}
+.rbox.win{border-color:var(--gbd);background:var(--gbg)}.rbox.lose{border-color:var(--rbd);background:var(--rbg)}
+.ricon{font-size:40px;margin-bottom:6px}
+.rtitle{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:4px}
+.rbox.win .rtitle{color:#86efac}.rbox.lose .rtitle{color:#fca5a5}
+.rsub{font-size:13px;color:var(--mut);line-height:1.6;margin-bottom:12px}.rsub b{color:var(--text)}
+.sbtn{padding:9px 22px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--brt);background:transparent;color:var(--text)}
+.back{display:block;text-align:center;margin-top:16px;font-size:12px;color:var(--mut);text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+.back:hover{color:var(--gold)}
+nav{position:sticky;to
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+p:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+</head><body>
+<div class="page">
+  <div class="hdr">
+    <div class="eyebrow">Daily Game</div>
+    <div class="ttl">Career Path</div>
+    <div class="date-lbl" id="date-lbl"></div>
+  </div>
+  <div class="path-wrap" id="path-wrap"></div>
+  <div class="status" id="status"></div>
+  <div class="guesses" id="guesses"></div>
+  <div class="pips" id="pips">
+    <div class="pip" id="p0"></div><div class="pip" id="p1"></div>
+    <div class="pip" id="p2"></div><div class="pip" id="p3"></div>
+    <div class="pip" id="p4"></div><div class="pip" id="p5"></div>
+  </div>
+  <div class="iwrap" id="iwrap">
+    <input id="ginput" class="ginput" type="text" placeholder="Name the footballer…" autocomplete="off" spellcheck="false"/>
+    <div id="sbox" class="sbox" style="display:none"></div>
+  </div>
+  <div id="rarea"></div>
+  <a class="back" href="index.html">← Back to all games</a>
+</div>
+<script>
+const PLAYERS=[
+  {name:"Alan Shearer",acc:["shearer", "alan shearer"],clubs:[{"c": "Southampton", "y": "1988\u201392"}, {"c": "Blackburn Rovers", "y": "1992\u201396"}, {"c": "Newcastle United", "y": "1996\u20132006"}]},
+  {name:"Wayne Rooney",acc:["rooney", "wayne rooney"],clubs:[{"c": "Everton", "y": "2002\u201304"}, {"c": "Manchester United", "y": "2004\u201317"}, {"c": "Everton", "y": "2017\u201318"}, {"c": "DC United", "y": "2018\u201319"}, {"c": "Derby County", "y": "2019\u201321"}]},
+  {name:"Cristiano Ronaldo",acc:["ronaldo", "cristiano ronaldo", "cr7"],clubs:[{"c": "Sporting CP", "y": "2001\u201303"}, {"c": "Manchester United", "y": "2003\u201309"}, {"c": "Real Madrid", "y": "2009\u201318"}, {"c": "Juventus", "y": "2018\u201321"}, {"c": "Manchester United", "y": "2021\u201322"}, {"c": "Al-Nassr", "y": "2023\u2013"}]},
+  {name:"Lionel Messi",acc:["messi", "lionel messi", "leo messi"],clubs:[{"c": "Barcelona", "y": "2004\u201321"}, {"c": "Paris Saint-Germain", "y": "2021\u201323"}, {"c": "Inter Miami", "y": "2023\u2013"}]},
+  {name:"Thierry Henry",acc:["henry", "thierry henry"],clubs:[{"c": "AS Monaco", "y": "1994\u201399"}, {"c": "Juventus", "y": "1999"}, {"c": "Arsenal", "y": "1999\u20132007"}, {"c": "Barcelona", "y": "2007\u201310"}, {"c": "New York Red Bulls", "y": "2010\u201314"}]},
+  {name:"Steven Gerrard",acc:["gerrard", "steven gerrard"],clubs:[{"c": "Liverpool", "y": "1998\u20132015"}, {"c": "LA Galaxy", "y": "2015\u201316"}]},
+  {name:"Frank Lampard",acc:["lampard", "frank lampard"],clubs:[{"c": "West Ham United", "y": "1995\u20132001"}, {"c": "Chelsea", "y": "2001\u201314"}, {"c": "Manchester City", "y": "2014\u201315"}, {"c": "New York City FC", "y": "2015\u201316"}]},
+  {name:"Patrick Vieira",acc:["vieira", "patrick vieira"],clubs:[{"c": "Cannes", "y": "1993\u201395"}, {"c": "AC Milan", "y": "1995\u201396"}, {"c": "Arsenal", "y": "1996\u20132005"}, {"c": "Juventus", "y": "2005\u201306"}, {"c": "Inter Milan", "y": "2006\u201310"}, {"c": "Manchester City", "y": "2010\u201311"}, {"c": "New York Red Bulls", "y": "2011\u201313"}]},
+  {name:"David Beckham",acc:["beckham", "david beckham"],clubs:[{"c": "Manchester United", "y": "1992\u20132003"}, {"c": "Real Madrid", "y": "2003\u201307"}, {"c": "LA Galaxy", "y": "2007\u201313"}, {"c": "AC Milan", "y": "2009\u201310"}, {"c": "Paris Saint-Germain", "y": "2013"}]},
+  {name:"Zinedine Zidane",acc:["zidane", "zinedine zidane", "zizou"],clubs:[{"c": "Cannes", "y": "1988\u201392"}, {"c": "Bordeaux", "y": "1992\u201396"}, {"c": "Juventus", "y": "1996\u20132001"}, {"c": "Real Madrid", "y": "2001\u201306"}]},
+  {name:"Fernando Torres",acc:["torres", "fernando torres", "el nino"],clubs:[{"c": "Atletico Madrid", "y": "2001\u201307"}, {"c": "Liverpool", "y": "2007\u201311"}, {"c": "Chelsea", "y": "2011\u201315"}, {"c": "Atletico Madrid", "y": "2014\u201315"}, {"c": "AC Milan", "y": "2014\u201315"}, {"c": "Sagan Tosu", "y": "2018"}]},
+  {name:"Luis Suarez",acc:["suarez", "luis suarez"],clubs:[{"c": "Nacional", "y": "2005\u201306"}, {"c": "FC Groningen", "y": "2006\u201307"}, {"c": "Ajax", "y": "2007\u201311"}, {"c": "Liverpool", "y": "2011\u201314"}, {"c": "Barcelona", "y": "2014\u201320"}, {"c": "Atletico Madrid", "y": "2020\u201322"}, {"c": "Inter Miami", "y": "2024"}]},
+  {name:"Didier Drogba",acc:["drogba", "didier drogba"],clubs:[{"c": "Le Mans", "y": "1999\u20132002"}, {"c": "Guingamp", "y": "2002\u201303"}, {"c": "Marseille", "y": "2003\u201304"}, {"c": "Chelsea", "y": "2004\u201312"}, {"c": "Shanghai Shenhua", "y": "2012\u201313"}, {"c": "Galatasaray", "y": "2013\u201314"}, {"c": "Chelsea", "y": "2014\u201315"}, {"c": "Montreal Impact", "y": "2015\u201316"}]},
+  {name:"Ruud van Nistelrooy",acc:["van nistelrooy", "ruud van nistelrooy", "rvn"],clubs:[{"c": "Den Bosch", "y": "1993\u201397"}, {"c": "Heerenveen", "y": "1997\u201398"}, {"c": "PSV Eindhoven", "y": "1998\u20132001"}, {"c": "Manchester United", "y": "2001\u201306"}, {"c": "Real Madrid", "y": "2006\u201310"}, {"c": "Hamburg", "y": "2010\u201312"}, {"c": "Malaga", "y": "2012\u201313"}]},
+  {name:"Michael Owen",acc:["owen", "michael owen"],clubs:[{"c": "Liverpool", "y": "1996\u20132004"}, {"c": "Real Madrid", "y": "2004\u201305"}, {"c": "Newcastle United", "y": "2005\u201309"}, {"c": "Manchester United", "y": "2009\u201312"}, {"c": "Stoke City", "y": "2012\u201313"}]},
+  {name:"Peter Schmeichel",acc:["schmeichel", "peter schmeichel"],clubs:[{"c": "Hvidovre IF", "y": "1984\u201387"}, {"c": "Brondby", "y": "1987\u201391"}, {"c": "Manchester United", "y": "1991\u201399"}, {"c": "Sporting CP", "y": "1999\u20132001"}, {"c": "Aston Villa", "y": "2001\u201302"}, {"c": "Manchester City", "y": "2002\u201303"}]},
+  {name:"Rio Ferdinand",acc:["ferdinand", "rio ferdinand"],clubs:[{"c": "West Ham United", "y": "1995\u20132000"}, {"c": "Leeds United", "y": "2000\u201302"}, {"c": "Manchester United", "y": "2002\u201314"}, {"c": "QPR", "y": "2014\u201315"}]},
+  {name:"John Terry",acc:["terry", "john terry"],clubs:[{"c": "Chelsea", "y": "1998\u20132017"}, {"c": "Aston Villa", "y": "2017\u201318"}]},
+  {name:"Ashley Cole",acc:["cole", "ashley cole"],clubs:[{"c": "Arsenal", "y": "1999\u20132006"}, {"c": "Chelsea", "y": "2006\u201314"}, {"c": "Roma", "y": "2014\u201315"}, {"c": "LA Galaxy", "y": "2016\u201317"}, {"c": "Derby County", "y": "2019"}]},
+  {name:"Robbie Fowler",acc:["fowler", "robbie fowler"],clubs:[{"c": "Liverpool", "y": "1993\u20132001"}, {"c": "Leeds United", "y": "2001\u201303"}, {"c": "Manchester City", "y": "2003\u201306"}, {"c": "Liverpool", "y": "2006\u201307"}, {"c": "Cardiff City", "y": "2007\u201308"}, {"c": "Blackburn Rovers", "y": "2008\u201309"}]},
+  {name:"Dennis Bergkamp",acc:["bergkamp", "dennis bergkamp"],clubs:[{"c": "Ajax", "y": "1986\u201393"}, {"c": "Inter Milan", "y": "1993\u201395"}, {"c": "Arsenal", "y": "1995\u20132006"}]},
+  {name:"Roy Keane",acc:["keane", "roy keane"],clubs:[{"c": "Cobh Ramblers", "y": "1989\u201390"}, {"c": "Nottingham Forest", "y": "1990\u201393"}, {"c": "Manchester United", "y": "1993\u20132005"}, {"c": "Celtic", "y": "2005\u201306"}]},
+  {name:"Gianfranco Zola",acc:["zola", "gianfranco zola"],clubs:[{"c": "Nuorese", "y": "1984\u201386"}, {"c": "Torres", "y": "1986\u201389"}, {"c": "Napoli", "y": "1989\u201393"}, {"c": "Parma", "y": "1993\u201396"}, {"c": "Chelsea", "y": "1996\u20132003"}, {"c": "Cagliari", "y": "2003\u201305"}]},
+  {name:"Robert Lewandowski",acc:["lewandowski", "robert lewandowski"],clubs:[{"c": "Znicz Pruszkow", "y": "2006\u201308"}, {"c": "Lech Poznan", "y": "2008\u201310"}, {"c": "Borussia Dortmund", "y": "2010\u201314"}, {"c": "Bayern Munich", "y": "2014\u201322"}, {"c": "Barcelona", "y": "2022\u2013"}]},
+  {name:"Harry Kane",acc:["kane", "harry kane"],clubs:[{"c": "Tottenham Hotspur", "y": "2009\u201323"}, {"c": "Bayern Munich", "y": "2023\u2013"}]},
+  {name:"Mohamed Salah",acc:["salah", "mohamed salah"],clubs:[{"c": "Al Mokawloon", "y": "2010\u201312"}, {"c": "Basel", "y": "2012\u201314"}, {"c": "Chelsea", "y": "2014\u201316"}, {"c": "Fiorentina", "y": "2015"}, {"c": "Roma", "y": "2016\u201317"}, {"c": "Liverpool", "y": "2017\u2013"}]},
+  {name:"Gareth Bale",acc:["bale", "gareth bale"],clubs:[{"c": "Southampton", "y": "2006\u201307"}, {"c": "Tottenham Hotspur", "y": "2007\u201313"}, {"c": "Real Madrid", "y": "2013\u201322"}, {"c": "Tottenham Hotspur", "y": "2020\u201321"}, {"c": "Cardiff City", "y": "2022\u201323"}]},
+  {name:"Zlatan Ibrahimovic",acc:["ibrahimovic", "zlatan ibrahimovic", "zlatan"],clubs:[{"c": "Malmo FF", "y": "1999\u20132001"}, {"c": "Ajax", "y": "2001\u201304"}, {"c": "Juventus", "y": "2004\u201306"}, {"c": "Inter Milan", "y": "2006\u201309"}, {"c": "Barcelona", "y": "2009\u201310"}, {"c": "AC Milan", "y": "2010\u201312"}, {"c": "Paris Saint-Germain", "y": "2012\u201316"}, {"c": "Manchester United", "y": "2016\u201318"}, {"c": "LA Galaxy", "y": "2018\u201319"}, {"c": "AC Milan", "y": "2020\u201323"}]},
+  {name:"Andrea Pirlo",acc:["pirlo", "andrea pirlo"],clubs:[{"c": "Brescia", "y": "1995\u20132001"}, {"c": "Inter Milan", "y": "2001\u201302"}, {"c": "AC Milan", "y": "2001\u201311"}, {"c": "Juventus", "y": "2011\u201315"}, {"c": "New York City FC", "y": "2015\u201317"}]},
+  {name:"Nicolas Anelka",acc:["anelka", "nicolas anelka"],clubs:[{"c": "Paris Saint-Germain", "y": "1995\u201397"}, {"c": "Arsenal", "y": "1997\u201399"}, {"c": "Real Madrid", "y": "1999\u20132000"}, {"c": "Paris Saint-Germain", "y": "2000\u201302"}, {"c": "Liverpool", "y": "2001\u201302"}, {"c": "Manchester City", "y": "2002\u201305"}, {"c": "Fenerbahce", "y": "2005\u201306"}, {"c": "Bolton Wanderers", "y": "2006\u201308"}, {"c": "Chelsea", "y": "2008\u201312"}, {"c": "West Brom", "y": "2013\u201314"}]},
+  {name:"Sol Campbell",acc:["campbell", "sol campbell"],clubs:[{"c": "Tottenham Hotspur", "y": "1992\u20132001"}, {"c": "Arsenal", "y": "2001\u201306"}, {"c": "Portsmouth", "y": "2006\u201309"}, {"c": "Notts County", "y": "2009"}, {"c": "Arsenal", "y": "2009\u201310"}, {"c": "Newcastle United", "y": "2010"}, {"c": "Leicester City", "y": "2011"}]},
+  {name:"Eric Cantona",acc:["cantona", "eric cantona"],clubs:[{"c": "Auxerre", "y": "1983\u201388"}, {"c": "Marseille", "y": "1988\u201391"}, {"c": "Nimes", "y": "1991\u201392"}, {"c": "Leeds United", "y": "1992"}, {"c": "Manchester United", "y": "1992\u201397"}]},
+  {name:"Paul Gascoigne",acc:["gascoigne", "paul gascoigne", "gazza"],clubs:[{"c": "Newcastle United", "y": "1985\u201388"}, {"c": "Tottenham Hotspur", "y": "1988\u201392"}, {"c": "Lazio", "y": "1992\u201395"}, {"c": "Rangers", "y": "1995\u201398"}, {"c": "Middlesbrough", "y": "1998\u20132000"}, {"c": "Everton", "y": "2000\u201302"}, {"c": "Burnley", "y": "2002"}]},
+  {name:"Dennis Wise",acc:["wise", "dennis wise"],clubs:[{"c": "Southampton", "y": "1985\u201390"}, {"c": "Wimbledon", "y": "1990\u201390"}, {"c": "Chelsea", "y": "1990\u20132001"}, {"c": "Leicester City", "y": "2001\u201302"}, {"c": "Millwall", "y": "2002\u201306"}]},
+  {name:"Ronaldo",acc:["r9", "ronaldo nazario", "el fenomeno"],clubs:[{"c": "Cruzeiro", "y": "1993\u201394"}, {"c": "PSV Eindhoven", "y": "1994\u201396"}, {"c": "Barcelona", "y": "1996\u201397"}, {"c": "Inter Milan", "y": "1997\u20132002"}, {"c": "Real Madrid", "y": "2002\u201307"}, {"c": "AC Milan", "y": "2007\u201308"}, {"c": "Corinthians", "y": "2009\u201311"}]},
+  {name:"Ronaldinho",acc:["ronaldinho"],clubs:[{"c": "Gremio", "y": "1998\u20132001"}, {"c": "Paris Saint-Germain", "y": "2001\u201303"}, {"c": "Barcelona", "y": "2003\u201308"}, {"c": "AC Milan", "y": "2008\u201310"}, {"c": "Flamengo", "y": "2011\u201312"}, {"c": "Atletico Mineiro", "y": "2012\u201314"}, {"c": "Queretaro", "y": "2014\u201315"}, {"c": "Fluminense", "y": "2015"}]},
+  {name:"Kaka",acc:["kaka"],clubs:[{"c": "Sao Paulo", "y": "2001\u201303"}, {"c": "AC Milan", "y": "2003\u201309"}, {"c": "Real Madrid", "y": "2009\u201313"}, {"c": "AC Milan", "y": "2013\u201314"}, {"c": "Orlando City", "y": "2014\u201317"}]},
+  {name:"Alessandro Del Piero",acc:["del piero", "alessandro del piero"],clubs:[{"c": "Juventus", "y": "1993\u20132012"}, {"c": "Sydney FC", "y": "2012\u201314"}, {"c": "Delhi Dynamos", "y": "2014"}]},
+  {name:"Andriy Shevchenko",acc:["shevchenko", "andriy shevchenko"],clubs:[{"c": "Dynamo Kyiv", "y": "1994\u201399"}, {"c": "AC Milan", "y": "1999\u20132006"}, {"c": "Chelsea", "y": "2006\u201308"}, {"c": "AC Milan", "y": "2008\u201309"}, {"c": "Dynamo Kyiv", "y": "2009\u201312"}]},
+  {name:"Cafu",acc:["cafu"],clubs:[{"c": "Sao Paulo", "y": "1990\u201394"}, {"c": "Real Zaragoza", "y": "1994\u201395"}, {"c": "Palmeiras", "y": "1995\u201397"}, {"c": "Roma", "y": "1997\u20132003"}, {"c": "AC Milan", "y": "2003\u201308"}]},
+  {name:"Roberto Carlos",acc:["roberto carlos"],clubs:[{"c": "Palmeiras", "y": "1992\u201395"}, {"c": "Internazionale", "y": "1995\u201396"}, {"c": "Real Madrid", "y": "1996\u20132007"}, {"c": "Fenerbahce", "y": "2007\u201309"}, {"c": "Corinthians", "y": "2010"}, {"c": "Anzhi", "y": "2012\u201313"}]},
+  {name:"Les Ferdinand",acc:["ferdinand", "les ferdinand"],clubs:[{"c": "Queens Park Rangers", "y": "1987\u201395"}, {"c": "Newcastle United", "y": "1995\u201397"}, {"c": "Tottenham Hotspur", "y": "1997\u20132003"}, {"c": "West Ham United", "y": "2003\u201304"}, {"c": "Leicester City", "y": "2004\u201305"}, {"c": "Bolton Wanderers", "y": "2004\u201306"}]},
+  {name:"Dwight Yorke",acc:["yorke", "dwight yorke"],clubs:[{"c": "Aston Villa", "y": "1989\u201398"}, {"c": "Manchester United", "y": "1998\u20132002"}, {"c": "Blackburn Rovers", "y": "2002\u201304"}, {"c": "Birmingham City", "y": "2004\u201305"}, {"c": "Sunderland", "y": "2005\u201309"}]},
+  {name:"Andy Cole",acc:["cole", "andy cole", "andrew cole"],clubs:[{"c": "Arsenal", "y": "1990\u201392"}, {"c": "Bristol City", "y": "1992"}, {"c": "Newcastle United", "y": "1992\u201395"}, {"c": "Manchester United", "y": "1995\u20132001"}, {"c": "Blackburn Rovers", "y": "2001\u201304"}, {"c": "Fulham", "y": "2004\u201306"}, {"c": "Manchester City", "y": "2005\u201306"}, {"c": "Portsmouth", "y": "2006\u201308"}, {"c": "Sunderland", "y": "2007\u201308"}]},
+  {name:"Teddy Sheringham",acc:["sheringham", "teddy sheringham"],clubs:[{"c": "Millwall", "y": "1984\u201391"}, {"c": "Nottingham Forest", "y": "1991\u201392"}, {"c": "Tottenham Hotspur", "y": "1992\u201397"}, {"c": "Manchester United", "y": "1997\u20132001"}, {"c": "Tottenham Hotspur", "y": "2001\u201303"}, {"c": "Portsmouth", "y": "2003\u201304"}, {"c": "West Ham United", "y": "2004\u201306"}]},
+  {name:"Dimitar Berbatov",acc:["berbatov", "dimitar berbatov"],clubs:[{"c": "CSKA Sofia", "y": "1998\u20132001"}, {"c": "Bayer Leverkusen", "y": "2001\u201306"}, {"c": "Tottenham Hotspur", "y": "2006\u201308"}, {"c": "Manchester United", "y": "2008\u201312"}, {"c": "Fulham", "y": "2012\u201314"}, {"c": "Monaco", "y": "2014\u201315"}, {"c": "PAOK", "y": "2015\u201316"}]},
+  {name:"Robbie Keane",acc:["keane", "robbie keane"],clubs:[{"c": "Wolverhampton Wanderers", "y": "1997\u201399"}, {"c": "Coventry City", "y": "1999\u20132000"}, {"c": "Inter Milan", "y": "2000\u201301"}, {"c": "Leeds United", "y": "2001\u201302"}, {"c": "Tottenham Hotspur", "y": "2002\u201308"}, {"c": "Liverpool", "y": "2008\u201309"}, {"c": "Tottenham Hotspur", "y": "2009\u201311"}, {"c": "LA Galaxy", "y": "2011\u201316"}]},
+  {name:"Jamie Vardy",acc:["vardy", "jamie vardy"],clubs:[{"c": "Sheffield Wednesday", "y": "2008\u201310"}, {"c": "Stocksbridge Park Steels", "y": "2010\u201312"}, {"c": "FC Halifax Town", "y": "2012"}, {"c": "Fleetwood Town", "y": "2012"}, {"c": "Leicester City", "y": "2012\u201324"}]},
+  {name:"Riyad Mahrez",acc:["mahrez", "riyad mahrez"],clubs:[{"c": "AAS Sarcelles", "y": "2009\u201310"}, {"c": "Quimper", "y": "2010\u201314"}, {"c": "Leicester City", "y": "2014\u201318"}, {"c": "Manchester City", "y": "2018\u201323"}, {"c": "Al-Ahli", "y": "2023\u2013"}]},
+  {name:"N'Golo Kante",acc:["kante", "ngolo kante"],clubs:[{"c": "Boulogne", "y": "2012\u201313"}, {"c": "Caen", "y": "2013\u201315"}, {"c": "Leicester City", "y": "2015\u201316"}, {"c": "Chelsea", "y": "2016\u201323"}, {"c": "Al-Ittihad", "y": "2023\u2013"}]},
+  {name:"Luka Modric",acc:["modric", "luka modric"],clubs:[{"c": "Dinamo Zagreb", "y": "2002\u201308"}, {"c": "Tottenham Hotspur", "y": "2008\u201312"}, {"c": "Real Madrid", "y": "2012\u2013"}]},
+  {name:"Sergio Aguero",acc:["aguero", "sergio aguero", "kun aguero"],clubs:[{"c": "Independiente", "y": "2003\u201306"}, {"c": "Atletico Madrid", "y": "2006\u201311"}, {"c": "Manchester City", "y": "2011\u201321"}, {"c": "Barcelona", "y": "2021"}]},
+  {name:"Eden Hazard",acc:["hazard", "eden hazard"],clubs:[{"c": "Lille", "y": "2007\u201312"}, {"c": "Chelsea", "y": "2012\u201319"}, {"c": "Real Madrid", "y": "2019\u201323"}]},
+  {name:"Neymar",acc:["neymar", "neymar jr"],clubs:[{"c": "Santos", "y": "2009\u201313"}, {"c": "Barcelona", "y": "2013\u201317"}, {"c": "Paris Saint-Germain", "y": "2017\u201323"}, {"c": "Al-Hilal", "y": "2023\u201324"}, {"c": "Santos", "y": "2025"}]},
+  {name:"Kylian Mbappe",acc:["mbappe", "kylian mbappe"],clubs:[{"c": "AS Monaco", "y": "2015\u201317"}, {"c": "Paris Saint-Germain", "y": "2017\u201324"}, {"c": "Real Madrid", "y": "2024\u2013"}]},
+  {name:"Sadio Mane",acc:["mane", "sadio mane"],clubs:[{"c": "Generation Foot", "y": "2011\u201312"}, {"c": "Metz", "y": "2012\u201314"}, {"c": "Red Bull Salzburg", "y": "2012\u201314"}, {"c": "Southampton", "y": "2014\u201316"}, {"c": "Liverpool", "y": "2016\u201322"}, {"c": "Bayern Munich", "y": "2022\u201323"}, {"c": "Al-Nassr", "y": "2023\u2013"}]},
+  {name:"Virgil van Dijk",acc:["van dijk", "virgil van dijk"],clubs:[{"c": "Groningen", "y": "2010\u201313"}, {"c": "Celtic", "y": "2013\u201315"}, {"c": "Southampton", "y": "2015\u201318"}, {"c": "Liverpool", "y": "2018\u2013"}]},
+  {name:"Kevin De Bruyne",acc:["de bruyne", "kevin de bruyne", "kdb"],clubs:[{"c": "Genk", "y": "2008\u201312"}, {"c": "Chelsea", "y": "2012\u201314"}, {"c": "Werder Bremen", "y": "2012\u201313"}, {"c": "Wolfsburg", "y": "2014\u201315"}, {"c": "Manchester City", "y": "2015\u2013"}]},
+  {name:"Paul Scholes",acc:["scholes", "paul scholes"],clubs:[{"c": "Manchester United", "y": "1993\u20132013"}]},
+  {name:"Hernan Crespo",acc:["crespo", "hernan crespo"],clubs:[{"c": "River Plate", "y": "1993\u201396"}, {"c": "Parma", "y": "1996\u20132000"}, {"c": "SS Lazio", "y": "2000\u201302"}, {"c": "Inter Milan", "y": "2002\u201304"}, {"c": "Chelsea", "y": "2003\u201304"}, {"c": "AC Milan", "y": "2004\u201308"}, {"c": "Inter Milan", "y": "2008\u201309"}, {"c": "Genoa", "y": "2009"}, {"c": "Parma", "y": "2010\u201312"}]},
+  {name:"Peter Beardsley",acc:["beardsley", "peter beardsley"],clubs:[{"c": "Carlisle United", "y": "1979\u201382"}, {"c": "Vancouver Whitecaps", "y": "1981\u201382"}, {"c": "Manchester United", "y": "1982\u201383"}, {"c": "Newcastle United", "y": "1983\u201387"}, {"c": "Liverpool", "y": "1987\u201391"}, {"c": "Everton", "y": "1991\u201393"}, {"c": "Newcastle United", "y": "1993\u201397"}, {"c": "Bolton Wanderers", "y": "1997\u201398"}, {"c": "Manchester City", "y": "1998"}]},
+  {name:"Jimmy Floyd Hasselbaink",acc:["hasselbaink", "jimmy floyd hasselbaink"],clubs:[{"c": "Telstar", "y": "1990\u201395"}, {"c": "Campomaiorense", "y": "1995\u201396"}, {"c": "Leeds United", "y": "1997\u201399"}, {"c": "Atletico Madrid", "y": "1999\u20132000"}, {"c": "Chelsea", "y": "2000\u201304"}, {"c": "Middlesbrough", "y": "2004\u201306"}, {"c": "Charlton Athletic", "y": "2006\u201307"}]},
+  {name:"Marco van Basten",acc:["van basten", "marco van basten"],clubs:[{"c": "Ajax", "y": "1981\u201387"}, {"c": "AC Milan", "y": "1987\u201395"}]},
+  {name:"Xavi",acc:["xavi", "xavi hernandez"],clubs:[{"c": "Barcelona", "y": "1998\u20132015"}, {"c": "Al-Sadd", "y": "2015\u201319"}]},
+  {name:"Samuel Eto'o",acc:["eto'o", "samuel eto'o", "etoo", "samuel etoo"],clubs:[{"c": "Real Madrid", "y": "1997\u20132000"}, {"c": "Mallorca", "y": "2000\u201304"}, {"c": "Barcelona", "y": "2004\u201309"}, {"c": "Inter Milan", "y": "2009\u201311"}, {"c": "Anzhi Makhachkala", "y": "2011\u201313"}, {"c": "Chelsea", "y": "2013\u201314"}, {"c": "Everton", "y": "2014"}, {"c": "Sampdoria", "y": "2015"}]},
+  {name:"Filippo Inzaghi",acc:["inzaghi", "filippo inzaghi", "pippo inzaghi"],clubs:[{"c": "Piacenza", "y": "1991\u201395"}, {"c": "Parma", "y": "1995\u201396"}, {"c": "Atalanta", "y": "1996\u201397"}, {"c": "Juventus", "y": "1997\u20132001"}, {"c": "AC Milan", "y": "2001\u201312"}]},
+  {name:"Fabio Cannavaro",acc:["cannavaro", "fabio cannavaro"],clubs:[{"c": "Napoli", "y": "1993\u201395"}, {"c": "Parma", "y": "1995\u20132002"}, {"c": "Inter Milan", "y": "2002\u201304"}, {"c": "Juventus", "y": "2004\u201306"}, {"c": "Real Madrid", "y": "2006\u201309"}, {"c": "Juventus", "y": "2009\u201310"}, {"c": "Al-Ahli", "y": "2010\u201311"}]},
+  {name:"Dele Alli",acc:["alli", "dele alli"],clubs:[{"c": "MK Dons", "y": "2012\u201315"}, {"c": "Tottenham Hotspur", "y": "2015\u201322"}, {"c": "Paris Saint-Germain", "y": "2022"}, {"c": "Everton", "y": "2022\u201323"}, {"c": "Besiktas", "y": "2023"}]},
+  {name:"Christian Eriksen",acc:["eriksen", "christian eriksen"],clubs:[{"c": "Ajax", "y": "2010\u201313"}, {"c": "Tottenham Hotspur", "y": "2013\u201320"}, {"c": "Inter Milan", "y": "2020\u201321"}, {"c": "Brentford", "y": "2022"}, {"c": "Manchester United", "y": "2022\u201324"}]},
+  {name:"James Milner",acc:["milner", "james milner"],clubs:[{"c": "Leeds United", "y": "2002\u201304"}, {"c": "Newcastle United", "y": "2004\u201308"}, {"c": "Aston Villa", "y": "2008\u201310"}, {"c": "Manchester City", "y": "2010\u201315"}, {"c": "Liverpool", "y": "2015\u201323"}, {"c": "Brighton", "y": "2023\u201324"}]},
+  {name:"Peter Crouch",acc:["crouch", "peter crouch"],clubs:[{"c": "Tottenham Hotspur", "y": "1998\u20132000"}, {"c": "Aston Villa", "y": "2002\u201304"}, {"c": "Southampton", "y": "2004\u201305"}, {"c": "Liverpool", "y": "2005\u201308"}, {"c": "Portsmouth", "y": "2008\u201309"}, {"c": "Tottenham Hotspur", "y": "2009\u201311"}, {"c": "Stoke City", "y": "2011\u201319"}, {"c": "Burnley", "y": "2019"}]},
+  {name:"Emile Heskey",acc:["heskey", "emile heskey"],clubs:[{"c": "Leicester City", "y": "1994\u20132000"}, {"c": "Liverpool", "y": "2000\u201304"}, {"c": "Birmingham City", "y": "2004\u201306"}, {"c": "Wigan Athletic", "y": "2006\u201309"}, {"c": "Aston Villa", "y": "2009\u201312"}, {"c": "Bolton Wanderers", "y": "2012\u201313"}]},
+  {name:"Jermain Defoe",acc:["defoe", "jermain defoe"],clubs:[{"c": "West Ham United", "y": "2000\u201304"}, {"c": "Tottenham Hotspur", "y": "2004\u201308"}, {"c": "Portsmouth", "y": "2008\u201309"}, {"c": "Tottenham Hotspur", "y": "2009\u201314"}, {"c": "Toronto FC", "y": "2014\u201315"}, {"c": "Sunderland", "y": "2015\u201317"}, {"c": "Bournemouth", "y": "2017\u201319"}, {"c": "Rangers", "y": "2019\u201321"}]},
+  {name:"Emmanuel Petit",acc:["petit", "emmanuel petit"],clubs:[{"c": "AS Monaco", "y": "1988\u201397"}, {"c": "Arsenal", "y": "1997\u20132000"}, {"c": "Barcelona", "y": "2000\u201301"}, {"c": "Chelsea", "y": "2001\u201304"}]},
+  {name:"Marc Overmars",acc:["overmars", "marc overmars"],clubs:[{"c": "Go Ahead Eagles", "y": "1990\u201392"}, {"c": "Willem II", "y": "1992\u201393"}, {"c": "Ajax", "y": "1992\u201397"}, {"c": "Arsenal", "y": "1997\u20132000"}, {"c": "Barcelona", "y": "2000\u201304"}]},
+  {name:"Xabi Alonso",acc:["alonso", "xabi alonso"],clubs:[{"c": "Real Sociedad", "y": "2000\u201304"}, {"c": "Liverpool", "y": "2004\u201309"}, {"c": "Real Madrid", "y": "2009\u201314"}, {"c": "Bayern Munich", "y": "2014\u201317"}]},
+  {name:"Cesc Fabregas",acc:["fabregas", "cesc fabregas"],clubs:[{"c": "Arsenal", "y": "2003\u201311"}, {"c": "Barcelona", "y": "2011\u201314"}, {"c": "Chelsea", "y": "2014\u201319"}, {"c": "AS Monaco", "y": "2019\u201322"}, {"c": "Como", "y": "2022\u201324"}]},
+  {name:"Robin van Persie",acc:["van persie", "robin van persie", "rvp"],clubs:[{"c": "Feyenoord", "y": "2001\u201304"}, {"c": "Arsenal", "y": "2004\u201312"}, {"c": "Manchester United", "y": "2012\u201315"}, {"c": "Fenerbahce", "y": "2015\u201318"}, {"c": "Feyenoord", "y": "2018\u201319"}]},
+  {name:"David Silva",acc:["silva", "david silva", "el mago"],clubs:[{"c": "Valencia", "y": "2003\u201310"}, {"c": "Manchester City", "y": "2010\u201320"}, {"c": "Real Sociedad", "y": "2020\u201322"}]},
+  {name:"Yaya Toure",acc:["toure", "yaya toure"],clubs:[{"c": "ASEC Mimosas", "y": "2001\u201303"}, {"c": "Beveren", "y": "2003\u201305"}, {"c": "Metalurh Donetsk", "y": "2005\u201306"}, {"c": "Olympiacos", "y": "2006\u201307"}, {"c": "Monaco", "y": "2006\u201307"}, {"c": "Barcelona", "y": "2007\u201310"}, {"c": "Manchester City", "y": "2010\u201318"}]},
+  {name:"Vincent Kompany",acc:["kompany", "vincent kompany"],clubs:[{"c": "Anderlecht", "y": "2003\u201306"}, {"c": "Hamburg", "y": "2006\u201308"}, {"c": "Manchester City", "y": "2008\u201319"}, {"c": "Anderlecht", "y": "2019\u201321"}]},
+  {name:"Joe Hart",acc:["hart", "joe hart"],clubs:[{"c": "Shrewsbury Town", "y": "2004\u201306"}, {"c": "Manchester City", "y": "2006\u201317"}, {"c": "Birmingham City", "y": "2009\u201310"}, {"c": "Torquay United", "y": "2009"}, {"c": "Blackpool", "y": "2010"}, {"c": "Burnley", "y": "2016\u201317"}, {"c": "West Ham United", "y": "2017\u201318"}, {"c": "Burnley", "y": "2019\u201321"}, {"c": "Tottenham Hotspur", "y": "2021\u201323"}, {"c": "Celtic", "y": "2023\u201324"}]},
+  {name:"Pepe Reina",acc:["reina", "pepe reina"],clubs:[{"c": "Barcelona", "y": "2000\u201302"}, {"c": "Villarreal", "y": "2002\u201305"}, {"c": "Liverpool", "y": "2005\u201314"}, {"c": "Napoli", "y": "2013\u201314"}, {"c": "Bayern Munich", "y": "2014\u201315"}, {"c": "Napoli", "y": "2015\u201318"}, {"c": "AC Milan", "y": "2018\u201319"}, {"c": "Aston Villa", "y": "2019\u201321"}, {"c": "Lazio", "y": "2021\u201323"}]},
+  {name:"Trent Alexander-Arnold",acc:["alexander-arnold", "trent alexander-arnold", "taa"],clubs:[{"c": "Liverpool", "y": "2016\u201325"}, {"c": "Real Madrid", "y": "2025\u2013"}]},
+  {name:"Miroslav Klose",acc:["klose", "miroslav klose"],clubs:[{"c": "FC Kaiserslautern", "y": "1999\u20132004"}, {"c": "Werder Bremen", "y": "2004\u201307"}, {"c": "Bayern Munich", "y": "2007\u201311"}, {"c": "SS Lazio", "y": "2011\u201316"}]},
+  {name:"Rivaldo",acc:["rivaldo"],clubs:[{"c": "Mogi Mirim", "y": "1993\u201394"}, {"c": "Corinthians", "y": "1994\u201395"}, {"c": "Palmeiras", "y": "1994\u201396"}, {"c": "Deportivo La Coruna", "y": "1996\u201397"}, {"c": "Barcelona", "y": "1997\u20132002"}, {"c": "AC Milan", "y": "2002\u201303"}, {"c": "Cruzeiro", "y": "2004"}, {"c": "Olympiacos", "y": "2004\u201307"}]},
+  {name:"Luca Toni",acc:["toni", "luca toni"],clubs:[{"c": "Modena", "y": "1997\u20132002"}, {"c": "Palermo", "y": "2003\u201305"}, {"c": "Fiorentina", "y": "2005\u201307"}, {"c": "Bayern Munich", "y": "2007\u201310"}, {"c": "Roma", "y": "2010\u201311"}, {"c": "Juventus", "y": "2010\u201311"}, {"c": "Real Madrid", "y": "2012\u201313"}, {"c": "Hellas Verona", "y": "2014\u201316"}]},
+  {name:"David De Gea",acc:["de gea", "david de gea"],clubs:[{"c": "Atletico Madrid", "y": "2009\u201311"}, {"c": "Manchester United", "y": "2011\u201323"}, {"c": "Girona", "y": "2024\u2013"}]},
+  {name:"Deco",acc:["deco"],clubs:[{"c": "Benfica", "y": "1997\u201399"}, {"c": "Porto", "y": "1999\u20132004"}, {"c": "Barcelona", "y": "2004\u201308"}, {"c": "Chelsea", "y": "2008\u201310"}]},
+  {name:"Javier Zanetti",acc:["zanetti", "javier zanetti"],clubs:[{"c": "Talleres", "y": "1992\u201393"}, {"c": "Banfield", "y": "1993\u201395"}, {"c": "Inter Milan", "y": "1995\u20132014"}]},
+  {name:"Mesut Ozil",acc:["ozil", "mesut ozil"],clubs:[{"c": "Schalke 04", "y": "2006\u201308"}, {"c": "Werder Bremen", "y": "2008\u201310"}, {"c": "Real Madrid", "y": "2010\u201313"}, {"c": "Arsenal", "y": "2013\u201321"}, {"c": "Fenerbahce", "y": "2021\u201323"}]},
+  {name:"Edwin van der Sar",acc:["van der sar", "edwin van der sar"],clubs:[{"c": "Ajax", "y": "1990\u201399"}, {"c": "Juventus", "y": "1999\u20132001"}, {"c": "Fulham", "y": "2001\u201305"}, {"c": "Manchester United", "y": "2005\u201311"}]},
+  {name:"Carlos Tevez",acc:["tevez", "carlos tevez"],clubs:[{"c": "Boca Juniors", "y": "2001\u201305"}, {"c": "Corinthians", "y": "2005\u201306"}, {"c": "West Ham United", "y": "2006\u201307"}, {"c": "Manchester United", "y": "2007\u201309"}, {"c": "Manchester City", "y": "2009\u201313"}, {"c": "Juventus", "y": "2013\u201315"}, {"c": "Boca Juniors", "y": "2015\u201318"}]},
+  {name:"Thibaut Courtois",acc:["courtois", "thibaut courtois"],clubs:[{"c": "Genk", "y": "2009\u201311"}, {"c": "Chelsea", "y": "2011\u201312"}, {"c": "Bayer Leverkusen", "y": "2012\u201314"}, {"c": "Atletico Madrid", "y": "2014\u201318"}, {"c": "Real Madrid", "y": "2018\u2013"}]},
+  {name:"Thiago Silva",acc:["thiago silva", "silva"],clubs:[{"c": "Fluminense", "y": "2006\u201309"}, {"c": "Dynamo Moscow", "y": "2008\u201309"}, {"c": "AC Milan", "y": "2009\u201312"}, {"c": "Paris Saint-Germain", "y": "2012\u201320"}, {"c": "Chelsea", "y": "2020\u201324"}, {"c": "Fluminense", "y": "2024\u2013"}]},
+  {name:"Henrik Larsson",acc:["larsson", "henrik larsson"],clubs:[{"c": "Hogaborgs BK", "y": "1988\u201392"}, {"c": "Helsingborg", "y": "1992\u201393"}, {"c": "Feyenoord", "y": "1993\u201397"}, {"c": "Celtic", "y": "1997\u20132004"}, {"c": "Barcelona", "y": "2004\u201306"}, {"c": "Manchester United", "y": "2007"}, {"c": "Helsingborg", "y": "2006\u201309"}]},
+  {name:"Raphael Varane",acc:["varane", "raphael varane"],clubs:[{"c": "RC Lens", "y": "2009\u201311"}, {"c": "Real Madrid", "y": "2011\u201321"}, {"c": "Manchester United", "y": "2021\u201323"}, {"c": "Como", "y": "2024"}]},
+  {name:"Raheem Sterling",acc:["sterling", "raheem sterling"],clubs:[{"c": "Liverpool", "y": "2010\u201315"}, {"c": "Manchester City", "y": "2015\u201322"}, {"c": "Chelsea", "y": "2022\u201324"}, {"c": "Arsenal", "y": "2024\u2013"}]},
+  {name:"Ryan Giggs",acc:["giggs", "ryan giggs"],clubs:[{"c": "Manchester United", "y": "1990\u20132014"}]},
+  {name:"Ivan Rakitic",acc:["rakitic", "ivan rakitic"],clubs:[{"c": "Schalke 04", "y": "2005\u201311"}, {"c": "Sevilla", "y": "2011\u201314"}, {"c": "Barcelona", "y": "2014\u201320"}, {"c": "Sevilla", "y": "2020\u201322"}]},
+  {name:"Jan Oblak",acc:["oblak", "jan oblak"],clubs:[{"c": "Olimpija Ljubljana", "y": "2009\u201310"}, {"c": "Benfica", "y": "2010\u201314"}, {"c": "Atletico Madrid", "y": "2014\u2013"}]},
+  {name:"Alessandro Nesta",acc:["nesta", "alessandro nesta"],clubs:[{"c": "SS Lazio", "y": "1993\u20132002"}, {"c": "AC Milan", "y": "2002\u201312"}, {"c": "Montreal Impact", "y": "2012\u201313"}]},
+  {name:"Wesley Sneijder",acc:["sneijder", "wesley sneijder"],clubs:[{"c": "Ajax", "y": "2002\u201307"}, {"c": "Real Madrid", "y": "2007\u201309"}, {"c": "Inter Milan", "y": "2009\u201313"}, {"c": "Galatasaray", "y": "2013\u201317"}, {"c": "OGC Nice", "y": "2017\u201318"}, {"c": "Utrecht", "y": "2018\u201319"}]},
+  {name:"Raul Gonzalez",acc:["raul", "raul gonzalez"],clubs:[{"c": "Real Madrid", "y": "1994\u20132010"}, {"c": "Schalke 04", "y": "2010\u201312"}, {"c": "Al Sadd", "y": "2012\u201314"}, {"c": "New York Cosmos", "y": "2015\u201316"}]},
+  {name:"Bastian Schweinsteiger",acc:["schweinsteiger", "bastian schweinsteiger", "basti"],clubs:[{"c": "Bayern Munich", "y": "2002\u201315"}, {"c": "Manchester United", "y": "2015\u201317"}, {"c": "Chicago Fire", "y": "2017\u201319"}]},
+  {name:"Marcelo",acc:["marcelo"],clubs:[{"c": "Fluminense", "y": "2005\u201307"}, {"c": "Real Madrid", "y": "2007\u201322"}, {"c": "Olympiacos", "y": "2022\u201323"}, {"c": "Fluminense", "y": "2023\u2013"}]},
+  {name:"Paolo Maldini",acc:["maldini", "paolo maldini"],clubs:[{"c": "AC Milan", "y": "1985\u20132009"}]},
+  {name:"Nemanja Vidic",acc:["vidic", "nemanja vidic"],clubs:[{"c": "Red Star Belgrade", "y": "2000\u201304"}, {"c": "Spartak Moscow", "y": "2004\u201306"}, {"c": "Manchester United", "y": "2006\u201314"}, {"c": "Inter Milan", "y": "2014\u201316"}]},
+  {name:"David Villa",acc:["villa", "david villa", "el guaje"],clubs:[{"c": "Sporting Gijon", "y": "1999\u20132001"}, {"c": "Real Zaragoza", "y": "2001\u201303"}, {"c": "Valencia", "y": "2003\u201310"}, {"c": "Barcelona", "y": "2010\u201313"}, {"c": "Atletico Madrid", "y": "2013\u201314"}, {"c": "New York City FC", "y": "2014\u201318"}, {"c": "Vissel Kobe", "y": "2019"}]},
+  {name:"Angel Di Maria",acc:["di maria", "angel di maria"],clubs:[{"c": "Rosario Central", "y": "2005\u201307"}, {"c": "Benfica", "y": "2007\u201310"}, {"c": "Real Madrid", "y": "2010\u201314"}, {"c": "Manchester United", "y": "2014\u201315"}, {"c": "Paris Saint-Germain", "y": "2015\u201322"}, {"c": "Juventus", "y": "2022\u201324"}, {"c": "Benfica", "y": "2024\u2013"}]},
+  {name:"Michael Ballack",acc:["ballack", "michael ballack"],clubs:[{"c": "Chemnitzer FC", "y": "1995\u201397"}, {"c": "FC Kaiserslautern", "y": "1997\u201399"}, {"c": "Bayer Leverkusen", "y": "1999\u20132002"}, {"c": "Bayern Munich", "y": "2002\u201306"}, {"c": "Chelsea", "y": "2006\u201310"}, {"c": "Bayer Leverkusen", "y": "2010\u201312"}]},
+  {name:"Radamel Falcao",acc:["falcao", "radamel falcao", "el tigre"],clubs:[{"c": "River Plate", "y": "2005\u201309"}, {"c": "Porto", "y": "2009\u201311"}, {"c": "Atletico Madrid", "y": "2011\u201313"}, {"c": "Monaco", "y": "2013\u201319"}, {"c": "Manchester United", "y": "2014\u201315"}, {"c": "Chelsea", "y": "2015\u201316"}, {"c": "Galatasaray", "y": "2019\u201321"}]},
+  {name:"Antoine Griezmann",acc:["griezmann", "antoine griezmann"],clubs:[{"c": "Real Sociedad", "y": "2009\u201314"}, {"c": "Atletico Madrid", "y": "2014\u201319"}, {"c": "Barcelona", "y": "2019\u201321"}, {"c": "Atletico Madrid", "y": "2021\u2013"}]},
+  {name:"Petr Cech",acc:["cech", "petr cech"],clubs:[{"c": "Chmel Blsany", "y": "1999\u20132001"}, {"c": "Sparta Prague", "y": "2001\u201302"}, {"c": "Stade Rennes", "y": "2002\u201304"}, {"c": "Chelsea", "y": "2004\u201315"}, {"c": "Arsenal", "y": "2015\u201319"}]},
+  {name:"Pavel Nedved",acc:["nedved", "pavel nedved"],clubs:[{"c": "Dukla Prague", "y": "1991\u201392"}, {"c": "Sparta Prague", "y": "1992\u201396"}, {"c": "SS Lazio", "y": "1996\u20132001"}, {"c": "Juventus", "y": "2001\u201309"}]},
+  {name:"Carles Puyol",acc:["puyol", "carles puyol"],clubs:[{"c": "Barcelona", "y": "1999\u20132014"}]},
+  {name:"Toni Kroos",acc:["kroos", "toni kroos"],clubs:[{"c": "Bayern Munich", "y": "2007\u201314"}, {"c": "Bayer Leverkusen", "y": "2009\u201310"}, {"c": "Real Madrid", "y": "2014\u201324"}]},
+  {name:"Luis Figo",acc:["figo", "luis figo"],clubs:[{"c": "Sporting CP", "y": "1989\u201395"}, {"c": "Barcelona", "y": "1995\u20132000"}, {"c": "Real Madrid", "y": "2000\u201305"}, {"c": "Inter Milan", "y": "2005\u201309"}]},
+  {name:"Franck Ribery",acc:["ribery", "franck ribery"],clubs:[{"c": "Brest", "y": "2002\u201304"}, {"c": "Metz", "y": "2004\u201305"}, {"c": "Galatasaray", "y": "2005\u201306"}, {"c": "Marseille", "y": "2006\u201307"}, {"c": "Bayern Munich", "y": "2007\u201319"}, {"c": "Fiorentina", "y": "2019\u201321"}, {"c": "Salernitana", "y": "2021\u201323"}]},
+  {name:"Francesco Totti",acc:["totti", "francesco totti"],clubs:[{"c": "Roma", "y": "1992\u20132017"}]},
+  {name:"Gianluigi Buffon",acc:["buffon", "gianluigi buffon"],clubs:[{"c": "Parma", "y": "1991\u20132001"}, {"c": "Juventus", "y": "2001\u201318"}, {"c": "Paris Saint-Germain", "y": "2018\u201319"}, {"c": "Juventus", "y": "2019\u201321"}, {"c": "Parma", "y": "2021\u201323"}]},
+  {name:"Claude Makelele",acc:["makelele", "claude makelele"],clubs:[{"c": "Nantes", "y": "1992\u201397"}, {"c": "Marseille", "y": "1997\u201398"}, {"c": "Celta Vigo", "y": "1998\u20132000"}, {"c": "Real Madrid", "y": "2000\u201303"}, {"c": "Chelsea", "y": "2003\u201308"}, {"c": "Paris Saint-Germain", "y": "2008\u201311"}]},
+  {name:"Sergio Busquets",acc:["busquets", "sergio busquets"],clubs:[{"c": "Barcelona", "y": "2008\u201323"}, {"c": "Inter Miami", "y": "2023\u2013"}]},
+  {name:"Iker Casillas",acc:["casillas", "iker casillas"],clubs:[{"c": "Real Madrid", "y": "1999\u20132015"}, {"c": "Porto", "y": "2015\u201319"}]},
+  {name:"Gerard Pique",acc:["pique", "gerard pique"],clubs:[{"c": "Manchester United", "y": "2004\u201308"}, {"c": "Real Zaragoza", "y": "2006\u201307"}, {"c": "Barcelona", "y": "2008\u201322"}]},
+  {name:"Arjen Robben",acc:["robben", "arjen robben"],clubs:[{"c": "Groningen", "y": "2000\u201302"}, {"c": "PSV Eindhoven", "y": "2002\u201304"}, {"c": "Chelsea", "y": "2004\u201307"}, {"c": "Real Madrid", "y": "2007\u201309"}, {"c": "Bayern Munich", "y": "2009\u201319"}, {"c": "Groningen", "y": "2020\u201321"}]},
+  {name:"Thomas Muller",acc:["muller", "thomas muller"],clubs:[{"c": "Bayern Munich", "y": "2008\u2013"}]},
+  {name:"Sergio Ramos",acc:["ramos", "sergio ramos"],clubs:[{"c": "Sevilla", "y": "2003\u201305"}, {"c": "Real Madrid", "y": "2005\u201321"}, {"c": "Paris Saint-Germain", "y": "2021\u201323"}, {"c": "Sevilla", "y": "2023\u201324"}]},
+  {name:"Philipp Lahm",acc:["lahm", "philipp lahm"],clubs:[{"c": "Bayern Munich", "y": "2002\u201303"}, {"c": "VfB Stuttgart", "y": "2003\u201305"}, {"c": "Bayern Munich", "y": "2005\u201317"}]},
+  {name:"Dani Alves",acc:["dani alves", "daniel alves"],clubs:[{"c": "Bahia", "y": "2001\u201302"}, {"c": "Sevilla", "y": "2002\u201308"}, {"c": "Barcelona", "y": "2008\u201316"}, {"c": "Juventus", "y": "2016\u201317"}, {"c": "Paris Saint-Germain", "y": "2017\u201319"}, {"c": "Sao Paulo", "y": "2019\u201322"}, {"c": "Barcelona", "y": "2021\u201322"}, {"c": "Pumas UNAM", "y": "2022\u201323"}]},
+  {name:"Karim Benzema",acc:["benzema", "karim benzema"],clubs:[{"c": "Olympique Lyon", "y": "2004\u201309"}, {"c": "Real Madrid", "y": "2009\u201323"}, {"c": "Al-Ittihad", "y": "2023\u201324"}]},
+  {name:"Manuel Neuer",acc:["neuer", "manuel neuer"],clubs:[{"c": "Schalke 04", "y": "2005\u201311"}, {"c": "Bayern Munich", "y": "2011\u2013"}]},
+  {name:"Andres Iniesta",acc:["iniesta", "andres iniesta"],clubs:[{"c": "Barcelona", "y": "2002\u201318"}, {"c": "Vissel Kobe", "y": "2018\u201323"}, {"c": "Emirates Club", "y": "2023\u201324"}]},
+  {name:"Alexis Sanchez",acc:["sanchez", "alexis sanchez"],clubs:[{"c": "Colo-Colo", "y": "2006"}, {"c": "Udinese", "y": "2006\u201311"}, {"c": "Barcelona", "y": "2011\u201314"}, {"c": "Arsenal", "y": "2014\u201318"}, {"c": "Manchester United", "y": "2018\u201319"}, {"c": "Inter Milan", "y": "2019\u201323"}, {"c": "Udinese", "y": "2024"}]},
+  {name:"Edinson Cavani",acc:["cavani", "edinson cavani", "el matador"],clubs:[{"c": "Danubio", "y": "2006\u201307"}, {"c": "Palermo", "y": "2007\u201310"}, {"c": "Napoli", "y": "2010\u201313"}, {"c": "Paris Saint-Germain", "y": "2013\u201320"}, {"c": "Manchester United", "y": "2020\u201322"}, {"c": "Valencia", "y": "2022\u201323"}, {"c": "Boca Juniors", "y": "2023\u201324"}]},
+  {name:"Erling Haaland",acc:["haaland", "erling haaland"],clubs:[{"c": "Molde", "y": "2017\u201319"}, {"c": "Red Bull Salzburg", "y": "2019\u201320"}, {"c": "Borussia Dortmund", "y": "2020\u201322"}, {"c": "Manchester City", "y": "2022\u2013"}]},
+  {name:"Vinicius Junior",acc:["vinicius", "vinicius junior", "vini jr"],clubs:[{"c": "Flamengo", "y": "2017\u201318"}, {"c": "Real Madrid", "y": "2018\u2013"}]},
+  {name:"Jude Bellingham",acc:["bellingham", "jude bellingham"],clubs:[{"c": "Birmingham City", "y": "2019\u201320"}, {"c": "Borussia Dortmund", "y": "2020\u201323"}, {"c": "Real Madrid", "y": "2023\u2013"}]},
+  {name:"Phil Foden",acc:["foden", "phil foden"],clubs:[{"c": "Manchester City", "y": "2017\u2013"}]},
+  {name:"Pedri",acc:["pedri"],clubs:[{"c": "Las Palmas", "y": "2018\u201320"}, {"c": "Barcelona", "y": "2020\u2013"}]},
+  {name:"Bukayo Saka",acc:["saka", "bukayo saka"],clubs:[{"c": "Arsenal", "y": "2019\u2013"}]},
+  {name:"Rodri",acc:["rodri"],clubs:[{"c": "Villarreal", "y": "2015\u201317"}, {"c": "Atletico Madrid", "y": "2017\u201319"}, {"c": "Manchester City", "y": "2019\u2013"}]},
+  {name:"Son Heung-min",acc:["son", "heung-min", "son heung-min"],clubs:[{"c": "Hamburg SV", "y": "2010\u201313"}, {"c": "Bayer Leverkusen", "y": "2013\u201315"}, {"c": "Tottenham Hotspur", "y": "2015\u2013"}]},
+  {name:"Marcus Rashford",acc:["rashford", "marcus rashford"],clubs:[{"c": "Manchester United", "y": "2015\u201325"}, {"c": "Aston Villa", "y": "2025\u2013"}]},
+  {name:"Bruno Fernandes",acc:["fernandes", "bruno fernandes"],clubs:[{"c": "Novara", "y": "2012\u201313"}, {"c": "Udinese", "y": "2013\u201316"}, {"c": "Sampdoria", "y": "2016\u201317"}, {"c": "Sporting CP", "y": "2017\u201320"}, {"c": "Manchester United", "y": "2020\u2013"}]},
+  {name:"Paulo Dybala",acc:["dybala", "paulo dybala", "la joya"],clubs:[{"c": "Instituto", "y": "2010\u201312"}, {"c": "Palermo", "y": "2012\u201315"}, {"c": "Juventus", "y": "2015\u201322"}, {"c": "Roma", "y": "2022\u2013"}]},
+  {name:"Mario Gotze",acc:["gotze", "mario gotze"],clubs:[{"c": "Borussia Dortmund", "y": "2009\u201313"}, {"c": "Bayern Munich", "y": "2013\u201316"}, {"c": "Borussia Dortmund", "y": "2016\u201320"}, {"c": "PSV Eindhoven", "y": "2020\u201322"}, {"c": "Eintracht Frankfurt", "y": "2022\u201324"}]},
+  {name:"Juan Mata",acc:["mata", "juan mata"],clubs:[{"c": "Real Madrid", "y": "2006\u201307"}, {"c": "Valencia", "y": "2007\u201311"}, {"c": "Chelsea", "y": "2011\u201314"}, {"c": "Manchester United", "y": "2014\u201323"}, {"c": "Galatasaray", "y": "2023"}, {"c": "Vissel Kobe", "y": "2023\u201324"}]},
+  {name:"Santi Cazorla",acc:["cazorla", "santi cazorla"],clubs:[{"c": "Villarreal", "y": "2003\u201308"}, {"c": "Recreativo", "y": "2006\u201307"}, {"c": "Villarreal", "y": "2007\u201311"}, {"c": "Malaga", "y": "2011\u201312"}, {"c": "Arsenal", "y": "2012\u201318"}, {"c": "Villarreal", "y": "2018\u201321"}, {"c": "Al-Sadd", "y": "2021\u201322"}]},
+  {name:"Pedro Rodriguez",acc:["pedro", "pedro rodriguez"],clubs:[{"c": "Barcelona", "y": "2008\u201315"}, {"c": "Chelsea", "y": "2015\u201320"}, {"c": "Roma", "y": "2020\u201322"}, {"c": "Lazio", "y": "2022\u2013"}]},
+  {name:"Aaron Ramsey",acc:["ramsey", "aaron ramsey"],clubs:[{"c": "Arsenal", "y": "2008\u201319"}, {"c": "Juventus", "y": "2019\u201321"}, {"c": "Rangers", "y": "2022"}, {"c": "Nice", "y": "2022\u201323"}, {"c": "Cardiff City", "y": "2023\u201324"}]},
+  {name:"Willian",acc:["willian"],clubs:[{"c": "Shakhtar Donetsk", "y": "2007\u201313"}, {"c": "Anzhi", "y": "2013"}, {"c": "Chelsea", "y": "2013\u201320"}, {"c": "Arsenal", "y": "2020\u201321"}, {"c": "Corinthians", "y": "2021\u201322"}, {"c": "Fulham", "y": "2022\u201324"}]},
+  {name:"Pierre-Emerick Aubameyang",acc:["aubameyang", "pierre-emerick aubameyang", "auba"],clubs:[{"c": "Saint-Etienne", "y": "2008\u201311"}, {"c": "AC Milan", "y": "2011\u201312"}, {"c": "Dijon", "y": "2011"}, {"c": "Lille", "y": "2013"}, {"c": "Monaco", "y": "2013\u201314"}, {"c": "Borussia Dortmund", "y": "2013\u201318"}, {"c": "Arsenal", "y": "2018\u201322"}, {"c": "Barcelona", "y": "2022"}, {"c": "Chelsea", "y": "2022\u201323"}, {"c": "Marseille", "y": "2024\u2013"}]},
+  {name:"Olivier Giroud",acc:["giroud", "olivier giroud"],clubs:[{"c": "Grenoble", "y": "2005\u201310"}, {"c": "Tours", "y": "2008\u201310"}, {"c": "Montpellier", "y": "2010\u201312"}, {"c": "Arsenal", "y": "2012\u201318"}, {"c": "Chelsea", "y": "2018\u201321"}, {"c": "AC Milan", "y": "2021\u201324"}, {"c": "LA Galaxy", "y": "2024\u2013"}]},
+  {name:"Alexandre Lacazette",acc:["lacazette", "alexandre lacazette"],clubs:[{"c": "Olympique Lyon", "y": "2010\u201317"}, {"c": "Arsenal", "y": "2017\u201322"}, {"c": "Olympique Lyon", "y": "2022\u2013"}]},
+  {name:"Romelu Lukaku",acc:["lukaku", "romelu lukaku"],clubs:[{"c": "Anderlecht", "y": "2009\u201311"}, {"c": "Chelsea", "y": "2011\u201314"}, {"c": "West Brom", "y": "2012\u201313"}, {"c": "Everton", "y": "2013\u201317"}, {"c": "Manchester United", "y": "2017\u201319"}, {"c": "Inter Milan", "y": "2019\u201321"}, {"c": "Chelsea", "y": "2021\u201322"}, {"c": "Inter Milan", "y": "2022\u201323"}, {"c": "Roma", "y": "2023\u201324"}]},
+  {name:"Mario Balotelli",acc:["balotelli", "mario balotelli", "super mario"],clubs:[{"c": "Inter Milan", "y": "2007\u201310"}, {"c": "Manchester City", "y": "2010\u201313"}, {"c": "AC Milan", "y": "2013\u201314"}, {"c": "Liverpool", "y": "2014\u201315"}, {"c": "AC Milan", "y": "2015\u201316"}, {"c": "Nice", "y": "2016\u201319"}, {"c": "Marseille", "y": "2019"}, {"c": "Brescia", "y": "2019\u201320"}, {"c": "Monza", "y": "2021"}, {"c": "Adana Demirspor", "y": "2021\u201323"}]},
+  {name:"Michael Carrick",acc:["carrick", "michael carrick"],clubs:[{"c": "West Ham United", "y": "1999\u20132004"}, {"c": "Sunderland", "y": "2003"}, {"c": "Tottenham Hotspur", "y": "2004\u201306"}, {"c": "Manchester United", "y": "2006\u201318"}]},
+  {name:"Joe Cole",acc:["cole", "joe cole"],clubs:[{"c": "West Ham United", "y": "1998\u20132003"}, {"c": "Chelsea", "y": "2003\u201310"}, {"c": "Liverpool", "y": "2010\u201312"}, {"c": "Lille", "y": "2011\u201312"}, {"c": "West Ham United", "y": "2012\u201313"}, {"c": "Aston Villa", "y": "2014"}, {"c": "Coventry City", "y": "2014\u201315"}]},
+  {name:"Gareth Barry",acc:["barry", "gareth barry"],clubs:[{"c": "Aston Villa", "y": "1997\u20132009"}, {"c": "Manchester City", "y": "2009\u201313"}, {"c": "Everton", "y": "2013\u201317"}, {"c": "West Brom", "y": "2017\u201318"}]},
+  {name:"Mikel Arteta",acc:["arteta", "mikel arteta"],clubs:[{"c": "Barcelona", "y": "1999\u20132002"}, {"c": "Rangers", "y": "2002\u201304"}, {"c": "Real Sociedad", "y": "2002\u201304"}, {"c": "Everton", "y": "2005\u201311"}, {"c": "Arsenal", "y": "2011\u201316"}]},
+  {name:"Lucas Moura",acc:["lucas moura", "lucas"],clubs:[{"c": "Sao Paulo", "y": "2010\u201312"}, {"c": "Paris Saint-Germain", "y": "2012\u201318"}, {"c": "Tottenham Hotspur", "y": "2018\u201323"}, {"c": "Sao Paulo", "y": "2023\u2013"}]},
+  {name:"Oscar",acc:["oscar", "oscar dos santos"],clubs:[{"c": "Internacional", "y": "2009\u201312"}, {"c": "Chelsea", "y": "2012\u201317"}, {"c": "Shanghai Port", "y": "2017\u2013"}]},
+  {name:"Robert Pires",acc:["pires", "robert pires"],clubs:[{"c": "Metz", "y": "1992\u201398"}, {"c": "Marseille", "y": "1998\u20132000"}, {"c": "Arsenal", "y": "2000\u201306"}, {"c": "Villarreal", "y": "2006\u201310"}, {"c": "Aston Villa", "y": "2010\u201311"}]},
+  {name:"Freddie Ljungberg",acc:["ljungberg", "freddie ljungberg"],clubs:[{"c": "Halmstad", "y": "1994\u201398"}, {"c": "Arsenal", "y": "1998\u20132007"}, {"c": "West Ham United", "y": "2007\u201308"}, {"c": "Barcelona", "y": "2008"}, {"c": "Celtic", "y": "2008"}, {"c": "Chicago Fire", "y": "2009\u201310"}]},
+  {name:"Adriano",acc:["adriano", "adriano leite"],clubs:[{"c": "Flamengo", "y": "2001\u201302"}, {"c": "Inter Milan", "y": "2001\u201309"}, {"c": "Parma", "y": "2002\u201303"}, {"c": "Fiorentina", "y": "2004"}, {"c": "Roma", "y": "2009"}, {"c": "Corinthians", "y": "2009\u201313"}, {"c": "Flamengo", "y": "2013\u201314"}]},
+  {name:"Robinho",acc:["robinho"],clubs:[{"c": "Santos", "y": "2002\u201305"}, {"c": "Real Madrid", "y": "2005\u201308"}, {"c": "Manchester City", "y": "2008\u201310"}, {"c": "Santos", "y": "2010\u201311"}, {"c": "AC Milan", "y": "2010\u201312"}, {"c": "Santos", "y": "2014\u201315"}, {"c": "Atletico Mineiro", "y": "2015\u201316"}]},
+  {name:"Patrick Kluivert",acc:["kluivert", "patrick kluivert"],clubs:[{"c": "Ajax", "y": "1994\u201398"}, {"c": "AC Milan", "y": "1997\u201398"}, {"c": "Barcelona", "y": "1998\u20132004"}, {"c": "Newcastle United", "y": "2004\u201305"}, {"c": "Valencia", "y": "2005\u201306"}, {"c": "PSV Eindhoven", "y": "2006\u201307"}, {"c": "Lille", "y": "2007\u201308"}]},
+  {name:"Clarence Seedorf",acc:["seedorf", "clarence seedorf"],clubs:[{"c": "Ajax", "y": "1992\u201395"}, {"c": "Sampdoria", "y": "1995\u201396"}, {"c": "Real Madrid", "y": "1996\u20132000"}, {"c": "Inter Milan", "y": "2000\u201302"}, {"c": "AC Milan", "y": "2002\u201312"}, {"c": "Botafogo", "y": "2012\u201314"}]},
+  {name:"Edgar Davids",acc:["davids", "edgar davids"],clubs:[{"c": "Ajax", "y": "1991\u201396"}, {"c": "AC Milan", "y": "1996\u201397"}, {"c": "Juventus", "y": "1997\u20132004"}, {"c": "Barcelona", "y": "2004"}, {"c": "Inter Milan", "y": "2004\u201305"}, {"c": "Tottenham Hotspur", "y": "2005\u201306"}, {"c": "Ajax", "y": "2008\u201312"}]},
+  {name:"Roy Makaay",acc:["makaay", "roy makaay"],clubs:[{"c": "Vitesse", "y": "1993\u201397"}, {"c": "Tenerife", "y": "1997\u201399"}, {"c": "Deportivo La Coruna", "y": "1999\u20132003"}, {"c": "Bayern Munich", "y": "2003\u201307"}, {"c": "Feyenoord", "y": "2007\u201309"}]},
+  {name:"Diego Forlan",acc:["forlan", "diego forlan"],clubs:[{"c": "Independiente", "y": "1998\u20132002"}, {"c": "Manchester United", "y": "2002\u201304"}, {"c": "Villarreal", "y": "2004\u201307"}, {"c": "Atletico Madrid", "y": "2007\u201311"}, {"c": "Inter Milan", "y": "2011\u201312"}, {"c": "Internacional", "y": "2012\u201313"}, {"c": "Cerezo Osaka", "y": "2014\u201315"}]},
+  {name:"Juan Roman Riquelme",acc:["riquelme", "juan roman riquelme"],clubs:[{"c": "Argentinos Juniors", "y": "1995\u201396"}, {"c": "Boca Juniors", "y": "1996\u20132002"}, {"c": "Barcelona", "y": "2002\u201303"}, {"c": "Villarreal", "y": "2003\u201307"}, {"c": "Boca Juniors", "y": "2007\u201314"}, {"c": "Argentinos Juniors", "y": "2014\u201315"}]},
+  {name:"Christian Vieri",acc:["vieri", "christian vieri", "bobo vieri"],clubs:[{"c": "Juventus", "y": "1993\u201396"}, {"c": "Atalanta", "y": "1996\u201397"}, {"c": "Atletico Madrid", "y": "1997\u201398"}, {"c": "SS Lazio", "y": "1998\u201399"}, {"c": "Inter Milan", "y": "1999\u20132005"}, {"c": "AC Milan", "y": "2005\u201306"}, {"c": "AS Roma", "y": "2006"}, {"c": "Sampdoria", "y": "2006\u201307"}]},
+  {name:"Rui Costa",acc:["rui costa"],clubs:[{"c": "Fiorentina", "y": "1994\u20132001"}, {"c": "AC Milan", "y": "2001\u201306"}, {"c": "Benfica", "y": "2006"}]},
+  {name:"David Trezeguet",acc:["trezeguet", "david trezeguet"],clubs:[{"c": "Platense", "y": "1994\u201395"}, {"c": "AS Monaco", "y": "1995\u20132000"}, {"c": "Juventus", "y": "2000\u201310"}, {"c": "Hercules", "y": "2010\u201311"}, {"c": "Montpellier", "y": "2011\u201312"}, {"c": "River Plate", "y": "2012\u201313"}]},
+  {name:"Michael Essien",acc:["essien", "michael essien"],clubs:[{"c": "Liberty Professionals", "y": "2000\u201302"}, {"c": "Bastia", "y": "2002\u201303"}, {"c": "Olympique Lyon", "y": "2003\u201305"}, {"c": "Chelsea", "y": "2005\u201314"}, {"c": "Real Madrid", "y": "2012\u201313"}, {"c": "AC Milan", "y": "2014\u201315"}, {"c": "Panathinaikos", "y": "2015\u201316"}]},
+  {name:"Emmanuel Adebayor",acc:["adebayor", "emmanuel adebayor"],clubs:[{"c": "Metz", "y": "2001\u201303"}, {"c": "Monaco", "y": "2003\u201306"}, {"c": "Arsenal", "y": "2006\u201309"}, {"c": "Manchester City", "y": "2009\u201311"}, {"c": "Real Madrid", "y": "2011\u201312"}, {"c": "Tottenham Hotspur", "y": "2012\u201316"}, {"c": "Crystal Palace", "y": "2016"}]},
+  {name:"Jay-Jay Okocha",acc:["okocha", "jay-jay okocha", "austin okocha"],clubs:[{"c": "Enugu Rangers", "y": "1990\u201392"}, {"c": "Borussia Neunkirchen", "y": "1992\u201393"}, {"c": "Eintracht Frankfurt", "y": "1992\u201396"}, {"c": "Fenerbahce", "y": "1996\u201398"}, {"c": "Paris Saint-Germain", "y": "1998\u20132002"}, {"c": "Bolton Wanderers", "y": "2002\u201306"}, {"c": "Hull City", "y": "2007\u201308"}]},
+  {name:"Gennaro Gattuso",acc:["gattuso", "gennaro gattuso", "rino gattuso"],clubs:[{"c": "Perugia", "y": "1995\u201397"}, {"c": "Rangers", "y": "1997\u201399"}, {"c": "AC Milan", "y": "1999\u20132012"}, {"c": "Sion", "y": "2012"}, {"c": "Palermo", "y": "2012\u201313"}]},
+  {name:"Nuno Gomes",acc:["nuno gomes"],clubs:[{"c": "Boavista", "y": "1993\u201397"}, {"c": "Benfica", "y": "1997\u20132000"}, {"c": "Fiorentina", "y": "2000\u201303"}, {"c": "Benfica", "y": "2003\u201311"}, {"c": "Braga", "y": "2011\u201312"}, {"c": "Blackburn Rovers", "y": "2012"}]},
+  {name:"Stefan Effenberg",acc:["effenberg", "stefan effenberg"],clubs:[{"c": "Borussia Monchengladbach", "y": "1987\u201390"}, {"c": "Fiorentina", "y": "1990\u201392"}, {"c": "Borussia Monchengladbach", "y": "1992\u201394"}, {"c": "Bayern Munich", "y": "1994\u201398"}, {"c": "Wolfsburg", "y": "1998\u201399"}, {"c": "Bayern Munich", "y": "1999\u20132002"}, {"c": "Qatar sports clubs", "y": "2002\u201304"}]},
+  {name:"Lilian Thuram",acc:["thuram", "lilian thuram"],clubs:[{"c": "AS Monaco", "y": "1991\u201396"}, {"c": "Parma", "y": "1996\u20132001"}, {"c": "Juventus", "y": "2001\u201306"}, {"c": "Barcelona", "y": "2006\u201308"}]},
+  {name:"Marcel Desailly",acc:["desailly", "marcel desailly"],clubs:[{"c": "Nantes", "y": "1986\u201392"}, {"c": "Marseille", "y": "1992\u201393"}, {"c": "AC Milan", "y": "1993\u201398"}, {"c": "Chelsea", "y": "1998\u20132004"}, {"c": "Al-Gharafa", "y": "2004\u201306"}]},
+  {name:"Didier Deschamps",acc:["deschamps", "didier deschamps"],clubs:[{"c": "Nantes", "y": "1989\u201391"}, {"c": "Marseille", "y": "1989\u201394"}, {"c": "Juventus", "y": "1994\u201399"}, {"c": "Chelsea", "y": "1999\u20132000"}, {"c": "Valencia", "y": "2000\u201301"}, {"c": "AS Monaco", "y": "2001\u201304"}]},
+  {name:"Laurent Blanc",acc:["blanc", "laurent blanc"],clubs:[{"c": "Montpellier", "y": "1983\u201391"}, {"c": "Napoli", "y": "1991\u201392"}, {"c": "Nimes", "y": "1992\u201393"}, {"c": "Saint-Etienne", "y": "1993\u201395"}, {"c": "Auxerre", "y": "1995\u201396"}, {"c": "Barcelona", "y": "1996\u201397"}, {"c": "Marseille", "y": "1997\u201399"}, {"c": "Inter Milan", "y": "1999\u20132001"}, {"c": "Manchester United", "y": "2001\u201303"}]},
+  {name:"Davor Suker",acc:["suker", "davor suker"],clubs:[{"c": "NK Osijek", "y": "1987\u201389"}, {"c": "Dinamo Zagreb", "y": "1989\u201391"}, {"c": "Sevilla", "y": "1991\u201396"}, {"c": "Real Madrid", "y": "1996\u201399"}, {"c": "Arsenal", "y": "1999\u20132000"}, {"c": "West Ham United", "y": "2000"}, {"c": "Borussia Dortmund", "y": "2001"}]},
+  {name:"Ian Wright",acc:["wright", "ian wright"],clubs:[{"c": "Crystal Palace", "y": "1985\u201391"}, {"c": "Arsenal", "y": "1991\u201398"}, {"c": "West Ham United", "y": "1998\u201399"}, {"c": "Nottingham Forest", "y": "1999"}, {"c": "Celtic", "y": "1999\u20132000"}]},
+  {name:"Tony Adams",acc:["adams", "tony adams"],clubs:[{"c": "Arsenal", "y": "1983\u20132002"}]},
+  {name:"David Seaman",acc:["seaman", "david seaman"],clubs:[{"c": "Leeds United", "y": "1982\u201384"}, {"c": "Peterborough United", "y": "1984\u201386"}, {"c": "Birmingham City", "y": "1986\u201387"}, {"c": "Queens Park Rangers", "y": "1986\u201390"}, {"c": "Arsenal", "y": "1990\u20132003"}, {"c": "Manchester City", "y": "2003\u201304"}]},
+  {name:"Gary Neville",acc:["neville", "gary neville"],clubs:[{"c": "Manchester United", "y": "1992\u20132011"}]},
+  {name:"Paul Ince",acc:["ince", "paul ince"],clubs:[{"c": "West Ham United", "y": "1985\u201389"}, {"c": "Manchester United", "y": "1989\u201395"}, {"c": "Inter Milan", "y": "1995\u201397"}, {"c": "Liverpool", "y": "1997\u201399"}, {"c": "Middlesbrough", "y": "1999\u20132002"}, {"c": "Wolverhampton Wanderers", "y": "2002\u201306"}]},
+  {name:"Jamie Carragher",acc:["carragher", "jamie carragher"],clubs:[{"c": "Liverpool", "y": "1996\u20132013"}]},
+  {name:"Steve McManaman",acc:["mcmanaman", "steve mcmanaman"],clubs:[{"c": "Liverpool", "y": "1990\u201399"}, {"c": "Real Madrid", "y": "1999\u20132003"}, {"c": "Manchester City", "y": "2003\u201305"}]},
+  {name:"Graeme Le Saux",acc:["le saux", "graeme le saux"],clubs:[{"c": "Chelsea", "y": "1987\u201393"}, {"c": "Blackburn Rovers", "y": "1993\u201397"}, {"c": "Chelsea", "y": "1997\u20132003"}, {"c": "Southampton", "y": "2003\u201305"}]},
+  {name:"Matt Le Tissier",acc:["le tissier", "matt le tissier", "letissier"],clubs:[{"c": "Southampton", "y": "1986\u20132002"}]},
+  {name:"Craig Bellamy",acc:["bellamy", "craig bellamy"],clubs:[{"c": "Norwich City", "y": "1997\u20132000"}, {"c": "Coventry City", "y": "2000\u201301"}, {"c": "Newcastle United", "y": "2001\u201305"}, {"c": "Blackburn Rovers", "y": "2005\u201306"}, {"c": "Liverpool", "y": "2006\u201307"}, {"c": "West Ham United", "y": "2007\u201308"}, {"c": "Manchester City", "y": "2009\u201312"}, {"c": "Liverpool", "y": "2011\u201312"}, {"c": "Cardiff City", "y": "2012\u201314"}]},
+  {name:"Nwankwo Kanu",acc:["kanu", "nwankwo kanu"],clubs:[{"c": "Iwuanyanwu Nationale", "y": "1992\u201393"}, {"c": "Ajax", "y": "1993\u201396"}, {"c": "Inter Milan", "y": "1996\u201399"}, {"c": "Arsenal", "y": "1999\u20132004"}, {"c": "West Brom", "y": "2004\u201306"}, {"c": "Portsmouth", "y": "2006\u201312"}]},
+  {name:"David Ginola",acc:["ginola", "david ginola"],clubs:[{"c": "Toulon", "y": "1985\u201388"}, {"c": "Racing Club de Paris", "y": "1988\u201390"}, {"c": "Brest", "y": "1990\u201392"}, {"c": "Paris Saint-Germain", "y": "1992\u201395"}, {"c": "Newcastle United", "y": "1995\u201397"}, {"c": "Tottenham Hotspur", "y": "1997\u20132000"}, {"c": "Aston Villa", "y": "2000"}, {"c": "Everton", "y": "2001\u201302"}]},
+  {name:"Duncan Ferguson",acc:["ferguson", "duncan ferguson", "big dunc"],clubs:[{"c": "Dundee United", "y": "1990\u201393"}, {"c": "Rangers", "y": "1993\u201394"}, {"c": "Everton", "y": "1994\u201398"}, {"c": "Newcastle United", "y": "1998\u20132000"}, {"c": "Everton", "y": "2000\u201306"}]},
+  {name:"Roberto Baggio",acc:["baggio", "roberto baggio", "il divin codino"],clubs:[{"c": "Vicenza", "y": "1982\u201385"}, {"c": "Fiorentina", "y": "1985\u201390"}, {"c": "Juventus", "y": "1990\u201395"}, {"c": "AC Milan", "y": "1995\u201397"}, {"c": "Bologna", "y": "1997\u201398"}, {"c": "Inter Milan", "y": "1998\u20132000"}, {"c": "Brescia", "y": "2000\u201304"}]},
+  {name:"Oliver Kahn",acc:["kahn", "oliver kahn"],clubs:[{"c": "Karlsruher SC", "y": "1987\u201394"}, {"c": "Bayern Munich", "y": "1994\u20132008"}]},
+  {name:"George Weah",acc:["weah", "george weah"],clubs:[{"c": "Tonnerre Yaounde", "y": "1985\u201388"}, {"c": "AS Monaco", "y": "1988\u201392"}, {"c": "Paris Saint-Germain", "y": "1992\u201395"}, {"c": "AC Milan", "y": "1995\u20132000"}, {"c": "Chelsea", "y": "2000"}, {"c": "Manchester City", "y": "2000"}, {"c": "Marseille", "y": "2000\u201301"}, {"c": "Al-Jazira", "y": "2001\u201303"}]},
+  {name:"Youri Djorkaeff",acc:["djorkaeff", "youri djorkaeff"],clubs:[{"c": "Strasbourg", "y": "1984\u201390"}, {"c": "Montpellier", "y": "1990\u201392"}, {"c": "Monaco", "y": "1992\u201395"}, {"c": "Paris Saint-Germain", "y": "1995\u201396"}, {"c": "Inter Milan", "y": "1996\u201399"}, {"c": "Kaiserslautern", "y": "1999\u20132002"}, {"c": "Bolton Wanderers", "y": "2002\u201304"}, {"c": "New York Red Bulls", "y": "2004\u201306"}]},
+  {name:"Hristo Stoichkov",acc:["stoichkov", "hristo stoichkov"],clubs:[{"c": "CSKA Sofia", "y": "1984\u201390"}, {"c": "Barcelona", "y": "1990\u201395"}, {"c": "Parma", "y": "1995\u201396"}, {"c": "Barcelona", "y": "1996\u201398"}, {"c": "CSKA Sofia", "y": "1998\u201399"}, {"c": "Chicago Fire", "y": "2000\u201303"}, {"c": "Al-Nassr", "y": "2003"}]},
+  {name:"Frank de Boer",acc:["de boer", "frank de boer"],clubs:[{"c": "Ajax", "y": "1988\u201399"}, {"c": "Barcelona", "y": "1999\u20132003"}, {"c": "Galatasaray", "y": "2003\u201304"}, {"c": "Rangers", "y": "2004"}, {"c": "Leeds United", "y": "2004"}, {"c": "Al-Rayyan", "y": "2004\u201306"}]},
+  {name:"Giorgio Chiellini",acc:["chiellini", "giorgio chiellini"],clubs:[{"c": "Livorno", "y": "2000\u201304"}, {"c": "Juventus", "y": "2005\u201322"}, {"c": "LA Galaxy", "y": "2022\u201323"}]},
+  {name:"Leonardo Bonucci",acc:["bonucci", "leonardo bonucci"],clubs:[{"c": "Internazionale", "y": "2005\u201309"}, {"c": "Treviso", "y": "2007\u201308"}, {"c": "Pisa", "y": "2008\u201309"}, {"c": "Genoa", "y": "2009"}, {"c": "Bari", "y": "2009\u201310"}, {"c": "Juventus", "y": "2010\u201317"}, {"c": "AC Milan", "y": "2017\u201318"}, {"c": "Juventus", "y": "2018\u201323"}, {"c": "Union Berlin", "y": "2023\u201324"}]},
+  {name:"Daniele De Rossi",acc:["de rossi", "daniele de rossi"],clubs:[{"c": "Roma", "y": "2001\u201319"}, {"c": "Boca Juniors", "y": "2019"}, {"c": "Roma", "y": "2019"}]},
+  {name:"Ivan Zamorano",acc:["zamorano", "ivan zamorano", "bam bam"],clubs:[{"c": "Cobresal", "y": "1987\u201388"}, {"c": "Saint-Gallen", "y": "1988\u201389"}, {"c": "Sevilla", "y": "1989\u201392"}, {"c": "Real Madrid", "y": "1992\u201396"}, {"c": "Inter Milan", "y": "1996\u20132001"}, {"c": "Atletico Madrid", "y": "2001"}, {"c": "America", "y": "2001\u201303"}, {"c": "Club America", "y": "2003"}, {"c": "Colo-Colo", "y": "2003"}]},
+  {name:"Emre Can",acc:["emre can", "can"],clubs:[{"c": "Bayern Munich", "y": "2010\u201313"}, {"c": "Bayer Leverkusen", "y": "2013\u201314"}, {"c": "Liverpool", "y": "2014\u201318"}, {"c": "Juventus", "y": "2018\u201320"}, {"c": "Borussia Dortmund", "y": "2019\u2013"}]},
+  {name:"Stephan Lichtsteiner",acc:["lichtsteiner", "stephan lichtsteiner"],clubs:[{"c": "Grasshopper", "y": "2002\u201305"}, {"c": "Lille", "y": "2005\u201308"}, {"c": "Lazio", "y": "2008\u201311"}, {"c": "Juventus", "y": "2011\u201318"}, {"c": "Arsenal", "y": "2018\u201319"}, {"c": "Augsburg", "y": "2019\u201320"}]},
+  {name:"Joleon Lescott",acc:["lescott", "joleon lescott"],clubs:[{"c": "Wolverhampton Wanderers", "y": "2000\u201306"}, {"c": "Everton", "y": "2006\u201309"}, {"c": "Manchester City", "y": "2009\u201314"}, {"c": "West Brom", "y": "2014\u201315"}, {"c": "Aston Villa", "y": "2015\u201316"}, {"c": "AEK Athens", "y": "2016\u201317"}, {"c": "Sunderland", "y": "2017"}]},
+  {name:"Georgios Samaras",acc:["samaras", "georgios samaras"],clubs:[{"c": "OFI Crete", "y": "2001\u201305"}, {"c": "Manchester City", "y": "2005\u201308"}, {"c": "Celtic", "y": "2008\u201314"}, {"c": "West Brom", "y": "2014\u201315"}]},
+  {name:"Shay Given",acc:["given", "shay given"],clubs:[{"c": "Celtic", "y": "1992\u201396"}, {"c": "Blackburn Rovers", "y": "1994\u201397"}, {"c": "Swindon Town", "y": "1996"}, {"c": "Sunderland", "y": "1996\u201397"}, {"c": "Newcastle United", "y": "1997\u20132009"}, {"c": "Manchester City", "y": "2009\u201311"}, {"c": "Aston Villa", "y": "2011\u201315"}, {"c": "Stoke City", "y": "2015\u201317"}]},
+  {name:"David James",acc:["james", "david james"],clubs:[{"c": "Watford", "y": "1990\u201392"}, {"c": "Liverpool", "y": "1992\u201399"}, {"c": "Aston Villa", "y": "1999\u20132001"}, {"c": "West Ham United", "y": "2001\u201304"}, {"c": "Manchester City", "y": "2004\u201306"}, {"c": "Portsmouth", "y": "2006\u201310"}, {"c": "Bristol City", "y": "2010\u201312"}]},
+  {name:"Brad Friedel",acc:["friedel", "brad friedel"],clubs:[{"c": "Columbus Crew", "y": "1996\u201397"}, {"c": "Liverpool", "y": "1997\u20132000"}, {"c": "Blackburn Rovers", "y": "2000\u201308"}, {"c": "Aston Villa", "y": "2008\u201311"}, {"c": "Tottenham Hotspur", "y": "2011\u201315"}]},
+  {name:"Tim Howard",acc:["howard", "tim howard"],clubs:[{"c": "New York Red Bulls", "y": "1998\u20132003"}, {"c": "Manchester United", "y": "2003\u201307"}, {"c": "Everton", "y": "2006\u201316"}, {"c": "Colorado Rapids", "y": "2016\u201319"}]},
+  {name:"Shaka Hislop",acc:["hislop", "shaka hislop"],clubs:[{"c": "Reading", "y": "1992\u201395"}, {"c": "Newcastle United", "y": "1995\u201398"}, {"c": "West Ham United", "y": "1998\u20132002"}, {"c": "Portsmouth", "y": "2002\u201305"}, {"c": "West Ham United", "y": "2005\u201306"}]},
+  {name:"Gabby Agbonlahor",acc:["agbonlahor", "gabriel agbonlahor", "gabby agbonlahor"],clubs:[{"c": "Aston Villa", "y": "2004\u201318"}]},
+  {name:"Stan Collymore",acc:["collymore", "stan collymore"],clubs:[{"c": "Stafford Rangers", "y": "1990\u201392"}, {"c": "Crystal Palace", "y": "1992\u201393"}, {"c": "Southend United", "y": "1992\u201393"}, {"c": "Nottingham Forest", "y": "1993\u201395"}, {"c": "Liverpool", "y": "1995\u201397"}, {"c": "Aston Villa", "y": "1997\u20132000"}, {"c": "Leicester City", "y": "1999\u20132000"}, {"c": "Bradford City", "y": "2000"}, {"c": "Real Oviedo", "y": "2001"}]},
+  {name:"Nicolas Pepe",acc:["pepe", "nicolas pepe"],clubs:[{"c": "Poitiers", "y": "2012\u201313"}, {"c": "Angers", "y": "2013\u201314"}, {"c": "LOSC Lille", "y": "2017\u201319"}, {"c": "Arsenal", "y": "2019\u201322"}, {"c": "Nice", "y": "2021\u201322"}, {"c": "Nottingham Forest", "y": "2022\u201323"}]},
+  {name:"Hakim Ziyech",acc:["ziyech", "hakim ziyech"],clubs:[{"c": "Heerenveen", "y": "2012\u201315"}, {"c": "FC Twente", "y": "2015\u201316"}, {"c": "Ajax", "y": "2016\u201321"}, {"c": "Chelsea", "y": "2020\u201324"}, {"c": "Galatasaray", "y": "2022\u201323"}, {"c": "Al-Nassr", "y": "2024\u2013"}]},
+  {name:"Divock Origi",acc:["origi", "divock origi"],clubs:[{"c": "Gent", "y": "2010\u201312"}, {"c": "Liverpool", "y": "2014\u201322"}, {"c": "LOSC Lille", "y": "2015\u201317"}, {"c": "Wolfsburg", "y": "2017\u201318"}, {"c": "AC Milan", "y": "2022\u201323"}, {"c": "Nottingham Forest", "y": "2024"}]},
+  {name:"Moussa Sissoko",acc:["sissoko", "moussa sissoko"],clubs:[{"c": "Toulouse", "y": "2008\u201313"}, {"c": "Newcastle United", "y": "2013\u201317"}, {"c": "Tottenham Hotspur", "y": "2016\u201322"}, {"c": "Watford", "y": "2021\u201322"}, {"c": "Nantes", "y": "2022\u2013"}]},
+  {name:"Heung-min Son",acc:["son", "heung-min", "son heung-min"],clubs:[{"c": "Hamburg SV", "y": "2010\u201313"}, {"c": "Bayer Leverkusen", "y": "2013\u201315"}, {"c": "Tottenham Hotspur", "y": "2015\u2013"}]},
+  {name:"Kasper Schmeichel",acc:["kasper schmeichel", "k schmeichel"],clubs:[{"c": "Manchester City", "y": "2002\u201309"}, {"c": "Notts County", "y": "2009\u201310"}, {"c": "Leeds United", "y": "2010\u201311"}, {"c": "Leicester City", "y": "2011\u201322"}, {"c": "OGC Nice", "y": "2022\u201323"}, {"c": "Anderlecht", "y": "2023\u201324"}]},
+  {name:"Wes Morgan",acc:["morgan", "wes morgan"],clubs:[{"c": "Nottingham Forest", "y": "2003\u201312"}, {"c": "Leicester City", "y": "2012\u201320"}]},
+  {name:"Joao Cancelo",acc:["cancelo", "joao cancelo"],clubs:[{"c": "Valencia", "y": "2014\u201317"}, {"c": "Internazionale", "y": "2017\u201318"}, {"c": "Juventus", "y": "2018\u201319"}, {"c": "Manchester City", "y": "2019\u201323"}, {"c": "Bayern Munich", "y": "2023"}, {"c": "Barcelona", "y": "2023\u201324"}, {"c": "Al-Qadsiah", "y": "2024"}]},
+  {name:"Chris Waddle",acc:["waddle", "chris waddle"],clubs:[{"c": "Newcastle United", "y": "1980\u201385"}, {"c": "Tottenham Hotspur", "y": "1985\u201389"}, {"c": "Marseille", "y": "1989\u201392"}, {"c": "Sheffield Wednesday", "y": "1992\u201396"}, {"c": "Bradford City", "y": "1996"}, {"c": "Burnley", "y": "1997"}, {"c": "Torquay United", "y": "1998"}]}
+];
+
+var MAX=6;
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function todaySeed(){var d=new Date();return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();}
+var rng=mulberry32(todaySeed());
+var PLAYER=PLAYERS[Math.floor(rng()*PLAYERS.length)];
+var guesses=0,over=false,revealed=1;
+
+document.getElementById('date-lbl').textContent=new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
+function isMatch(v){var nv=norm(v);return norm(PLAYER.name)===nv||PLAYER.acc.some(function(a){return norm(a)===nv;});}
+function lev(a,b){var m=a.length,n=b.length,i,j;if(!m)return n;if(!n)return m;var p=Array(n+1),q=Array(n+1);for(j=0;j<=n;j++)p[j]=j;for(i=1;i<=m;i++){q[0]=i;for(j=1;j<=n;j++)q[j]=a[i-1]===b[j-1]?p[j-1]:1+Math.min(p[j],q[j-1],p[j-1]);}return q[n];}
+
+function buildPath(all){
+  var wrap=document.getElementById('path-wrap');wrap.innerHTML='';
+  var total=PLAYER.clubs.length,show=all?total:revealed;
+  for(var i=0;i<total;i++){
+    var club=PLAYER.clubs[i],isOn=i<show;
+    var item=document.createElement('div');item.className='path-item';
+    var left=document.createElement('div');left.className='path-left';
+    var dot=document.createElement('div');dot.className='path-dot'+(isOn?'':' dim');
+    var line=document.createElement('div');line.className='path-line'+(isOn?'':' dim');
+    if(i===total-1)line.style.opacity='0';
+    left.appendChild(dot);left.appendChild(line);
+    var card=document.createElement('div');card.className='path-card '+(isOn?'on':'off');
+    card.innerHTML=isOn?'<div class="club-name">'+club.c+'</div><div class="club-years">'+club.y+'</div>':'<div class="club-name">Club '+(i+1)+'</div>';
+    item.appendChild(left);item.appendChild(card);wrap.appendChild(item);
+  }
+  var st=document.getElementById('status');
+  st.textContent=all?'':(revealed<total?'Showing '+revealed+' of '+total+' clubs \u2014 each wrong guess reveals the next':'All '+total+' clubs shown');
+}
+buildPath(false);
+
+function addRow(name,ok){
+  var row=document.createElement('div');row.className='grow '+(ok?'ok':'no');
+  row.innerHTML='<span class="gico">'+(ok?'\u2705':'\u274c')+'</span><span class="gnm">'+name+'</span>';
+  document.getElementById('guesses').appendChild(row);
+  var pip=document.getElementById('p'+(guesses-1));if(pip)pip.classList.add(ok?'ok':'no');
+}
+function finish(won){
+  over=true;document.getElementById('ginput').disabled=true;hideSugg();buildPath(true);
+  if(typeof saveResult==='function'){var sc=won?Math.max(1,7-guesses):0;saveResult('career-path','Career Path',sc,6,won);}
+  document.getElementById('status').textContent='';
+  var area=document.getElementById('rarea');
+  var body='<div class="rbox '+(won?'win':'lose')+'"><div class="ricon">'+(won?'\uD83C\uDFC6':'\u274c')+'</div>'
+    +'<div class="rtitle">'+(won?'Correct!':'Unlucky!')+'</div>'
+    +'<div class="rsub">'+(won?'That was':'It was')+' <b>'+PLAYER.name+'</b></div>'
+    +'<button class="sbtn" onclick="shareResult('+(won?'true':'false')+')">Share \uD83D\uDCCB</button></div>';
+  area.innerHTML=body;
+}
+function shareResult(won){
+  var today=new Date().toLocaleDateString('en-AU'),pips='';
+  for(var i=0;i<6;i++){var p=document.getElementById('p'+i);pips+=p.classList.contains('ok')?'\uD83D\uDFE9':p.classList.contains('no')?'\uD83D\uDFE5':'\u2B1C';}
+  var txt='SportsStack \u2014 Career Path \u00b7 '+today+'\n'+(won?'\u2705 '+guesses+'/6':'\u274c X/6')+' \u00b7 '+revealed+'/'+PLAYER.clubs.length+' clubs shown\n'+pips+'\nsportsstack.com.au/career-path.html';
+  navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){var b=document.querySelector('.sbtn');if(b){b.textContent='Copied!';setTimeout(function(){b.textContent='Share \uD83D\uDCCB';},2000);}});
+}
+function doGuess(){
+  if(over)return;
+  var inp=document.getElementById('ginput'),val=inp.value.trim();if(!val)return;
+  inp.value='';hideSugg();guesses++;
+  var ok=isMatch(val);addRow(val,ok);
+  if(ok){finish(true);return;}
+  if(revealed<PLAYER.clubs.length)revealed++;
+  buildPath(false);
+  if(guesses>=MAX)finish(false);
+}
+function hideSugg(){var b=document.getElementById('sbox');b.style.display='none';b.innerHTML='';}
+function buildSugg(val){
+  if(over||val.length<2){hideSugg();return;}
+  var nv=norm(val),seen={},hits=[];
+  for(var i=0;i<PLAYERS.length;i++){var p=PLAYERS[i];if(seen[p.name])continue;var pn=norm(p.name);if(pn.indexOf(nv)===0||p.acc.some(function(a){return norm(a).indexOf(nv)===0;})||lev(nv,pn)<=2){seen[p.name]=1;hits.push(p);}if(hits.length>=6)break;}
+  if(!hits.length){hideSugg();return;}
+  var box=document.getElementById('sbox');
+  box.innerHTML=hits.map(function(h){var s=h.name.replace(/&/g,'&amp;').replace(/"/g,'&quot;');return '<div class="si" data-n="'+s+'">'+s+'</div>';}).join('');
+  box.style.display='block';
+  box.querySelectorAll('.si').forEach(function(el){el.addEventListener('mousedown',function(e){e.preventDefault();document.getElementById('ginput').value=el.getAttribute('data-n').replace(/&amp;/g,'&').replace(/&quot;/g,'"');hideSugg();});});
+}
+document.getElementById('ginput').addEventListener('input',function(e){buildSugg(e.target.value.trim());});
+document.getElementById('ginput').addEventListener('keydown',function(e){if(e.key==='Enter')doGuess();if(e.key==='Escape')hideSugg();});
+document.addEventListener('click',function(e){if(!e.target.closest('#iwrap'))hideSugg();});
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="sportstack-member.js?v=4"></script>
+</body></html>

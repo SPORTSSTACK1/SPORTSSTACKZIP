@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Pl Tots 2019 2020 — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/pl-tots-2019-2020.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>PL Team of the Season 2019/20 – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
+  --gold:#f5c842;--blue:#2563eb;--blue-light:#3b82f6;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.14);--green-border:rgba(34,197,94,.55);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.12);--red-border:rgba(239,68,68,.45);
+  --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;
+  --border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:720px;margin:0 auto;padding:16px 10px 40px}
+@media(max-width:480px){
+  .pitch-wrap{padding:16px 6px}
+  .formation{gap:10px}
+  .score-bar{gap:8px;margin-bottom:8px}
+  .score-pill,.timer-pill{padding:5px 12px;font-size:12px}
+  .btn-give-up{padding:7px 14px;font-size:12px}
+}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.game-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(20px,4.5vw,36px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--text);line-height:1}
+.game-name .hl{color:var(--gold)}
+.game-sub{font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:5px}
+.score-bar{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+.score-pill,.timer-pill{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 18px;border-radius:20px;background:var(--surface2);border:1px solid var(--border-bright);color:var(--text-muted)}
+.score-pill span{color:var(--gold)}
+.timer-pill span{color:var(--text)}
+.timer-pill.urgent span{color:#ef4444}
+.msg{font-size:13px;color:var(--gold);min-height:20px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.btn-give-up{display:block;margin:0 auto 14px;padding:8px 20px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text-muted);transition:all .2s}
+.btn-give-up:hover{border-color:var(--red);color:var(--red)}
+
+/* ── Pitch ── */
+.pitch-wrap{
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.022) 0px,rgba(255,255,255,.022) 46px,transparent 46px,transparent 92px),
+    linear-gradient(180deg,#1b4a1f 0%,#1e5222 50%,#1b4a1f 100%);
+  border-radius:14px;border:2px solid rgba(255,255,255,.1);
+  padding:24px 12px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5);
+}
+.pitch-wrap::before{content:'';position:absolute;left:6%;right:6%;top:50%;height:1px;background:rgba(255,255,255,.12);pointer-events:none}
+.pitch-wrap::after{content:'';position:absolute;left:50%;top:50%;width:72px;height:72px;margin:-36px 0 0 -36px;border:1px solid rgba(255,255,255,.12);border-radius:50%;pointer-events:none}
+.formation{display:flex;flex-direction:column;gap:14px;position:relative;z-index:1}
+.form-row{display:flex;justify-content:center;gap:clamp(4px,1.5vw,10px);align-items:flex-start}
+
+/* ── Shirt card — scales with viewport ── */
+.shirt-card{display:flex;flex-direction:column;align-items:center;width:clamp(72px,20vw,106px)}
+.shirt-svg-wrap{
+  width:clamp(64px,18vw,96px);
+  height:clamp(72px,20vw,108px);
+  position:relative;transition:filter .35s,transform .25s
+}
+.shirt-card.found .shirt-svg-wrap{filter:drop-shadow(0 0 10px rgba(34,197,94,.5));transform:scale(1.04)}
+.shirt-card.revealed .shirt-svg-wrap{filter:drop-shadow(0 0 6px rgba(239,68,68,.4))}
+
+/* pos label on shirt */
+.shirt-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:16%;pointer-events:none;z-index:2}
+.shirt-pos{font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,2.2vw,11px);font-weight:900;letter-spacing:.14em;text-transform:uppercase;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.shirt-q{font-size:clamp(20px,6vw,30px);font-weight:900;line-height:1;transition:opacity .3s;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.shirt-card.found .shirt-q,.shirt-card.revealed .shirt-q{opacity:0!important}
+
+/* ── Labels under shirt ── */
+.shirt-club-label{margin-top:5px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,2vw,11px);font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);text-align:center;line-height:1.3}
+.shirt-nat-label{font-size:clamp(12px,3.5vw,16px);text-align:center;opacity:0;transition:opacity .5s;height:20px;line-height:1}
+.shirt-nat-label.visible{opacity:1}
+.shirt-card.found .shirt-nat-label{opacity:0!important}
+
+/* ── Per-shirt input ── */
+.shirt-input-wrap{margin-top:5px;width:clamp(64px,18vw,100px)}
+.shirt-input{width:100%;font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,2.5vw,12px);font-weight:700;padding:5px 4px;border:1.5px solid var(--border-bright);border-radius:8px;background:var(--surface2);color:var(--text);outline:none;text-align:center;transition:border-color .2s,background .2s,color .2s;letter-spacing:.04em}
+.shirt-input::placeholder{color:var(--text-dim);font-weight:400;font-size:clamp(9px,2.2vw,11px)}
+.shirt-input:focus{border-color:var(--blue-light)}
+.shirt-input.correct{border-color:var(--green-border);background:var(--green-bg);color:#86efac;cursor:default}
+.shirt-input.wrong{border-color:var(--red-border);background:rgba(239,68,68,.1)}
+.shirt-input.miss{border-color:var(--red-border);background:rgba(239,68,68,.1);color:#fca5a5;cursor:default}
+
+/* ── Result ── */
+.result-banner{border-radius:var(--radius-lg);padding:1.1rem 1.25rem;text-align:center;margin-top:18px;border:1px solid}
+.result-banner.win{border-color:var(--green-border);background:var(--green-bg)}
+.result-banner.lose{border-color:var(--red-border);background:var(--red-bg)}
+.rb-icon{font-size:32px;margin-bottom:6px}
+.rb-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-banner.win .rb-title{color:#86efac}.result-banner.lose .rb-title{color:#fca5a5}
+.rb-sub{font-size:13px;color:var(--text-muted)}
+.share-btn{margin-top:12px;display:inline-block;padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+
+.next-quiz-wrap{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);text-align:center}
+.next-quiz-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.next-quiz-link{display:inline-block;margin-top:6px;padding:10px 22px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--bg);text-decoration:none;transition:all .2s}
+.next-quiz-link:hover{background:#ffd700;transform:translateY(-1px)}
+
+.shirt-card{cursor:default;transition:transform .15s}
+.shirt-card.selected .shirt-svg-wrap{filter:drop-shadow(0 0 12px rgba(245,200,66,.7));transform:scale(1.08)}
+.shirt-card.selected{outline:none}
+.shirt-name-label{margin-top:3px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,2vw,11px);font-weight:800;color:var(--text-muted);text-align:center;min-height:14px;line-height:1.2}
+.input-area{display:flex;align-items:center;gap:10px;padding:10px 12px 4px;flex-shrink:0}
+.global-input{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,3.5vw,22px);font-weight:700;padding:10px 16px;border:2px solid var(--border-bright);border-radius:12px;background:var(--surface2);color:var(--text);outline:none;text-align:center;transition:border-color .2s,background .2s;letter-spacing:.04em}
+.global-input::placeholder{color:var(--text-dim);font-weight:400}
+.global-input:focus{border-color:var(--blue-light);background:var(--surface3)}
+.global-input.wrong{border-color:var(--red-border);background:rgba(239,68,68,.1);animation:shake .3s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.shirt-nat-label.visible{opacity:1}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TL0NM71G5M');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="page">
+<header class="site-header">
+  <div class="game-name">PL Team of the Season <span class="hl">2019/20</span></div>
+  <div class="game-sub">Name all 11 players · 4 minutes · 4-3-3</div>
+</header>
+<div class="score-bar">
+  <div class="score-pill"><span id="found-count">0</span> / 11 players</div>
+  <div class="timer-pill" id="timer-pill">⏱ <span id="timer">4:00</span></div>
+</div>
+<div class="msg" id="msg">&nbsp;</div>
+<div class="input-area" id="input-area">
+  <input class="global-input" id="global-input" type="text" placeholder="Type any player name…" autocomplete="off" spellcheck="false"/>
+</div>
+<button class="btn-give-up" id="give-up-btn" onclick="giveUp()">Give up &amp; reveal</button>
+<div class="pitch-wrap"><div class="formation" id="formation"></div></div>
+<div id="result"></div>
+</div>
+<script>
+const CLUBS = {
+  "Man United":       {body:"#cc0a0a", posCol:"#fff", pattern:"plain"},
+  "Arsenal":          {body:"#ee0208", posCol:"#fff", pattern:"plain"},
+  "Liverpool":        {body:"#c0001e", posCol:"#fff", pattern:"white_sleeves", sleeveCol:"#ffffff"},
+  "Chelsea":          {body:"#034694", posCol:"#fff", pattern:"plain"},
+  "Tottenham":        {body:"#f0f0f0", posCol:"#1a1a2e", pattern:"plain"},
+  "Man City":         {body:"#6caddf", posCol:"#fff", pattern:"plain"},
+  "Newcastle United": {body:"#1a1a2e", posCol:"#fff", pattern:"stripes_v", stripeCol:"#f0f0f0"},
+  "Everton":          {body:"#003ea8", posCol:"#fff", pattern:"plain"},
+  "Aston Villa":      {body:"#7b0033", posCol:"#fff", pattern:"plain"},
+  "Birmingham City":  {body:"#1e3a8a", posCol:"#fff", pattern:"plain"},
+  "Southampton":      {body:"#d01c1c", posCol:"#fff", pattern:"stripes_v", stripeCol:"#f0f0f0"},
+  "Leicester City":   {body:"#003090", posCol:"#fff", pattern:"plain"},
+  "West Ham":         {body:"#7f1734", posCol:"#fff", pattern:"plain"},
+  "Blackburn Rovers": {body:"#1e4fa8", posCol:"#fff", pattern:"halves", halfCol:"#f0f0f0"},
+  "Crystal Palace":   {body:"#c4122f", posCol:"#fff", pattern:"stripes_v", stripeCol:"#1b458b"},
+  "Wigan Athletic":   {body:"#1a3c6e", posCol:"#fff", pattern:"plain"},
+  "Portsmouth":       {body:"#001489", posCol:"#fff", pattern:"plain"},
+  "Burnley":          {body:"#6c1d45", posCol:"#fff", pattern:"plain"},
+};
+
+const FORMATION = [
+  [{name:"Jamie Vardy",aliases:["vardy","jamie vardy"],pos:"FW",club:"Leicester City",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},{name:"Pierre-Emerick Aubameyang",aliases:["aubameyang","pierre-emerick aubameyang","auba"],pos:"FW",club:"Arsenal",flag:"🇬🇦"},{name:"Sadio Mane",aliases:["mane","sadio mane"],pos:"FW",club:"Liverpool",flag:"🇸🇳"}],
+  [{name:"Kevin De Bruyne",aliases:["de bruyne","kevin de bruyne"],pos:"MF",club:"Man City",flag:"🇧🇪"},{name:"David Silva",aliases:["silva","david silva"],pos:"MF",club:"Man City",flag:"🇪🇸"},{name:"Jordan Henderson",aliases:["henderson","jordan henderson"],pos:"MF",club:"Liverpool",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"}],
+  [{name:"Trent Alexander-Arnold",aliases:["trent","alexander-arnold","trent alexander-arnold"],pos:"DF",club:"Liverpool",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},{name:"Virgil van Dijk",aliases:["van dijk","virgil van dijk"],pos:"DF",club:"Liverpool",flag:"🇳🇱"},{name:"Caglar Soyuncu",aliases:["soyuncu","caglar soyuncu"],pos:"DF",club:"Leicester City",flag:"🇹🇷"},{name:"Andy Robertson",aliases:["robertson","andy robertson"],pos:"DF",club:"Liverpool",flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿"}],
+  [{name:"Nick Pope",aliases:["pope","nick pope"],pos:"GK",club:"Burnley",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"}],
+];
+
+const HIDDEN_COL = '#0a1628';
+
+function buildShirtSVG(uid, clubName, isHidden){
+  const C = isHidden ? null : CLUBS[clubName];
+  const body = isHidden ? HIDDEN_COL : C.body;
+  const grad = 'g'+uid, pat = 'p'+uid;
+  let defs = `<linearGradient id="${grad}" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="${body}" stop-opacity="1"/><stop offset="100%" stop-color="${body}" stop-opacity=".7"/></linearGradient>`;
+  let bodyFill = `url(#${grad})`, extra = '';
+  if(!isHidden){
+    if(C.pattern==='stripes_v'){
+      defs+=`<pattern id="${pat}" patternUnits="userSpaceOnUse" width="9" height="100"><rect width="4.5" height="100" fill="${C.body}"/><rect x="4.5" width="4.5" height="100" fill="${C.stripeCol}"/></pattern>`;
+      defs+=`<clipPath id="cp${uid}"><path d="M28,16 L12,6 L0,20 L12,34 L22,29 L22,90 L64,90 L64,29 L74,34 L86,20 L74,6 L58,16 Q43,30 28,16 Z"/></clipPath>`;
+      extra+=`<rect x="0" y="0" width="86" height="92" fill="url(#${pat})" clip-path="url(#cp${uid})"/>`;
+      extra+=`<path d="M28,16 L12,6 L0,20 L12,34 L22,29 L22,90 L64,90 L64,29 L74,34 L86,20 L74,6 L58,16 Q43,30 28,16 Z" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>`;
+    } else if(C.pattern==='stripes_h'){
+      defs+=`<pattern id="${pat}" patternUnits="userSpaceOnUse" width="100" height="10"><rect width="100" height="5" fill="${C.body}"/><rect y="5" width="100" height="5" fill="${C.stripeCol}"/></pattern>`;
+      defs+=`<clipPath id="cp${uid}"><path d="M28,16 L12,6 L0,20 L12,34 L22,29 L22,90 L64,90 L64,29 L74,34 L86,20 L74,6 L58,16 Q43,30 28,16 Z"/></clipPath>`;
+      extra+=`<rect x="0" y="0" width="86" height="92" fill="url(#${pat})" clip-path="url(#cp${uid})"/>`;
+      extra+=`<path d="M28,16 L12,6 L0,20 L12,34 L22,29 L22,90 L64,90 L64,29 L74,34 L86,20 L74,6 L58,16 Q43,30 28,16 Z" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>`;
+    } else if(C.pattern==='halves'){
+      defs+=`<clipPath id="cp${uid}"><path d="M28,16 L12,6 L0,20 L12,34 L22,29 L22,90 L64,90 L64,29 L74,34 L86,20 L74,6 L58,16 Q43,30 28,16 Z"/></clipPath>`;
+      extra+=`<rect x="43" y="0" width="43" height="92" fill="${C.halfCol}" clip-path="url(#cp${uid})"/>`;
+      extra+=`<path d="M28,16 L12,6 L0,20 L12,34 L22,29 L22,90 L64,90 L64,29 L74,34 L86,20 L74,6 L58,16 Q43,30 28,16 Z" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>`;
+      extra+=`<line x1="43" y1="16" x2="43" y2="90" stroke="rgba(0,0,0,0.18)" stroke-width="0.8"/>`;
+    } else if(C.pattern==='white_sleeves'){
+      extra+=`<path d="M12,6 L0,20 L12,34 L22,29 Z" fill="${C.sleeveCol}" opacity="0.92"/>`;
+      extra+=`<path d="M74,6 L86,20 L74,34 L64,29 Z" fill="${C.sleeveCol}" opacity="0.92"/>`;
+      extra+=`<line x1="22" y1="29" x2="12" y2="6" stroke="rgba(0,0,0,0.18)" stroke-width="0.7"/>`;
+      extra+=`<line x1="64" y1="29" x2="74" y2="6" stroke="rgba(0,0,0,0.18)" stroke-width="0.7"/>`;
+    }
+  }
+  return `<svg viewBox="0 0 86 92" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;width:100%;height:100%">
+    <defs>${defs}</defs>
+    <path d="M28,16 L12,6 L0,20 L12,34 L22,29 L22,90 L64,90 L64,29 L74,34 L86,20 L74,6 L58,16 Q43,30 28,16 Z" fill="${bodyFill}" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+    ${extra}
+    <path d="M12,6 Q43,2 74,6 L62,20 Q43,26 24,20 Z" fill="${body}"/>
+    <path d="M12,6 Q43,2 74,6" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="1"/>
+    <path d="M24,20 Q43,26 62,20" fill="none" stroke="rgba(0,0,0,0.14)" stroke-width="0.8"/>
+    <rect x="41.5" y="20" width="3" height="5" rx="1" fill="${body}" opacity="0.6"/>
+    <path d="M22,29 L64,29 L64,52 Q43,56 22,52 Z" fill="rgba(0,0,0,0.05)"/>
+  </svg>`;
+}
+
+const ALL_PLAYERS = FORMATION.flat();
+const found = new Set();
+let done = false, secondsLeft = 240, timerInterval = null, hintShown = false, uidCtr = 0;
+let activePlayer = null; // which shirt is currently focused
+
+function normalise(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim(); }
+
+function matches(player, val){
+  const nv = normalise(val); if(!nv) return false;
+  const surname = normalise(player.name.split(' ').pop());
+  return normalise(player.name) === nv || surname === nv || player.aliases.some(a => normalise(a) === nv);
+}
+
+function levenshtein(a, b){
+  const m=a.length, n=b.length;
+  const dp = Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:i===0?j:0));
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++) dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+function buildFormation(){
+  const container = document.getElementById('formation');
+  container.innerHTML = '';
+  FORMATION.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'form-row';
+    row.forEach(player => {
+      const uid = 'u'+(uidCtr++);
+      const cid = 'card-'+normalise(player.name).replace(/\s/g,'-');
+      const sid = 'svg-'+normalise(player.name).replace(/\s/g,'-');
+      const nid = 'nat-'+normalise(player.name).replace(/\s/g,'-');
+      const card = document.createElement('div');
+      card.className = 'shirt-card';
+      card.id = cid;
+      card.setAttribute('data-player', player.name);
+      card.innerHTML =
+        `<div class="shirt-svg-wrap" id="${sid}">` +
+          buildShirtSVG(uid, player.club, true) +
+          `<div class="shirt-overlay">` +
+            `<div class="shirt-pos" style="color:#f5c842">${player.pos}</div>` +
+            `<div class="shirt-q" style="color:#1e3560;opacity:0.22">?</div>` +
+          `</div>` +
+        `</div>` +
+        `<div class="shirt-club-label" id="lbl-${normalise(player.name).replace(/\s/g,'-')}">${player.club}</div>` +
+        `<div class="shirt-nat-label" id="${nid}">${player.flag}</div>`;
+      card.addEventListener('click', () => selectShirt(player.name));
+      rowEl.appendChild(card);
+    });
+    container.appendChild(rowEl);
+  });
+  // Select first unfound player automatically
+  // selectNextUnfound();
+  document.getElementById('global-input').focus();
+}
+
+function selectShirt(playerName){
+  // No longer required — input accepts all players directly
+}
+
+function selectNextUnfound(){
+  const next = ALL_PLAYERS.find(p => !found.has(p.name));
+  if(next) selectShirt(next.name);
+  else { activePlayer = null; }
+}
+
+function handleGlobalGuess(){
+  if(done) return;
+  const inp = document.getElementById('global-input');
+  const val = inp.value.trim();
+  if(!val) return;
+  const player = ALL_PLAYERS.find(p => !found.has(p.name) && matches(p, val));
+  if(player){
+    found.add(player.name);
+    inp.value = '';
+    const cid = 'card-'+normalise(player.name).replace(/\s/g,'-');
+    const card = document.getElementById(cid);
+    card.classList.remove('selected');
+    card.classList.add('found');
+    const lbl = document.getElementById('lbl-'+normalise(player.name).replace(/\s/g,'-'));
+    if(lbl) lbl.textContent = player.name;
+    revealShirtColour(player.name);
+    document.getElementById('found-count').textContent = found.size;
+    flash('\u2713 '+player.name);
+    if(found.size === ALL_PLAYERS.length){ endGame(true); return; }
+    inp.focus();
+  } else {
+    const nv = normalise(val);
+    const fuzzy = nv.length >= 3 ? ALL_PLAYERS.filter(p => !found.has(p.name)).find(p => {
+      const cands = [normalise(p.name), normalise(p.name.split(' ').pop()), ...p.aliases.map(a => normalise(a))];
+      return cands.some(t => levenshtein(nv, t) <= 2);
+    }) : null;
+    if(fuzzy){
+      const surname = fuzzy.name.split(' ').pop();
+      flashClickable('Did you mean ', surname, '?', () => { inp.value = surname; handleGlobalGuess(); });
+      inp.classList.add('wrong');
+      setTimeout(() => { inp.classList.remove('wrong'); inp.select(); }, 700);
+    } else {
+      inp.classList.add('wrong');
+      inp.value = '';
+      setTimeout(() => inp.classList.remove('wrong'), 600);
+    }
+  }
+}
+
+function flashClickable(pre, word, post, onClick){
+  const el = document.getElementById('msg');
+  el.innerHTML = pre + '<span id="flash-suggestion" style="cursor:pointer;text-decoration:underline;color:#ffd700;padding:2px 4px;">' + word + '</span>' + post;
+  // Use mousedown instead of click so it fires before blur
+  document.getElementById('flash-suggestion').addEventListener('mousedown', e => {
+    e.preventDefault(); // prevent input blur
+    onClick();
+  }, {once:true});
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.innerHTML = '&nbsp;', 3000);
+}
+
+function revealShirtColour(playerName){
+  const player = ALL_PLAYERS.find(p => p.name === playerName);
+  const uid = 'u'+(uidCtr++);
+  const sid = 'svg-'+normalise(playerName).replace(/\s/g,'-');
+  const wrap = document.getElementById(sid); if(!wrap) return;
+  wrap.innerHTML = buildShirtSVG(uid, player.club, false) +
+    `<div class="shirt-overlay"><div class="shirt-pos" style="color:#f5c842">${player.pos}</div><div class="shirt-q" style="opacity:0">?</div></div>`;
+}
+
+function flash(msg){
+  const el = document.getElementById('msg');
+  el.textContent = msg;
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.innerHTML = '&nbsp;', 1800);
+}
+
+function startTimer(){
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    const m = Math.floor(secondsLeft/60), s = secondsLeft%60;
+    document.getElementById('timer').textContent = m+':'+String(s).padStart(2,'0');
+    if(secondsLeft <= 30) document.getElementById('timer-pill').classList.add('urgent');
+    if(secondsLeft === 60 && !hintShown && !done){
+      hintShown = true;
+      ALL_PLAYERS.forEach(p => {
+        if(!found.has(p.name)){
+          const el = document.getElementById('nat-'+normalise(p.name).replace(/\s/g,'-'));
+          if(el) el.classList.add('visible');
+        }
+      });
+      flash('\u29d6 Nationality clue unlocked!');
+    }
+    if(secondsLeft <= 0){ clearInterval(timerInterval); endGame(false); }
+  }, 1000);
+}
+
+function giveUp(){
+  if(done) return;
+  clearInterval(timerInterval);
+  revealAll(); done = true;
+  document.getElementById('give-up-btn').style.display = 'none';
+  document.getElementById('input-area').style.display = 'none';
+  showResult(false, true);
+}
+
+function endGame(won){
+  done = true; clearInterval(timerInterval);
+  if(!won) revealAll();
+  document.getElementById('give-up-btn').style.display = 'none';
+  document.getElementById('input-area').style.display = 'none';
+  showResult(won, false);
+}
+
+function revealAll(){
+  ALL_PLAYERS.forEach(p => {
+    if(!found.has(p.name)){
+      const cid = 'card-'+normalise(p.name).replace(/\s/g,'-');
+      document.getElementById(cid).classList.remove('selected');
+      document.getElementById(cid).classList.add('revealed');
+      revealShirtColour(p.name);
+      const nid = 'nat-'+normalise(p.name).replace(/\s/g,'-');
+      // Show name on revealed shirts via overlay
+      const wrap = document.getElementById('svg-'+normalise(p.name).replace(/\s/g,'-'));
+      if(wrap){
+        const overlay = wrap.querySelector('.shirt-overlay');
+        if(overlay) overlay.innerHTML = `<div class="shirt-pos" style="color:#f5c842">${p.pos}</div>`;
+      }
+      // swap club label to player name
+      const lbl = document.getElementById('lbl-'+normalise(p.name).replace(/\s/g,'-'));
+      if(lbl) lbl.textContent = p.name;
+    }
+  });
+}
+
+function showResult(won,gaveUp){
+  const r=document.getElementById("result");
+  const perfect=found.size===ALL_PLAYERS.length;
+  let icon,title,sub;
+  if(perfect&&!gaveUp){icon="🏆";title="Perfect Score!";sub="You named all 11 in the 2019/20 Team of the Season!";}
+  else if(gaveUp){icon="🏳️";title="Better luck next time";sub=found.size+" / 11 players named.";}
+  else{icon="⏱";title="Time's Up!";sub=found.size+" / 11 players named.";}
+  const cls=(perfect&&!gaveUp)?"win":"lose";
+  r.innerHTML='<div class="result-banner '+cls+'">'+
+    '<div class="rb-icon">'+icon+'</div>'+
+    '<div class="rb-title">'+title+'</div>'+
+    '<div class="rb-sub">'+sub+'</div>'+
+    '<button class="share-btn" onclick="copyResult()">Share result</button>'+
+    '<div class="next-quiz-wrap"><div class="next-quiz-label">Why not try next?</div>'+
+    '<a class="next-quiz-link" href="pl-tots-2020-2021.html">2020/21 Team of the Season →</a></div></div>';
+}
+function copyResult(){
+  const e=240-secondsLeft,m=Math.floor(e/60),s=e%60;
+  const txt="SportsStack — 2019/20 Team of the Season\n"+found.size+"/11"
+    +(found.size===11?" · "+m+"m "+s+"s":"")+"\nsportstack.com";
+  const b=document.querySelector(".share-btn");
+  if(navigator.clipboard)navigator.clipboard.writeText(txt)
+    .then(()=>{b.textContent="Copied!";setTimeout(()=>b.textContent="Share result",2000);});
+}
+
+buildFormation();
+startTimer();
+// Wire up global input
+document.getElementById("global-input").addEventListener("keydown", e => {
+  if(e.key === "Enter") handleGlobalGuess();
+});
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="T20I Wicket Takers Quiz — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/t20i-wicket-takers-quiz.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>T20I Cricket All-Time Wicket Takers – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--green:#22c55e;--red:#ef4444;--radius:10px}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:680px;margin:0 auto;padding:20px 14px 60px}
+.game-header{text-align:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,36px);font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:5px}
+.hud{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.hud-pill{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 16px;border-radius:20px;background:var(--surface2);border:1px solid var(--border-bright);color:var(--text-muted)}
+.hud-pill span{color:var(--gold)}.timer-pill.urgent span{color:var(--red)!important}
+.input-wrap{position:relative;margin-bottom:14px}
+.guess-input{width:100%;font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,3.5vw,22px);font-weight:700;padding:12px 16px;border:2px solid var(--border-bright);border-radius:12px;background:var(--surface2);color:var(--text);outline:none;text-align:center;letter-spacing:.04em;transition:border-color .2s,background .2s}
+.guess-input:focus{border-color:#3b82f6}
+.guess-input.wrong{border-color:var(--red);background:rgba(239,68,68,.08)}
+.sugg-box{position:absolute;top:100%;left:0;right:0;z-index:50;background:var(--surface);border:1px solid var(--border-bright);border-radius:10px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.sugg-item{padding:10px 16px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--text);cursor:pointer;border-bottom:1px solid var(--border);transition:background .15s}
+.sugg-item:last-child{border-bottom:none}
+.sugg-item:hover{background:var(--surface2);color:var(--gold)}
+.tower{display:flex;flex-direction:column;gap:6px}
+.rank-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:all .3s}
+.rank-row.found{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4)}
+.rank-row.revealed{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.3)}
+.rank-num{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text-dim);width:32px;text-align:center;flex-shrink:0}
+.rank-row.found .rank-num,.rank-row.revealed .rank-num{color:var(--gold)}
+.rank-row:nth-child(1) .rank-num{color:#ffd700;font-size:26px}
+.rank-row:nth-child(2) .rank-num{color:#c0c0c0;font-size:24px}
+.rank-row:nth-child(3) .rank-num{color:#cd7f32;font-size:23px}
+.rank-info{flex:1;min-width:0}
+.rank-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,3vw,18px);font-weight:800;letter-spacing:.04em;min-height:22px;display:flex;align-items:center;gap:6px}
+.rank-flag{font-size:16px;opacity:0;transition:opacity .5s;flex-shrink:0}
+.rank-flag.visible{opacity:1}
+.rank-stat{font-size:12px;color:var(--text-muted);margin-top:2px}
+.rank-bar-wrap{width:80px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;flex-shrink:0}
+.rank-bar{height:100%;background:linear-gradient(90deg,#3b82f6,var(--gold));border-radius:2px;transition:width .6s ease}
+.rank-val{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--gold);width:68px;text-align:right;flex-shrink:0}
+.result-banner{border-radius:14px;padding:20px;text-align:center;margin-top:18px;border:1px solid}
+.result-banner.win{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.08)}
+.result-banner.lose{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.06)}
+.rb-icon{font-size:36px;margin-bottom:8px}
+.rb-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-banner.win .rb-title{color:#86efac}.result-banner.lose .rb-title{color:#fca5a5}
+.rb-sub{font-size:14px;color:var(--text-muted);margin-bottom:14px}
+.share-btn{padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="page">
+  <header class="game-header">
+    <div class="game-title">T20I Cricket <span class="hl">All-Time Wicket Takers</span></div>
+    <div class="game-subtitle">Name the top 10 wicket takers in T20I cricket history · 4 minutes</div>
+  </header>
+  <div class="hud">
+    <div class="hud-pill"><span id="remain-count">10</span> remaining</div>
+    <div class="hud-pill timer-pill" id="timer-pill">⏱ <span id="timer">4:00</span></div>
+    <div class="hud-pill"><span id="score">0</span> / 10</div>
+  </div>
+  <div class="input-wrap">
+    <input id="guess-input" class="guess-input" type="text" placeholder="Type a name…" autocomplete="off" spellcheck="false"/>
+    <div id="sugg-box" class="sugg-box" style="display:none"></div>
+  </div>
+  <div id="msg" style="text-align:center;font-size:13px;color:var(--gold);min-height:20px;margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;font-weight:700"></div>
+  <div class="tower">
+  <div class="rank-row" id="row-1">
+    <div class="rank-num">#1</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-1">🇦🇫</span><span id="rname-1">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-1" style="width:100%"></div></div>
+    <div class="rank-val" id="rval-1">165 wkts</div>
+  </div>
+  <div class="rank-row" id="row-2">
+    <div class="rank-num">#2</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-2">🇳🇿</span><span id="rname-2">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-2" style="width:99%"></div></div>
+    <div class="rank-val" id="rval-2">164 wkts</div>
+  </div>
+  <div class="rank-row" id="row-3">
+    <div class="rank-num">#3</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-3">🇧🇩</span><span id="rname-3">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-3" style="width:85%"></div></div>
+    <div class="rank-val" id="rval-3">140 wkts</div>
+  </div>
+  <div class="rank-row" id="row-4">
+    <div class="rank-num">#4</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-4">🇳🇿</span><span id="rname-4">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-4" style="width:91%"></div></div>
+    <div class="rank-val" id="rval-4">150 wkts</div>
+  </div>
+  <div class="rank-row" id="row-5">
+    <div class="rank-num">#5</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-5">🇱🇰</span><span id="rname-5">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-5" style="width:65%"></div></div>
+    <div class="rank-val" id="rval-5">107 wkts</div>
+  </div>
+  <div class="rank-row" id="row-6">
+    <div class="rank-num">#6</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-6">🇱🇰</span><span id="rname-6">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-6" style="width:73%"></div></div>
+    <div class="rank-val" id="rval-6">120 wkts</div>
+  </div>
+  <div class="rank-row" id="row-7">
+    <div class="rank-num">#7</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-7">🇮🇪</span><span id="rname-7">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-7" style="width:78%"></div></div>
+    <div class="rank-val" id="rval-7">128 wkts</div>
+  </div>
+  <div class="rank-row" id="row-8">
+    <div class="rank-num">#8</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-8">🇦🇺</span><span id="rname-8">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-8" style="width:70%"></div></div>
+    <div class="rank-val" id="rval-8">115 wkts</div>
+  </div>
+  <div class="rank-row" id="row-9">
+    <div class="rank-num">#9</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-9">🇳🇿</span><span id="rname-9">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-9" style="width:74%"></div></div>
+    <div class="rank-val" id="rval-9">122 wkts</div>
+  </div>
+  <div class="rank-row" id="row-10">
+    <div class="rank-num">#10</div>
+    <div class="rank-info">
+      <div class="rank-name"><span class="rank-flag" id="flag-10">🇵🇰</span><span id="rname-10">?</span></div>
+      <div class="rank-stat">T20I wickets</div>
+    </div>
+    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-10" style="width:67%"></div></div>
+    <div class="rank-val" id="rval-10">110 wkts</div>
+  </div>
+  </div>
+  <div id="result"></div>
+</div>
+<script>
+const ENTRIES = [
+  {rank:1,name:"Rashid Khan",accepted:["rashid","rashid khan"],stat:165,statDisp:"165 wkts",flag:"🇦🇫"},
+  {rank:2,name:"Tim Southee",accepted:["southee","tim southee"],stat:164,statDisp:"164 wkts",flag:"🇳🇿"},
+  {rank:3,name:"Shakib Al Hasan",accepted:["shakib","shakib al hasan"],stat:140,statDisp:"140 wkts",flag:"🇧🇩"},
+  {rank:4,name:"Ish Sodhi",accepted:["sodhi","ish sodhi"],stat:150,statDisp:"150 wkts",flag:"🇳🇿"},
+  {rank:5,name:"Lasith Malinga",accepted:["malinga","lasith malinga"],stat:107,statDisp:"107 wkts",flag:"🇱🇰"},
+  {rank:6,name:"Wanindu Hasaranga",accepted:["hasaranga","wanindu hasaranga"],stat:120,statDisp:"120 wkts",flag:"🇱🇰"},
+  {rank:7,name:"Mark Adair",accepted:["adair","mark adair"],stat:128,statDisp:"128 wkts",flag:"🇮🇪"},
+  {rank:8,name:"Adam Zampa",accepted:["zampa","adam zampa"],stat:115,statDisp:"115 wkts",flag:"🇦🇺"},
+  {rank:9,name:"Mitch Santner",accepted:["santner","mitch santner"],stat:122,statDisp:"122 wkts",flag:"🇳🇿"},
+  {rank:10,name:"Imad Wasim",accepted:["imad","imad wasim"],stat:110,statDisp:"110 wkts",flag:"🇵🇰"}
+];
+const TOTAL = ENTRIES.length;
+const TOTAL_SECS = 240;
+let secsLeft = TOTAL_SECS, timerInterval = null, foundIds = new Set(), gameActive = false, hintShown = false;
+
+function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim(); }
+function levenshtein(a,b){
+  const m=a.length,n=b.length;
+  if(!m)return n;if(!n)return m;
+  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:i===0?j:0));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+function showMsg(txt,dur=2000){
+  const el=document.getElementById('msg');
+  el.textContent=txt;
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.textContent='',dur);
+}
+
+function revealRow(rank){
+  const e=ENTRIES.find(x=>x.rank===rank);
+  if(!e||foundIds.has(rank))return;
+  foundIds.add(rank);
+  const row=document.getElementById('row-'+rank);
+  if(row)row.classList.add('found');
+  const rn=document.getElementById('rname-'+rank);
+  if(rn)rn.textContent=e.name;
+  const flagEl=document.getElementById('flag-'+rank);
+  if(flagEl)flagEl.classList.add('visible');
+}
+
+
+  function fillAllMatching(acceptedArr) {
+    // single fill only - find first unfound match
+    for (const e of ENTRIES) {
+      if (foundIds.has(e.rank)) continue;
+      if (e.accepted.some(a => acceptedArr.includes(a))) {
+        revealRow(e.rank);
+        return;
+      }
+    }
+  }
+
+
+function hideSugg(){document.getElementById('sugg-box').style.display='none';document.getElementById('sugg-box').innerHTML='';}
+
+function showSugg(matches){
+  const box=document.getElementById('sugg-box');
+  if(!matches.length){hideSugg();return;}
+  box.innerHTML=matches.map(m=>
+    `<div class="sugg-item" data-name="${m.name}" data-accepted='${JSON.stringify(m.accepted)}'>→ ${m.name}</div>`
+  ).join('');
+  box.style.display='block';
+  box.querySelectorAll('.sugg-item').forEach(el=>{
+    el.addEventListener('mousedown',ev=>{
+      ev.preventDefault();
+      const acc=JSON.parse(el.dataset.accepted);
+      document.getElementById('guess-input').value='';
+      hideSugg();
+      fillAllMatching(acc);
+      updateHUD();
+      if(foundIds.size===TOTAL)endGame(true);
+    });
+  });
+}
+
+function updateHUD(){
+  document.getElementById('remain-count').textContent=TOTAL-foundIds.size;
+  document.getElementById('score').textContent=foundIds.size;
+
+  var _tm=document.getElementById('timer');if(_tm){var _m=Math.floor(secsLeft/60),_s=secsLeft%60;_tm.textContent=_m+':'+(_s<10?'0':'')+_s;}
+}
+
+function tryGuess(val){
+  if(!gameActive||!val.trim())return;
+  const nv=norm(val);
+  // Exact match
+  for(const e of ENTRIES){
+    if(foundIds.has(e.rank))continue;
+    if(e.accepted.some(a=>norm(a)===nv)){
+      fillAllMatching(e.accepted);
+      updateHUD();
+      document.getElementById('guess-input').value='';
+      hideSugg();
+      if(foundIds.size===TOTAL)endGame(true);
+      return;
+    }
+  }
+  // Fuzzy suggestions (within 2 letters)
+    // fuzzy "did you mean"
+  if(val.length>=2){
+    const nv2=norm(val);
+    function lev2(a,b){
+      if(Math.abs(a.length-b.length)>2)return 9;
+      let dp=Array.from({length:a.length+1},(_,i)=>i);
+      for(let j=1;j<=b.length;j++){let p=j;for(let i=1;i<=a.length;i++){const c=a[i-1]===b[j-1]?dp[i-1]:1+Math.min(dp[i-1],dp[i],p);dp[i-1]=p;p=c;}dp[a.length]=p;}
+      return dp[a.length];
+    }
+    const fuzzy=ENTRIES.filter(e=>{
+      if(foundIds.has(e.rank))return false;
+      return e.accepted.some(a=>{const na=norm(a);return na.includes(nv2)||lev2(nv2,na)<=2;});
+    });
+    if(fuzzy.length){
+      const box=document.getElementById('sugg-box');
+      if(box){box.innerHTML=fuzzy.slice(0,3).map(e=>'<div class="sugg-item" data-n="'+e.rank+'">→ '+e.name+'</div>').join('');box.style.display='block';
+        box.querySelectorAll('.sugg-item').forEach(el=>el.addEventListener('mousedown',ev=>{ev.preventDefault();document.getElementById('guess-input').value=el.textContent.slice(2).trim();box.style.display='none';}));
+        return;}
+    }
+  }
+hideSugg();
+}
+
+function startTimer(){
+  gameActive=true;
+  timerInterval=setInterval(()=>{
+    secsLeft--;
+    const m=Math.floor(secsLeft/60),s=secsLeft%60;
+    document.getElementById('timer').textContent=m+':'+String(s).padStart(2,'0');
+    if(secsLeft<=30)document.getElementById('timer-pill').classList.add('urgent');
+    
+    if (secsLeft === 60 && !hintShown) {
+      hintShown = true;
+      ENTRIES.forEach(e => {
+        if (!foundIds.has(e.rank) && e.flag) {
+          const flagEl = document.getElementById('flag-' + e.rank);
+          if (flagEl) flagEl.classList.add('visible');
+        }
+      });
+      showMsg('🌍 Nationality hint revealed!');
+    }
+
+    if(secsLeft<=0){clearInterval(timerInterval);endGame(false);}
+  },1000);
+}
+
+function endGame(won){
+  gameActive=false;clearInterval(timerInterval);hideSugg();
+  if(!won){
+    ENTRIES.forEach(e=>{
+      if(!foundIds.has(e.rank)){
+        const row=document.getElementById('row-'+e.rank);
+        if(row)row.classList.add('revealed');
+        const rn=document.getElementById('rname-'+e.rank);
+        if(rn)rn.textContent=e.name;
+        const flagEl=document.getElementById('flag-'+e.rank);
+        if(flagEl)flagEl.classList.add('visible');
+      }
+    });
+  }
+  const won_emoji = '🏆';
+  const lose_emoji = '⏱';
+  document.getElementById('result').innerHTML=
+    `<div class="result-banner ${won?'win':'lose'}">
+      <div class="rb-icon">${won?won_emoji:lose_emoji}</div>
+      <div class="rb-title">${won?'Perfect!':"Time's Up!"}</div>
+      <div class="rb-sub">${foundIds.size} / ${TOTAL} named</div>
+      <button class="share-btn" onclick="copyResult()">Share result</button>
+    </div>`;
+}
+
+function copyResult(){
+  const txt='SportsStack — T20I Cricket All-Time Wicket Takers\n'+foundIds.size+'/'+TOTAL+'\nsportsstack.com.au';
+  navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{
+    const b=document.querySelector('.share-btn');b.textContent='Copied!';
+    setTimeout(()=>b.textContent='Share result',2000);
+  });
+}
+
+const inp=document.getElementById('guess-input');
+inp.addEventListener('input',e=>{if(gameActive)tryGuess(e.target.value);});
+inp.addEventListener('keydown',e=>{if(e.key==='Enter'){tryGuess(e.target.value);} if(e.key==='Escape')hideSugg();});
+document.addEventListener('click',e=>{if(!e.target.closest('.input-wrap'))hideSugg();});
+gameActive=true;startTimer();
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>
