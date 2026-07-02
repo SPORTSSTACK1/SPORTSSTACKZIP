@@ -298,9 +298,9 @@ function copyResult(){
   const timeStr = found.size === NFL.length ? mins + 'm ' + secs + 's' : 'time up';
   const txt = 'SportsStack — Name every NFL team\n'
     + found.size + '/32 teams · ' + timeStr + '\n'
-    + 'sportstack.com';
+    + 'sportsstack.com.au';
   const b = document.querySelector('.share-btn');
-  if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>{
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}else if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>{
     b.textContent='Copied!'; setTimeout(()=>b.textContent='Share result',2000);
   });
 }

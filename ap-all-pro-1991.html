@@ -277,7 +277,10 @@ function shareScore(score, total){
   const bar = Array.from({length:10},(_,i)=>i<Math.round(pct/10)?'🟨':'⬛').join('');
   const txt = 'SportsStack — 1991 AP All-Pro First Team\n'+score+' / '+total+' players ('+pct+'%)\n'+bar+'\nsportsstack.com.au/ap-all-pro-1991.html';
   const btn = document.querySelector('.share-btn');
-  if(navigator.clipboard){
+  if(navigator.share){
+    navigator.share({text:txt}).catch(()=>{});
+    btn.textContent='Shared ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);
+  } else if(navigator.clipboard){
     navigator.clipboard.writeText(txt).then(()=>{btn.textContent='Copied! ✔';setTimeout(()=>btn.textContent='Share Score 📋',2000);});
   } else {
     const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();

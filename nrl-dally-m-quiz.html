@@ -292,7 +292,7 @@ function endGame(won){
 
 function copyResult(){
   const txt='SportsStack — NRL Dally M Medal Winners Since 2000\n'+foundIds.size+'/'+TOTAL+'\nsportsstack.com.au';
-  navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{
+  navigator.share?(navigator.share({text:txt}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{
     const b=document.querySelector('.share-btn');b.textContent='Copied!';
     setTimeout(()=>b.textContent='Share result',2000);
   });
@@ -499,7 +499,7 @@ function endGame(won){
 
 function copyResult(){
   const txt='SportsStack — NRL Dally M Medal Winners Since 2000\n'+foundIds.size+'/'+TOTAL+'\nsportsstack.com.au';
-  navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{
+  navigator.share?(navigator.share({text:txt}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{
     const b=document.querySelector('.share-btn');b.textContent='Copied!';
     setTimeout(()=>b.textContent='Share result',2000);
   });

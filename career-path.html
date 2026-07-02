@@ -386,7 +386,7 @@ function shareResult(won){
   var today=new Date().toLocaleDateString('en-AU'),pips='';
   for(var i=0;i<6;i++){var p=document.getElementById('p'+i);pips+=p.classList.contains('ok')?'\uD83D\uDFE9':p.classList.contains('no')?'\uD83D\uDFE5':'\u2B1C';}
   var txt='SportsStack \u2014 Career Path \u00b7 '+today+'\n'+(won?'\u2705 '+guesses+'/6':'\u274c X/6')+' \u00b7 '+revealed+'/'+PLAYER.clubs.length+' clubs shown\n'+pips+'\nsportsstack.com.au/career-path.html';
-  navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){var b=document.querySelector('.sbtn');if(b){b.textContent='Copied!';setTimeout(function(){b.textContent='Share \uD83D\uDCCB';},2000);}});
+  navigator.share?(navigator.share({text:txt}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){var b=document.querySelector('.sbtn');if(b){b.textContent='Copied!';setTimeout(function(){b.textContent='Share \uD83D\uDCCB';},2000);}});
 }
 function doGuess(){
   if(over)return;

@@ -636,7 +636,7 @@ function shareResult(won){
   var today=new Date().toLocaleDateString('en-AU'),pips='';
   for(var i=0;i<6;i++){var p=document.getElementById('p'+i);pips+=p.classList.contains('ok')?'\ud83d\udfe9':p.classList.contains('no')?'\ud83d\udfe5':'\u2b1c';}
   var txt='SportsStack \u2014 Deal of the Day \u00b7 '+today+'\n'+(won?'\u2705 '+guesses+'/6':'\u274c X/6')+'\n'+pips+'\nsportsstack.com.au/transferotd.html';
-  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(function(){var b=document.querySelector('.sbtn');if(b){b.textContent='Copied!';setTimeout(function(){b.textContent='Share result';},2000);}});
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(function(){var b=document.querySelector('.sbtn');if(b){b.textContent='Copied!';setTimeout(function(){b.textContent='Share result';},2000);}});
 }
 function doGuess(){
   if(over)return;var inp=document.getElementById('ginput'),val=inp.value.trim();if(!val)return;

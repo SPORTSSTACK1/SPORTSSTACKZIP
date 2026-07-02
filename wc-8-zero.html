@@ -1289,7 +1289,7 @@ function shareResult(){
   var prefix=isDaily?'SportsStack — WC 2026 Daily #'+getDailyNum():'SportsStack — World Cup 2026: 8-0';
   var stageNames=['Group stage','Group stage','Group stage','Round of 32','Round of 16','Quarter-final','Semi-final','Runner-up','World Champions 🏆'];
   var txt=prefix+'\n'+stageNames[Math.min(rec.w,8)]+' ('+rec.w+'-'+rec.d+'-'+rec.l+')\n'+bar+' '+avg.toFixed(1)+'/100\nsportsstack.com.au/wc-8-zero.html';
-  navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){
+  navigator.share?(navigator.share({text:txt}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){
     var b=document.querySelector('.btn-share');b.textContent='Copied! ✔';setTimeout(function(){b.textContent='Share Result 📋';},2000);
   });
 }

@@ -807,7 +807,11 @@ function endGame(finalScore, completed){
 
 function shareResult(){
   const text = "SportsStack \ud83c\udfc6 The Stack\nI reached level "+score+" of 15!\nCan you go higher? sportsstack.com.au/the-stack.html";
-  if(navigator.clipboard){
+  if(navigator.share){
+    navigator.share({text:text}).catch(()=>{});
+    const c = document.getElementById('copied-msg');
+    if(c){ c.textContent = '✓ Shared!'; setTimeout(()=>c.textContent='',2000); }
+  } else if(navigator.clipboard){
     navigator.clipboard.writeText(text).then(() => {
       const c = document.getElementById('copied-msg');
       if(c){ c.textContent = 'Copied to clipboard!'; setTimeout(()=>c.textContent='',2000); }

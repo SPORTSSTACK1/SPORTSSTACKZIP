@@ -276,7 +276,7 @@ function showResult(won, gaveUp){
 function copyResult(){
   const txt = 'SportsStack — Super Rugby Pacific Teams\n'+found.size+'/12 teams\nsportsstack.com.au';
   const b = document.querySelector('.share-btn');
-  if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>{
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}else if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>{
     b.textContent='Copied!'; setTimeout(()=>b.textContent='Share result',2000);
   });
 }

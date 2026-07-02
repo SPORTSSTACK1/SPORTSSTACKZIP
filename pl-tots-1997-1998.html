@@ -423,9 +423,9 @@ function showResult(won, gaveUp){
 function copyResult(){
   const e = 240 - secondsLeft, m = Math.floor(e/60), s = e % 60;
   const txt = "SportsStack — 1997/98 Team of the Season\n" + found.size + "/11"
-    + (found.size === 11 ? " · " + m + "m " + s + "s" : "") + "\nsportstack.com";
+    + (found.size === 11 ? " · " + m + "m " + s + "s" : "") + "\nsportsstack.com.au";
   const b = document.querySelector(".share-btn");
-  if(navigator.clipboard) navigator.clipboard.writeText(txt)
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}else if(navigator.clipboard) navigator.clipboard.writeText(txt)
     .then(() => { b.textContent = "Copied!"; setTimeout(() => b.textContent = "Share result", 2000); });
 }
 

@@ -279,7 +279,7 @@ function showScore(){
 function shareScore(){
   var dots=answers.map(function(a,i){return a===QUESTIONS[i].correct?'\u2705':'\u274C';}).join('');
   var text='SportsStack World Cup Quiz of the Day\n'+score+'/5 '+dots+'\nsportsstack.com.au';
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){var c=document.getElementById('copied-msg');if(c)c.textContent='Copied!';});}
+  if(navigator.share){navigator.share({text:text}).catch(()=>{});}else if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){var c=document.getElementById('copied-msg');if(c)c.textContent='Copied!';});}
 }
 function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');}
 

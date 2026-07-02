@@ -313,7 +313,8 @@ function shareScore(){
   const emojiStr = answers.map((a,i)=>a===null?'\u2B1C':a===QUESTIONS[i].correct?'\uD83D\uDFE9':'\uD83D\uDFE5').join('');
   const line1 = emojiStr.slice(0,20);
   const line2 = emojiStr.slice(20,40);
-  const txt = `SportsStack \u2013 Quiz of the Week \uD83C\uDFC6\nScore: ${score}/20\n\n${line1}\n${line2}\n\nsportsstackquiz.com`;
+  const txt = `SportsStack \u2013 Quiz of the Week \uD83C\uDFC6\nScore: ${score}/20\n\n${line1}\n${line2}\n\nsportsstack.com.au`;
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});document.getElementById('copied-msg').textContent='✓ Shared!';setTimeout(()=>document.getElementById('copied-msg').textContent='',3500);return;}
   copyText(txt, ()=>{
     document.getElementById('copied-msg').textContent = '\u2713 Copied to clipboard \u2014 paste into any app!';
     setTimeout(()=>document.getElementById('copied-msg').textContent='', 3500);

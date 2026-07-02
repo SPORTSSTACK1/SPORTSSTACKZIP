@@ -704,7 +704,7 @@ function shareResult() {
   var bar='';for(var i=0;i<10;i++)bar+=i<Math.round(avg/10)?'\uD83D\uDFE8':'\u2B1C';
   var prefix = isDaily ? 'SportsStack \u2014 38-0 Daily #'+getDailyNum() : 'SportsStack \u2014 38-0 PL Challenge';
   var txt=prefix+'\n'+wins+'-'+draws+'-'+losses+' ('+pts+' pts)\n'+bar+' '+avg.toFixed(1)+'/100\n'+'sportsstack.com.au/pl-38-zero.html';
-  navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){
+  navigator.share?(navigator.share({text:txt}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){
     var b=document.querySelector('.btn-share');
     b.textContent='Copied! \u2714';
     setTimeout(function(){b.textContent='Share Result \uD83D\uDCCB';},2000);

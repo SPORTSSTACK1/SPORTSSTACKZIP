@@ -404,7 +404,11 @@ function endGame(){
 
 function shareResult(){
   const text = "SportsStack \u26bd Higher or Lower: PL Career Goals\nMy streak: "+streak+"\nCan you beat it? sportsstack.com.au/pl-higher-lower.html";
-  if(navigator.clipboard){
+  if(navigator.share){
+    navigator.share({text:text}).catch(()=>{});
+    const c = document.getElementById('copied-msg');
+    if(c){ c.textContent = '✓ Shared!'; setTimeout(()=>c.textContent='',2000); }
+  } else if(navigator.clipboard){
     navigator.clipboard.writeText(text).then(() => {
       const c = document.getElementById('copied-msg');
       if(c){ c.textContent = 'Copied to clipboard!'; setTimeout(()=>c.textContent='',2000); }

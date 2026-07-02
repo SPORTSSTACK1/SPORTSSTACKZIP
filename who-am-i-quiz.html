@@ -276,7 +276,7 @@ function showResult(won){
 function shareResult(won,hints,pts){
   const blocks=Array(6).fill(0).map((_,i)=>i<hints?'🟩':'⬜').join('');
   const text=`Who Am I? — SportsStack\n${TARGET.name} (${TARGET.sport})\n${blocks}\n${won?pts+' points':'Did not get it'}\nsportsstack.com.au`;
-  navigator.clipboard&&navigator.clipboard.writeText(text).then(()=>alert('Copied to clipboard!'));
+  navigator.share?(navigator.share({text:text}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(text).then(()=>alert('Copied to clipboard!'));
 }
 
 renderHints();

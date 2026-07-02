@@ -464,7 +464,7 @@ function copyShare(){
   let txt='Clubble — '+today+'\n'+(done&&guesses.length&&guesses[guesses.length-1].name===TARGET.name?attempts:'X')+'/'+MAX+'\n\n';
   guesses.forEach(g=>{const s=scoreGuess(g);txt+=cats.map(c=>e[s[c]]).join('')+'\n';});
   const b=document.querySelector('.share-btn');
-  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>{b.textContent='Copied!';setTimeout(()=>b.textContent='Copy result',2000);});
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>{b.textContent='Copied!';setTimeout(()=>b.textContent='Copy result',2000);});
 }
 renderRows();
 </script>
