@@ -116,7 +116,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input class="guess-input" id="guess-input" type="text" placeholder="Type a name and press Enter…" autocomplete="off"/>
     <div class="suggestions" id="suggestions" style="display:none"></div>
   </div>
-  <button id="give-up-btn" onclick="giveUp()" style="display:block;margin:8px auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:1px solid var(--border-bright);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
+  <button id="give-up-btn" onclick="giveUp()" style="display:block;margin:8px auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:#e8f0fe;border:1.5px solid rgba(255,255,255,.3);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='rgba(255,255,255,.3)';this.style.color='#e8f0fe'">Give Up &amp; Reveal</button>
   <div class="team-grid" id="team-grid"></div>
 </div>
 
@@ -136,31 +136,31 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 <script>
 const ENTRIES = [
   {id:1, year:2000, name:"Roy Keane", accepted:["keane","roy keane"], club:"Man Utd"},
-  {id:2, year:2001, name:"Teddy Sheringham", accepted:["sheringham","teddy sheringham"]},
-  {id:3, year:2002, name:"Ruud van Nistelrooy", accepted:["van nistelrooy","ruud van nistelrooy"], club:"Arsenal"},
-  {id:4, year:2003, name:"Thierry Henry", accepted:["henry","thierry henry"]},
+  {id:2, year:2001, name:"Teddy Sheringham", accepted:["sheringham","teddy sheringham"], club:"Man Utd"},
+  {id:3, year:2002, name:"Ruud van Nistelrooy", accepted:["van nistelrooy","ruud van nistelrooy"], club:"Man Utd"},
+  {id:4, year:2003, name:"Thierry Henry", accepted:["henry","thierry henry"], club:"Arsenal"},
   {id:5, year:2004, name:"Thierry Henry", accepted:["henry","thierry henry"], club:"Arsenal"},
-  {id:6, year:2005, name:"John Terry", accepted:["terry","john terry"]},
-  {id:7, year:2006, name:"Steven Gerrard", accepted:["gerrard","steven gerrard"], club:"Chelsea"},
-  {id:8, year:2007, name:"Cristiano Ronaldo", accepted:["ronaldo","cristiano ronaldo"]},
+  {id:6, year:2005, name:"John Terry", accepted:["terry","john terry"], club:"Chelsea"},
+  {id:7, year:2006, name:"Steven Gerrard", accepted:["gerrard","steven gerrard"], club:"Liverpool"},
+  {id:8, year:2007, name:"Cristiano Ronaldo", accepted:["ronaldo","cristiano ronaldo"], club:"Man Utd"},
   {id:9, year:2008, name:"Cristiano Ronaldo", accepted:["ronaldo","cristiano ronaldo"], club:"Man Utd"},
-  {id:10, year:2009, name:"Ryan Giggs", accepted:["giggs","ryan giggs"]},
-  {id:11, year:2010, name:"Wayne Rooney", accepted:["rooney","wayne rooney"], club:"Man City"},
-  {id:12, year:2011, name:"Gareth Bale", accepted:["bale","gareth bale"]},
+  {id:10, year:2009, name:"Ryan Giggs", accepted:["giggs","ryan giggs"], club:"Man Utd"},
+  {id:11, year:2010, name:"Wayne Rooney", accepted:["rooney","wayne rooney"], club:"Man Utd"},
+  {id:12, year:2011, name:"Gareth Bale", accepted:["bale","gareth bale"], club:"Tottenham"},
   {id:13, year:2012, name:"Vincent Kompany", accepted:["kompany","vincent kompany"], club:"Man City"},
-  {id:14, year:2013, name:"Gareth Bale", accepted:["bale","gareth bale"]},
+  {id:14, year:2013, name:"Gareth Bale", accepted:["bale","gareth bale"], club:"Tottenham"},
   {id:15, year:2014, name:"Luis Suarez", accepted:["suarez","luis suarez"], club:"Liverpool"},
-  {id:16, year:2015, name:"Eden Hazard", accepted:["hazard","eden hazard"]},
+  {id:16, year:2015, name:"Eden Hazard", accepted:["hazard","eden hazard"], club:"Chelsea"},
   {id:17, year:2016, name:"Riyad Mahrez", accepted:["mahrez","riyad mahrez"], club:"Leicester"},
-  {id:18, year:2017, name:"N'Golo Kante", accepted:["kante","ngolo kante","n'golo kante"]},
+  {id:18, year:2017, name:"N'Golo Kante", accepted:["kante","ngolo kante","n'golo kante"], club:"Chelsea"},
   {id:19, year:2018, name:"Mohamed Salah", accepted:["salah","mohamed salah"], club:"Liverpool"},
-  {id:20, year:2019, name:"Raheem Sterling", accepted:["sterling","raheem sterling"]},
+  {id:20, year:2019, name:"Raheem Sterling", accepted:["sterling","raheem sterling"], club:"Man City"},
   {id:21, year:2020, name:"Jordan Henderson", accepted:["henderson","jordan henderson"], club:"Liverpool"},
-  {id:22, year:2021, name:"Ruben Dias", accepted:["dias","ruben dias"]},
+  {id:22, year:2021, name:"Ruben Dias", accepted:["dias","ruben dias"], club:"Man City"},
   {id:23, year:2022, name:"Kevin De Bruyne", accepted:["de bruyne","kevin de bruyne"], club:"Man City"},
-  {id:24, year:2023, name:"Erling Haaland", accepted:["haaland","erling haaland"]},
+  {id:24, year:2023, name:"Erling Haaland", accepted:["haaland","erling haaland"], club:"Man City"},
   {id:25, year:2024, name:"Phil Foden", accepted:["foden","phil foden"], club:"Man City"},
-  {id:26, year:2025, name:"Mohamed Salah", accepted:["salah","mohamed salah"]},
+  {id:26, year:2025, name:"Mohamed Salah", accepted:["salah","mohamed salah"], club:"Liverpool"},
 ];
 
 
@@ -280,11 +280,33 @@ function startTimer(){
 }
 
 function giveUp(){
-  if(!gameActive)return;
-  if(typeof timerInterval!=="undefined")clearInterval(timerInterval);if(typeof timer!=="undefined")clearInterval(timer);
-  const btn=document.getElementById('give-up-btn');
-  if(btn)btn.style.display='none';
-  timeUp();
+  if(!gameActive) return;
+  gameActive = false;
+  try{clearInterval(timer);}catch(e){}
+  try{clearInterval(timerInterval);}catch(e){}
+  const btn = document.getElementById('give-up-btn');
+  if(btn) btn.style.display = 'none';
+  const inp = document.getElementById('guess-input');
+  if(inp) inp.disabled = true;
+  try{hideSuggestions();}catch(e){}
+  for(const e of ENTRIES){
+    if(!foundIds.has(e.id)){
+      const card = document.getElementById('card-'+e.id);
+      if(!card) continue;
+      card.className = 'team-card revealed';
+      card.innerHTML = cardInner(e,'revealed');
+    }
+  }
+  const mb = document.getElementById('modal-backdrop');
+  const m = document.getElementById('modal');
+  if(m && mb){
+    m.className = 'modal lose';
+    document.getElementById('modal-icon').textContent = '⏰';
+    document.getElementById('modal-title').textContent = 'Quiz Ended';
+    document.getElementById('modal-score').textContent = foundIds.size + ' / ' + TOTAL + ' found';
+    document.getElementById('modal-msg').innerHTML = 'You found <strong>'+foundIds.size+'</strong> of '+TOTAL+' players. Missing names shown in red.';
+    mb.classList.add('show');
+  }
 }
 function timeUp(){
   gameActive = false;
