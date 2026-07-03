@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Sportsman Au — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/sportsman-au.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>The Sportsman: AU – Legends Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
+  --blue:#2563eb;--blue-light:#3b82f6;
+  --gold:#f5c842;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,.09);--amber-border:rgba(245,158,11,.42);
+  --grey:#4b5563;--grey-bg:rgba(75,85,99,.1);--grey-border:rgba(75,85,99,.4);
+  --red:#ef4444;
+  --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;
+  --border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:20px}
+.game-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,40px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1;color:var(--text)}
+.game-name .hl{color:var(--gold)}
+.legends-tag{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,2.5vw,18px);font-weight:700;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-top:4px;opacity:.85}
+.game-sub{font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:5px}
+.att-badge{display:block;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 16px;border-radius:20px;background:var(--surface2);color:var(--text-muted);border:1px solid var(--border-bright);margin-bottom:14px;width:fit-content;margin-left:auto;margin-right:auto}
+.legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted)}
+.dot{width:8px;height:8px;border-radius:50%}
+.col-hdr{font-size:10px;font-weight:700;color:var(--text-muted);text-align:center;padding:2px 0;text-transform:uppercase;letter-spacing:.06em}
+.tile{border-radius:var(--radius);padding:7px 4px;text-align:center;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--border-bright);background:var(--surface2);transition:background .25s,border-color .25s}
+.tile .tv{font-size:11px;font-weight:600;line-height:1.3;color:var(--text)}
+.tile .ti{font-size:10px;color:var(--text-muted);margin-top:2px;line-height:1.2}
+.tile.g{background:var(--green-bg);border-color:var(--green-border)}.tile.g .tv{color:#86efac}.tile.g .ti{color:#4ade80}
+.tile.a{background:var(--amber-bg);border-color:var(--amber-border)}.tile.a .tv{color:#fcd34d}.tile.a .ti{color:#fbbf24}
+.tile.gr{background:var(--grey-bg);border-color:var(--grey-border)}.tile.gr .tv{color:#9ca3af}.tile.gr .ti{color:#6b7280}
+.tile.empty{background:var(--surface);border:1px dashed var(--border-bright)}
+.input-area{margin-top:14px;display:flex;gap:8px;position:relative}
+.input-area input{flex:1;font-size:15px;padding:11px 16px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.input-area input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.input-area input::placeholder{color:var(--text-dim)}
+.dropdown{position:absolute;top:100%;left:0;right:80px;background:var(--surface2);border:1.5px solid var(--border-bright);border-radius:var(--radius);z-index:99;max-height:260px;overflow-y:auto;margin-top:3px;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.dd-item{padding:9px 13px;font-size:14px;color:var(--text);cursor:pointer;border-bottom:1px solid var(--border)}
+.dd-item:last-child{border-bottom:none}
+.dd-item:hover,.dd-item.hl{background:var(--surface3)}
+.dd-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+.btn{padding:11px 18px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;background:var(--gold);color:var(--bg);white-space:nowrap;transition:all .2s;flex-shrink:0}
+.btn:hover{background:#ffd700;transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.result-banner{border-radius:var(--radius-lg);padding:1.1rem 1.25rem;text-align:center;margin-top:14px;border:1px solid}
+.result-banner.win{border-color:var(--green-border);background:var(--green-bg)}
+.result-banner.lose{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.06)}
+.rb-icon{font-size:32px;margin-bottom:6px}
+.rb-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-banner.win .rb-title{color:#86efac}
+.result-banner.lose .rb-title{color:#fca5a5}
+.rb-player{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:4px}
+.rb-sub{font-size:13px;color:var(--text-muted);margin-bottom:2px}
+.share-btn{margin-top:10px;display:inline-block;padding:9px 22px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+.msg{font-size:13px;color:#fca5a5;margin-top:6px;min-height:18px}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TL0NM71G5M');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="page">
+<header class="site-header">
+  <div class="game-name">The Sportsman: <span class="hl">AU</span></div>
+  <div class="legends-tag">· Legends Edition ·</div>
+  <div class="game-sub">Guess today's Australian sporting legend · 8 attempts</div>
+</header>
+<span class="att-badge" id="att-badge">8 attempts remaining</span>
+<div class="legend">
+  <span class="leg"><span class="dot" style="background:#22c55e"></span>Correct</span>
+  <span class="leg"><span class="dot" style="background:#f59e0b"></span>Close</span>
+  <span class="leg"><span class="dot" style="background:#4b5563"></span>Wrong</span>
+  <span class="leg" style="color:var(--text-muted);font-size:11px">↑↓ age / trophies</span>
+</div>
+<div style="overflow-x:auto"><div style="min-width:320px">
+<div style="display:grid;grid-template-columns:28px repeat(4,1fr);gap:4px;margin-bottom:4px">
+  <div></div>
+  <div class="col-hdr">Gender</div>
+  <div class="col-hdr">Sport</div>
+  <div class="col-hdr">Age</div>
+  <div class="col-hdr">Trophies</div>
+</div>
+<div id="rows"></div>
+</div></div>
+<div class="input-area" id="input-area">
+  <input type="text" id="guess-input" placeholder="Type a name..." autocomplete="off"/>
+  <div class="dropdown" id="dropdown" style="display:none"></div>
+  <button class="btn" onclick="submitGuess()">Guess</button>
+</div>
+<div class="msg" id="msg"></div>
+<div id="result"></div>
+</div>
+<script>
+const SPORT_CLOSE={"NRL":"rugby","Rugby Union":"rugby","AFL":"footy_au","AFLW":"footy_au"};
+
+const ALL_PLAYERS=[
+  /* ── ORIGINAL PLAYERS ── */
+  {name:"Daniel Ricciardo",    aliases:["ricciardo","danny ric","dr3"],          gender:"Male",   sport:"Formula 1",   age:36,trophies:0},
+  {name:"Oscar Piastri",       aliases:["piastri","oscar"],                       gender:"Male",   sport:"Formula 1",   age:25,trophies:0},
+  {name:"Cathy Freeman",       aliases:["freeman","cathy"],                       gender:"Female", sport:"Athletics",   age:53,trophies:2},
+  {name:"Ian Thorpe",          aliases:["thorpe","thorpedo"],                     gender:"Male",   sport:"Swimming",    age:43,trophies:5},
+  {name:"Grant Hackett",       aliases:["hackett"],                               gender:"Male",   sport:"Swimming",    age:46,trophies:2},
+  {name:"Liz Watson",          aliases:["watson","liz w"],                        gender:"Female", sport:"Netball",     age:32,trophies:1},
+  {name:"Gretel Bueta",        aliases:["bueta","gretel"],                        gender:"Female", sport:"Netball",     age:32,trophies:1},
+  {name:"Caitlin Bassett",     aliases:["bassett","caitlin bassett"],             gender:"Female", sport:"Netball",     age:39,trophies:2},
+  {name:"Sharni Layton",       aliases:["layton","sharni"],                       gender:"Female", sport:"Netball",     age:37,trophies:2},
+  {name:"Laura Geitz",         aliases:["geitz","laura"],                         gender:"Female", sport:"Netball",     age:37,trophies:2},
+  {name:"Ben Simmons",         aliases:["simmons","ben simmons"],                 gender:"Male",   sport:"Basketball",  age:29,trophies:0},
+  {name:"Patty Mills",         aliases:["mills","patty"],                         gender:"Male",   sport:"Basketball",  age:37,trophies:1},
+  {name:"Andrew Bogut",        aliases:["bogut"],                                 gender:"Male",   sport:"Basketball",  age:41,trophies:1},
+  {name:"Josh Giddey",         aliases:["giddey"],                                gender:"Male",   sport:"Basketball",  age:23,trophies:0},
+  {name:"Dyson Daniels",       aliases:["daniels dyson","dyson d"],               gender:"Male",   sport:"Basketball",  age:23,trophies:0},
+  {name:"Nick Kyrgios",        aliases:["kyrgios","nick"],                        gender:"Male",   sport:"Tennis",      age:31,trophies:0},
+  {name:"Lleyton Hewitt",      aliases:["hewitt","lleyton"],                      gender:"Male",   sport:"Tennis",      age:45,trophies:2},
+  {name:"Ash Barty",           aliases:["barty","ash","ashleigh barty"],          gender:"Female", sport:"Tennis",      age:30,trophies:3},
+  {name:"Sam Stosur",          aliases:["stosur","sam stosur"],                   gender:"Female", sport:"Tennis",      age:42,trophies:1},
+  {name:"Pat Rafter",          aliases:["rafter","pat rafter"],                   gender:"Male",   sport:"Tennis",      age:53,trophies:2},
+  {name:"Ricky Ponting",       aliases:["ponting","punter"],                      gender:"Male",   sport:"Cricket",     age:51,trophies:3},
+  {name:"Steve Smith",         aliases:["smith","steve smith"],                   gender:"Male",   sport:"Cricket",     age:36,trophies:2},
+  {name:"David Warner",        aliases:["warner","dave warner"],                  gender:"Male",   sport:"Cricket",     age:39,trophies:2},
+  {name:"Pat Cummins",         aliases:["cummins","pat cummins"],                 gender:"Male",   sport:"Cricket",     age:33,trophies:3},
+  {name:"Glenn McGrath",       aliases:["mcgrath","pigeon"],                      gender:"Male",   sport:"Cricket",     age:56,trophies:3},
+  {name:"Shane Warne",         aliases:["warne","warney"],                        gender:"Male",   sport:"Cricket",     age:52,trophies:1},
+  {name:"Adam Gilchrist",      aliases:["gilchrist","gilly"],                     gender:"Male",   sport:"Cricket",     age:54,trophies:3},
+  {name:"Mitchell Starc",      aliases:["starc","mitch starc"],                   gender:"Male",   sport:"Cricket",     age:36,trophies:2},
+  {name:"Ellyse Perry",        aliases:["perry","ellyse"],                        gender:"Female", sport:"Cricket",     age:35,trophies:4},
+  {name:"Mitchell Johnson",    aliases:["johnson","mitch johnson"],               gender:"Male",   sport:"Cricket",     age:44,trophies:1},
+  {name:"Tim Cahill",          aliases:["cahill","timmy cahill"],                 gender:"Male",   sport:"Football",    age:46,trophies:0},
+  {name:"Harry Kewell",        aliases:["kewell","harry"],                        gender:"Male",   sport:"Football",    age:47,trophies:0},
+  {name:"Mark Viduka",         aliases:["viduka"],                                gender:"Male",   sport:"Football",    age:51,trophies:0},
+  {name:"Mile Jedinak",        aliases:["jedinak","mile"],                        gender:"Male",   sport:"Football",    age:41,trophies:1},
+  {name:"Mathew Ryan",         aliases:["ryan","mat ryan"],                       gender:"Male",   sport:"Football",    age:33,trophies:0},
+  {name:"Aaron Mooy",          aliases:["mooy","aaron"],                          gender:"Male",   sport:"Football",    age:35,trophies:0},
+  {name:"Mark Schwarzer",      aliases:["schwarzer"],                             gender:"Male",   sport:"Football",    age:53,trophies:0},
+  {name:"Samantha Kerr",       aliases:["kerr","sam kerr"],                       gender:"Female", sport:"Football",    age:32,trophies:4},
+  {name:"Mary Fowler",         aliases:["fowler","mary"],                         gender:"Female", sport:"Football",    age:23,trophies:0},
+  {name:"Caitlin Foord",       aliases:["foord","caitlin foord"],                 gender:"Female", sport:"Football",    age:31,trophies:0},
+  {name:"Ellie Carpenter",     aliases:["carpenter","ellie"],                     gender:"Female", sport:"Football",    age:26,trophies:0},
+  {name:"David Pocock",        aliases:["pocock"],                                gender:"Male",   sport:"Rugby Union", age:37,trophies:0},
+  {name:"Michael Hooper",      aliases:["hooper"],                                gender:"Male",   sport:"Rugby Union", age:34,trophies:0},
+  {name:"George Gregan",       aliases:["gregan"],                                gender:"Male",   sport:"Rugby Union", age:53,trophies:0},
+  {name:"Stephen Larkham",     aliases:["larkham"],                               gender:"Male",   sport:"Rugby Union", age:52,trophies:0},
+  {name:"Matt Giteau",         aliases:["giteau","gits"],                         gender:"Male",   sport:"Rugby Union", age:43,trophies:0},
+  {name:"Quade Cooper",        aliases:["cooper","quade"],                        gender:"Male",   sport:"Rugby Union", age:38,trophies:0},
+  {name:"Kurtley Beale",       aliases:["beale","kurtley"],                       gender:"Male",   sport:"Rugby Union", age:37,trophies:0},
+  {name:"Israel Folau",        aliases:["folau","izzy"],                          gender:"Male",   sport:"Rugby Union", age:37,trophies:0},
+  {name:"Will Genia",          aliases:["genia"],                                 gender:"Male",   sport:"Rugby Union", age:38,trophies:0},
+  {name:"Tim Horan",           aliases:["horan"],                                 gender:"Male",   sport:"Rugby Union", age:56,trophies:2},
+  {name:"Cameron Smith",       aliases:["cam smith","smithy nrl"],                gender:"Male",   sport:"NRL",         age:42,trophies:3},
+  {name:"Johnathan Thurston",  aliases:["thurston","jt"],                         gender:"Male",   sport:"NRL",         age:42,trophies:2},
+  {name:"Billy Slater",        aliases:["slater","billy"],                        gender:"Male",   sport:"NRL",         age:41,trophies:3},
+  {name:"Cooper Cronk",        aliases:["cronk","cooper c"],                      gender:"Male",   sport:"NRL",         age:42,trophies:4},
+  {name:"Nathan Cleary",       aliases:["cleary","nathan c"],                     gender:"Male",   sport:"NRL",         age:27,trophies:3},
+  {name:"James Tedesco",       aliases:["tedesco","jimmy teds"],                  gender:"Male",   sport:"NRL",         age:32,trophies:2},
+  {name:"Latrell Mitchell",    aliases:["mitchell","latrell"],                    gender:"Male",   sport:"NRL",         age:28,trophies:2},
+  {name:"Kalyn Ponga",         aliases:["ponga","kalyn"],                         gender:"Male",   sport:"NRL",         age:26,trophies:0},
+  {name:"Greg Inglis",         aliases:["inglis","gi"],                           gender:"Male",   sport:"NRL",         age:38,trophies:3},
+  {name:"Paul Gallen",         aliases:["gallen","gal"],                          gender:"Male",   sport:"NRL",         age:44,trophies:1},
+  {name:"Andrew Johns",        aliases:["johns","joey"],                          gender:"Male",   sport:"NRL",         age:52,trophies:2},
+  {name:"Brad Fittler",        aliases:["fittler","freddy"],                      gender:"Male",   sport:"NRL",         age:54,trophies:2},
+  {name:"Sonny Bill Williams", aliases:["sonny bill","sbw"],                      gender:"Male",   sport:"NRL",         age:40,trophies:1},
+  {name:"Benji Marshall",      aliases:["marshall","benji"],                      gender:"Male",   sport:"NRL",         age:40,trophies:1},
+  {name:"Tom Trbojevic",       aliases:["tom t","turbo"],                         gender:"Male",   sport:"NRL",         age:29,trophies:0},
+  {name:"Jake Trbojevic",      aliases:["jake t","jake trb"],                     gender:"Male",   sport:"NRL",         age:31,trophies:0},
+  {name:"Cameron Munster",     aliases:["munster","cam munster"],                 gender:"Male",   sport:"NRL",         age:31,trophies:1},
+  {name:"Daly Cherry-Evans",   aliases:["dce","cherry evans"],                    gender:"Male",   sport:"NRL",         age:36,trophies:0},
+  {name:"Jarome Luai",         aliases:["luai","jarome"],                         gender:"Male",   sport:"NRL",         age:27,trophies:3},
+  {name:"Apisai Koroisau",     aliases:["koroisau","api"],                        gender:"Male",   sport:"NRL",         age:33,trophies:2},
+  {name:"Isaah Yeo",           aliases:["yeo","isaah"],                           gender:"Male",   sport:"NRL",         age:30,trophies:3},
+  {name:"Reece Walsh",         aliases:["walsh","reece"],                         gender:"Male",   sport:"NRL",         age:23,trophies:0},
+  {name:"Payne Haas",          aliases:["haas","payne"],                          gender:"Male",   sport:"NRL",         age:25,trophies:0},
+  {name:"Damien Cook",         aliases:["cook","damo"],                           gender:"Male",   sport:"NRL",         age:34,trophies:0},
+  {name:"Dustin Martin",       aliases:["martin","dusty"],                        gender:"Male",   sport:"AFL",         age:34,trophies:3},
+  {name:"Gary Ablett Jr.",     aliases:["ablett","gaj","gary ablett"],            gender:"Male",   sport:"AFL",         age:42,trophies:2},
+  {name:"Nat Fyfe",            aliases:["fyfe","nat"],                            gender:"Male",   sport:"AFL",         age:34,trophies:0},
+  {name:"Patrick Dangerfield", aliases:["dangerfield","danger"],                  gender:"Male",   sport:"AFL",         age:36,trophies:1},
+  {name:"Marcus Bontempelli",  aliases:["bontempelli","bont"],                    gender:"Male",   sport:"AFL",         age:30,trophies:1},
+  {name:"Scott Pendlebury",    aliases:["pendlebury","pendles"],                  gender:"Male",   sport:"AFL",         age:37,trophies:2},
+  {name:"Buddy Franklin",      aliases:["franklin","buddy","lance franklin"],     gender:"Male",   sport:"AFL",         age:38,trophies:2},
+  {name:"Nick Daicos",         aliases:["daicos","nick d"],                       gender:"Male",   sport:"AFL",         age:23,trophies:1},
+  {name:"Chris Judd",          aliases:["judd","chris j"],                        gender:"Male",   sport:"AFL",         age:42,trophies:1},
+  {name:"Joel Selwood",        aliases:["selwood","joel"],                        gender:"Male",   sport:"AFL",         age:37,trophies:3},
+  {name:"Max Gawn",            aliases:["gawn","maxy"],                           gender:"Male",   sport:"AFL",         age:33,trophies:1},
+  {name:"Toby Greene",         aliases:["greene","toby"],                         gender:"Male",   sport:"AFL",         age:32,trophies:0},
+  {name:"Adam Goodes",         aliases:["goodes","adam"],                         gender:"Male",   sport:"AFL",         age:45,trophies:2},
+  {name:"Ben Cousins",         aliases:["cousins","benny"],                       gender:"Male",   sport:"AFL",         age:47,trophies:1},
+  {name:"Travis Boak",         aliases:["boak","travis"],                         gender:"Male",   sport:"AFL",         age:37,trophies:0},
+  {name:"Tom Hawkins",         aliases:["hawkins","tommy"],                       gender:"Male",   sport:"AFL",         age:37,trophies:3},
+  {name:"Jack Riewoldt",       aliases:["riewoldt","jacky"],                      gender:"Male",   sport:"AFL",         age:37,trophies:3},
+  {name:"Steele Sidebottom",   aliases:["sidebottom","steele"],                   gender:"Male",   sport:"AFL",         age:35,trophies:2},
+  {name:"Taylor Walker",       aliases:["walker","tex"],                          gender:"Male",   sport:"AFL",         age:35,trophies:1},
+  {name:"Dayne Zorko",         aliases:["zorko","dayne"],                         gender:"Male",   sport:"AFL",         age:37,trophies:0},
+  {name:"Jeremy Cameron",      aliases:["cameron","jezza"],                       gender:"Male",   sport:"AFL",         age:32,trophies:1},
+  {name:"Christian Petracca",  aliases:["petracca","petro"],                      gender:"Male",   sport:"AFL",         age:29,trophies:1},
+  {name:"Clayton Oliver",      aliases:["oliver","clarry"],                       gender:"Male",   sport:"AFL",         age:28,trophies:1},
+  {name:"Jordan De Goey",      aliases:["de goey","jdg"],                         gender:"Male",   sport:"AFL",         age:30,trophies:1},
+
+  /* ── 100 NEW ADDITIONS ── */
+  /* Swimming */
+  {name:"Dawn Fraser",         aliases:["fraser","dawn fraser"],                  gender:"Female", sport:"Swimming",    age:88,trophies:3},
+  {name:"Susie O'Neill",       aliases:["o'neill","susie"],                       gender:"Female", sport:"Swimming",    age:52,trophies:2},
+  {name:"Emma McKeon",         aliases:["mckeon","emma mckeon"],                  gender:"Female", sport:"Swimming",    age:32,trophies:4},
+  {name:"Ariarne Titmus",      aliases:["titmus","the terminator"],               gender:"Female", sport:"Swimming",    age:25,trophies:2},
+  {name:"Kyle Chalmers",       aliases:["chalmers","kyle c"],                     gender:"Male",   sport:"Swimming",    age:27,trophies:1},
+  {name:"Leisel Jones",        aliases:["jones","leisel"],                        gender:"Female", sport:"Swimming",    age:40,trophies:3},
+  {name:"Libby Trickett",      aliases:["trickett","libby"],                      gender:"Female", sport:"Swimming",    age:41,trophies:3},
+  {name:"Mack Horton",         aliases:["horton","mack"],                         gender:"Male",   sport:"Swimming",    age:29,trophies:1},
+  {name:"Michael Klim",        aliases:["klim"],                                  gender:"Male",   sport:"Swimming",    age:49,trophies:1},
+  {name:"Cate Campbell",       aliases:["campbell","cate"],                       gender:"Female", sport:"Swimming",    age:34,trophies:1},
+  {name:"Stephanie Rice",      aliases:["rice","steph rice"],                     gender:"Female", sport:"Swimming",    age:37,trophies:3},
+  /* Cricket */
+  {name:"Matthew Hayden",      aliases:["hayden","haydos"],                       gender:"Male",   sport:"Cricket",     age:54,trophies:3},
+  {name:"Brett Lee",           aliases:["lee","binga"],                           gender:"Male",   sport:"Cricket",     age:49,trophies:2},
+  {name:"Michael Clarke",      aliases:["clarke","pup"],                          gender:"Male",   sport:"Cricket",     age:45,trophies:2},
+  {name:"Steve Waugh",         aliases:["waugh","tugga"],                         gender:"Male",   sport:"Cricket",     age:61,trophies:3},
+  {name:"Mark Taylor",         aliases:["taylor","tubby"],                        gender:"Male",   sport:"Cricket",     age:61,trophies:2},
+  {name:"Meg Lanning",         aliases:["lanning","meg"],                         gender:"Female", sport:"Cricket",     age:34,trophies:6},
+  {name:"Alyssa Healy",        aliases:["healy","alyssa"],                        gender:"Female", sport:"Cricket",     age:36,trophies:4},
+  {name:"Beth Mooney",         aliases:["mooney","beth"],                         gender:"Female", sport:"Cricket",     age:32,trophies:3},
+  {name:"Travis Head",         aliases:["head","travis head"],                    gender:"Male",   sport:"Cricket",     age:32,trophies:2},
+  {name:"Nathan Lyon",         aliases:["lyon","gary","goat"],                    gender:"Male",   sport:"Cricket",     age:38,trophies:3},
+  {name:"Marcus Stoinis",      aliases:["stoinis","stoin"],                       gender:"Male",   sport:"Cricket",     age:36,trophies:1},
+  /* Tennis */
+  {name:"Rod Laver",           aliases:["laver","rocket"],                        gender:"Male",   sport:"Tennis",      age:87,trophies:11},
+  {name:"John Newcombe",       aliases:["newcombe","newk"],                       gender:"Male",   sport:"Tennis",      age:81,trophies:7},
+  {name:"Alex de Minaur",      aliases:["de minaur","demon"],                     gender:"Male",   sport:"Tennis",      age:27,trophies:0},
+  {name:"Mark Philippoussis",  aliases:["philippoussis","scud"],                  gender:"Male",   sport:"Tennis",      age:49,trophies:0},
+  {name:"Thanasi Kokkinakis",  aliases:["kokkinakis","thanasi"],                  gender:"Male",   sport:"Tennis",      age:29,trophies:0},
+  /* Golf */
+  {name:"Greg Norman",         aliases:["norman","great white shark"],            gender:"Male",   sport:"Golf",        age:71,trophies:2},
+  {name:"Adam Scott",          aliases:["scott","adam scott"],                    gender:"Male",   sport:"Golf",        age:46,trophies:1},
+  {name:"Karrie Webb",         aliases:["webb","karrie"],                         gender:"Female", sport:"Golf",        age:51,trophies:7},
+  {name:"Jason Day",           aliases:["day","jason day"],                       gender:"Male",   sport:"Golf",        age:38,trophies:1},
+  {name:"Min Woo Lee",         aliases:["min woo","min woo lee"],                 gender:"Male",   sport:"Golf",        age:28,trophies:0},
+  /* Surfing */
+  {name:"Mick Fanning",        aliases:["fanning","white shark"],                 gender:"Male",   sport:"Surfing",     age:44,trophies:3},
+  {name:"Stephanie Gilmore",   aliases:["gilmore","steph gilmore"],               gender:"Female", sport:"Surfing",     age:38,trophies:8},
+  {name:"Tyler Wright",        aliases:["wright","tyler wright"],                 gender:"Female", sport:"Surfing",     age:31,trophies:2},
+  {name:"Mark Occhilupo",      aliases:["occhilupo","occy"],                      gender:"Male",   sport:"Surfing",     age:59,trophies:1},
+  {name:"Joel Parkinson",      aliases:["parkinson","parko"],                     gender:"Male",   sport:"Surfing",     age:44,trophies:1},
+  {name:"Julian Wilson",       aliases:["wilson julian","julian w"],              gender:"Male",   sport:"Surfing",     age:38,trophies:0},
+  /* AFL */
+  {name:"Tony Lockett",        aliases:["lockett","plugger","tony l"],            gender:"Male",   sport:"AFL",         age:59,trophies:0},
+  {name:"Wayne Carey",         aliases:["carey","the duck"],                      gender:"Male",   sport:"AFL",         age:54,trophies:2},
+  {name:"Jason Dunstall",      aliases:["dunstall","dunny"],                      gender:"Male",   sport:"AFL",         age:62,trophies:4},
+  {name:"Luke Hodge",          aliases:["hodge","luke hodge"],                    gender:"Male",   sport:"AFL",         age:42,trophies:5},
+  {name:"Cyril Rioli",         aliases:["rioli","cyril"],                         gender:"Male",   sport:"AFL",         age:36,trophies:4},
+  {name:"Simon Black",         aliases:["black","simon b"],                       gender:"Male",   sport:"AFL",         age:48,trophies:3},
+  {name:"Matthew Pavlich",     aliases:["pavlich","pavs"],                        gender:"Male",   sport:"AFL",         age:44,trophies:0},
+  {name:"Matthew Lloyd",       aliases:["lloyd","lloydy"],                        gender:"Male",   sport:"AFL",         age:49,trophies:1},
+  {name:"Robert Harvey",       aliases:["harvey","robert harvey"],                gender:"Male",   sport:"AFL",         age:54,trophies:0},
+  {name:"Andrew McLeod",       aliases:["mcleod","andrew mcleod"],                gender:"Male",   sport:"AFL",         age:51,trophies:2},
+  {name:"Michael Voss",        aliases:["voss","michael voss"],                   gender:"Male",   sport:"AFL",         age:51,trophies:3},
+  {name:"Nic Naitanui",        aliases:["naitanui","nic nat"],                    gender:"Male",   sport:"AFL",         age:36,trophies:1},
+  {name:"Harley Reid",         aliases:["reid","harley r"],                       gender:"Male",   sport:"AFL",         age:20,trophies:0},
+  {name:"Erin Phillips",       aliases:["phillips","erin p"],                     gender:"Female", sport:"AFLW",        age:38,trophies:4},
+  {name:"Daisy Pearce",        aliases:["pearce","daisy"],                        gender:"Female", sport:"AFLW",        age:36,trophies:1},
+  /* NRL */
+  {name:"Darren Lockyer",      aliases:["lockyer","dazz"],                        gender:"Male",   sport:"NRL",         age:49,trophies:3},
+  {name:"Mal Meninga",         aliases:["meninga","mal"],                         gender:"Male",   sport:"NRL",         age:65,trophies:3},
+  {name:"Laurie Daley",        aliases:["daley","laurie"],                        gender:"Male",   sport:"NRL",         age:56,trophies:2},
+  {name:"Wally Lewis",         aliases:["lewis","king wally"],                    gender:"Male",   sport:"NRL",         age:66,trophies:2},
+  {name:"Peter Sterling",      aliases:["sterling","sterlo"],                     gender:"Male",   sport:"NRL",         age:65,trophies:4},
+  {name:"Gorden Tallis",       aliases:["tallis","gordie"],                       gender:"Male",   sport:"NRL",         age:52,trophies:3},
+  {name:"Ryan Papenhuyzen",    aliases:["papenhuyzen","papo"],                    gender:"Male",   sport:"NRL",         age:26,trophies:1},
+  {name:"Joey Manu",           aliases:["manu","joey m"],                         gender:"Male",   sport:"NRL",         age:29,trophies:1},
+  {name:"Ricky Stuart",        aliases:["stuart","ricky"],                        gender:"Male",   sport:"NRL",         age:58,trophies:2},
+  /* Rugby Union */
+  {name:"John Eales",          aliases:["eales","nobody"],                        gender:"Male",   sport:"Rugby Union", age:55,trophies:2},
+  {name:"David Campese",       aliases:["campese","campo"],                       gender:"Male",   sport:"Rugby Union", age:63,trophies:1},
+  {name:"Nick Farr-Jones",     aliases:["farr-jones","farr jones"],               gender:"Male",   sport:"Rugby Union", age:64,trophies:1},
+  {name:"Michael Lynagh",      aliases:["lynagh"],                                gender:"Male",   sport:"Rugby Union", age:62,trophies:1},
+  {name:"Phil Kearns",         aliases:["kearns"],                                gender:"Male",   sport:"Rugby Union", age:58,trophies:2},
+  /* Cycling */
+  {name:"Cadel Evans",         aliases:["evans","cadel"],                         gender:"Male",   sport:"Cycling",     age:49,trophies:1},
+  {name:"Anna Meares",         aliases:["meares","anna m"],                       gender:"Female", sport:"Cycling",     age:42,trophies:2},
+  {name:"Rohan Dennis",        aliases:["dennis","rohan"],                        gender:"Male",   sport:"Cycling",     age:35,trophies:2},
+  {name:"Grace Brown",         aliases:["brown grace","grace b"],                 gender:"Female", sport:"Cycling",     age:33,trophies:1},
+  /* Boxing */
+  {name:"Jeff Fenech",         aliases:["fenech"],                                gender:"Male",   sport:"Boxing",      age:62,trophies:3},
+  {name:"Danny Green",         aliases:["green","danny g"],                       gender:"Male",   sport:"Boxing",      age:52,trophies:1},
+  {name:"Kostya Tszyu",        aliases:["tszyu","kostya"],                        gender:"Male",   sport:"Boxing",      age:56,trophies:1},
+  {name:"Tim Tszyu",           aliases:["tim tszyu","timmy tszyu"],               gender:"Male",   sport:"Boxing",      age:32,trophies:1},
+  /* Hockey */
+  {name:"Jamie Dwyer",         aliases:["dwyer","jamie d"],                       gender:"Male",   sport:"Hockey",      age:45,trophies:3},
+  {name:"Rechelle Hawkes",     aliases:["hawkes","rechelle"],                     gender:"Female", sport:"Hockey",      age:58,trophies:3},
+  {name:"Nova Peris",          aliases:["peris","nova"],                          gender:"Female", sport:"Hockey",      age:55,trophies:1},
+  /* Football */
+  {name:"Brett Emerton",       aliases:["emerton"],                               gender:"Male",   sport:"Football",    age:48,trophies:0},
+  {name:"John Aloisi",         aliases:["aloisi"],                                gender:"Male",   sport:"Football",    age:50,trophies:0},
+  {name:"Steph Catley",        aliases:["catley","steph c"],                      gender:"Female", sport:"Football",    age:32,trophies:0},
+  /* Athletics */
+  {name:"Herb Elliott",        aliases:["elliott","herb"],                        gender:"Male",   sport:"Athletics",   age:88,trophies:1},
+  {name:"Steve Hooker",        aliases:["hooker"],                                gender:"Male",   sport:"Athletics",   age:43,trophies:1},
+  {name:"Dani Samuels",        aliases:["samuels","dani"],                        gender:"Female", sport:"Athletics",   age:37,trophies:1},
+  {name:"Peter Bol",           aliases:["bol"],                                   gender:"Male",   sport:"Athletics",   age:32,trophies:0},
+  /* Motorsport */
+  {name:"Mark Webber",         aliases:["webber"],                                gender:"Male",   sport:"Motorsport",  age:49,trophies:0},
+  {name:"Will Power",          aliases:["power","will p"],                        gender:"Male",   sport:"Motorsport",  age:45,trophies:1},
+  /* Basketball */
+  {name:"Lauren Jackson",      aliases:["jackson","lj"],                          gender:"Female", sport:"Basketball",  age:44,trophies:2},
+  {name:"Liz Cambage",         aliases:["cambage"],                               gender:"Female", sport:"Basketball",  age:34,trophies:0},
+  /* Sailing */
+  {name:"Jessica Watson",      aliases:["watson jess","jess watson"],             gender:"Female", sport:"Sailing",     age:32,trophies:1},
+  /* Triathlon */
+  {name:"Craig Alexander",     aliases:["alexander","crowie"],                    gender:"Male",   sport:"Triathlon",   age:52,trophies:3},
+  {name:"Erin Densham",        aliases:["densham","erin d"],                      gender:"Female", sport:"Triathlon",   age:40,trophies:0},
+  /* Rowing */
+  {name:"Drew Ginn",           aliases:["ginn","drew"],                           gender:"Male",   sport:"Rowing",      age:52,trophies:3},
+  {name:"Kim Brennan",         aliases:["brennan","kim b"],                       gender:"Female", sport:"Rowing",      age:42,trophies:1},
+  /* Squash */
+  {name:"Michelle Martin",     aliases:["martin","michelle m"],                   gender:"Female", sport:"Squash",      age:57,trophies:3},
+  /* Netball */
+  {name:"Liz Ellis",           aliases:["ellis","liz e"],                         gender:"Female", sport:"Netball",     age:53,trophies:2},
+  {name:"Sharelle McMahon",    aliases:["mcmahon","sharelle"],                    gender:"Female", sport:"Netball",     age:50,trophies:3},
+  /* Horse Racing */
+  {name:"Michelle Payne",      aliases:["payne","michelle p"],                    gender:"Female", sport:"Horse Racing",age:40,trophies:1},
+  {name:"Glen Boss",           aliases:["boss","glen"],                           gender:"Male",   sport:"Horse Racing",age:53,trophies:3},
+  /* Diving */
+  {name:"Matthew Mitcham",     aliases:["mitcham","matt mitcham"],                gender:"Male",   sport:"Diving",      age:38,trophies:1},
+  /* Volleyball */
+  {name:"Kerri Pottharst",     aliases:["pottharst","kerri"],                     gender:"Female", sport:"Volleyball",  age:58,trophies:1},
+];
+
+const seen=new Set();
+const PLAYERS=ALL_PLAYERS.filter(p=>{if(seen.has(p.name))return false;seen.add(p.name);return true;});
+
+function getDayIndex(){
+  const epoch=new Date('2026-01-01');
+  return Math.floor((new Date()-epoch)/86400000)%PLAYERS.length;
+}
+const TARGET=PLAYERS[getDayIndex()];
+const MAX=8;
+let attempts=0,done=false,guesses=[],ddHighlight=-1,ddItems=[];
+
+function normalise(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();
+}
+function findPlayer(val){
+  const nv=normalise(val);
+  return PLAYERS.find(p=>normalise(p.name)===nv||p.aliases.some(a=>normalise(a)===nv))
+    ||PLAYERS.find(p=>normalise(p.name).includes(nv)||p.aliases.some(a=>normalise(a).includes(nv)));
+}
+function scoreGuess(g){
+  const t=TARGET,ageDiff=Math.abs(g.age-t.age),trophyDiff=Math.abs(g.trophies-t.trophies);
+  let sportScore='gr';
+  if(g.sport===t.sport)sportScore='g';
+  else if(SPORT_CLOSE[g.sport]&&SPORT_CLOSE[g.sport]===SPORT_CLOSE[t.sport])sportScore='a';
+  return{
+    gender:  g.gender===t.gender?'g':'gr',
+    sport:   sportScore,
+    age:     g.age===t.age?'g':ageDiff<=2?'a':'gr',
+    trophies:g.trophies===t.trophies?'g':trophyDiff<=2?'a':'gr',
+  };
+}
+function ageArrow(g){return g.age===TARGET.age?'':g.age<TARGET.age?' ↑':' ↓';}
+function trophyArrow(g){return g.trophies===TARGET.trophies?'':g.trophies<TARGET.trophies?' ↑':' ↓';}
+
+function renderRows(){
+  const c=document.getElementById('rows');c.innerHTML='';
+  for(let i=0;i<MAX;i++){
+    const wrap=document.createElement('div');
+    wrap.style.cssText='display:grid;grid-template-columns:28px repeat(4,1fr);gap:4px;margin-bottom:2px';
+    const lbl=document.createElement('div');
+    lbl.style.cssText='font-size:11px;color:var(--text-muted);text-align:right;padding-right:4px;display:flex;align-items:center;justify-content:flex-end;font-family:"Barlow Condensed",sans-serif;font-weight:700';
+    lbl.textContent=i+1;wrap.appendChild(lbl);
+    if(i<guesses.length){
+      const g=guesses[i],s=scoreGuess(g),aa=ageArrow(g),ta=trophyArrow(g);
+      [{cat:'gender',val:g.gender,sub:''},{cat:'sport',val:g.sport,sub:''},
+       {cat:'age',val:g.age+(aa||''),sub:''},
+       {cat:'trophies',val:g.trophies+(ta||''),sub:''}].forEach(def=>{
+        const tile=document.createElement('div');tile.className='tile '+s[def.cat];
+        const tv=document.createElement('div');tv.className='tv';tv.textContent=def.val;tile.appendChild(tv);
+        if(def.sub){const ti=document.createElement('div');ti.className='ti';ti.textContent=def.sub;tile.appendChild(ti);}
+        wrap.appendChild(tile);
+      });
+      c.appendChild(wrap);
+      const nr=document.createElement('div');
+      nr.style.cssText='display:grid;grid-template-columns:28px 1fr;gap:4px;margin-bottom:6px';
+      nr.innerHTML='<div></div><div style="font-size:11px;color:var(--text-muted);padding-left:2px;font-style:italic">'+g.name+'</div>';
+      c.appendChild(nr);
+    } else {
+      for(let j=0;j<4;j++){const t=document.createElement('div');t.className='tile empty';wrap.appendChild(t);}
+      c.appendChild(wrap);
+    }
+  }
+}
+function getFiltered(q){
+  if(!q||q.length<2)return[];
+  const nq=normalise(q);
+  return PLAYERS.filter(p=>normalise(p.name).includes(nq)||p.aliases.some(a=>normalise(a).includes(nq))).slice(0,10);
+}
+const input=document.getElementById('guess-input'),dd=document.getElementById('dropdown');
+function renderDD(items,hl=-1){
+  ddItems=items;
+  if(!items.length){dd.style.display='none';return;}
+  dd.innerHTML='';
+  items.forEach((p,i)=>{
+    const item=document.createElement('div');
+    item.className='dd-item'+(i===hl?' hl':'');
+    item.innerHTML='<div>'+p.name+'</div><div class="dd-meta">'+p.gender+' · '+p.sport+' · Age '+p.age+'</div>';
+    item.onmousedown=e=>{e.preventDefault();input.value=p.name;dd.style.display='none';ddHighlight=-1;input.focus();};
+    dd.appendChild(item);
+  });
+  dd.style.display='block';
+}
+input.addEventListener('input',()=>{ddHighlight=-1;renderDD(getFiltered(input.value));});
+input.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'){e.preventDefault();ddHighlight=Math.min(ddHighlight+1,ddItems.length-1);renderDD(ddItems,ddHighlight);}
+  else if(e.key==='ArrowUp'){e.preventDefault();ddHighlight=Math.max(ddHighlight-1,0);renderDD(ddItems,ddHighlight);}
+  else if(e.key==='Enter'){ddHighlight>=0&&ddItems[ddHighlight]?(input.value=ddItems[ddHighlight].name,dd.style.display='none',ddHighlight=-1):submitGuess();}
+  else if(e.key==='Escape')dd.style.display='none';
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.input-area'))dd.style.display='none';});
+function submitGuess(){
+  if(done)return;
+  const val=input.value.trim();
+  if(!val){document.getElementById('msg').textContent='Type a name first.';return;}
+  const player=findPlayer(val);
+  if(!player){document.getElementById('msg').textContent='"'+val+'" not found — check spelling or pick from the dropdown.';return;}
+  if(guesses.find(g=>g.name===player.name)){document.getElementById('msg').textContent='Already guessed '+player.name+'!';return;}
+  document.getElementById('msg').textContent='';
+  guesses.push(player);attempts++;
+  renderRows();
+  document.getElementById('att-badge').textContent=(MAX-attempts)+' attempt'+(MAX-attempts!==1?'s':'')+' remaining';
+  input.value='';dd.style.display='none';
+  if(player.name===TARGET.name){done=true;showResult(true);}
+  else if(attempts>=MAX){done=true;showResult(false);}
+}
+function showResult(won){
+  document.getElementById('input-area').style.display='none';
+  document.getElementById('att-badge').style.display='none';
+  const r=document.getElementById('result');
+  const attWord=attempts===1?'1 attempt':attempts+' attempts';
+  r.innerHTML='<div class="result-banner '+(won?'win':'lose')+'">'
+    +'<div class="rb-icon">'+(won?'🎉':'😔')+'</div>'
+    +'<div class="rb-title">'+(won?'Congratulations!':'Unlucky!')+'</div>'
+    +'<div class="rb-player">'+TARGET.name+'</div>'
+    +'<div class="rb-sub">'+TARGET.gender+' · '+TARGET.sport+'</div>'
+    +'<div class="rb-sub" style="margin-top:4px">'+(won?'Guessed correctly in '+attWord:'Better luck tomorrow!')+'</div>'
+    +'<button class="share-btn" onclick="copyShare()">Share result</button></div>';
+}
+function copyShare(){
+  const e={g:'🟩',a:'🟨',gr:'⬜'};
+  const cats=['gender','sport','age','trophies'];
+  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  const won=done&&guesses.length&&guesses[guesses.length-1].name===TARGET.name;
+  let txt='The Sportsman: AU (Legends) — '+today+'\n'+(won?attempts:'X')+'/'+MAX+'\n\n';
+  guesses.forEach(g=>{const s=scoreGuess(g);txt+=cats.map(c=>e[s[c]]).join('')+'\n';});
+  const b=document.querySelector('.share-btn');
+  const finish=()=>{b.textContent='Copied!';setTimeout(()=>b.textContent='Share result',2000);};
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(finish).catch(()=>fbCopy(txt,finish));}
+  else{fbCopy(txt,finish);}
+}
+function fbCopy(txt,cb){
+  const ta=document.createElement('textarea');ta.value=txt;
+  ta.style.cssText='position:fixed;top:-9999px;left:-9999px';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');if(cb)cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+renderRows();
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

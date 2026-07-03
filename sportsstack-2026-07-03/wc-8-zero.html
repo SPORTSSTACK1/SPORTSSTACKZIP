@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<title>World Cup 2026: 8-0 – SportsStack</title>
+<meta property="og:title" content="World Cup 2026: 8-0 – SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/wc-8-zero.html"/>
+<meta name="twitter:card" content="summary"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+
+:root{--bg:#011a0d;--surface:#062c15;--surface2:#083620;--gold:#f5c842;--green:#00a651;--green-dark:#006831;--green-glow:rgba(0,166,81,.3);--red:#ef4444;--red-glow:rgba(239,68,68,.3);--text:#e8f5ee;--text-muted:#6baa85;--text-dim:#1a4530;--border:#0a3d1f;--border-bright:#145a30;--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);font-family:'Barlow',sans-serif;color:var(--text);min-height:100vh}
+nav{position:sticky;top:0;z-index:1000;background:rgba(1,26,13,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.page{max-width:640px;margin:0 auto;padding:20px 16px 60px}
+
+/* screens */
+.screen{display:none}.screen.active{display:block}
+.game-header{text-align:center;padding:20px 16px 12px;margin-bottom:14px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:6px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,12vw,80px);font-weight:900;font-style:italic;color:var(--gold);line-height:1}
+.game-sub{font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5}
+.wc-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,166,81,.15);border:1px solid var(--green-dark);border-radius:50px;padding:6px 14px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+
+/* setup */
+.daily-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--green-dark),#009c3b);border:none;border-radius:12px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#fff;cursor:pointer;margin-bottom:14px}
+.daily-divider{text-align:center;font-size:12px;color:var(--text-dim);margin:12px 0;position:relative}
+.daily-divider::before,.daily-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border)}
+.daily-divider::before{left:0}.daily-divider::after{right:0}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.setup-card{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:border-color .2s}
+.setup-card.sel{border-color:var(--green)}
+.sc-icon{font-size:26px;margin-bottom:6px}
+.sc-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.sc-desc{font-size:11px;color:var(--text-muted);line-height:1.4}
+.cards-lbl{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.setup-row{display:flex;gap:8px;margin-bottom:16px}
+.form-btn{flex:1;padding:12px;background:var(--surface);border:2px solid var(--border);border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:.08em;color:var(--text);cursor:pointer;text-align:center;transition:border-color .2s}
+.form-btn.sel{border-color:var(--green);color:var(--green)}
+.btn-start{width:100%;padding:16px;background:var(--gold);border:none;border-radius:12px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#011a0d;cursor:pointer;margin-bottom:16px}
+.back-lnk{display:block;text-align:center;font-size:13px;color:var(--text-muted);text-decoration:none}
+
+/* game screen */
+.daily-indicator{background:rgba(0,166,81,.12);border:1px solid var(--green-dark);border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700;color:var(--green);margin-bottom:12px;text-align:center}
+.progress-bar{display:flex;gap:4px;margin-bottom:6px}
+.prog-dot{flex:1;height:6px;background:var(--border);border-radius:3px}
+.prog-dot.done{background:var(--green)}
+.prog-dot.cur{background:var(--gold)}
+.round-lbl{font-size:11px;color:var(--text-dim);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;text-align:center}
+
+/* slot */
+.slot-wrap{background:var(--surface);border:1px solid var(--border-bright);border-radius:12px;padding:16px;margin-bottom:12px}
+.slot-title{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.slot-display{display:flex;align-items:center;gap:12px}
+.slot-flag{font-size:36px;line-height:1}
+.slot-nation{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:.04em}
+.slot-year{font-size:13px;color:var(--text-muted);margin-top:2px;font-weight:700}
+.slot-anim{animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+
+.skip-row{margin-bottom:4px}
+.btn-skip{background:transparent;border:1px solid var(--border-bright);border-radius:50px;padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);cursor:pointer}
+.btn-skip:disabled{opacity:.35;cursor:default}
+.skip-lbl{font-size:11px;color:var(--text-dim);margin-bottom:12px;font-weight:700}
+
+/* player cards */
+.player-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.pcard{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:0;cursor:pointer;overflow:hidden;transition:border-color .2s,transform .15s}
+.pcard:hover:not(.disabled){border-color:var(--gold);transform:translateY(-2px)}
+.pcard.sel{border-color:var(--gold)}
+.pcard.disabled{opacity:.45;cursor:default}
+.pcard-stripe{height:4px}
+.pcard-pos{font-size:10px;font-weight:900;letter-spacing:.14em;padding:8px 10px 0;margin-bottom:4px}
+.pos-gk{color:#f59e0b}.pos-def{color:#3b82f6}.pos-mid{color:#8b5cf6}.pos-fwd{color:#ef4444}
+.pcard-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;padding:0 10px;margin-bottom:8px;line-height:1.2}
+.pcard-rating-wrap{padding:0 10px 10px;display:flex;align-items:center;gap:6px}
+.pcard-bar{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.pcard-fill{height:100%;background:var(--gold);border-radius:3px;width:0%;transition:width .5s ease}
+.pcard-num{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:var(--gold)}
+.pcard-q{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--text-dim);padding:0 10px 10px}
+.pcard-sub{font-size:10px;color:var(--text-dim);padding:0 10px 8px;margin-top:-4px}
+
+/* pitch */
+.pitch-wrap{margin-bottom:14px}
+.pitch-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.pitch-title{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim)}
+.pitch-avg{font-size:12px;font-weight:800;color:var(--gold)}
+.pitch{background:linear-gradient(180deg,#0a3d1a 0%,#083015 50%,#0a3d1a 100%);border:1px solid var(--border-bright);border-radius:12px;padding:12px 10px;position:relative;overflow:hidden}
+.pitch::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent,transparent 19%,rgba(255,255,255,.04) 19%,rgba(255,255,255,.04) 20%)}
+.pitch-inner{display:flex;flex-direction:column;gap:8px;position:relative}
+.pitch-row{display:flex;justify-content:center;gap:8px}
+.pslot{text-align:center;width:52px}
+.pslot-bubble{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:900;letter-spacing:.04em;margin:0 auto 2px}
+.pslot-bubble.empty{background:rgba(255,255,255,.06);border:1px dashed rgba(255,255,255,.12);color:var(--text-dim)}
+.pslot-bubble.gk{background:#92400e;color:#fef3c7}
+.pslot-bubble.def{background:#1e3a8a;color:#bfdbfe}
+.pslot-bubble.mid{background:#4c1d95;color:#ede9fe}
+.pslot-bubble.fwd{background:#7f1d1d;color:#fee2e2}
+.pslot-name{font-size:9px;font-weight:700;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52px}
+
+.btn-sim{display:none;width:100%;padding:16px;background:var(--gold);border:none;border-radius:12px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#011a0d;cursor:pointer}
+.btn-sim.show{display:block}
+
+/* sim screen */
+.sim-wrap{text-align:center;padding:60px 20px}
+.sim-lbl{font-size:14px;color:var(--text-muted);margin-bottom:16px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.sim-score{font-family:'Barlow Condensed',sans-serif;font-size:96px;font-weight:900;color:var(--gold);line-height:1}
+.sim-sub{font-size:14px;color:var(--text-muted);margin-top:6px;margin-bottom:20px}
+.sim-bar-wrap{height:8px;background:var(--surface);border-radius:4px;overflow:hidden;max-width:320px;margin:0 auto}
+.sim-bar-fill{height:100%;background:var(--gold);border-radius:4px;width:0%;transition:width .3s}
+
+/* result */
+.res-screen{max-width:480px;margin:0 auto;padding:20px 0 40px}
+.res-icon{font-size:56px;text-align:center;margin-bottom:8px}
+.res-record{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;text-align:center;color:var(--gold);line-height:1}
+.res-pts{font-size:13px;color:var(--text-muted);text-align:center;margin:6px 0 20px;font-weight:700}
+.res-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
+.res-cell{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.res-n{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900}
+.res-w{color:var(--green)}.res-d{color:var(--gold)}.res-l{color:var(--red)}
+.res-lbl{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-top:2px}
+.res-msg{text-align:center;font-size:14px;color:var(--text-muted);margin-bottom:20px;line-height:1.5;padding:0 8px;font-weight:400}
+.res-xi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px}
+.res-xi h3{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px}
+.res-player{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+.res-player:last-child{border-bottom:none}
+.rp-info{flex:1}
+.rp-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800}
+.rp-club{font-size:11px;color:var(--text-muted);margin-top:1px}
+.rp-r{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--gold)}
+.btn-share{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#011a0d;cursor:pointer;margin-bottom:10px}
+.btn-reset{width:100%;padding:14px;background:transparent;border:1px solid var(--border-bright);border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);cursor:pointer}
+.res-story{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px}
+.story-title{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px}
+.story-match{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.story-match:last-child{border-bottom:none}
+.story-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.story-dot.w{background:var(--green)}.story-dot.l{background:var(--red)}
+.story-stage{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);min-width:86px;padding-top:1px;flex-shrink:0}
+.story-detail{color:var(--text);flex:1;font-size:13px;line-height:1.5;font-weight:400}
+
+@media(max-width:480px){
+  .player-cards{grid-template-columns:1fr 1fr}
+  .pcard-name{font-size:13px}
+}
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="page">
+
+<!-- SCREEN 1: Setup -->
+<div id="sc-setup" class="screen active">
+  <div class="game-header">
+    <div class="eyebrow">⚽ World Cup 2026</div>
+    <div class="game-title">8-0</div>
+    <div class="game-sub">Pick a World Cup XI from 11 different nations &mdash; legends and 2026 stars &mdash; can you build a team to go unbeaten?</div>
+  </div>
+  <button class="daily-btn" onclick="startDaily()">
+    📅 Daily Challenge <span style="font-size:14px;opacity:.7" id="daily-num"></span>
+  </button>
+  <div class="daily-divider">or free play</div>
+  <div class="setup-grid">
+    <div class="setup-card sel" id="mc-classic" onclick="pickMode('classic')">
+      <div class="sc-icon">📊</div>
+      <div class="sc-name">Classic</div>
+      <div class="sc-desc">Player ratings visible. Make informed picks.</div>
+    </div>
+    <div class="setup-card" id="mc-knowledge" onclick="pickMode('knowledge')">
+      <div class="sc-icon">🧠</div>
+      <div class="sc-name">Knowledge</div>
+      <div class="sc-desc">Ratings hidden. Pick on World Cup knowledge alone.</div>
+    </div>
+  </div>
+  <div class="cards-lbl" style="margin-top:10px">Choose formation</div>
+  <div class="setup-row">
+    <div class="form-btn sel" id="fb-433" onclick="pickFormation('4-3-3')">4&#x2011;3&#x2011;3</div>
+    <div class="form-btn" id="fb-442" onclick="pickFormation('4-4-2')">4&#x2011;4&#x2011;2</div>
+    <div class="form-btn" id="fb-352" onclick="pickFormation('3-5-2')">3&#x2011;5&#x2011;2</div>
+  </div>
+  <button class="btn-start" onclick="startGame()">Kick Off ⚽</button>
+  <a class="back-lnk" href="index.html" style="margin-top:20px">&#x2190; Back to all quizzes</a>
+</div>
+
+<!-- SCREEN 2: Game -->
+<div id="sc-game" class="screen">
+  <div class="game-header" style="padding-bottom:0">
+    <div class="eyebrow">⚽ World Cup 2026</div>
+    <div class="game-title" style="font-size:clamp(28px,7vw,42px)">8-0</div>
+  </div>
+  <div class="daily-indicator" id="daily-indicator" style="display:none"></div>
+  <div class="progress-bar" id="progress-bar"></div>
+  <div class="round-lbl" id="round-lbl"></div>
+  <div class="slot-wrap">
+    <div class="slot-title">Your pick comes from</div>
+    <div class="slot-display">
+      <div class="slot-flag" id="slot-flag">🌍</div>
+      <div>
+        <div class="slot-nation" id="slot-nation">—</div>
+        <div class="slot-year" id="slot-year">—</div>
+      </div>
+    </div>
+  </div>
+  <div class="skip-row"><button class="btn-skip" id="btn-skip" onclick="doSkip()">↺ Skip draw</button></div>
+  <div class="skip-lbl" id="skip-lbl">3 skips remaining</div>
+  <div class="cards-lbl">Choose your player — best available at each position</div>
+  <div class="player-cards" id="player-cards"></div>
+  <div class="pitch-wrap">
+    <div class="pitch-hdr">
+      <div class="pitch-title" id="form-lbl"></div>
+      <div class="pitch-avg" id="pitch-avg"></div>
+    </div>
+    <div class="pitch" id="pitch-el"><div class="pitch-inner" id="pitch-inner"></div></div>
+  </div>
+  <button class="btn-sim" id="btn-sim" onclick="runSim()">⚽ Simulate Tournament</button>
+</div>
+
+<!-- SCREEN 3: Simulation -->
+<div id="sc-sim" class="screen">
+  <div class="sim-wrap">
+    <div class="sim-lbl">Simulating your tournament…</div>
+    <div class="sim-score" id="sim-score">0</div>
+    <div class="sim-sub" id="sim-sub">wins from 0 matches</div>
+    <div class="sim-bar-wrap"><div class="sim-bar-fill" id="sim-bar"></div></div>
+  </div>
+</div>
+
+<!-- SCREEN 4: Result -->
+<div id="sc-result" class="screen">
+  <div class="res-screen">
+    <div class="res-icon" id="res-icon">⚽</div>
+    <div class="res-record" id="res-record">0-0-0</div>
+    <div class="res-pts" id="res-pts">0 matches</div>
+    <div class="res-grid">
+      <div class="res-cell"><div class="res-n res-w" id="rw">0</div><div class="res-lbl">Won</div></div>
+      <div class="res-cell"><div class="res-n res-d" id="rd">0</div><div class="res-lbl">Drawn</div></div>
+      <div class="res-cell"><div class="res-n res-l" id="rl">0</div><div class="res-lbl">Lost</div></div>
+    </div>
+    <div class="res-story" id="res-story"></div>
+    <div class="res-msg" id="res-msg"></div>
+    <div class="res-xi" id="res-xi"></div>
+    <button class="btn-share" onclick="shareResult()">Share Result 📋</button>
+    <button class="btn-reset" onclick="resetGame()">Play Again</button>
+  </div>
+</div>
+
+</div><!-- /page -->
+<script>
+const NATIONS = {
+"Argentina":{color:"#74ACDF",flag:"🇦🇷",squads:{
+  "2026":[
+    {name:"Emiliano Martínez",pos:"GK",rating:91},{name:"Franco Armani",pos:"GK",rating:82},
+    {name:"Cristian Romero",pos:"DEF",rating:88},{name:"Lisandro Martínez",pos:"DEF",rating:87},
+    {name:"Nahuel Molina",pos:"DEF",rating:83},{name:"Nicolás Tagliafico",pos:"DEF",rating:81},
+    {name:"Enzo Fernández",pos:"MID",rating:88},{name:"Rodrigo De Paul",pos:"MID",rating:85},
+    {name:"Alexis Mac Allister",pos:"MID",rating:86},{name:"Alejandro Garnacho",pos:"MID",rating:83},
+    {name:"Lionel Messi",pos:"FWD",rating:96},{name:"Lautaro Martínez",pos:"FWD",rating:88},
+    {name:"Julián Álvarez",pos:"FWD",rating:89}
+  ],
+  "2022":[
+    {name:"Emiliano Martínez",pos:"GK",rating:90},{name:"Cristian Romero",pos:"DEF",rating:87},
+    {name:"Nicolás Otamendi",pos:"DEF",rating:84},{name:"Nicolás Tagliafico",pos:"DEF",rating:82},
+    {name:"Rodrigo De Paul",pos:"MID",rating:86},{name:"Enzo Fernández",pos:"MID",rating:86},
+    {name:"Leandro Paredes",pos:"MID",rating:82},{name:"Lionel Messi",pos:"FWD",rating:99},
+    {name:"Julián Álvarez",pos:"FWD",rating:90},{name:"Ángel Di María",pos:"FWD",rating:88}
+  ],
+  "1986":[
+    {name:"Nery Pumpido",pos:"GK",rating:85},{name:"José-Luis Brown",pos:"DEF",rating:83},
+    {name:"Oscar Ruggeri",pos:"DEF",rating:87},{name:"Jorge Burruchaga",pos:"MID",rating:88},
+    {name:"Diego Maradona",pos:"MID",rating:99},{name:"Jorge Valdano",pos:"FWD",rating:87},
+    {name:"Carlos Tapia",pos:"MID",rating:82}
+  ],
+  "1978":[
+    {name:"Ubaldo Fillol",pos:"GK",rating:88},{name:"Daniel Passarella",pos:"DEF",rating:91},
+    {name:"Luis Galván",pos:"DEF",rating:84},{name:"Américo Gallego",pos:"MID",rating:84},
+    {name:"Mario Kempes",pos:"FWD",rating:96},{name:"Leopoldo Luque",pos:"FWD",rating:86}
+  ]
+}},
+"France":{color:"#002395",flag:"🇫🇷",squads:{
+  "2026":[
+    {name:"Mike Maignan",pos:"GK",rating:88},{name:"Alphonse Areola",pos:"GK",rating:82},
+    {name:"William Saliba",pos:"DEF",rating:89},{name:"Jules Koundé",pos:"DEF",rating:87},
+    {name:"Dayot Upamecano",pos:"DEF",rating:86},{name:"Ibrahima Konaté",pos:"DEF",rating:87},{name:"Théo Hernández",pos:"DEF",rating:85},
+    {name:"N'Golo Kanté",pos:"MID",rating:86},{name:"Aurélien Tchouaméni",pos:"MID",rating:85},
+    {name:"Eduardo Camavinga",pos:"MID",rating:84},{name:"Kylian Mbappé",pos:"FWD",rating:97},
+    {name:"Antoine Griezmann",pos:"FWD",rating:88},{name:"Marcus Thuram",pos:"FWD",rating:87}
+  ],
+  "2018":[
+    {name:"Hugo Lloris",pos:"GK",rating:90},{name:"Raphaël Varane",pos:"DEF",rating:91},
+    {name:"Samuel Umtiti",pos:"DEF",rating:86},{name:"Lucas Hernández",pos:"DEF",rating:86},
+    {name:"N'Golo Kanté",pos:"MID",rating:95},{name:"Paul Pogba",pos:"MID",rating:89},
+    {name:"Blaise Matuidi",pos:"MID",rating:86},{name:"Kylian Mbappé",pos:"FWD",rating:95},
+    {name:"Antoine Griezmann",pos:"FWD",rating:93},{name:"Olivier Giroud",pos:"FWD",rating:87}
+  ],
+  "1998":[
+    {name:"Fabien Barthez",pos:"GK",rating:90},{name:"Marcel Desailly",pos:"DEF",rating:91},
+    {name:"Laurent Blanc",pos:"DEF",rating:90},{name:"Lilian Thuram",pos:"DEF",rating:91},
+    {name:"Zinedine Zidane",pos:"MID",rating:99},{name:"Patrick Vieira",pos:"MID",rating:93},
+    {name:"Emmanuel Petit",pos:"MID",rating:88},{name:"Thierry Henry",pos:"FWD",rating:96},
+    {name:"David Trezeguet",pos:"FWD",rating:90}
+  ]
+}},
+"Brazil":{color:"#009c3b",flag:"🇧🇷",squads:{
+  "2026":[
+    {name:"Alisson",pos:"GK",rating:90},{name:"Ederson",pos:"GK",rating:87},
+    {name:"Marquinhos",pos:"DEF",rating:87},{name:"Gabriel Magalhães",pos:"DEF",rating:85},
+    {name:"Bremer",pos:"DEF",rating:83},{name:"Danilo",pos:"DEF",rating:82},
+    {name:"Lucas Paquetá",pos:"MID",rating:86},{name:"Bruno Guimarães",pos:"MID",rating:85},
+    {name:"Casemiro",pos:"MID",rating:83},{name:"Vinícius Júnior",pos:"FWD",rating:93},
+    {name:"Raphinha",pos:"FWD",rating:87},{name:"Neymar",pos:"FWD",rating:85},
+    {name:"Endrick",pos:"FWD",rating:82}
+  ],
+  "2002":[
+    {name:"Marcos",pos:"GK",rating:88},{name:"Lúcio",pos:"DEF",rating:91},
+    {name:"Roque Júnior",pos:"DEF",rating:86},{name:"Roberto Carlos",pos:"DEF",rating:94},
+    {name:"Ronaldinho",pos:"MID",rating:95},{name:"Rivaldo",pos:"MID",rating:96},
+    {name:"Cafu",pos:"DEF",rating:92},{name:"Ronaldo",pos:"FWD",rating:99},
+    {name:"Gilberto Silva",pos:"MID",rating:87}
+  ],
+  "1994":[
+    {name:"Taffarel",pos:"GK",rating:89},{name:"Márcio Santos",pos:"DEF",rating:86},
+    {name:"Aldair",pos:"DEF",rating:88},{name:"Leonardo",pos:"MID",rating:87},
+    {name:"Mauro Silva",pos:"MID",rating:85},{name:"Romário",pos:"FWD",rating:98},
+    {name:"Bebeto",pos:"FWD",rating:94}
+  ],
+  "1970":[
+    {name:"Félix",pos:"GK",rating:84},{name:"Carlos Alberto",pos:"DEF",rating:92},
+    {name:"Clodoaldo",pos:"MID",rating:86},{name:"Pelé",pos:"FWD",rating:99},
+    {name:"Jairzinho",pos:"FWD",rating:93},{name:"Rivelino",pos:"MID",rating:93},
+    {name:"Tostão",pos:"FWD",rating:91}
+  ],
+  "1958":[
+    {name:"Gilmar",pos:"GK",rating:86},{name:"Nilton Santos",pos:"DEF",rating:89},
+    {name:"Djalma Santos",pos:"DEF",rating:87},{name:"Didi",pos:"MID",rating:93},
+    {name:"Garrincha",pos:"FWD",rating:97},{name:"Pelé",pos:"FWD",rating:98},
+    {name:"Vavá",pos:"FWD",rating:88}
+  ],
+  "1962":[
+    {name:"Gilmar",pos:"GK",rating:85},{name:"Djalma Santos",pos:"DEF",rating:88},
+    {name:"Zózimo",pos:"DEF",rating:85},{name:"Garrincha",pos:"FWD",rating:97},
+    {name:"Amarildo",pos:"FWD",rating:86},{name:"Vavá",pos:"FWD",rating:86}
+  ]
+}},
+"England":{color:"#CF081F",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",squads:{
+  "2026":[
+    {name:"Jordan Pickford",pos:"GK",rating:83},{name:"Aaron Ramsdale",pos:"GK",rating:81},
+    {name:"John Stones",pos:"DEF",rating:84},{name:"Kieran Trippier",pos:"DEF",rating:82},
+    {name:"Levi Colwill",pos:"DEF",rating:81},{name:"Luke Shaw",pos:"DEF",rating:79},
+    {name:"Jude Bellingham",pos:"MID",rating:94},{name:"Phil Foden",pos:"MID",rating:90},
+    {name:"Declan Rice",pos:"MID",rating:88},{name:"Cole Palmer",pos:"MID",rating:88},
+    {name:"Harry Kane",pos:"FWD",rating:91},{name:"Bukayo Saka",pos:"FWD",rating:89},
+    {name:"Ollie Watkins",pos:"FWD",rating:84}
+  ],
+  "1966":[
+    {name:"Gordon Banks",pos:"GK",rating:92},{name:"Bobby Moore",pos:"DEF",rating:95},
+    {name:"George Cohen",pos:"DEF",rating:84},{name:"Jack Charlton",pos:"DEF",rating:86},
+    {name:"Bobby Charlton",pos:"MID",rating:95},{name:"Alan Ball",pos:"MID",rating:88},
+    {name:"Martin Peters",pos:"MID",rating:87},{name:"Geoff Hurst",pos:"FWD",rating:91},
+    {name:"Roger Hunt",pos:"FWD",rating:84}
+  ]
+}},
+"Germany":{color:"#000000",flag:"🇩🇪",squads:{
+  "2026":[
+    {name:"Marc-André ter Stegen",pos:"GK",rating:87},{name:"Manuel Neuer",pos:"GK",rating:83},
+    {name:"Antonio Rüdiger",pos:"DEF",rating:87},{name:"Nico Schlotterbeck",pos:"DEF",rating:83},
+    {name:"David Raum",pos:"DEF",rating:81},{name:"Joshua Kimmich",pos:"MID",rating:88},
+    {name:"Jamal Musiala",pos:"MID",rating:91},{name:"Florian Wirtz",pos:"MID",rating:92},
+    {name:"Kai Havertz",pos:"FWD",rating:85},{name:"Leroy Sané",pos:"FWD",rating:84},
+    {name:"Niclas Füllkrug",pos:"FWD",rating:82}
+  ],
+  "2014":[
+    {name:"Manuel Neuer",pos:"GK",rating:96},{name:"Philipp Lahm",pos:"DEF",rating:93},
+    {name:"Mats Hummels",pos:"DEF",rating:90},{name:"Jérôme Boateng",pos:"DEF",rating:89},
+    {name:"Toni Kroos",pos:"MID",rating:95},{name:"Bastian Schweinsteiger",pos:"MID",rating:92},
+    {name:"Sami Khedira",pos:"MID",rating:88},{name:"Thomas Müller",pos:"FWD",rating:92},
+    {name:"Miroslav Klose",pos:"FWD",rating:91},{name:"Mario Götze",pos:"FWD",rating:88}
+  ],
+  "1990":[
+    {name:"Bodo Illgner",pos:"GK",rating:86},{name:"Andreas Brehme",pos:"DEF",rating:89},
+    {name:"Jürgen Kohler",pos:"DEF",rating:91},{name:"Lothar Matthäus",pos:"MID",rating:97},
+    {name:"Thomas Hässler",pos:"MID",rating:87},{name:"Rudi Völler",pos:"FWD",rating:90},
+    {name:"Jürgen Klinsmann",pos:"FWD",rating:92}
+  ],
+  "1974":[
+    {name:"Sepp Maier",pos:"GK",rating:90},{name:"Franz Beckenbauer",pos:"DEF",rating:97},
+    {name:"Berti Vogts",pos:"DEF",rating:88},{name:"Paul Breitner",pos:"MID",rating:92},
+    {name:"Rainer Bonhof",pos:"MID",rating:87},{name:"Gerd Müller",pos:"FWD",rating:99},
+    {name:"Uli Hoeneß",pos:"FWD",rating:88}
+  ],
+  "1954":[
+    {name:"Toni Turek",pos:"GK",rating:85},{name:"Karl Mai",pos:"DEF",rating:84},
+    {name:"Fritz Walter",pos:"MID",rating:93},{name:"Helmut Rahn",pos:"FWD",rating:91},
+    {name:"Max Morlock",pos:"FWD",rating:86}
+  ]
+}},
+"Spain":{color:"#AA151B",flag:"🇪🇸",squads:{
+  "2026":[
+    {name:"David Raya",pos:"GK",rating:85},{name:"Unai Simón",pos:"GK",rating:83},
+    {name:"Alejandro Balde",pos:"DEF",rating:83},{name:"Robin Le Normand",pos:"DEF",rating:82},
+    {name:"Dani Vivian",pos:"DEF",rating:81},{name:"Dani Carvajal",pos:"DEF",rating:84},
+    {name:"Rodri",pos:"MID",rating:93},{name:"Pedri",pos:"MID",rating:90},
+    {name:"Gavi",pos:"MID",rating:88},{name:"Fabián Ruiz",pos:"MID",rating:84},
+    {name:"Lamine Yamal",pos:"FWD",rating:91},{name:"Nico Williams",pos:"FWD",rating:87},
+    {name:"Álvaro Morata",pos:"FWD",rating:82}
+  ],
+  "2010":[
+    {name:"Iker Casillas",pos:"GK",rating:95},{name:"Carles Puyol",pos:"DEF",rating:92},
+    {name:"Gerard Piqué",pos:"DEF",rating:89},{name:"Joan Capdevila",pos:"DEF",rating:83},
+    {name:"Sergio Busquets",pos:"MID",rating:89},{name:"Xavi",pos:"MID",rating:97},
+    {name:"Andrés Iniesta",pos:"MID",rating:98},{name:"David Silva",pos:"MID",rating:91},
+    {name:"David Villa",pos:"FWD",rating:92},{name:"Fernando Torres",pos:"FWD",rating:87}
+  ]
+}},
+"Portugal":{color:"#006600",flag:"🇵🇹",squads:{
+  "2026":[
+    {name:"Diogo Costa",pos:"GK",rating:86},{name:"Rui Patrício",pos:"GK",rating:80},
+    {name:"Rúben Dias",pos:"DEF",rating:90},{name:"Nuno Mendes",pos:"DEF",rating:85},
+    {name:"Diogo Dalot",pos:"DEF",rating:83},{name:"Gonçalo Inácio",pos:"DEF",rating:82},
+    {name:"Bernardo Silva",pos:"MID",rating:91},{name:"Bruno Fernandes",pos:"MID",rating:90},
+    {name:"João Neves",pos:"MID",rating:85},{name:"Vitinha",pos:"MID",rating:84},
+    {name:"Cristiano Ronaldo",pos:"FWD",rating:87},{name:"Rafael Leão",pos:"FWD",rating:87},
+    {name:"João Félix",pos:"FWD",rating:84},{name:"Pedro Neto",pos:"FWD",rating:83}
+  ]
+}},
+"Netherlands":{color:"#FF6600",flag:"🇳🇱",squads:{
+  "2026":[
+    {name:"Bart Verbruggen",pos:"GK",rating:83},{name:"Mark Flekken",pos:"GK",rating:80},
+    {name:"Virgil van Dijk",pos:"DEF",rating:91},{name:"Matthijs de Ligt",pos:"DEF",rating:85},
+    {name:"Denzel Dumfries",pos:"DEF",rating:83},{name:"Nathan Aké",pos:"DEF",rating:82},
+    {name:"Frenkie de Jong",pos:"MID",rating:88},{name:"Xavi Simons",pos:"MID",rating:87},
+    {name:"Tijjani Reijnders",pos:"MID",rating:86},{name:"Teun Koopmeiners",pos:"MID",rating:85},
+    {name:"Cody Gakpo",pos:"FWD",rating:85},{name:"Memphis Depay",pos:"FWD",rating:82},
+    {name:"Donyell Malen",pos:"FWD",rating:81}
+  ]
+}},
+"Belgium":{color:"#000000",flag:"🇧🇪",squads:{
+  "2026":[
+    {name:"Koen Casteels",pos:"GK",rating:83},{name:"Matz Sels",pos:"GK",rating:80},
+    {name:"Zeno Debast",pos:"DEF",rating:81},{name:"Arthur Theate",pos:"DEF",rating:80},
+    {name:"Timothy Castagne",pos:"DEF",rating:79},{name:"Wout Faes",pos:"DEF",rating:79},
+    {name:"Youri Tielemans",pos:"MID",rating:82},{name:"Charles De Ketelaere",pos:"MID",rating:83},
+    {name:"Arthur Vermeeren",pos:"MID",rating:80},{name:"Leandro Trossard",pos:"MID",rating:82},
+    {name:"Romelu Lukaku",pos:"FWD",rating:85},{name:"Lois Openda",pos:"FWD",rating:86},
+    {name:"Jérémy Doku",pos:"FWD",rating:84}
+  ]
+}},
+"Italy":{color:"#009246",flag:"🇮🇹",squads:{
+  "2006":[
+    {name:"Gianluigi Buffon",pos:"GK",rating:96},{name:"Fabio Cannavaro",pos:"DEF",rating:97},
+    {name:"Marco Materazzi",pos:"DEF",rating:87},{name:"Fabio Grosso",pos:"DEF",rating:85},
+    {name:"Andrea Pirlo",pos:"MID",rating:95},{name:"Gennaro Gattuso",pos:"MID",rating:90},
+    {name:"Francesco Totti",pos:"MID",rating:92},{name:"Alessandro Del Piero",pos:"FWD",rating:93},
+    {name:"Luca Toni",pos:"FWD",rating:89}
+  ],
+  "1982":[
+    {name:"Dino Zoff",pos:"GK",rating:93},{name:"Claudio Gentile",pos:"DEF",rating:89},
+    {name:"Gaetano Scirea",pos:"DEF",rating:92},{name:"Fulvio Collovati",pos:"DEF",rating:85},
+    {name:"Marco Tardelli",pos:"MID",rating:90},{name:"Giancarlo Antognoni",pos:"MID",rating:89},
+    {name:"Bruno Conti",pos:"MID",rating:87},{name:"Paolo Rossi",pos:"FWD",rating:95},
+    {name:"Francesco Graziani",pos:"FWD",rating:85}
+  ],
+  "1938":[
+    {name:"Aldo Olivieri",pos:"GK",rating:83},{name:"Pietro Rava",pos:"DEF",rating:84},
+    {name:"Alfredo Foni",pos:"DEF",rating:83},{name:"Giuseppe Meazza",pos:"MID",rating:95},
+    {name:"Silvio Piola",pos:"FWD",rating:91},{name:"Gino Colaussi",pos:"FWD",rating:87}
+  ],
+  "1934":[
+    {name:"Gianpiero Combi",pos:"GK",rating:85},{name:"Luisito Monti",pos:"MID",rating:87},
+    {name:"Giovanni Ferrari",pos:"MID",rating:86},{name:"Giuseppe Meazza",pos:"FWD",rating:94},
+    {name:"Angelo Schiavio",pos:"FWD",rating:86}
+  ]
+}},
+"Uruguay":{color:"#5BBFED",flag:"🇺🇾",squads:{
+  "2026":[
+    {name:"Sergio Rochet",pos:"GK",rating:80},{name:"Ronald Araújo",pos:"DEF",rating:86},
+    {name:"José María Giménez",pos:"DEF",rating:82},{name:"Mathías Olivera",pos:"DEF",rating:80},
+    {name:"Federico Valverde",pos:"MID",rating:91},{name:"Manuel Ugarte",pos:"MID",rating:84},
+    {name:"Rodrigo Bentancur",pos:"MID",rating:82},{name:"Darwin Núñez",pos:"FWD",rating:87},
+    {name:"Facundo Torres",pos:"FWD",rating:82},{name:"Luis Suárez",pos:"FWD",rating:80}
+  ],
+  "1950":[
+    {name:"Roque Máspoli",pos:"GK",rating:83},{name:"Matías González",pos:"DEF",rating:82},
+    {name:"Obdulio Varela",pos:"MID",rating:90},{name:"Alcides Ghiggia",pos:"FWD",rating:90},
+    {name:"Juan Schiaffino",pos:"FWD",rating:93},{name:"Óscar Míguez",pos:"FWD",rating:86}
+  ],
+  "1930":[
+    {name:"Enrique Ballesteros",pos:"GK",rating:80},{name:"José Nasazzi",pos:"DEF",rating:88},
+    {name:"José Andrade",pos:"MID",rating:90},{name:"Pedro Cea",pos:"FWD",rating:88},
+    {name:"Guillermo Stábile",pos:"FWD",rating:87},{name:"Héctor Castro",pos:"FWD",rating:85}
+  ]
+}},
+"Morocco":{color:"#C1272D",flag:"🇲🇦",squads:{
+  "2026":[
+    {name:"Yassine Bounou",pos:"GK",rating:88},{name:"Munir Mohamedi",pos:"GK",rating:79},
+    {name:"Achraf Hakimi",pos:"DEF",rating:90},{name:"Nayef Aguerd",pos:"DEF",rating:83},
+    {name:"Noussair Mazraoui",pos:"DEF",rating:82},{name:"Chadi Riad",pos:"DEF",rating:79},
+    {name:"Sofyan Amrabat",pos:"MID",rating:84},{name:"Azzedine Ounahi",pos:"MID",rating:82},
+    {name:"Bilal El Khannouss",pos:"MID",rating:79},{name:"Ismael Saibari",pos:"MID",rating:79},
+    {name:"Ayoub El Kaabi",pos:"FWD",rating:83},{name:"Brahim Díaz",pos:"FWD",rating:83},
+    {name:"Soufiane Rahimi",pos:"FWD",rating:81}
+  ]
+}},
+"Colombia":{color:"#FCD116",flag:"🇨🇴",squads:{
+  "2026":[
+    {name:"Camilo Vargas",pos:"GK",rating:80},{name:"Dávinson Sánchez",pos:"DEF",rating:83},
+    {name:"Carlos Cuesta",pos:"DEF",rating:80},{name:"Daniel Muñoz",pos:"DEF",rating:81},
+    {name:"Jhon Lucumí",pos:"DEF",rating:80},{name:"James Rodríguez",pos:"MID",rating:85},
+    {name:"Richard Ríos",pos:"MID",rating:82},{name:"Jhon Arias",pos:"MID",rating:81},
+    {name:"Luis Díaz",pos:"FWD",rating:90},{name:"Jhon Durán",pos:"FWD",rating:85},
+    {name:"Cucho Hernández",pos:"FWD",rating:82}
+  ]
+}},
+"Ecuador":{color:"#FFD100",flag:"🇪🇨",squads:{
+  "2026":[
+    {name:"Hernán Galíndez",pos:"GK",rating:79},{name:"Piero Hincapié",pos:"DEF",rating:83},
+    {name:"Felix Torres",pos:"DEF",rating:79},{name:"Diego Palacios",pos:"DEF",rating:78},
+    {name:"Moisés Caicedo",pos:"MID",rating:88},{name:"Kendry Páez",pos:"MID",rating:83},
+    {name:"Gonzalo Plata",pos:"FWD",rating:81},{name:"Enner Valencia",pos:"FWD",rating:81},
+    {name:"Kevin Rodríguez",pos:"MID",rating:79}
+  ]
+}},
+"USA":{color:"#002868",flag:"🇺🇸",squads:{
+  "2026":[
+    {name:"Matt Turner",pos:"GK",rating:80},{name:"Patrick Schulte",pos:"GK",rating:77},
+    {name:"Sergino Dest",pos:"DEF",rating:80},{name:"Chris Richards",pos:"DEF",rating:79},
+    {name:"Tim Ream",pos:"DEF",rating:77},{name:"Joe Scally",pos:"DEF",rating:78},
+    {name:"Christian Pulisic",pos:"MID",rating:86},{name:"Yunus Musah",pos:"MID",rating:82},
+    {name:"Tyler Adams",pos:"MID",rating:82},{name:"Weston McKennie",pos:"MID",rating:81},
+    {name:"Ricardo Pepi",pos:"FWD",rating:80},{name:"Folarin Balogun",pos:"FWD",rating:81},
+    {name:"Tim Weah",pos:"FWD",rating:79}
+  ]
+}},
+"Canada":{color:"#FF0000",flag:"🇨🇦",squads:{
+  "2026":[
+    {name:"Dayne St. Clair",pos:"GK",rating:80},{name:"Maxime Crépeau",pos:"GK",rating:78},
+    {name:"Alphonso Davies",pos:"DEF",rating:86},{name:"Alistair Johnston",pos:"DEF",rating:80},
+    {name:"Derek Cornelius",pos:"DEF",rating:78},{name:"Moïse Bombito",pos:"DEF",rating:78},
+    {name:"Stephen Eustáquio",pos:"MID",rating:82},{name:"Tajon Buchanan",pos:"MID",rating:83},
+    {name:"Jonathan Osorio",pos:"MID",rating:80},{name:"Ismaël Koné",pos:"MID",rating:80},
+    {name:"Jonathan David",pos:"FWD",rating:88},{name:"Cyle Larin",pos:"FWD",rating:79},
+    {name:"Jacob Shaffelburg",pos:"MID",rating:78}
+  ]
+}},
+"Mexico":{color:"#006847",flag:"🇲🇽",squads:{
+  "2026":[
+    {name:"Guillermo Ochoa",pos:"GK",rating:82},{name:"Raúl Rangel",pos:"GK",rating:77},
+    {name:"Jesús Gallardo",pos:"DEF",rating:78},{name:"César Montes",pos:"DEF",rating:79},
+    {name:"Johan Vásquez",pos:"DEF",rating:77},{name:"Edson Álvarez",pos:"MID",rating:83},
+    {name:"Orbelín Pineda",pos:"MID",rating:79},{name:"Roberto Alvarado",pos:"MID",rating:78},
+    {name:"Santiago Giménez",pos:"FWD",rating:83},{name:"Raúl Jiménez",pos:"FWD",rating:79},
+    {name:"Alexis Vega",pos:"FWD",rating:78}
+  ]
+}},
+"Japan":{color:"#BC002D",flag:"🇯🇵",squads:{
+  "2026":[
+    {name:"Zion Suzuki",pos:"GK",rating:80},{name:"Keisuke Osako",pos:"GK",rating:77},
+    {name:"Takehiro Tomiyasu",pos:"DEF",rating:82},{name:"Ko Itakura",pos:"DEF",rating:80},
+    {name:"Hiroki Ito",pos:"DEF",rating:80},{name:"Mao Hosoya",pos:"DEF",rating:78},
+    {name:"Wataru Endo",pos:"MID",rating:83},{name:"Daichi Kamada",pos:"MID",rating:83},
+    {name:"Ritsu Doan",pos:"MID",rating:83},{name:"Kaoru Mitoma",pos:"FWD",rating:86},
+    {name:"Ayase Ueda",pos:"FWD",rating:82},{name:"Takumi Minamino",pos:"FWD",rating:82}
+  ]
+}},
+"South Korea":{color:"#CD2E3A",flag:"🇰🇷",squads:{
+  "2026":[
+    {name:"Kim Seung-gyu",pos:"GK",rating:79},{name:"Jo Hyeon-woo",pos:"GK",rating:78},
+    {name:"Kim Min-jae",pos:"DEF",rating:88},{name:"Seol Young-woo",pos:"DEF",rating:79},
+    {name:"Kim Moon-hwan",pos:"DEF",rating:77},{name:"Lee Tae-seok",pos:"DEF",rating:76},
+    {name:"Lee Jae-sung",pos:"MID",rating:80},{name:"Hwang Hee-chan",pos:"MID",rating:82},
+    {name:"Lee Kang-in",pos:"MID",rating:84},{name:"Hwang In-beom",pos:"MID",rating:80},
+    {name:"Son Heung-min",pos:"FWD",rating:88},{name:"Cho Gue-sung",pos:"FWD",rating:79},
+    {name:"Oh Hyeon-gyu",pos:"FWD",rating:78}
+  ]
+}},
+"Australia":{color:"#FFCD00",flag:"🇦🇺",squads:{
+  "2026":[
+    {name:"Mathew Ryan",pos:"GK",rating:82},{name:"Paul Izzo",pos:"GK",rating:76},
+    {name:"Harry Souttar",pos:"DEF",rating:79},{name:"Miloš Degenek",pos:"DEF",rating:77},
+    {name:"Aziz Behich",pos:"DEF",rating:76},{name:"Jordan Bos",pos:"DEF",rating:76},
+    {name:"Jackson Irvine",pos:"MID",rating:79},{name:"Ajdin Hrustic",pos:"MID",rating:78},
+    {name:"Connor Metcalfe",pos:"MID",rating:76},{name:"Mathew Leckie",pos:"FWD",rating:79},
+    {name:"Awer Mabil",pos:"FWD",rating:78},{name:"Nestory Irankunda",pos:"FWD",rating:76}
+  ]
+}},
+"Senegal":{color:"#00853F",flag:"🇸🇳",squads:{
+  "2026":[
+    {name:"Édouard Mendy",pos:"GK",rating:84},{name:"Seny Dieng",pos:"GK",rating:79},
+    {name:"Kalidou Koulibaly",pos:"DEF",rating:84},{name:"Abdou Diallo",pos:"DEF",rating:78},
+    {name:"Ismail Jakobs",pos:"DEF",rating:79},{name:"Formose Mendy",pos:"DEF",rating:78},
+    {name:"Idrissa Gueye",pos:"MID",rating:82},{name:"Pape Matar Sarr",pos:"MID",rating:83},
+    {name:"Lamine Camara",pos:"MID",rating:80},{name:"Sadio Mané",pos:"FWD",rating:86},
+    {name:"Ismaïla Sarr",pos:"FWD",rating:83},{name:"Nicolas Jackson",pos:"FWD",rating:82}
+  ]
+}},
+"Croatia":{color:"#FF0000",flag:"🇭🇷",squads:{
+  "2026":[
+    {name:"Dominik Livaković",pos:"GK",rating:85},{name:"Ivica Ivušić",pos:"GK",rating:79},
+    {name:"Joško Gvardiol",pos:"DEF",rating:89},{name:"Josip Stanišić",pos:"DEF",rating:81},
+    {name:"Borna Sosa",pos:"DEF",rating:80},{name:"Martin Erlić",pos:"DEF",rating:79},
+    {name:"Luka Modrić",pos:"MID",rating:86},{name:"Mateo Kovačić",pos:"MID",rating:86},
+    {name:"Marcelo Brozović",pos:"MID",rating:83},{name:"Andrej Kramarić",pos:"FWD",rating:83},
+    {name:"Ivan Perišić",pos:"FWD",rating:82},{name:"Bruno Petković",pos:"FWD",rating:79}
+  ]
+}},
+"Turkey":{color:"#E30A17",flag:"🇹🇷",squads:{
+  "2026":[
+    {name:"Uğurcan Çakır",pos:"GK",rating:81},{name:"Altay Bayındır",pos:"GK",rating:79},
+    {name:"Merih Demiral",pos:"DEF",rating:83},{name:"Zeki Çelik",pos:"DEF",rating:79},
+    {name:"Çağlar Söyüncü",pos:"DEF",rating:79},{name:"Mert Müldür",pos:"DEF",rating:78},
+    {name:"Hakan Çalhanoğlu",pos:"MID",rating:88},{name:"Salih Özcan",pos:"MID",rating:80},
+    {name:"Arda Güler",pos:"MID",rating:86},{name:"Kerem Aktürkoğlu",pos:"FWD",rating:82},
+    {name:"Yusuf Yazıcı",pos:"FWD",rating:80},{name:"Barış Alper Yılmaz",pos:"FWD",rating:79}
+  ]
+}},
+"Austria":{color:"#ED2939",flag:"🇦🇹",squads:{
+  "2026":[
+    {name:"Patrick Pentz",pos:"GK",rating:79},{name:"Alexander Schlager",pos:"GK",rating:77},
+    {name:"Philipp Lienhart",pos:"DEF",rating:79},{name:"Kevin Danso",pos:"DEF",rating:81},
+    {name:"Phillipp Mwene",pos:"DEF",rating:76},{name:"Stefan Posch",pos:"DEF",rating:78},
+    {name:"Marcel Sabitzer",pos:"MID",rating:83},{name:"Christoph Baumgartner",pos:"MID",rating:82},
+    {name:"Nicolas Seiwald",pos:"MID",rating:79},{name:"Romano Schmid",pos:"MID",rating:78},
+    {name:"Michael Gregoritsch",pos:"FWD",rating:80},{name:"Marko Arnautović",pos:"FWD",rating:79},
+    {name:"Patrick Wimmer",pos:"FWD",rating:78}
+  ]
+}},
+"Switzerland":{color:"#FF0000",flag:"🇨🇭",squads:{
+  "2026":[
+    {name:"Gregor Kobel",pos:"GK",rating:84},{name:"Yvon Mvogo",pos:"GK",rating:79},
+    {name:"Manuel Akanji",pos:"DEF",rating:83},{name:"Nico Elvedi",pos:"DEF",rating:81},
+    {name:"Ricardo Rodriguez",pos:"DEF",rating:79},{name:"Silvan Widmer",pos:"DEF",rating:79},
+    {name:"Granit Xhaka",pos:"MID",rating:84},{name:"Remo Freuler",pos:"MID",rating:82},
+    {name:"Ardon Jashari",pos:"MID",rating:80},{name:"Denis Zakaria",pos:"MID",rating:80},
+    {name:"Breel Embolo",pos:"FWD",rating:82},{name:"Dan Ndoye",pos:"FWD",rating:80},
+    {name:"Zeki Amdouni",pos:"FWD",rating:80}
+  ]
+}},
+"Czech Republic":{color:"#D7141A",flag:"🇨🇿",squads:{
+  "2026":[
+    {name:"Matěj Kovář",pos:"GK",rating:82},{name:"Jindřich Staněk",pos:"GK",rating:78},
+    {name:"Vladimír Coufal",pos:"DEF",rating:78},{name:"Ladislav Krejčí",pos:"DEF",rating:78},
+    {name:"Tomáš Holeš",pos:"DEF",rating:77},{name:"Robin Hranáč",pos:"DEF",rating:77},
+    {name:"Tomáš Souček",pos:"MID",rating:82},{name:"Lukáš Provod",pos:"MID",rating:79},
+    {name:"Pavel Šulc",pos:"MID",rating:79},{name:"Vladimír Darida",pos:"MID",rating:78},
+    {name:"Patrik Schick",pos:"FWD",rating:84},{name:"Adam Hložek",pos:"FWD",rating:79},
+    {name:"Jan Kuchta",pos:"FWD",rating:77}
+  ]
+}},
+"South Africa":{color:"#007A4D",flag:"🇿🇦",squads:{
+  "2026":[
+    {name:"Ronwen Williams",pos:"GK",rating:79},{name:"Sipho Chaine",pos:"GK",rating:75},
+    {name:"Khuliso Mudau",pos:"DEF",rating:76},{name:"Nkosinathi Sibisi",pos:"DEF",rating:75},
+    {name:"Aubrey Modiba",pos:"DEF",rating:76},{name:"Mbekezeli Mbokazi",pos:"DEF",rating:74},
+    {name:"Teboho Mokoena",pos:"MID",rating:78},{name:"Sphephelo Sithole",pos:"MID",rating:75},
+    {name:"Thalente Mbatha",pos:"MID",rating:75},{name:"Lyle Foster",pos:"FWD",rating:77},
+    {name:"Oswin Appollis",pos:"FWD",rating:76},{name:"Themba Zwane",pos:"FWD",rating:76},
+    {name:"Evidence Makgopa",pos:"FWD",rating:75}
+  ]
+}},
+"Qatar":{color:"#8D1B3D",flag:"🇶🇦",squads:{
+  "2026":[
+    {name:"Meshaal Barsham",pos:"GK",rating:78},{name:"Mahmud Abunada",pos:"GK",rating:75},
+    {name:"Pedro Miguel",pos:"DEF",rating:76},{name:"Boualem Khoukhi",pos:"DEF",rating:77},
+    {name:"Homam Ahmed",pos:"DEF",rating:76},{name:"Sultan Al-Brake",pos:"DEF",rating:75},
+    {name:"Abdulaziz Hatem",pos:"MID",rating:78},{name:"Karim Boudiaf",pos:"MID",rating:77},
+    {name:"Assim Madibo",pos:"MID",rating:75},{name:"Akram Afif",pos:"FWD",rating:83},
+    {name:"Almoez Ali",pos:"FWD",rating:80},{name:"Hassan Al-Haydos",pos:"FWD",rating:77}
+  ]
+}},
+"Bosnia-Herzegovina":{color:"#003DA5",flag:"🇧🇦",squads:{
+  "2026":[
+    {name:"Nikola Vasilj",pos:"GK",rating:79},{name:"Sead Kolašinac",pos:"DEF",rating:79},
+    {name:"Amar Dedić",pos:"DEF",rating:80},{name:"Dennis Hadžikadunić",pos:"DEF",rating:77},
+    {name:"Nikola Katić",pos:"DEF",rating:76},{name:"Benjamin Tahirović",pos:"MID",rating:78},
+    {name:"Amir Hadžiahmetović",pos:"MID",rating:77},{name:"Esmir Bajraktarević",pos:"MID",rating:77},
+    {name:"Edin Džeko",pos:"FWD",rating:82},{name:"Ermedin Demirović",pos:"FWD",rating:79},
+    {name:"Haris Tabaković",pos:"FWD",rating:76}
+  ]
+}},
+"Sweden":{color:"#006AA7",flag:"🇸🇪",squads:{
+  "2026":[
+    {name:"Robin Olsen",pos:"GK",rating:80},{name:"Karl-Johan Johnsson",pos:"GK",rating:77},
+    {name:"Victor Lindelöf",pos:"DEF",rating:83},{name:"Carl Starfelt",pos:"DEF",rating:79},
+    {name:"Ludwig Augustinsson",pos:"DEF",rating:79},{name:"Emil Krafth",pos:"DEF",rating:77},
+    {name:"Dejan Kulusevski",pos:"MID",rating:87},{name:"Emil Forsberg",pos:"MID",rating:82},
+    {name:"Mattias Svanberg",pos:"MID",rating:79},{name:"Viktor Claesson",pos:"MID",rating:78},
+    {name:"Alexander Isak",pos:"FWD",rating:90},{name:"Viktor Gyökeres",pos:"FWD",rating:89}
+  ]
+}},
+"Norway":{color:"#EF2B2D",flag:"🇳🇴",squads:{
+  "2026":[
+    {name:"Ørjan Nyland",pos:"GK",rating:79},{name:"Sten Grytebust",pos:"GK",rating:76},
+    {name:"Leo Østigård",pos:"DEF",rating:79},{name:"Andreas Hanche-Olsen",pos:"DEF",rating:78},
+    {name:"Stefan Strandberg",pos:"DEF",rating:77},{name:"Birger Meling",pos:"DEF",rating:78},
+    {name:"Martin Ødegaard",pos:"MID",rating:91},{name:"Sander Berge",pos:"MID",rating:82},
+    {name:"Patrick Berg",pos:"MID",rating:79},{name:"Morten Thorsby",pos:"MID",rating:78},
+    {name:"Erling Haaland",pos:"FWD",rating:97},{name:"Alexander Sørloth",pos:"FWD",rating:83},
+    {name:"Mohamed Elyounoussi",pos:"FWD",rating:79}
+  ]
+}},
+"Scotland":{color:"#003F87",flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",squads:{
+  "2026":[
+    {name:"Craig Gordon",pos:"GK",rating:79},{name:"Angus Gunn",pos:"GK",rating:78},
+    {name:"Andy Robertson",pos:"DEF",rating:86},{name:"Kieran Tierney",pos:"DEF",rating:81},
+    {name:"Scott McKenna",pos:"DEF",rating:79},{name:"Jack Hendry",pos:"DEF",rating:78},
+    {name:"Nathan Patterson",pos:"DEF",rating:78},{name:"John Souttar",pos:"DEF",rating:77},
+    {name:"John McGinn",pos:"MID",rating:83},{name:"Scott McTominay",pos:"MID",rating:84},
+    {name:"Ryan Christie",pos:"MID",rating:80},{name:"Lewis Ferguson",pos:"MID",rating:79},
+    {name:"Ché Adams",pos:"FWD",rating:79},{name:"Lawrence Shankland",pos:"FWD",rating:79},
+    {name:"Lyndon Dykes",pos:"FWD",rating:78}
+  ]
+}},
+"Iran":{color:"#239F40",flag:"🇮🇷",squads:{
+  "2026":[
+    {name:"Alireza Beiranvand",pos:"GK",rating:79},{name:"Hossein Hosseini",pos:"GK",rating:76},
+    {name:"Morteza Pouraliganji",pos:"DEF",rating:79},{name:"Shojae Khalilzadeh",pos:"DEF",rating:78},
+    {name:"Ramin Rezaeian",pos:"DEF",rating:77},{name:"Ahmad Nourollahi",pos:"DEF",rating:77},
+    {name:"Alireza Jahanbakhsh",pos:"MID",rating:82},{name:"Saeid Ezatolahi",pos:"MID",rating:80},
+    {name:"Mehdi Torabi",pos:"MID",rating:79},{name:"Ali Gholizadeh",pos:"MID",rating:79},
+    {name:"Mehdi Taremi",pos:"FWD",rating:86},{name:"Sardar Azmoun",pos:"FWD",rating:83},
+    {name:"Allahyar Sayyad",pos:"FWD",rating:78}
+  ]
+}},
+"Egypt":{color:"#C8102E",flag:"🇪🇬",squads:{
+  "2026":[
+    {name:"Mohamed El-Shenawy",pos:"GK",rating:79},{name:"Mostafa Shobeir",pos:"GK",rating:76},
+    {name:"Ahmed Hegazi",pos:"DEF",rating:79},{name:"Mohamed Abdelmonem",pos:"DEF",rating:78},
+    {name:"Omar Gaber",pos:"DEF",rating:77},{name:"Ayman Ashraf",pos:"DEF",rating:77},
+    {name:"Mohamed Salah",pos:"MID",rating:92},{name:"Omar Marmoush",pos:"MID",rating:85},
+    {name:"Tarek Hamed",pos:"MID",rating:78},{name:"Emam Ashour",pos:"MID",rating:78},
+    {name:"Mostafa Mohamed",pos:"FWD",rating:81},{name:"Mahmoud Trezeguet",pos:"FWD",rating:80},
+    {name:"Ahmed Sayed Zizo",pos:"FWD",rating:78}
+  ]
+}},
+"Ivory Coast":{color:"#F77F00",flag:"🇨🇮",squads:{
+  "2026":[
+    {name:"Yahia Fofana",pos:"GK",rating:79},{name:"Badra Ali Sangaré",pos:"GK",rating:76},
+    {name:"Wilfried Singo",pos:"DEF",rating:81},{name:"Odilon Kossounou",pos:"DEF",rating:80},
+    {name:"Eric Bailly",pos:"DEF",rating:79},{name:"Emmanuel Agbadou",pos:"DEF",rating:79},
+    {name:"Seko Fofana",pos:"MID",rating:83},{name:"Ibrahim Sangaré",pos:"MID",rating:82},
+    {name:"Franck Kessié",pos:"MID",rating:82},{name:"Oumar Diakité",pos:"MID",rating:78},
+    {name:"Simon Adingra",pos:"FWD",rating:82},{name:"Sébastien Haller",pos:"FWD",rating:81},
+    {name:"Wilfried Zaha",pos:"FWD",rating:80}
+  ]
+}},
+"Algeria":{color:"#006233",flag:"🇩🇿",squads:{
+  "2026":[
+    {name:"Rais M'Bolhi",pos:"GK",rating:78},{name:"Alexandre Oukidja",pos:"GK",rating:76},
+    {name:"Ramy Bensebaini",pos:"DEF",rating:82},{name:"Aissa Mandi",pos:"DEF",rating:80},
+    {name:"Youcef Atal",pos:"DEF",rating:79},{name:"Djamel Benlamri",pos:"DEF",rating:78},
+    {name:"Ismaël Bennacer",pos:"MID",rating:84},{name:"Said Benrahma",pos:"MID",rating:83},
+    {name:"Sofiane Feghouli",pos:"MID",rating:79},{name:"Mehdi Benali",pos:"MID",rating:78},
+    {name:"Riyad Mahrez",pos:"FWD",rating:86},{name:"Islam Slimani",pos:"FWD",rating:79},
+    {name:"Andy Delort",pos:"FWD",rating:79}
+  ]
+}},
+"DR Congo":{color:"#007FFF",flag:"🇨🇩",squads:{
+  "2026":[
+    {name:"Joël Kiassumbua",pos:"GK",rating:78},{name:"Léandre Tawamba",pos:"GK",rating:75},
+    {name:"Chancel Mbemba",pos:"DEF",rating:82},{name:"Christian Luyindama",pos:"DEF",rating:78},
+    {name:"Dylan Batubinsika",pos:"DEF",rating:77},{name:"Marcel Tisserand",pos:"DEF",rating:78},
+    {name:"Yannick Bolasie",pos:"MID",rating:79},{name:"Silas",pos:"MID",rating:79},
+    {name:"Meschack Elia",pos:"MID",rating:79},{name:"Fiston Mayele",pos:"MID",rating:78},
+    {name:"Cédric Bakambu",pos:"FWD",rating:80},{name:"Théo Bongonda",pos:"FWD",rating:78},
+    {name:"Dieumerci Ndockyt",pos:"FWD",rating:76}
+  ]
+}},
+"Panama":{color:"#CC0000",flag:"🇵🇦",squads:{
+  "2026":[
+    {name:"Luis Mejía",pos:"GK",rating:77},{name:"Gianluca Riolfo",pos:"GK",rating:74},
+    {name:"Eric Davis",pos:"DEF",rating:79},{name:"Fidel Escobar",pos:"DEF",rating:78},
+    {name:"Andrés Andrade",pos:"DEF",rating:77},{name:"César Blackman",pos:"DEF",rating:77},
+    {name:"Adalberto Carrasquilla",pos:"MID",rating:80},{name:"Rodolfo Austin",pos:"MID",rating:77},
+    {name:"Aníbal Godoy",pos:"MID",rating:77},{name:"Édgar Bárcenas",pos:"MID",rating:77},
+    {name:"Ismael Díaz",pos:"FWD",rating:81},{name:"Cecilio Waterman",pos:"FWD",rating:79},
+    {name:"Alberto Quintero",pos:"FWD",rating:77}
+  ]
+}},
+"Saudi Arabia":{color:"#006C35",flag:"🇸🇦",squads:{
+  "2026":[
+    {name:"Mohammed Al-Owais",pos:"GK",rating:80},{name:"Fawaz Al-Qarni",pos:"GK",rating:76},
+    {name:"Ali Al-Bulayhi",pos:"DEF",rating:78},{name:"Sultan Al-Ghanam",pos:"DEF",rating:77},
+    {name:"Saud Abdulhamid",pos:"DEF",rating:79},{name:"Mohammed Al-Breik",pos:"DEF",rating:77},
+    {name:"Salman Al-Faraj",pos:"MID",rating:80},{name:"Mohamed Kanno",pos:"MID",rating:79},
+    {name:"Nasser Al-Dawsari",pos:"MID",rating:78},{name:"Sami Al-Naji",pos:"MID",rating:77},
+    {name:"Salem Al-Dawsari",pos:"FWD",rating:83},{name:"Feras Al-Brikan",pos:"FWD",rating:80},
+    {name:"Haitham Asiri",pos:"FWD",rating:77}
+  ]
+}},
+"Iraq":{color:"#007A3D",flag:"🇮🇶",squads:{
+  "2026":[
+    {name:"Jalal Hassan",pos:"GK",rating:77},{name:"Mohammed Hameed",pos:"GK",rating:74},
+    {name:"Ahmed Yasin",pos:"DEF",rating:78},{name:"Ali Adnan",pos:"DEF",rating:78},
+    {name:"Hussein Ali",pos:"DEF",rating:77},{name:"Basil Gourab",pos:"DEF",rating:76},
+    {name:"Amjad Attwan",pos:"MID",rating:78},{name:"Saad Natiq",pos:"MID",rating:77},
+    {name:"Alaa Abbas",pos:"MID",rating:77},{name:"Mustafa Mohammed",pos:"MID",rating:79},
+    {name:"Aymen Hussein",pos:"FWD",rating:80},{name:"Mohanad Ali",pos:"FWD",rating:78},
+    {name:"Ali Jasim",pos:"FWD",rating:77}
+  ]
+}},
+"Uzbekistan":{color:"#1EB53A",flag:"🇺🇿",squads:{
+  "2026":[
+    {name:"Otabek Sherjanov",pos:"GK",rating:76},{name:"Husan Murzaev",pos:"GK",rating:73},
+    {name:"Sherzod Nasriddinov",pos:"DEF",rating:75},{name:"Dostonbek Khamdamov",pos:"DEF",rating:75},
+    {name:"Sanjar Tursunov",pos:"DEF",rating:74},{name:"Laziz Azimov",pos:"DEF",rating:74},
+    {name:"Abbosbek Fayzullaev",pos:"MID",rating:79},{name:"Otabek Ziyodullayev",pos:"MID",rating:77},
+    {name:"Bekhruz Mirzaev",pos:"MID",rating:76},{name:"Khojimat Erkinov",pos:"MID",rating:76},
+    {name:"Eldor Shomurodov",pos:"FWD",rating:83},{name:"Jasur Yakhshiboev",pos:"FWD",rating:78},
+    {name:"Nodir Qodirov",pos:"FWD",rating:76}
+  ]
+}},
+"Paraguay":{color:"#D52B1E",flag:"🇵🇾",squads:{
+  "2026":[
+    {name:"Gatito Fernández",pos:"GK",rating:79},{name:"Orlando Gill",pos:"GK",rating:74},
+    {name:"Gustavo Gómez",pos:"DEF",rating:83},{name:"Junior Alonso",pos:"DEF",rating:80},
+    {name:"Fabián Balbuena",pos:"DEF",rating:79},{name:"Omar Alderete",pos:"DEF",rating:78},
+    {name:"Miguel Almirón",pos:"MID",rating:83},{name:"Diego Gómez",pos:"MID",rating:79},
+    {name:"Ramón Sosa",pos:"MID",rating:78},{name:"Kaku",pos:"MID",rating:78},
+    {name:"Antonio Sanabria",pos:"FWD",rating:78},{name:"Julio Enciso",pos:"FWD",rating:80},
+    {name:"Gabriel Ávalos",pos:"FWD",rating:75}
+  ]
+}},
+"Ghana":{color:"#006B3F",flag:"🇬🇭",squads:{
+  "2026":[
+    {name:"Lawrence Ati-Zigi",pos:"GK",rating:79},{name:"Joseph Wollacott",pos:"GK",rating:76},
+    {name:"Alexander Djiku",pos:"DEF",rating:81},{name:"Mohammed Salisu",pos:"DEF",rating:80},
+    {name:"Tariq Lamptey",pos:"DEF",rating:79},{name:"Baba Rahman",pos:"DEF",rating:77},
+    {name:"Thomas Partey",pos:"MID",rating:83},{name:"Abdul Samed Salis",pos:"MID",rating:79},
+    {name:"Antoine Semenyo",pos:"MID",rating:80},{name:"Mohammed Kudus",pos:"MID",rating:84},
+    {name:"Inaki Williams",pos:"FWD",rating:83},{name:"Jordan Ayew",pos:"FWD",rating:79},
+    {name:"Joel Fameyeh",pos:"FWD",rating:77}
+  ]
+}},
+"Jordan":{color:"#007A3D",flag:"🇯🇴",squads:{
+  "2026":[
+    {name:"Mussa Mahaira",pos:"GK",rating:75},{name:"Rami Hamadeh",pos:"GK",rating:73},
+    {name:"Baha'a Abdelrahman",pos:"DEF",rating:76},{name:"Yosef Qasim",pos:"DEF",rating:75},
+    {name:"Ehsan Haddad",pos:"DEF",rating:74},{name:"Moayad Al-Jabour",pos:"DEF",rating:74},
+    {name:"Ahmad Hayel",pos:"MID",rating:76},{name:"Musa Al-Tamari",pos:"MID",rating:80},
+    {name:"Mahmoud Al-Mardi",pos:"MID",rating:76},{name:"Yazan Al-Naimat",pos:"MID",rating:75},
+    {name:"Yazan Al-Arab",pos:"FWD",rating:78},{name:"Hamzah Aldardarui",pos:"FWD",rating:77},
+    {name:"Ahmad Dheeb",pos:"FWD",rating:75}
+  ]
+}},
+"Cape Verde":{color:"#003893",flag:"🇨🇻",squads:{
+  "2026":[
+    {name:"Vozinha",pos:"GK",rating:77},{name:"Ricardo Andrade",pos:"GK",rating:74},
+    {name:"Stopira",pos:"DEF",rating:79},{name:"Nuno Tavares",pos:"DEF",rating:80},
+    {name:"Dylan Tavares",pos:"DEF",rating:76},{name:"Bryan Tavares",pos:"DEF",rating:75},
+    {name:"Ryan Mendes",pos:"MID",rating:81},{name:"Garry Rodrigues",pos:"MID",rating:80},
+    {name:"Júlio Tavares",pos:"MID",rating:79},{name:"Babanco",pos:"MID",rating:76},
+    {name:"Fali Candé",pos:"FWD",rating:79},{name:"Kenny Rocha Santos",pos:"FWD",rating:77},
+    {name:"Deroy Duarte",pos:"FWD",rating:76}
+  ]
+}},
+"Curaçao":{color:"#002395",flag:"🇨🇼",squads:{
+  "2026":[
+    {name:"Eloy Room",pos:"GK",rating:77},{name:"Lamar Bervini",pos:"GK",rating:73},
+    {name:"Cuco Martina",pos:"DEF",rating:77},{name:"Shermain Martina",pos:"DEF",rating:76},
+    {name:"Ethan Crichlow",pos:"DEF",rating:76},{name:"Elson Hooi",pos:"DEF",rating:75},
+    {name:"Juninho Bacuna",pos:"MID",rating:79},{name:"Leandro Bacuna",pos:"MID",rating:78},
+    {name:"Brandley Kuwas",pos:"MID",rating:77},{name:"Gevaro Nepomuceno",pos:"MID",rating:76},
+    {name:"Rangelo Janga",pos:"FWD",rating:77},{name:"Kensley Malgas",pos:"FWD",rating:76},
+    {name:"Quentin Thurière",pos:"FWD",rating:75}
+  ]
+}},
+"Haiti":{color:"#00209F",flag:"🇭🇹",squads:{
+  "2026":[
+    {name:"Johny Placide",pos:"GK",rating:77},{name:"Alexandre Pierre",pos:"GK",rating:74},
+    {name:"Ricardo Adé",pos:"DEF",rating:74},{name:"Carlens Arcus",pos:"DEF",rating:75},
+    {name:"Jean-Kévin Duverne",pos:"DEF",rating:75},{name:"Martin Expérience",pos:"DEF",rating:74},
+    {name:"Danley Jean Jacques",pos:"MID",rating:77},{name:"Jean-Ricner Bellegarde",pos:"MID",rating:76},
+    {name:"Leverton Pierre",pos:"MID",rating:75},{name:"Carl Sainté",pos:"MID",rating:74},
+    {name:"Duckens Nazon",pos:"FWD",rating:79},{name:"Frantzdy Pierrot",pos:"FWD",rating:78},
+    {name:"Derrick Etienne Jr.",pos:"FWD",rating:77}
+  ]
+}},
+"New Zealand":{color:"#000000",flag:"🇳🇿",squads:{
+  "2026":[
+    {name:"Oliver Sail",pos:"GK",rating:76},{name:"Michael Woud",pos:"GK",rating:74},
+    {name:"Tommy Smith",pos:"DEF",rating:77},{name:"Winston Reid",pos:"DEF",rating:76},
+    {name:"Michael Boxall",pos:"DEF",rating:76},{name:"Liberato Cacace",pos:"DEF",rating:76},
+    {name:"Marco Rojas",pos:"MID",rating:78},{name:"Joe Bell",pos:"MID",rating:77},
+    {name:"Clayton Lewis",pos:"MID",rating:76},{name:"Matthew Garbett",pos:"MID",rating:76},
+    {name:"Chris Wood",pos:"FWD",rating:82},{name:"Kosta Barbarouses",pos:"FWD",rating:75},
+    {name:"Marko Aalbers",pos:"FWD",rating:74}
+  ]
+}},
+"World Cup Legends":{color:"#f5c842",flag:"🏆",squads:{
+  "All-Time":[
+    {name:"Lev Yashin",pos:"GK",rating:95},
+    {name:"Guillermo Ochoa",pos:"GK",rating:89},
+    {name:"Paolo Maldini",pos:"DEF",rating:93},
+    {name:"Sergio Ramos",pos:"DEF",rating:92},
+    {name:"Dani Alves",pos:"DEF",rating:91},
+    {name:"Johan Cruyff",pos:"MID",rating:97},
+    {name:"Luka Modrić",pos:"MID",rating:95},
+    {name:"James Rodríguez",pos:"MID",rating:90},
+    {name:"Eusébio",pos:"FWD",rating:96},
+    {name:"Just Fontaine",pos:"FWD",rating:94},
+    {name:"Thomas Müller",pos:"FWD",rating:94},
+    {name:"Miroslav Klose",pos:"FWD",rating:90}
+  ]
+}},
+};
+
+var FORMATIONS = {
+  '4-3-3':{slots:['GK','DEF','DEF','DEF','DEF','MID','MID','MID','FWD','FWD','FWD'],
+    rows:[[{pos:'FWD'},{pos:'FWD'},{pos:'FWD'}],[{pos:'MID'},{pos:'MID'},{pos:'MID'}],
+          [{pos:'DEF'},{pos:'DEF'},{pos:'DEF'},{pos:'DEF'}],[{pos:'GK'}]]},
+  '4-4-2':{slots:['GK','DEF','DEF','DEF','DEF','MID','MID','MID','MID','FWD','FWD'],
+    rows:[[{pos:'FWD'},{pos:'FWD'}],[{pos:'MID'},{pos:'MID'},{pos:'MID'},{pos:'MID'}],
+          [{pos:'DEF'},{pos:'DEF'},{pos:'DEF'},{pos:'DEF'}],[{pos:'GK'}]]},
+  '3-5-2':{slots:['GK','DEF','DEF','DEF','MID','MID','MID','MID','MID','FWD','FWD'],
+    rows:[[{pos:'FWD'},{pos:'FWD'}],[{pos:'MID'},{pos:'MID'},{pos:'MID'},{pos:'MID'},{pos:'MID'}],
+          [{pos:'DEF'},{pos:'DEF'},{pos:'DEF'}],[{pos:'GK'}]]}
+};
+
+var round=0, squad=[], skipsLeft=3, mode='classic', formation='4-3-3';
+var isDaily=false, dailyDraws=[], dailyRound=0, currentDraw=null, usedPlayers=new Set();
+
+function mulberry32(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function getDailyNum(){var launch=new Date(2026,5,11);var today=new Date();today.setHours(0,0,0,0);return Math.max(1,Math.floor((today-launch)/86400000)+1);}
+function getDailySeed(){var d=new Date();return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();}
+
+function getAllCombos(){
+  var combos=[];
+  Object.keys(NATIONS).forEach(function(n){
+    Object.keys(NATIONS[n].squads).forEach(function(y){combos.push({nation:n,year:y});});
+  });
+  return combos;
+}
+
+function generateDailyDraws(){
+  var rng=mulberry32(getDailySeed());
+  var allCombos=getAllCombos();
+  for(var j=allCombos.length-1;j>0;j--){var k=Math.floor(rng()*(j+1));var tmp=allCombos[j];allCombos[j]=allCombos[k];allCombos[k]=tmp;}
+  var usedNations={};var draws=[];
+  for(var i=0;i<allCombos.length&&draws.length<11;i++){
+    if(!usedNations[allCombos[i].nation]){usedNations[allCombos[i].nation]=true;draws.push({nation:allCombos[i].nation,year:allCombos[i].year});}
+  }
+  return draws;
+}
+
+(function(){var el=document.getElementById('daily-num');if(el)el.textContent='#'+getDailyNum();})();
+
+function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');}
+function pickMode(m){mode=m;document.getElementById('mc-classic').classList.toggle('sel',m==='classic');document.getElementById('mc-knowledge').classList.toggle('sel',m==='knowledge');}
+function pickFormation(f){formation=f;['4-3-3','4-4-2','3-5-2'].forEach(function(x){document.getElementById('fb-'+x.replace(/-/g,'')).classList.toggle('sel',x===f);});}
+function posClass(pos){return pos==='GK'?'gk':pos==='DEF'?'def':pos==='MID'?'mid':'fwd';}
+function posColor(pos){return pos==='GK'?'pos-gk':pos==='DEF'?'pos-def':pos==='MID'?'pos-mid':'pos-fwd';}
+
+function makeDraw(){
+  var allCombos=getAllCombos();
+  var primary;
+  if(isDaily&&dailyDraws.length>0){primary=dailyDraws[dailyRound%dailyDraws.length];dailyRound++;}
+  else{
+    allCombos.sort(function(){return Math.random()-.5;});
+    var usedNations={};squad.forEach(function(p){usedNations[p.nation]=true;});
+    for(var i=0;i<allCombos.length;i++){if(!usedNations[allCombos[i].nation]){primary=allCombos[i];break;}}
+    if(!primary)primary=allCombos[0];
+  }
+  var squadPlayers=NATIONS[primary.nation].squads[primary.year];
+  var cards=[];
+  ['GK','DEF','MID','FWD'].forEach(function(pos){
+    var pool=squadPlayers.filter(function(p){return p.pos===pos&&!usedPlayers.has(p.name);});
+    pool.sort(function(a,b){return b.rating-a.rating;});
+    if(pool.length)cards.push(pool[0]);
+  });
+  return {nation:primary.nation,year:primary.year,players:cards};
+}
+
+function neededPositions(){
+  var needed={};var f=FORMATIONS[formation];
+  f.slots.forEach(function(pos){needed[pos]=(needed[pos]||0)+1;});
+  var posOrder={GK:0,DEF:1,MID:2,FWD:3};
+  var sortedSquad=squad.slice().sort(function(a,b){return posOrder[a.pos]-posOrder[b.pos];});
+  sortedSquad.forEach(function(p){if(needed[p.pos])needed[p.pos]--;});
+  return needed;
+}
+
+function startDaily(){
+  isDaily=true;usedPlayers=new Set();dailyDraws=generateDailyDraws();dailyRound=0;
+  mode='classic';document.getElementById('mc-classic').classList.add('sel');document.getElementById('mc-knowledge').classList.remove('sel');
+  round=0;squad=[];skipsLeft=0;
+  buildPitch();document.getElementById('form-lbl').textContent=formation;
+  var ind=document.getElementById('daily-indicator');
+  if(ind){ind.style.display='block';ind.textContent='📅 Daily Challenge #'+getDailyNum()+' — Same draws for everyone today — No skips';}
+  showScreen('sc-game');nextRound();
+}
+
+function startGame(){
+  round=0;squad=[];skipsLeft=3;usedPlayers=new Set();isDaily=false;
+  buildPitch();document.getElementById('form-lbl').textContent=formation;
+  showScreen('sc-game');nextRound();
+}
+
+function nextRound(){
+  round++;updateProgress();currentDraw=makeDraw();renderSlot(currentDraw);renderCards(currentDraw.players);
+  document.getElementById('btn-skip').disabled=(skipsLeft<=0);
+  document.getElementById('btn-skip').style.display=isDaily?'none':'';
+  document.getElementById('skip-lbl').textContent=isDaily?'':skipsLeft+' skip'+(skipsLeft!==1?'s':'')+' remaining';
+  document.getElementById('btn-sim').classList.remove('show');
+}
+
+function renderSlot(draw){
+  var n=NATIONS[draw.nation];
+  var flagEl=document.getElementById('slot-flag');
+  var nationEl=document.getElementById('slot-nation');
+  var yearEl=document.getElementById('slot-year');
+  flagEl.textContent=n.flag;
+  nationEl.textContent=draw.nation;
+  nationEl.style.color='#ffffff';
+  nationEl.classList.add('slot-anim');
+  yearEl.textContent=draw.year+' World Cup Squad';
+  setTimeout(function(){nationEl.classList.remove('slot-anim');},500);
+}
+
+function renderCards(players){
+  var needed=neededPositions();var container=document.getElementById('player-cards');container.innerHTML='';
+  var n=NATIONS[currentDraw.nation];
+  players.forEach(function(p,i){
+    var avail=(needed[p.pos]||0)>0;
+    var card=document.createElement('div');card.className='pcard'+(avail?'':' disabled');
+    if(avail)card.onclick=function(){selectPlayer(p,card);};
+    var stripe=document.createElement('div');stripe.className='pcard-stripe';stripe.style.background=n.color;card.appendChild(stripe);
+    var posEl=document.createElement('div');posEl.className='pcard-pos '+posColor(p.pos);posEl.textContent=p.pos;card.appendChild(posEl);
+    var nameEl=document.createElement('div');nameEl.className='pcard-name';nameEl.textContent=p.name;card.appendChild(nameEl);
+    if(mode==='classic'){
+      var rw=document.createElement('div');rw.className='pcard-rating-wrap';
+      var bar=document.createElement('div');bar.className='pcard-bar';
+      var fill=document.createElement('div');fill.className='pcard-fill';fill.style.width='0%';
+      bar.appendChild(fill);var num=document.createElement('div');num.className='pcard-num';num.textContent=p.rating;
+      rw.appendChild(bar);rw.appendChild(num);card.appendChild(rw);
+      setTimeout(function(){fill.style.width=p.rating+'%';},60+i*80);
+    }else{var q=document.createElement('div');q.className='pcard-q';q.textContent='?';card.appendChild(q);}
+    if(!avail){var note=document.createElement('div');note.className='pcard-sub';note.textContent='Position full';card.appendChild(note);}
+    container.appendChild(card);
+  });
+}
+
+function selectPlayer(player,cardEl){
+  document.querySelectorAll('.pcard').forEach(function(c){c.style.pointerEvents='none';});
+  cardEl.classList.add('sel');
+  squad.push({name:player.name,pos:player.pos,rating:player.rating,nation:currentDraw.nation,year:currentDraw.year});
+  usedPlayers.add(player.name);updatePitch();
+  var avg=squad.reduce(function(a,p){return a+p.rating;},0)/squad.length;
+  document.getElementById('pitch-avg').textContent=(mode==='classic')?'Avg: '+avg.toFixed(1):'';
+  if(squad.length===11){setTimeout(function(){document.getElementById('btn-sim').classList.add('show');},400);}
+  else{setTimeout(function(){nextRound();},600);}
+}
+
+function doSkip(){
+  if(skipsLeft<=0)return;skipsLeft--;
+  document.getElementById('btn-skip').disabled=(skipsLeft<=0);
+  document.getElementById('skip-lbl').textContent=skipsLeft+' skip'+(skipsLeft!==1?'s':'')+' remaining';
+  currentDraw=makeDraw();renderSlot(currentDraw);renderCards(currentDraw.players);
+}
+
+function updateProgress(){
+  var bar=document.getElementById('progress-bar');bar.innerHTML='';
+  for(var i=1;i<=11;i++){var d=document.createElement('div');d.className='prog-dot'+(i<round?' done':i===round?' cur':'');bar.appendChild(d);}
+  document.getElementById('round-lbl').textContent='Round '+round+' of 11';
+}
+
+function buildPitch(){
+  var inner=document.getElementById('pitch-inner');inner.innerHTML='';
+  var rows=FORMATIONS[formation].rows;
+  rows.forEach(function(row,ri){
+    var rowEl=document.createElement('div');rowEl.className='pitch-row';
+    row.forEach(function(slot,si){
+      var slotEl=document.createElement('div');slotEl.className='pslot';
+      var bubble=document.createElement('div');bubble.className='pslot-bubble empty';bubble.textContent=slot.pos;bubble.id='slot-'+ri+'-'+si;
+      var name=document.createElement('div');name.className='pslot-name';name.id='sname-'+ri+'-'+si;
+      slotEl.appendChild(bubble);slotEl.appendChild(name);rowEl.appendChild(slotEl);
+    });
+    inner.appendChild(rowEl);
+  });
+}
+
+function updatePitch(){
+  var rows=FORMATIONS[formation].rows;
+  rows.forEach(function(row,ri){row.forEach(function(slot,si){
+    document.getElementById('slot-'+ri+'-'+si).className='pslot-bubble empty';
+    document.getElementById('slot-'+ri+'-'+si).textContent=slot.pos;
+    document.getElementById('sname-'+ri+'-'+si).textContent='';
+  });});
+  squad.forEach(function(player){
+    var p=player.pos;var placed=false;
+    rows.forEach(function(row,ri){
+      if(placed)return;
+      row.forEach(function(slot,si){
+        if(placed)return;
+        if(slot.pos===p){
+          var bubble=document.getElementById('slot-'+ri+'-'+si);
+          if(bubble.classList.contains('empty')){
+            bubble.className='pslot-bubble '+posClass(p);
+            var parts=player.name.split(' ');bubble.textContent=parts.length>1?parts[parts.length-1]:player.name;
+            document.getElementById('sname-'+ri+'-'+si).textContent=(mode==='classic')?player.rating:'';
+            placed=true;
+          }
+        }
+      });
+    });
+  });
+}
+
+var lastResult=null;
+
+function calcRecord(avg){
+  // Base expected wins: avg 92→~7.5, 80→~4, 68→0
+  var base=Math.max(0,(avg-68)*7.5/24);
+  // Luck factor: sum of 3 uniforms → roughly normal noise centered at 0, range ±1.5
+  var luck=(Math.random()+Math.random()+Math.random()-1.5);
+  var wins=Math.min(8,Math.max(0,Math.round(base+luck)));
+  return{w:wins,d:0,l:8-wins};
+}
+
+function generateStory(wins,avg){
+  function r(arr){return arr[Math.floor(Math.random()*arr.length)];}
+  var elite=['France','Spain','Argentina','England','Germany','Brazil'];
+  var strong=['Netherlands','Portugal','Belgium','Morocco','Colombia','Croatia','Uruguay','Senegal','Sweden','Norway','Algeria','Egypt','Ivory Coast','Japan','South Korea','Ghana'];
+  var mid=['USA','Mexico','Austria','Switzerland','Czech Republic','Turkey','Ecuador','Scotland','DR Congo','Iran','Saudi Arabia','Paraguay'];
+  var lower=['South Africa','Qatar','Iraq','Uzbekistan','Cape Verde','New Zealand','Curaçao','Haiti','Jordan','Panama','Bosnia-Herzegovina','Canada'];
+  var pens=['on penalties (4-3)','on penalties (5-4)','on spot kicks after a shootout','on penalties in front of a packed stadium'];
+  var et=['in extra time','in the 115th minute','after 120 gruelling minutes'];
+  var drama=['a stunning long-range strike','a last-minute header','a controversial penalty','a brilliant solo goal','a VAR decision that left the team devastated'];
+
+  var stages=[];
+
+  // Group stage exits
+  if(wins===0){
+    stages.push({stage:'Group Stage',text:'Three group defeats — '+r(elite.concat(strong))+', '+r(strong.concat(mid))+' and '+r(mid)+' proved too strong. Eliminated without a win.',won:false});
+    return stages;
+  }
+  if(wins===1){
+    stages.push({stage:'Group Stage',text:'One win over '+r(lower.concat(mid))+', but defeats to '+r(elite.concat(strong))+' and '+r(strong.concat(mid))+' ended the campaign at the group stage.',won:false});
+    return stages;
+  }
+  if(wins===2){
+    stages.push({stage:'Group Stage',text:'Wins over '+r(lower)+' and '+r(mid)+', but a defeat to '+r(elite.concat(strong))+' left the team eliminated on third-place standings.',won:false});
+    return stages;
+  }
+
+  // Advanced from group
+  var gp=rng_group();
+  function rng_group(){
+    var roll=Math.random();
+    if(avg>=90)return'Swept through the group — three wins, clean sheets, and top of the table.';
+    if(roll<0.45)return'Topped the group with three wins from three — the XI arrived in style.';
+    if(roll<0.75)return'Two wins and a draw advanced the team in second place.';
+    return'Scraped through as one of the best third-placed teams after a nervy final group game.';
+  }
+  stages.push({stage:'Group Stage',text:gp,won:true});
+
+  // Round of 32
+  if(wins===3){
+    var opp=r(strong.concat(mid));
+    var how=r(['Lost '+r(pens)+' after a goalless draw.','Beaten 2-1 '+r(et)+' — heartbreaking.','Went down 1-0 to '+r(drama)+'.','Lost 3-2 in a five-goal thriller.','A defensive masterclass from '+opp+' kept the team out — 1-0 defeat.']);
+    stages.push({stage:'Round of 32',text:'vs '+opp+' — '+how,won:false});
+    return stages;
+  }
+  var r32opp=r(lower.concat(mid));
+  stages.push({stage:'Round of 32',text:'Beat '+r32opp+' '+r(['2-0','2-1','1-0','3-1','3-0'])+' — a comfortable passage to the last 16.',won:true});
+
+  // Round of 16
+  if(wins===4){
+    var opp16=r(strong.concat(mid));
+    var how16=r(['Lost '+r(pens)+' after a 1-1 draw — gut-wrenching.','Beaten 2-1 '+r(et)+' by '+r(drama)+'.','Went down 1-0 — a single moment of brilliance from '+opp16+' ended the run.','Lost 3-2 in an instant classic.','A red card in the 54th minute changed everything — 2-0 defeat.']);
+    stages.push({stage:'Round of 16',text:'vs '+opp16+' — '+how16,won:false});
+    return stages;
+  }
+  var r16opp=r(mid.concat(strong));
+  var r16margin=r(['2-1','2-0','1-0','3-1']);
+  stages.push({stage:'Round of 16',text:r(['A '+r(['hard-fought','gritty','commanding'])+' '+r16margin+' win','Knocked out '+r16opp+' '+r16margin,'Survived a scare but got through '+r16margin])+' over '+r16opp+(Math.random()<0.3?' — went to extra time':'')+'. Into the quarter-finals.',won:true});
+
+  // Quarter-Final
+  if(wins===5){
+    var oppQF=r(strong.slice(0,8).concat(elite.slice(2)));
+    var howQF=r(['Lost '+r(pens)+' in an all-time classic — heartbreaking.','Beaten 2-1 '+r(et)+' by '+r(drama)+'.','Went down 1-0 — a single moment ended a brilliant run.','Lost 3-2 in what many called the game of the tournament.','Two moments of magic from '+oppQF+' — couldn\'t find a response. 2-0.']);
+    stages.push({stage:'Quarter-Final',text:'vs '+oppQF+' — '+howQF,won:false});
+    return stages;
+  }
+  var qfOpp=r(strong.concat(elite.slice(3)));
+  stages.push({stage:'Quarter-Final',text:r(['Beat','Knocked out','Overcame','Stunned'])+' '+qfOpp+' '+r(['1-0','2-1','2-0','1-0 (extra time)','3-2'])+' in a '+r(['memorable','historic','pulsating','brilliant'])+' quarter-final. Into the final four.',won:true});
+
+  // Semi-Final
+  if(wins===6){
+    var oppSF=r(elite);
+    var howSF=r(['Lost '+r(pens)+' after a gripping 1-1 draw.','Beaten 2-1 '+r(et)+' — so close to the final.','Went down to '+r(drama)+' in the 89th minute.','Lost 1-0 in a tense, cagey semi-final.','Lost 3-2 in an epic extra-time encounter.']);
+    stages.push({stage:'Semi-Final',text:'vs '+oppSF+' — '+howSF,won:false});
+    return stages;
+  }
+  var sfOpp=r(elite);
+  stages.push({stage:'Semi-Final',text:'Beat '+sfOpp+' '+r(['2-1','1-0','2-0','1-0 (extra time)','3-1'])+' in a '+r(['historic','breathtaking','memorable','stunning'])+' semi-final. The final awaits.',won:true});
+
+  // Final
+  var usedInSF=sfOpp;
+  var finOpp=r(elite.filter(function(n){return n!==usedInSF;}));
+  if(wins===7){
+    var howFin=r(['Lost '+r(pens)+' at MetLife Stadium — agonising.','Beaten 2-1 — '+r(drama)+' in extra time ended it.','Went down 1-0 in a tight, tense final.','Lost 3-2 in what many called the greatest final ever.']);
+    stages.push({stage:'Final',text:'vs '+finOpp+' at MetLife — '+howFin+' Runners-up. An incredible run.',won:false});
+    return stages;
+  }
+
+  // Champions!
+  var champHow=r(['Won 2-1 in extra time vs '+finOpp,'Triumphed '+r(pens)+' vs '+finOpp,'Won 2-0 in a dominant display vs '+finOpp,'Beat '+finOpp+' 3-1 — a masterclass from start to finish']);
+  stages.push({stage:'Final',text:champHow+' at MetLife Stadium. WORLD CHAMPIONS! 🏆',won:true});
+  return stages;
+}
+
+function runSim(){
+  document.getElementById('btn-sim').classList.remove('show');showScreen('sc-sim');
+  var avg=squad.reduce(function(a,p){return a+p.rating;},0)/squad.length;
+  var record=calcRecord(avg);
+  lastResult={rec:record,avg:avg};
+  var wins=record.w;
+  var scoreEl=document.getElementById('sim-score');var subEl=document.getElementById('sim-sub');
+  var barEl=document.getElementById('sim-bar');var cur=0;var total=wins>0?wins:1;
+  var iv=setInterval(function(){
+    cur=Math.min(wins,cur+1);scoreEl.textContent=cur;
+    subEl.textContent='wins from 8 matches';
+    barEl.style.width=(cur/8*100)+'%';
+    if(cur>=wins){clearInterval(iv);setTimeout(function(){showResult(record,avg);},900);}
+  },wins>0?1600/wins:300);
+}
+
+function showResult(rec,avg){
+  showScreen('sc-result');
+  var stageNames=['Group stage','Group stage','Group stage','Round of 32','Round of 16','Quarter-final','Semi-final','Runner-up','🏆 World Champions!'];
+  var icons=['😞','😞','😞','😔','⚽','🥉','🥈','🥇','🏆'];
+  document.getElementById('res-icon').innerHTML=rec.w===8?'🏆':icons[rec.w];
+  document.getElementById('res-record').textContent=rec.w+'-'+rec.d+'-'+rec.l;
+  var dailyLabel=isDaily?' — Daily #'+getDailyNum():'';
+  document.getElementById('res-pts').textContent=(rec.w===8?'Perfect 8-0! ':'')+stageNames[rec.w]+' · '+formation+dailyLabel;
+  document.getElementById('rw').textContent=rec.w;
+  document.getElementById('rd').textContent=rec.d;
+  document.getElementById('rl').textContent=rec.l;
+
+  // Tournament story
+  var story=generateStory(rec.w,avg);
+  var storyEl=document.getElementById('res-story');
+  var shtml='<div class="story-title">Tournament Journey</div>';
+  story.forEach(function(s){
+    shtml+='<div class="story-match">'
+      +'<div class="story-dot '+(s.won?'w':'l')+'"></div>'
+      +'<div class="story-stage">'+s.stage+'</div>'
+      +'<div class="story-detail">'+s.text+'</div>'
+      +'</div>';
+  });
+  storyEl.innerHTML=shtml;
+
+  // Summary line
+  var summaries=['The squad wasn\'t quite World Cup standard.','A tough group — the XI never found its rhythm.','So agonisingly close to the knockout rounds.','Bowed out in the Round of 32 — a decent showing.','Fell at the Round of 16 — a respectable run.','Quarter-finalists! A brilliant showing — could have gone further.','Semi-finalists! A remarkable campaign — so close to glory.','Runners-up — one match short of immortality.','Perfect 8-0 — one of the greatest squads ever assembled. 🏆'];
+  document.getElementById('res-msg').textContent=summaries[Math.min(rec.w,8)];
+
+  // XI list
+  var xi='<h3>Your World Cup XI ('+formation+')</h3>';
+  var posOrder={GK:0,DEF:1,MID:2,FWD:3};
+  var sortedSquad=squad.slice().sort(function(a,b){return posOrder[a.pos]-posOrder[b.pos];});
+  sortedSquad.forEach(function(p){
+    xi+='<div class="res-player"><div class="rp-info"><div class="rp-name"><span class="'+posColor(p.pos)+'">'+p.pos+'</span> '+p.name+'</div>';
+    xi+='<div class="rp-club">'+NATIONS[p.nation].flag+' '+p.nation+' · '+p.year+'</div></div><div class="rp-r">'+p.rating+'</div></div>';
+  });
+  document.getElementById('res-xi').innerHTML=xi;
+  if(typeof saveResult==='function'){saveResult('wc-8-zero','World Cup 2026: 8-0',rec.w,8,rec.w===8);}
+}
+
+function shareResult(){
+  if(!lastResult)return;
+  var rec=lastResult.rec;var avg=lastResult.avg;
+  var bar='';for(var i=0;i<8;i++)bar+=i<rec.w?'🟩':'⬜';
+  var prefix=isDaily?'SportsStack — WC 2026 Daily #'+getDailyNum():'SportsStack — World Cup 2026: 8-0';
+  var stageNames=['Group stage','Group stage','Group stage','Round of 32','Round of 16','Quarter-final','Semi-final','Runner-up','World Champions 🏆'];
+  var txt=prefix+'\n'+stageNames[Math.min(rec.w,8)]+' ('+rec.w+'-'+rec.d+'-'+rec.l+')\n'+bar+' '+avg.toFixed(1)+'/100\nsportsstack.com.au/wc-8-zero.html';
+  navigator.share?(navigator.share({text:txt}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){
+    var b=document.querySelector('.btn-share');b.textContent='Copied! ✔';setTimeout(function(){b.textContent='Share Result 📋';},2000);
+  });
+}
+
+function resetGame(){var ind=document.getElementById('daily-indicator');if(ind)ind.style.display='none';showScreen('sc-setup');}
+
+</script>
+<script src="sportstack-member.js?v=4"></script>
+
+</body>
+</html>

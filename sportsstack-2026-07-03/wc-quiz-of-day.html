@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Wc Quiz Of Day — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/wc-quiz-of-day.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>World Cup Quiz of the Day - SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--blue:#2563eb;--blue-light:#3b82f6;--green:#22c55e;--green-glow:rgba(34,197,94,.35);--red:#ef4444;--red-glow:rgba(239,68,68,.35);--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);overflow:hidden;font-family:'Barlow',sans-serif;color:var(--text)}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease}
+.screen.active{opacity:1;pointer-events:all}
+
+/* LOADING */
+#title-screen{background:var(--bg)}
+.title-logo-wrap{margin-bottom:20px}
+.title-logo-wrap img{display:block;border-radius:8px}
+.title-brand{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,32px);font-weight:900;font-style:italic;letter-spacing:.06em;color:var(--gold);margin-bottom:6px}
+.title-tagline{font-family:'Barlow Condensed',sans-serif;font-size:clamp(12px,2.5vw,16px);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:40px}
+.title-tagline span{color:var(--gold)}
+.start-btn{font-family:'Barlow Condensed',sans-serif;font-size:clamp(15px,3vw,20px);font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;padding:16px 52px;border-radius:50px;cursor:pointer;transition:all .2s}
+.start-btn:hover{transform:translateY(-2px)}
+
+/* QUIZ */
+#quiz-screen{padding:0;align-items:stretch;justify-content:stretch}
+.quiz-inner{display:flex;flex-direction:column;width:100%;height:100%;max-width:760px;margin:0 auto}
+.quiz-topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px;flex-shrink:0;border-bottom:1px solid var(--border)}
+.topbar-brand{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.progress-wrap{flex:1;margin:0 16px;display:flex;flex-direction:column;gap:4px}
+.progress-label{font-size:11px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.progress-bar-outer{height:4px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+.progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.score-badge{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--gold);letter-spacing:.06em}
+
+/* Full-width single-column layout */
+.quiz-body{flex:1;display:flex;flex-direction:column;padding:16px 20px 10px;gap:12px;overflow:hidden;min-height:0}
+.q-num{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim)}
+.q-text-box{background:var(--surface);border:1px solid var(--border-bright);border-radius:var(--radius);padding:18px 20px}
+.q-text{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2.8vw,24px);font-weight:700;line-height:1.3;color:var(--text)}
+.q-answers{display:flex;flex-direction:column;gap:10px;flex:1}
+.ans-btn{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:var(--radius);cursor:pointer;transition:all .2s;text-align:left;width:100%}
+.ans-btn:hover:not(.answered-wrong):not(.answered-correct):not(.locked){background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2)}
+.ans-btn.answered-correct{background:var(--green-glow);border-color:var(--green)}
+.ans-btn.answered-wrong{background:var(--red-glow);border-color:var(--red)}
+.ans-btn.reveal-correct{background:var(--green-glow);border-color:var(--green)}
+.ans-btn.locked{cursor:default;pointer-events:none}
+.ans-label{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,2.2vw,18px);font-weight:900;color:var(--text-dim);flex-shrink:0;min-width:28px}
+.ans-btn.answered-correct .ans-label,.ans-btn.reveal-correct .ans-label{color:var(--green)}
+.ans-btn.answered-wrong .ans-label{color:var(--red)}
+.ans-text{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:700;line-height:1.3;color:var(--text)}
+
+.quiz-nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:8px 16px 12px;flex-shrink:0;border-top:1px solid var(--border)}
+.nav-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--border-bright);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.nav-btn:hover{background:rgba(255,255,255,.15)}
+.nav-btn:disabled{opacity:.25;cursor:default}
+.nav-btn svg{width:18px;height:18px;fill:var(--text)}
+.nav-dots{display:flex;gap:5px;flex-wrap:wrap;max-width:280px;justify-content:center}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .2s;cursor:pointer}
+.nav-dot.current{background:var(--text);transform:scale(1.2)}
+.nav-dot.done-correct{background:var(--green)}
+.nav-dot.done-wrong{background:var(--red)}
+
+/* SCORE */
+#score-screen{background:var(--bg)}
+.score-logo{display:block;border-radius:6px;margin-bottom:14px}
+.score-brand{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;font-style:italic;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
+.score-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,2.5vw,18px);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.score-number{font-family:'Barlow Condensed',sans-serif;font-size:clamp(60px,15vw,100px);font-weight:900;line-height:1;margin-bottom:4px}
+.score-denom{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,36px);font-weight:700;color:var(--text-dim);margin-bottom:16px}
+.score-msg{font-size:clamp(14px,2.5vw,18px);color:var(--text-muted);margin-bottom:32px;max-width:360px;text-align:center;line-height:1.5}
+.score-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.score-share-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;padding:14px 36px;border-radius:50px;cursor:pointer;transition:all .2s}
+.score-replay-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:var(--text);border:1.5px solid var(--border-bright);padding:14px 36px;border-radius:50px;cursor:pointer;transition:all .2s}
+.copied-msg{font-size:13px;color:var(--green);margin-top:10px;min-height:18px;text-align:center}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+<style>
+:root{--wc-green:#3ddc6e}
+.wc-badge{font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;background:rgba(61,220,110,.12);border:1px solid rgba(61,220,110,.35);color:var(--wc-green);padding:4px 14px;border-radius:20px;margin-bottom:14px;display:inline-block}
+.topbar-brand{color:var(--wc-green)!important}
+.start-btn{background:var(--wc-green)!important;color:#04080f!important}
+.progress-bar-inner{background:linear-gradient(90deg,var(--wc-green),var(--gold))!important}
+.nav-dot.current{background:var(--wc-green)!important}
+.score-title{color:var(--wc-green)!important}
+.score-share-btn{background:var(--wc-green)!important;color:#04080f!important}
+.ans-btn:hover:not(.an
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+swered-wrong):not(.answered-correct):not(.locked){border-color:var(--wc-green)!important}
+.title-sub{font-size:12px;color:var(--text-muted);margin-bottom:36px;letter-spacing:.04em}
+</style>
+</head>
+<body>
+
+<div class="screen active" id="title-screen">
+  <div class="title-logo-wrap">
+    <img src="logo.png" alt="SportsStack" width="72" height="72" style="border-radius:10px;display:block"/>
+  </div>
+  <div class="wc-badge">&#x26BD; 2026 FIFA World Cup</div>
+  <div class="title-brand">SportsStack</div>
+  <div class="title-tagline"><span>World Cup</span> Quiz of the Day</div>
+  <div class="title-sub">5 new questions every day</div>
+  <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+</div>
+
+<div class="screen" id="quiz-screen">
+  <div class="quiz-inner">
+    <div class="quiz-topbar">
+      <div class="topbar-brand">&#x26BD; World Cup</div>
+      <div class="progress-wrap">
+        <div class="progress-label" id="prog-label">Question 1 of 5</div>
+        <div class="progress-bar-outer"><div class="progress-bar-inner" id="prog-bar" style="width:20%"></div></div>
+      </div>
+      <div class="score-badge" id="live-score">0 / 0</div>
+    </div>
+    <div class="quiz-body">
+      <div class="q-num" id="q-num">Question 1</div>
+      <div class="q-text-box"><div class="q-text" id="q-text">Loading...</div></div>
+      <div class="q-answers" id="q-answers">
+        <button class="ans-btn" id="ans-a" onclick="selectAnswer(0)"><span class="ans-label">A)</span><span class="ans-text" id="ans-a-text">A</span></button>
+        <button class="ans-btn" id="ans-b" onclick="selectAnswer(1)"><span class="ans-label">B)</span><span class="ans-text" id="ans-b-text">B</span></button>
+        <button class="ans-btn" id="ans-c" onclick="selectAnswer(2)"><span class="ans-label">C)</span><span class="ans-text" id="ans-c-text">C</span></button>
+      </div>
+    </div>
+    <div class="quiz-nav">
+      <button class="nav-btn" id="nav-prev" onclick="goTo(currentQ-1)" disabled><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="nav-dots" id="nav-dots"></div>
+      <button class="nav-btn" id="nav-next" onclick="goTo(currentQ+1)" disabled><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="score-screen">
+  <img src="logo.png" alt="SportsStack" width="60" height="60" class="score-logo"/>
+  <div class="score-brand">SportsStack</div>
+  <div class="score-title">&#x26BD; World Cup Quiz of the Day</div>
+  <div class="score-number" id="score-number">0</div>
+  <div class="score-denom" id="score-denom">/ 5</div>
+  <div class="score-msg" id="score-msg"></div>
+  <div class="score-btns">
+    <button class="score-share-btn" onclick="shareScore()">Share Score</button>
+    <button class="score-replay-btn" onclick="restartQuiz()">Play Again</button>
+  </div>
+  <div class="copied-msg" id="copied-msg"></div>
+</div>
+
+<script>
+const POOL = [
+  {q:"How many teams are competing in the 2026 FIFA World Cup?", a:"32", b:"48", c:"64", correct:1},
+  {q:"Which three countries are co-hosting the 2026 FIFA World Cup?", a:"USA, Mexico, Brazil", b:"USA, Canada, Mexico", c:"Canada, USA, Argentina", correct:1},
+  {q:"At which stadium will the 2026 World Cup final be held?", a:"AT&T Stadium", b:"MetLife Stadium", c:"Rose Bowl", correct:1},
+  {q:"Which nation holds the record for most World Cup titles with five?", a:"Germany", b:"Argentina", c:"Brazil", correct:2},
+  {q:"Who holds the record for most goals in a single World Cup tournament with 13?", a:"Miroslav Klose", b:"Just Fontaine", c:"Gerd Muller", correct:1},
+  {q:"In which year did Lionel Messi win his first FIFA World Cup?", a:"2018", b:"2022", c:"2014", correct:1},
+  {q:"Germany beat Argentina in the 2014 World Cup final. Who scored the only goal?", a:"Thomas Muller", b:"Mario Gotze", c:"Miroslav Klose", correct:1},
+  {q:"In which country was the very first FIFA World Cup held?", a:"Brazil", b:"France", c:"Uruguay", correct:2},
+  {q:"Who was the top scorer at the 2022 World Cup in Qatar with 8 goals?", a:"Kylian Mbappe", b:"Lionel Messi", c:"Olivier Giroud", correct:0},
+  {q:"England's only World Cup victory came in which year?", a:"1962", b:"1966", c:"1970", correct:1},
+  {q:"Which African nation became the first from the continent to reach a World Cup semi-final, doing so in 2022?", a:"Cameroon", b:"Nigeria", c:"Morocco", correct:2},
+  {q:"Argentina beat which country in the 2022 World Cup final?", a:"Brazil", b:"France", c:"Croatia", correct:1},
+  {q:"How many times did Pele win the World Cup?", a:"2", b:"3", c:"4", correct:1},
+  {q:"Which team did Italy defeat in the 2006 World Cup final on penalties?", a:"England", b:"France", c:"Germany", correct:1},
+  {q:"Which city will host the opening match of the 2026 FIFA World Cup?", a:"New York", b:"Los Angeles", c:"Mexico City", correct:2},
+  {q:"How many host cities are there across the 2026 World Cup?", a:"11", b:"16", c:"20", correct:1},
+  {q:"Who holds the all-time record for goals in Women's World Cup history with 17?", a:"Marta", b:"Abby Wambach", c:"Birgit Prinz", correct:0},
+  {q:"What was the name of the original World Cup trophy that Brazil were allowed to keep permanently after winning it three times?", a:"FIFA Gold Trophy", b:"Jules Rimet Trophy", c:"Santiago Trophy", correct:1},
+  {q:"Which goalkeeper won the Golden Glove at the 2022 World Cup?", a:"Hugo Lloris", b:"Yassine Bounou", c:"Emiliano Martinez", correct:2},
+  {q:"Before this year, how many World Cups has Messi played in?", a:"4", b:"5", c:"6", correct:1},
+  {q:"The USA last hosted the World Cup before 2026 in which year?", a:"1990", b:"1994", c:"1998", correct:1},
+  {q:"At which World Cup did Diego Maradona score his famous Hand of God goal?", a:"1982", b:"1986", c:"1990", correct:1},
+  {q:"Which country has reached the most World Cup finals without winning, appearing in three?", a:"Netherlands", b:"Portugal", c:"Hungary", correct:0},
+  {q:"France's Zinedine Zidane scored twice in the 1998 World Cup final. Which country did France beat?", a:"Italy", b:"Brazil", c:"Germany", correct:1},
+  {q:"Miroslav Klose's record of 16 World Cup goals was set across how many tournaments?", a:"3", b:"4", c:"5", correct:1},
+  {q:"Which stadium hosted Uruguay's shock 1950 World Cup victory over Brazil in the final?", a:"Maracana", b:"Estadio Azteca", c:"Wembley", correct:0},
+  {q:"In 2026, the World Cup expanded from 32 to 48 teams. How many groups are there in the new group stage?", a:"8", b:"12", c:"16", correct:1},
+  {q:"Who scored a hat-trick for Portugal against Switzerland in the 2022 World Cup round of 16?", a:"Cristiano Ronaldo", b:"Goncalo Ramos", c:"Bruno Fernandes", correct:1},
+  {q:"Which nation knocked out defending champions France in the 2002 World Cup group stage?", a:"Senegal", b:"Denmark", c:"Turkey", correct:0},
+  {q:"The 2026 World Cup trophy ceremony will take place in which US state?", a:"Texas", b:"New Jersey", c:"California", correct:1}
+];
+
+const QUESTIONS_PER_DAY = 5;
+function mulberry32(seed){
+  return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+}
+function getDailySeed(){var d=new Date();return d.getFullYear()*10000+((d.getMonth()+1)*100)+d.getDate();}
+
+const DAILY_OVERRIDES = {
+  '2026-06-13': [
+    {q:"Mexico kicked off the 2026 World Cup on June 11. Who did they beat in the opening match?", a:"Canada", b:"Jamaica", c:"South Africa", correct:2},
+    {q:"What was the score in the 2026 World Cup opening match?", a:"1-0", b:"2-0", c:"3-1", correct:1},
+    {q:"The 2026 World Cup features a record number of teams. How many are competing?", a:"32", b:"48", c:"40", correct:1},
+    {q:"Which nation has won the World Cup more times than any other, claiming five titles?", a:"Argentina", b:"Germany", c:"Brazil", correct:2},
+    {q:"At which stadium will the 2026 World Cup final be held?", a:"Estadio Azteca", b:"SoFi Stadium", c:"MetLife Stadium", correct:2}
+  ],
+  '2026-06-14': [
+    {q:"Which stadium hosted Uruguay's famous shock victory over Brazil in the 1950 World Cup?", a:"Maracana", b:"Estadio Azteca", c:"Wembley", correct:0},
+    {q:"How many times did Pele win the FIFA World Cup?", a:"2", b:"3", c:"4", correct:1},
+    {q:"Germany beat Brazil 7-1 in the 2014 World Cup semi-final. In which city was the match played?", a:"Sao Paulo", b:"Brasilia", c:"Belo Horizonte", correct:2},
+    {q:"How many host cities are there across the 2026 World Cup?", a:"11", b:"16", c:"20", correct:1},
+    {q:"Which country has reached the most World Cup finals without winning, having appeared in three?", a:"Netherlands", b:"Portugal", c:"Hungary", correct:0}
+  ]
+};
+function getDailyQuestions(){
+  var d=new Date();
+  var dateStr=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  if(DAILY_OVERRIDES[dateStr]) return DAILY_OVERRIDES[dateStr];
+  var rng=mulberry32(getDailySeed());
+  var idx=Array.from({length:POOL.length},function(_,i){return i;});
+  for(var j=idx.length-1;j>0;j--){var k=Math.floor(rng()*(j+1));var tmp=idx[j];idx[j]=idx[k];idx[k]=tmp;}
+  return idx.slice(0,QUESTIONS_PER_DAY).map(function(i){return POOL[i];});
+}
+var QUESTIONS=getDailyQuestions();
+var answers=new Array(QUESTIONS.length).fill(null);
+var score=0,answered=0,currentQ=0;
+var MSGS=[[0,1,"Rough day! Come back tomorrow"],[2,2,"Getting there! A couple slipped away..."],[3,3,"Solid! You know your World Cup!"],[4,4,"Excellent! Nearly perfect!"],[5,5,"PERFECT! World Cup genius!"]];
+function buildDots(){
+  var c=document.getElementById('nav-dots');c.innerHTML='';
+  QUESTIONS.forEach(function(_,i){var d=document.createElement('div');d.className='nav-dot'+(i===0?' current':'');d.onclick=function(){goTo(i);};c.appendChild(d);});
+}
+function startQuiz(){answers=new Array(QUESTIONS.length).fill(null);score=0;answered=0;currentQ=0;buildDots();showScreen('quiz-screen');renderQ(0);}
+function restartQuiz(){answers=new Array(QUESTIONS.length).fill(null);score=0;answered=0;currentQ=0;buildDots();showScreen('title-screen');}
+function renderQ(i){
+  var q=QUESTIONS[i],done=answers[i]!==null;
+  document.getElementById('prog-label').textContent='Question '+(i+1)+' of '+QUESTIONS.length;
+  document.getElementById('prog-bar').style.width=((i+1)/QUESTIONS.length*100)+'%';
+  document.getElementById('live-score').textContent=score+' / '+answered;
+  document.getElementById('q-num').textContent='Question '+(i+1);
+  document.getElementById('q-text').textContent=q.q;
+  ['ans-a','ans-b','ans-c'].forEach(function(id,j){
+    var btn=document.getElementById(id);
+    document.getElementById(['ans-a-text','ans-b-text','ans-c-text'][j]).textContent=[q.a,q.b,q.c][j];
+    btn.className='ans-btn';
+    if(done){btn.classList.add('locked');if(j===q.correct)btn.classList.add(answers[i]===q.correct?'answered-correct':'reveal-correct');if(j===answers[i]&&answers[i]!==q.correct)btn.classList.add('answered-wrong');}
+  });
+  document.getElementById('nav-prev').disabled=(i===0);
+  document.getElementById('nav-next').disabled=!done&&i>=QUESTIONS.length-1;
+  if(done&&i<QUESTIONS.length-1)document.getElementById('nav-next').disabled=false;
+  document.querySelectorAll('.nav-dot').forEach(function(d,j){d.className='nav-dot';if(j===i)d.classList.add('current');else if(answers[j]!==null)d.classList.add(answers[j]===QUESTIONS[j].correct?'done-correct':'done-wrong');});
+}
+function goTo(i){if(i<0||i>=QUESTIONS.length)return;if(i>answered&&answers[i]===null)return;currentQ=i;renderQ(i);}
+function selectAnswer(choice){
+  if(answers[currentQ]!==null)return;
+  var q=QUESTIONS[currentQ];answers[currentQ]=choice;answered++;
+  if(choice===q.correct)score++;
+  renderQ(currentQ);
+  setTimeout(function(){
+    if(currentQ<QUESTIONS.length-1){goTo(currentQ+1);}
+    else{var allDone=answers.every(function(a){return a!==null;});if(allDone)setTimeout(showScore,600);}
+  },1500);
+}
+function showScore(){
+  var n=document.getElementById('score-number'),m=document.getElementById('score-msg'),c=document.getElementById('copied-msg');
+  if(n){n.textContent=score;n.style.color=score===5?'var(--gold)':score>=4?'#86efac':score>=2?'var(--text)':'#fca5a5';}
+  if(document.getElementById('score-denom'))document.getElementById('score-denom').textContent='/ 5';
+  var msg=MSGS.find(function(x){return score>=x[0]&&score<=x[1];});
+  if(m)m.textContent=msg?msg[2]:'Well done!';if(c)c.textContent='';
+  saveResult('wc-quiz-of-day','World Cup Quiz of the Day',score,5,score===5);
+  showScreen('score-screen');
+}
+function shareScore(){
+  var dots=answers.map(function(a,i){return a===QUESTIONS[i].correct?'\u2705':'\u274C';}).join('');
+  var text='SportsStack World Cup Quiz of the Day\n'+score+'/5 '+dots+'\nsportsstack.com.au';
+  if(navigator.share){navigator.share({text:text}).catch(()=>{});}else if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){var c=document.getElementById('copied-msg');if(c)c.textContent='Copied!';});}
+}
+function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');}
+
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

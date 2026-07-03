@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Vote the GOAT — SportsStack</title>
+<meta name="description" content="Vote for the Greatest Athlete of All Time. One vote per member. Live results."/>
+<link rel="icon" href="/favicon.ico"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="sportstack-member.js?v=4"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#04080f;--surface:#080f1c;--border:#0d2040;--border-bright:#1a3a6a;--gold:#f5c842;--green:#22c55e;--text:#e8f0fe;--text-muted:#7a9ab8;--text-dim:#1e3355;--red:#ef4444}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
+nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(4,8,15,.95);backdrop-filter:blur(8px);z-index:1000}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:8px;color:#7a9ab8;border:1.5px solid var(--border-bright);text-decoration:none;background:transparent;transition:all .15s;white-space:nowrap}
+.btn-lb:visited{color:#7a9ab8}
+.btn-lb:hover{color:var(--text);border-color:#3a6a9a}
+.btn-goat-nav{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:8px;color:var(--gold);border:1.5px solid rgba(245,200,66,.4);text-decoration:none;background:transparent;transition:all .15s;white-space:nowrap}
+.btn-goat-nav:hover{background:rgba(245,200,66,.08)}
+
+/* Hero */
+.goat-hero{text-align:center;padding:0 0 20px;position:relative;overflow:hidden}
+.goat-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(245,200,66,.12) 0%,transparent 70%);pointer-events:none}
+.goat-icon{font-size:80px;display:block;margin-bottom:8px;filter:drop-shadow(0 0 30px rgba(245,200,66,.5))}
+.goat-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(52px,12vw,96px);font-weight:900;font-style:italic;line-height:.9;letter-spacing:-.02em;background:linear-gradient(135deg,#f5c842 0%,#fff8dc 50%,#f5c842 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.goat-sub{font-size:15px;color:var(--text-muted);max-width:440px;margin:12px auto 20px;line-height:1.5}
+.vote-counter{display:inline-flex;align-items:center;gap:8px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.25);border-radius:20px;padding:6px 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.06em;color:var(--gold)}
+
+/* Auth notice */
+.auth-notice{margin:0 auto 28px;max-width:600px;padding:12px 20px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:10px;text-align:center;font-size:13px;color:var(--text-muted)}
+.auth-notice a{color:var(--gold);text-decoration:none;font-weight:700}
+
+/* Top 3 podium */
+.podium-wrap{max-width:700px;margin:0 auto 40px;padding:0 16px}
+.podium-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:12px}
+.podium{display:flex;gap:10px;justify-content:center}
+.podium-card{flex:1;max-width:200px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 12px;text-align:center}
+.podium-card.p1{border-color:rgba(245,200,66,.5);background:rgba(245,200,66,.06)}
+.podium-card.p2{border-color:rgba(192,192,192,.35)}
+.podium-card.p3{border-color:rgba(205,127,50,.35)}
+.podium-rank{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;margin-bottom:4px}
+.p1 .podium-rank{color:var(--gold)}
+.p2 .podium-rank{color:#c0c0c0}
+.p3 .podium-rank{color:#cd7f32}
+.podium-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:var(--text);margin-bottom:2px}
+.podium-pct{font-size:12px;color:var(--text-muted)}
+
+/* Candidate grid */
+.grid-wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+.cands{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:600px){.cands{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:380px){.cands{grid-template-columns:1fr}}
+
+.cand-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:18px 14px 14px;text-align:center;transition:border-color .2s,transform .15s;position:relative}
+.cand-card:hover{border-color:var(--border-bright);transform:translateY(-2px)}
+.cand-card.voted-for{border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.05)}
+.cand-emoji{font-size:32px;margin-bottom:8px}
+.cand-name{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;color:var(--text);margin-bottom:2px;line-height:1.1}
+.cand-sport{font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.cand-bar-wrap{height:4px;background:var(--border);border-radius:2px;margin-bottom:6px;overflow:hidden}
+.cand-bar{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .6s ease}
+.cand-meta{font-size:11px;color:var(--text-muted);margin-bottom:10px}
+.cand-vote{width:100%;padding:9px;background:var(--gold);color:#04080f;border:none;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:opacity .15s}
+.cand-vote:hover{opacity:.85}
+.cand-vote:disabled{background:transparent;border:1.5px solid var(--border-bright);color:var(--text-muted);cursor:default;opacity:1}
+.cand-vote.my-vote{background:var(--green);color:#fff}
+.cand-vote:disabled.my-vote{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.4);color:var(--green)}
+
+.voted-badge{position:absolute;top:10px;right:10px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);border-radius:10px;padding:2px 8px;font-size:10px;font-weight:800;color:var(--green);letter-spacing:.06em;display:none}
+.cand-card.voted-for .voted-badge{display:block}
+
+.state-msg{text-align:center;padding:16px;font-size:14px;color:var(--text-muted)}
+
+.goat-banner-wrap{position:relative;width:100%;border-radius:0}
+.goat-banner-img{width:100%;display:block;object-fit:contain}
+.goat-banner-overlay{position:absolute;bottom:16px;left:50%;transform:translateX(-50%)}
+.goat-hero{padding-bottom:20px}
+.goat-hero::before{display:none}
+.goat-icon{display:none}
+.goat-title{display:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <a href="vote-goat.html" class="btn-goat-nav">Vote 🐐</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+
+<div class="goat-hero">
+  <div class="goat-banner-wrap">
+    <img src="goat-banner.jpg" alt="Vote the GOAT" class="goat-banner-img"/>
+    <div class="goat-banner-overlay">
+      <div class="vote-counter">🗳️ <span id="total-votes">—</span> votes cast</div>
+    </div>
+  </div>
+  <p class="goat-sub">One sport. One legend. One vote. Who is the Greatest Athlete of All Time?</p>
+</div>
+
+<div class="auth-notice" id="auth-notice" style="display:none">
+  <a href="auth.html">Sign in</a> or <a href="auth.html?mode=signup">create a free account</a> to cast your vote.
+</div>
+
+<div class="podium-wrap">
+  <div class="podium-title">Current Leaders</div>
+  <div class="podium" id="podium">
+    <div class="podium-card p1"><div class="podium-rank">🥇</div><div class="podium-name" id="p1-name">—</div><div class="podium-pct" id="p1-pct"></div></div>
+    <div class="podium-card p2"><div class="podium-rank">🥈</div><div class="podium-name" id="p2-name">—</div><div class="podium-pct" id="p2-pct"></div></div>
+    <div class="podium-card p3"><div class="podium-rank">🥉</div><div class="podium-name" id="p3-name">—</div><div class="podium-pct" id="p3-pct"></div></div>
+  </div>
+</div>
+
+<div class="grid-wrap">
+  <div class="cands" id="cands">
+  <div class="cand-card" id="card-michael-jordan">
+    <div class="cand-emoji">🏀</div>
+    <div class="cand-name">Michael Jordan</div>
+    <div class="cand-sport">Basketball</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-michael-jordan"></div></div>
+    <div class="cand-meta" id="meta-michael-jordan">0 votes</div>
+    <button class="cand-vote" id="btn-michael-jordan" onclick="castVote('michael-jordan')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-lionel-messi">
+    <div class="cand-emoji">⚽</div>
+    <div class="cand-name">Lionel Messi</div>
+    <div class="cand-sport">Soccer</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-lionel-messi"></div></div>
+    <div class="cand-meta" id="meta-lionel-messi">0 votes</div>
+    <button class="cand-vote" id="btn-lionel-messi" onclick="castVote('lionel-messi')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-tom-brady">
+    <div class="cand-emoji">🏈</div>
+    <div class="cand-name">Tom Brady</div>
+    <div class="cand-sport">American Football</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-tom-brady"></div></div>
+    <div class="cand-meta" id="meta-tom-brady">0 votes</div>
+    <button class="cand-vote" id="btn-tom-brady" onclick="castVote('tom-brady')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-wayne-gretzky">
+    <div class="cand-emoji">🏒</div>
+    <div class="cand-name">Wayne Gretzky</div>
+    <div class="cand-sport">Ice Hockey</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-wayne-gretzky"></div></div>
+    <div class="cand-meta" id="meta-wayne-gretzky">0 votes</div>
+    <button class="cand-vote" id="btn-wayne-gretzky" onclick="castVote('wayne-gretzky')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-serena-williams">
+    <div class="cand-emoji">🎾</div>
+    <div class="cand-name">Serena Williams</div>
+    <div class="cand-sport">Tennis</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-serena-williams"></div></div>
+    <div class="cand-meta" id="meta-serena-williams">0 votes</div>
+    <button class="cand-vote" id="btn-serena-williams" onclick="castVote('serena-williams')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-tiger-woods">
+    <div class="cand-emoji">⛳</div>
+    <div class="cand-name">Tiger Woods</div>
+    <div class="cand-sport">Golf</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-tiger-woods"></div></div>
+    <div class="cand-meta" id="meta-tiger-woods">0 votes</div>
+    <button class="cand-vote" id="btn-tiger-woods" onclick="castVote('tiger-woods')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-usain-bolt">
+    <div class="cand-emoji">🏃</div>
+    <div class="cand-name">Usain Bolt</div>
+    <div class="cand-sport">Track & Field</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-usain-bolt"></div></div>
+    <div class="cand-meta" id="meta-usain-bolt">0 votes</div>
+    <button class="cand-vote" id="btn-usain-bolt" onclick="castVote('usain-bolt')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-michael-phelps">
+    <div class="cand-emoji">🏊</div>
+    <div class="cand-name">Michael Phelps</div>
+    <div class="cand-sport">Swimming</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-michael-phelps"></div></div>
+    <div class="cand-meta" id="meta-michael-phelps">0 votes</div>
+    <button class="cand-vote" id="btn-michael-phelps" onclick="castVote('michael-phelps')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-muhammad-ali">
+    <div class="cand-emoji">🥊</div>
+    <div class="cand-name">Muhammad Ali</div>
+    <div class="cand-sport">Boxing</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-muhammad-ali"></div></div>
+    <div class="cand-meta" id="meta-muhammad-ali">0 votes</div>
+    <button class="cand-vote" id="btn-muhammad-ali" onclick="castVote('muhammad-ali')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-babe-ruth">
+    <div class="cand-emoji">⚾</div>
+    <div class="cand-name">Babe Ruth</div>
+    <div class="cand-sport">Baseball</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-babe-ruth"></div></div>
+    <div class="cand-meta" id="meta-babe-ruth">0 votes</div>
+    <button class="cand-vote" id="btn-babe-ruth" onclick="castVote('babe-ruth')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-roger-federer">
+    <div class="cand-emoji">🎾</div>
+    <div class="cand-name">Roger Federer</div>
+    <div class="cand-sport">Tennis</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-roger-federer"></div></div>
+    <div class="cand-meta" id="meta-roger-federer">0 votes</div>
+    <button class="cand-vote" id="btn-roger-federer" onclick="castVote('roger-federer')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-michael-schumacher">
+    <div class="cand-emoji">🏎️</div>
+    <div class="cand-name">Michael Schumacher</div>
+    <div class="cand-sport">Formula 1</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-michael-schumacher"></div></div>
+    <div class="cand-meta" id="meta-michael-schumacher">0 votes</div>
+    <button class="cand-vote" id="btn-michael-schumacher" onclick="castVote('michael-schumacher')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-simone-biles">
+    <div class="cand-emoji">🤸</div>
+    <div class="cand-name">Simone Biles</div>
+    <div class="cand-sport">Gymnastics</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-simone-biles"></div></div>
+    <div class="cand-meta" id="meta-simone-biles">0 votes</div>
+    <button class="cand-vote" id="btn-simone-biles" onclick="castVote('simone-biles')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-novak-djokovic">
+    <div class="cand-emoji">🎾</div>
+    <div class="cand-name">Novak Djokovic</div>
+    <div class="cand-sport">Tennis</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-novak-djokovic"></div></div>
+    <div class="cand-meta" id="meta-novak-djokovic">0 votes</div>
+    <button class="cand-vote" id="btn-novak-djokovic" onclick="castVote('novak-djokovic')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-pelé">
+    <div class="cand-emoji">⚽</div>
+    <div class="cand-name">Pelé</div>
+    <div class="cand-sport">Soccer</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-pelé"></div></div>
+    <div class="cand-meta" id="meta-pelé">0 votes</div>
+    <button class="cand-vote" id="btn-pelé" onclick="castVote('pelé')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-rafael-nadal">
+    <div class="cand-emoji">🎾</div>
+    <div class="cand-name">Rafael Nadal</div>
+    <div class="cand-sport">Tennis</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-rafael-nadal"></div></div>
+    <div class="cand-meta" id="meta-rafael-nadal">0 votes</div>
+    <button class="cand-vote" id="btn-rafael-nadal" onclick="castVote('rafael-nadal')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-sachin-tendulkar">
+    <div class="cand-emoji">🏏</div>
+    <div class="cand-name">Sachin Tendulkar</div>
+    <div class="cand-sport">Cricket</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-sachin-tendulkar"></div></div>
+    <div class="cand-meta" id="meta-sachin-tendulkar">0 votes</div>
+    <button class="cand-vote" id="btn-sachin-tendulkar" onclick="castVote('sachin-tendulkar')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-lebron-james">
+    <div class="cand-emoji">🏀</div>
+    <div class="cand-name">LeBron James</div>
+    <div class="cand-sport">Basketball</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-lebron-james"></div></div>
+    <div class="cand-meta" id="meta-lebron-james">0 votes</div>
+    <button class="cand-vote" id="btn-lebron-james" onclick="castVote('lebron-james')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-cristiano-ronaldo">
+    <div class="cand-emoji">⚽</div>
+    <div class="cand-name">Cristiano Ronaldo</div>
+    <div class="cand-sport">Soccer</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-cristiano-ronaldo"></div></div>
+    <div class="cand-meta" id="meta-cristiano-ronaldo">0 votes</div>
+    <button class="cand-vote" id="btn-cristiano-ronaldo" onclick="castVote('cristiano-ronaldo')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-diego-maradona">
+    <div class="cand-emoji">⚽</div>
+    <div class="cand-name">Diego Maradona</div>
+    <div class="cand-sport">Soccer</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-diego-maradona"></div></div>
+    <div class="cand-meta" id="meta-diego-maradona">0 votes</div>
+    <button class="cand-vote" id="btn-diego-maradona" onclick="castVote('diego-maradona')">Vote</button>
+  </div>
+  <div class="cand-card" id="card-dan-carter">
+    <div class="cand-emoji">🏉</div>
+    <div class="cand-name">Dan Carter</div>
+    <div class="cand-sport">Rugby Union</div>
+    <div class="cand-bar-wrap"><div class="cand-bar" id="bar-dan-carter"></div></div>
+    <div class="cand-meta" id="meta-dan-carter">0 votes</div>
+    <button class="cand-vote" id="btn-dan-carter" onclick="castVote('dan-carter')">Vote</button>
+  </div>
+  </div>
+  <div class="state-msg" id="state-msg"></div>
+</div>
+
+<script>
+// SS_URL and SS_KEY already defined by sportstack-member.js
+const POLL_ID='sports-goat-2026';
+const CANDIDATES = [
+  {slug:"michael-jordan",name:"Michael Jordan",sport:"Basketball",emoji:"🏀"},
+  {slug:"lionel-messi",name:"Lionel Messi",sport:"Soccer",emoji:"⚽"},
+  {slug:"tom-brady",name:"Tom Brady",sport:"American Football",emoji:"🏈"},
+  {slug:"wayne-gretzky",name:"Wayne Gretzky",sport:"Ice Hockey",emoji:"🏒"},
+  {slug:"serena-williams",name:"Serena Williams",sport:"Tennis",emoji:"🎾"},
+  {slug:"tiger-woods",name:"Tiger Woods",sport:"Golf",emoji:"⛳"},
+  {slug:"usain-bolt",name:"Usain Bolt",sport:"Track & Field",emoji:"🏃"},
+  {slug:"michael-phelps",name:"Michael Phelps",sport:"Swimming",emoji:"🏊"},
+  {slug:"muhammad-ali",name:"Muhammad Ali",sport:"Boxing",emoji:"🥊"},
+  {slug:"babe-ruth",name:"Babe Ruth",sport:"Baseball",emoji:"⚾"},
+  {slug:"roger-federer",name:"Roger Federer",sport:"Tennis",emoji:"🎾"},
+  {slug:"michael-schumacher",name:"Michael Schumacher",sport:"Formula 1",emoji:"🏎️"},
+  {slug:"simone-biles",name:"Simone Biles",sport:"Gymnastics",emoji:"🤸"},
+  {slug:"novak-djokovic",name:"Novak Djokovic",sport:"Tennis",emoji:"🎾"},
+  {slug:"pelé",name:"Pelé",sport:"Soccer",emoji:"⚽"},
+  {slug:"rafael-nadal",name:"Rafael Nadal",sport:"Tennis",emoji:"🎾"},
+  {slug:"sachin-tendulkar",name:"Sachin Tendulkar",sport:"Cricket",emoji:"🏏"},
+  {slug:"lebron-james",name:"LeBron James",sport:"Basketball",emoji:"🏀"},
+  {slug:"cristiano-ronaldo",name:"Cristiano Ronaldo",sport:"Soccer",emoji:"⚽"},
+  {slug:"diego-maradona",name:"Diego Maradona",sport:"Soccer",emoji:"⚽"},
+  {slug:"dan-carter",name:"Dan Carter",sport:"Rugby Union",emoji:"🏉"},
+];
+
+var sbClient = null;
+var voteCounts = {};
+var totalVotes = 0;
+var myVote = null;
+var hasVoted = false;
+var isLoggedIn = false;
+var currentUser = null;
+
+// Poll until supabase-js CDN script has loaded, then boot
+(function tryInit(n){
+  if (window.supabase) {
+    sbClient = window.supabase.createClient(SS_URL, SS_KEY);
+    sbClient.auth.getSession().then(function(r){
+      var s = r && r.data && r.data.session;
+      currentUser = s ? s.user : null;
+      isLoggedIn = !!currentUser;
+      console.log('[vote-goat] auth:', isLoggedIn ? 'logged in' : 'not logged in');
+      var notice = document.getElementById('auth-notice');
+      if (notice) notice.style.display = isLoggedIn ? 'none' : 'block';
+      loadVotes().then(function(){
+        return isLoggedIn ? checkMyVote() : Promise.resolve();
+      }).then(function(){
+        renderResults();
+      });
+    }).catch(function(e){
+      console.warn('[vote-goat] getSession error:', e);
+      loadVotes().then(renderResults);
+    });
+  } else if (n < 50) {
+    setTimeout(function(){ tryInit(n+1); }, 100);
+  }
+})(0);
+
+function loadVotes(){
+  return sbClient.from('poll_votes').select('choice').eq('poll_id', POLL_ID)
+    .then(function(r){
+      voteCounts = {};
+      totalVotes = 0;
+      if (r.data) {
+        r.data.forEach(function(row){
+          voteCounts[row.choice] = (voteCounts[row.choice] || 0) + 1;
+          totalVotes++;
+        });
+      }
+      var el = document.getElementById('total-votes');
+      if (el) el.textContent = totalVotes.toLocaleString();
+    }).catch(function(e){ console.warn('[vote-goat] loadVotes error:', e); });
+}
+
+function checkMyVote(){
+  return sbClient.from('poll_votes').select('choice')
+    .eq('poll_id', POLL_ID).eq('user_id', currentUser.id).single()
+    .then(function(r){
+      if (r.data && r.data.choice) {
+        myVote = r.data.choice;
+        hasVoted = true;
+      }
+    }).catch(function(){ /* no vote yet — that's fine */ });
+}
+
+function renderResults(){
+  var sorted = CANDIDATES.slice().sort(function(a,b){
+    return (voteCounts[b.slug]||0)-(voteCounts[a.slug]||0);
+  });
+  var names = ['p1-name','p2-name','p3-name'];
+  var pcts  = ['p1-pct','p2-pct','p3-pct'];
+  sorted.slice(0,3).forEach(function(c,i){
+    var v = voteCounts[c.slug]||0;
+    var pct = totalVotes>0 ? Math.round(v/totalVotes*100) : 0;
+    var el = document.getElementById(names[i]);
+    var ep = document.getElementById(pcts[i]);
+    if (el) el.textContent = c.emoji+' '+c.name;
+    if (ep) ep.textContent = v+' votes ('+pct+'%)';
+  });
+  CANDIDATES.forEach(function(c){
+    var v   = voteCounts[c.slug]||0;
+    var pct = totalVotes>0 ? Math.round(v/totalVotes*100) : 0;
+    var bar  = document.getElementById('bar-'+c.slug);
+    var meta = document.getElementById('meta-'+c.slug);
+    var btn  = document.getElementById('btn-'+c.slug);
+    var card = document.getElementById('card-'+c.slug);
+    if (bar)  bar.style.width = pct+'%';
+    if (meta) meta.textContent = v+' vote'+(v!==1?'s':'')+' · '+pct+'%';
+    if (!btn) return;
+    if (hasVoted) {
+      if (c.slug === myVote) {
+        if (card) card.classList.add('voted-for');
+        btn.textContent = '✓ Your Vote';
+        btn.disabled = true;
+        btn.classList.add('my-vote');
+        var badge = card ? card.querySelector('.voted-badge') : null;
+        if (!badge && card) {
+          badge = document.createElement('div');
+          badge.className = 'voted-badge';
+          badge.textContent = 'YOUR VOTE';
+          card.appendChild(badge);
+        }
+      } else {
+        btn.textContent = 'Voted';
+        btn.disabled = true;
+      }
+    } else if (!isLoggedIn) {
+      btn.textContent = 'Sign in to vote';
+      btn.disabled = true;
+      btn.style.fontSize = '11px';
+    } else {
+      btn.textContent = 'Vote';
+      btn.disabled = false;
+    }
+  });
+}
+
+function castVote(slug){
+  console.log('[vote-goat] castVote:', slug, 'isLoggedIn:', isLoggedIn, 'hasVoted:', hasVoted, 'client:', !!sbClient);
+  if (!isLoggedIn) { window.location.href='auth.html?mode=signup'; return; }
+  if (hasVoted) return;
+  var btn = document.getElementById('btn-'+slug);
+  if (btn) { btn.textContent='Voting…'; btn.disabled=true; }
+  sbClient.from('poll_votes').insert({
+    poll_id: POLL_ID,
+    user_id: currentUser.id,
+    choice: slug
+  }).then(function(r){
+    if (r.error) throw r.error;
+    hasVoted = true;
+    myVote = slug;
+    voteCounts[slug] = (voteCounts[slug]||0)+1;
+    totalVotes++;
+    var el = document.getElementById('total-votes');
+    if (el) el.textContent = totalVotes.toLocaleString();
+    renderResults();
+  }).catch(function(e){
+    console.warn('[vote-goat] castVote error:', e);
+    if (btn) { btn.textContent='Vote'; btn.disabled=false; }
+    var msg = document.getElementById('state-msg');
+    if (msg) msg.textContent = 'Could not save vote: '+e.message;
+  });
+}
+</script>

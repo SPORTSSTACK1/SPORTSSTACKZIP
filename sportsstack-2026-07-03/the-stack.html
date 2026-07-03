@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<title>The Stack – SportsStack</title>
+<meta property="og:title" content="The Stack – SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/the-stack.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--blue:#2563eb;--blue-light:#3b82f6;--green:#22c55e;--green-glow:rgba(34,197,94,.35);--red:#ef4444;--red-glow:rgba(239,68,68,.35);--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);font-family:'Barlow',sans-serif;color:var(--text);min-height:100vh}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.page{max-width:680px;margin:0 auto;padding:20px 16px 60px}
+.site-header{text-align:center;border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px;background:var(--surface)}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,5vw,34px);font-weight:900;letter-spacing:.04em}
+.game-title .hl{color:var(--gold);font-style:italic}
+.game-subtitle{font-size:13px;color:var(--text-muted);margin-top:6px}
+.game-layout{display:flex;gap:12px;align-items:stretch;margin-bottom:12px}
+.game-main{flex:1;display:flex;flex-direction:column;gap:10px}
+.game-main .q-card{margin-bottom:0}
+.tower{display:flex;flex-direction:column-reverse;gap:3px;width:44px;flex-shrink:0}
+.tower-block{flex:1;border-radius:5px;background:var(--surface);border:1px solid var(--border);position:relative;min-height:14px;transition:background .25s,border-color .25s}
+.tower-block.filled{background:var(--gold);border-color:var(--gold)}
+.tower-block.current{background:rgba(245,200,66,.45);border-color:var(--gold);animation:tower-pulse 1.4s ease-in-out infinite}
+.tower-block.checkpoint::after{content:'';position:absolute;left:-8px;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--green)}
+@keyframes tower-pulse{0%,100%{opacity:.5}50%{opacity:1}}
+.go-modal.completed{border-color:var(--gold);box-shadow:0 0 48px rgba(245,200,66,.35)}
+.go-modal.completed .go-title{font-size:26px;color:var(--gold);animation:pulse-gold 1s ease-in-out 3}
+.go-modal.completed .go-score{font-size:88px;color:var(--gold)}
+@keyframes pulse-gold{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.85;transform:scale(1.06)}}
+@keyframes confetti-fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+.q-card{background:var(--surface);border:1px solid var(--border-bright);border-radius:12px;padding:18px 20px;margin-bottom:12px}
+.q-level{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.q-text{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,3.2vw,21px);font-weight:700;line-height:1.35}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.opt-btn{display:flex;align-items:flex-start;gap:8px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;padding:13px 14px;cursor:pointer;transition:all .2s;text-align:left;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,2.4vw,15px);font-weight:700;min-height:54px}
+.opt-btn:hover:not(:disabled){background:rgba(255,255,255,.09);border-color:var(--border-bright)}
+.opt-btn:disabled{cursor:default}
+.opt-label{color:var(--text-dim);flex-shrink:0}
+.opt-btn.correct-opt{background:var(--green-glow);border-color:var(--green)}
+.opt-btn.correct-opt .opt-label{color:var(--green)}
+.opt-btn.wrong-opt{background:var(--red-glow);border-color:var(--red)}
+.opt-btn.wrong-opt .opt-label{color:var(--red)}
+.lifelines{display:flex;gap:8px;margin-bottom:12px}
+.lifeline-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--surface);border:1px solid var(--border-bright);border-radius:50px;padding:10px 8px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,2.2vw,12px);font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text);cursor:pointer;transition:all .2s}
+.lifeline-btn:hover:not(:disabled){border-color:var(--gold)}
+.lifeline-btn.used,.lifeline-btn:disabled{opacity:.3;cursor:default;border-color:var(--border)}
+.crowd-result,.phone-result{background:var(--surface2);border:1px solid var(--border-bright);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:none}
+.crowd-result.show,.phone-result.show{display:block}
+.crowd-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.crowd-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:var(--text-dim);width:14px}
+.crowd-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.crowd-fill{height:100%;background:var(--gold);border-radius:4px}
+.crowd-pct{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;width:36px;text-align:right}
+.phone-text{font-size:13px;color:var(--text-muted);line-height:1.5;font-style:italic}
+.continue-row{display:none;gap:10px}
+.continue-row.show{display:flex}
+.continue-btn,.walkaway-btn{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:14px;border-radius:50px;cursor:pointer;border:none}
+.continue-btn{background:var(--gold);color:var(--bg)}
+.walkaway-btn{background:transparent;color:var(--text);border:1.5px solid var(--border-bright)}
+.rules{margin-top:18px;text-align:center;font-size:12px;color:var(--text-dim);line-height:1.6}
+.game-over-overlay{position:fixed;inset:0;background:rgba(4,8,15,.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.game-over-overlay.show{opacity:1;pointer-events:all}
+.go-modal{background:var(--surface);border:1px solid var(--border-bright);border-radius:16px;padding:32px 28px;text-align:center;max-width:340px;width:90%}
+.go-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.go-score{font-family:'Barlow Condensed',sans-serif;font-size:64px;font-weight:900;color:var(--gold);line-height:1;margin:12px 0 2px}
+.go-score-label{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.go-msg{font-size:14px;color:var(--text-muted);margin-bottom:24px;line-height:1.5}
+.go-btns{display:flex;flex-direction:column;gap:10px}
+.go-btn{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:14px;border-radius:50px;cursor:pointer;border:none}
+.go-btn.primary{background:var(--gold);color:var(--bg)}
+.go-btn.secondary{background:transparent;color:var(--text);border:1.5px solid var(--border-bright)}
+#copied-msg{font-size:12px;color:var(--green);min-height:16px;margin-top:8px}
+@media (max-width:480px){
+  .lifeline-btn{font-size:9px;padding:9px 4px;gap:3px}
+  .opt-btn{padding:11px 10px}
+}
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="page">
+  <header class="site-header">
+    <div class="game-title">THE <span class="hl">STACK</span></div>
+    <div class="game-subtitle">15 questions, getting harder every level &middot; Use your lifelines wisely &middot; How far can you climb?</div>
+  </header>
+
+  <div class="game-layout">
+    <div class="game-main">
+      <div class="q-card">
+        <div class="q-level" id="q-level">Question 1 of 15</div>
+        <div class="q-text" id="q-text">Loading...</div>
+      </div>
+      <div class="opts">
+        <button class="opt-btn" id="opt-0"><span class="opt-label" id="opt-0-label">A)</span><span id="opt-0-text"></span></button>
+        <button class="opt-btn" id="opt-1"><span class="opt-label" id="opt-1-label">B)</span><span id="opt-1-text"></span></button>
+        <button class="opt-btn" id="opt-2"><span class="opt-label" id="opt-2-label">C)</span><span id="opt-2-text"></span></button>
+        <button class="opt-btn" id="opt-3"><span class="opt-label" id="opt-3-label">D)</span><span id="opt-3-text"></span></button>
+      </div>
+    </div>
+    <div class="tower" id="tower"></div>
+  </div>
+
+  <div class="lifelines">
+    <button class="lifeline-btn" id="lifeline-fifty">50:50</button>
+    <button class="lifeline-btn" id="lifeline-crowd">Ask the Crowd</button>
+    <button class="lifeline-btn" id="lifeline-phone">Phone a Friend</button>
+  </div>
+
+  <div class="crowd-result" id="crowd-result">
+    <div class="crowd-bars" id="crowd-bars"></div>
+  </div>
+  <div class="phone-result" id="phone-result">
+    <div class="phone-text" id="phone-text"></div>
+  </div>
+
+  <div class="continue-row" id="continue-row">
+    <button class="walkaway-btn" id="walkaway-btn">Walk Away</button>
+    <button class="continue-btn" id="continue-btn">Continue &rarr;</button>
+  </div>
+
+  <div class="rules">Answer correctly to climb the stack. Get it wrong and your run ends — your score is the highest level you reached. Each lifeline can only be used once.</div>
+</div>
+
+<div class="game-over-overlay" id="game-over-overlay">
+  <div class="go-modal">
+    <div class="go-title" id="go-title">Stack Collapsed!</div>
+    <div class="go-score" id="final-score">0</div>
+    <div class="go-score-label">Level Reached</div>
+    <div class="go-msg" id="go-msg"></div>
+    <div class="go-btns">
+      <button class="go-btn primary" id="play-again-btn">Play Again</button>
+      <button class="go-btn secondary" onclick="shareResult()">Share Result</button>
+    </div>
+    <div id="copied-msg"></div>
+  </div>
+</div>
+
+<script>
+const QUESTION_BANK = {
+  1: [
+    {q:"How many players are on a football team on the pitch at one time?", o:["9","10","11","12"], c:2},
+    {q:"How many points is a touchdown worth in American football, before the extra point?", o:["3","5","6","7"], c:2},
+    {q:"In which sport can a player score a 'six'?", o:["Baseball","Cricket","Hockey","Rugby"], c:1},
+    {q:"What colour card means a player is sent off in football?", o:["Yellow","Red","Blue","Green"], c:1},
+    {q:"How many holes are played in a standard round of golf?", o:["9","18","24","36"], c:1},
+    {q:"How many quarters are there in a basketball game?", o:["2","3","4","5"], c:2},
+    {q:"In tennis, how many sets must a man win to win a best-of-five match?", o:["2","3","4","5"], c:1},
+    {q:"How many players are on a baseball team's starting batting lineup?", o:["8","9","10","11"], c:1},
+    {q:"What is the standard distance of a marathon, in miles (approx)?", o:["20","23","26","30"], c:2},
+    {q:"In golf, what term describes the target number of strokes for a hole?", o:["Birdie","Par","Bogey","Eagle"], c:1},
+    {q:"How many periods are there in a standard ice hockey game?", o:["2","3","4","5"], c:1},
+    {q:"In Australian Rules Football, how many points is a goal worth?", o:["1","3","6","10"], c:2},
+    {q:"How many players are on the ice for one ice hockey team, including the goalie?", o:["5","6","7","8"], c:1},
+    {q:"What is the standard length of an Olympic swimming pool, in metres?", o:["25","50","100","75"], c:1},
+    {q:"What is the approximate length of a marathon, in kilometres?", o:["21","32","42","50"], c:2},
+    {q:"How many players are on the field for one team in rugby league?", o:["11","13","15","7"], c:1},
+    {q:"In a best-of-five-set tennis match, how many sets does a player need to win?", o:["2","3","4","5"], c:1},
+    {q:"What colour is the cue ball in snooker?", o:["Black","Red","White","Yellow"], c:2}
+,
+    {q:"How many players are on a cricket team?", o:["9","10","11","12"], c:2},
+    {q:"What is the term for the starting area of each hole in golf?", o:["Green","Fairway","Tee","Rough"], c:2},
+    {q:"What is the maximum number of clubs a golfer can carry in their bag?", o:["12","14","16","10"], c:1},
+    {q:"Which sport uses a shuttlecock?", o:["Squash","Badminton","Table Tennis","Tennis"], c:1},
+    {q:"In which sport would a player perform a 'slam dunk'?", o:["Volleyball","Basketball","Tennis","Badminton"], c:1},
+    {q:"How many players are on the field for one team in American football?", o:["9","10","11","12"], c:2}
+  ],
+  2: [
+    {q:"How long is a standard football match, excluding stoppage time?", o:["80 minutes","90 minutes","100 minutes","120 minutes"], c:1},
+    {q:"In basketball, how many points is a free throw worth?", o:["1","2","3","4"], c:0},
+    {q:"How many players from each team are on court during basketball play?", o:["4","5","6","7"], c:1},
+    {q:"What shape is a rugby ball?", o:["Round","Oval","Square","Triangular"], c:1},
+    {q:"In tennis, what is the term for a score of zero?", o:["Nil","Love","Zero","Null"], c:1},
+    {q:"How many rings are on the Olympic flag?", o:["4","5","6","7"], c:1},
+    {q:"How many players are on a netball team on court at one time, for each side?", o:["5","6","7","9"], c:2},
+    {q:"In swimming, what is the stroke swum on your back called?", o:["Butterfly","Freestyle","Backstroke","Breaststroke"], c:2},
+    {q:"Which trophy is awarded to the winner of The Open Championship in golf?", o:["Claret Jug","Green Jacket","Wanamaker Trophy","FedEx Cup"], c:0},
+    {q:"How many rounds are typically scheduled in a championship boxing fight?", o:["10","12","15","8"], c:1},
+    {q:"What term describes finishing a hole in the same number of strokes as par?", o:["Birdie","Bogey","Even par","Eagle"], c:2},
+    {q:"What distance is the 'metric mile' in athletics?", o:["1000m","1500m","2000m","1600m"], c:1},
+    {q:"In a standard 5-on-5 ice hockey situation, how many skaters per team are on the ice (excluding goalies)?", o:["4","5","6","3"], c:1},
+    {q:"In rugby league, how many points is a try worth?", o:["3","4","5","6"], c:1},
+    {q:"How many clubs currently compete in the AFL?", o:["16","17","18","20"], c:2},
+    {q:"What is the maximum number of clubs a golfer can carry in their bag during a round?", o:["12","14","16","10"], c:1},
+    {q:"In darts, what type of segment must a player hit to finish (win) a leg?", o:["Single","Triple","Double","Bullseye only"], c:2},
+    {q:"In Australian Rules Football, how many points is a behind worth?", o:["1","2","3","6"], c:0}
+,
+    {q:"How many points is a try worth in rugby league, before the conversion?", o:["3","4","5","6"], c:1},
+    {q:"In snooker, what colour ball is worth 7 points?", o:["Blue","Pink","Black","Brown"], c:2},
+    {q:"How many points is a successful field goal worth in American football?", o:["2","3","4","6"], c:1},
+    {q:"How many players are on a netball team on court for each side?", o:["5","6","7","9"], c:2},
+    {q:"How many rounds are in a standard professional boxing title fight?", o:["10","12","15","8"], c:1},
+    {q:"How many players are in the pool for each side in a water polo team?", o:["6","7","8","9"], c:1}
+  ],
+  3: [
+    {q:"Which country is often nicknamed the 'Home of Football'?", o:["Brazil","Germany","England","Spain"], c:2},
+    {q:"How many Grand Slam tennis tournaments are there each year?", o:["2","3","4","5"], c:2},
+    {q:"In Formula 1, how many points does a race winner currently receive?", o:["20","25","30","10"], c:1},
+    {q:"In cricket, how many runs make up a 'century' for a batter?", o:["50","100","150","200"], c:1},
+    {q:"Which nation won the first ever FIFA World Cup in 1930?", o:["Brazil","Argentina","Uruguay","Italy"], c:2},
+    {q:"How many players make up a rugby union team on the pitch?", o:["11","13","15","7"], c:2},
+    {q:"Which sport uses the terms 'love', 'deuce' and 'advantage'?", o:["Squash","Badminton","Tennis","Table Tennis"], c:2},
+    {q:"How many players are on an ice hockey team on the ice at once, including the goalie?", o:["5","6","7","8"], c:1},
+    {q:"In which sport would a 'slam dunk' be performed?", o:["Volleyball","Basketball","Netball","Handball"], c:1},
+    {q:"How many points is a try worth in rugby league?", o:["3","4","5","6"], c:1},
+    {q:"In which country was the sport of cricket invented?", o:["Australia","India","England","South Africa"], c:2},
+    {q:"In AFL, what is it called when the ball is kicked through the outer posts, worth one point?", o:["Goal","Behind","Mark","Free kick"], c:1},
+    {q:"What trophy is awarded to the winning team of the AFL Grand Final?", o:["Premiership Cup","Brownlow Medal","Norm Smith Medal","Coleman Medal"], c:0},
+    {q:"How many players make up a cricket team in a Test match?", o:["10","11","12","9"], c:1},
+    {q:"What is the term for a batter being dismissed without scoring any runs in cricket?", o:["Love","Duck","Golden","Blank"], c:1},
+    {q:"In golf, what is the term for completing a hole in the expected number of strokes?", o:["Par","Even","Standard","Level"], c:0},
+    {q:"How many halves make up a rugby league match?", o:["1","2","3","4"], c:1},
+    {q:"In Formula 1 qualifying, what is the name of the final, top-10 session?", o:["Q1","Q2","Q3","Pole Session"], c:2}
+,
+    {q:"Which sport's biggest rivalry series is called 'The Ashes'?", o:["Rugby","Cricket","Football","Tennis"], c:1},
+    {q:"How many players are on an ice hockey team on the ice per side?", o:["5","6","7","4"], c:1},
+    {q:"In golf, how many strokes under par is an 'eagle'?", o:["1","2","3","4"], c:1},
+    {q:"Which country's top football division is known as 'La Liga'?", o:["Italy","Spain","Portugal","France"], c:1},
+    {q:"A men's Grand Slam tennis final is played as best of how many sets?", o:["Best of 3","Best of 5","Best of 7","Best of 9"], c:1},
+    {q:"In Australian Rules Football, how many points is a 'behind' worth?", o:["0","1","2","3"], c:1}
+  ],
+  4: [
+    {q:"Who is the all-time top scorer in Premier League history?", o:["Wayne Rooney","Alan Shearer","Thierry Henry","Harry Kane"], c:1},
+    {q:"How many teams compete in the Six Nations rugby championship?", o:["4","5","6","8"], c:2},
+    {q:"In golf, what term describes a score of one under par on a hole?", o:["Bogey","Birdie","Eagle","Albatross"], c:1},
+    {q:"Which NBA player is nicknamed 'King James'?", o:["Kevin Durant","LeBron James","Stephen Curry","Kobe Bryant"], c:1},
+    {q:"How many FIFA World Cups has Brazil won?", o:["4","5","6","3"], c:1},
+    {q:"What is the term for scoring three goals in a single football match?", o:["Brace","Treble","Hat-trick","Triple"], c:2},
+    {q:"In which Australian city is the AFL Grand Final traditionally held?", o:["Sydney","Adelaide","Melbourne","Perth"], c:2},
+    {q:"Which golfer is nicknamed 'The Golden Bear'?", o:["Arnold Palmer","Jack Nicklaus","Gary Player","Tom Watson"], c:1},
+    {q:"How many tournaments make up tennis's 'calendar Grand Slam' in one year?", o:["3","4","5","6"], c:1},
+    {q:"Which boxing weight division sits between 147 and 160 pounds?", o:["Featherweight","Welterweight","Middleweight","Light Heavyweight"], c:2},
+    {q:"Which country won the 2022 Rugby League World Cup?", o:["England","Australia","New Zealand","Tonga"], c:1},
+    {q:"In Formula 1, which flag signals the end of a session or race?", o:["Red","Yellow","Chequered","Blue"], c:2},
+    {q:"Which trophy do NHL teams compete for each season?", o:["Vince Lombardi Trophy","Stanley Cup","Larry O\u2019Brien Trophy","Commissioner\u2019s Trophy"], c:1},
+    {q:"Who holds the AFL record for the most career goals kicked?", o:["Tony Lockett","Jason Dunstall","Gordon Coventry","Lance Franklin"], c:0},
+    {q:"Which club has won the most premierships in Australian rugby league history?", o:["South Sydney Rabbitohs","Sydney Roosters","Parramatta Eels","Brisbane Broncos"], c:0},
+    {q:"What surface are the courts at the French Open played on?", o:["Grass","Hard court","Clay","Carpet"], c:2},
+    {q:"Which sporting rivalry, contested between England and Australia, is known as \u2018The Ashes\u2019?", o:["Rugby","Cricket","Football","Hockey"], c:1},
+    {q:"How many points is a successful drop goal worth in rugby union?", o:["1","2","3","5"], c:2}
+,
+    {q:"Which NFL team is nicknamed 'America's Team'?", o:["Dallas Cowboys","New England Patriots","Green Bay Packers","Pittsburgh Steelers"], c:0},
+    {q:"Which country won the UEFA Euro 2024 championship?", o:["England","Spain","France","Germany"], c:1},
+    {q:"What term describes a golf score of two strokes over par?", o:["Bogey","Double Bogey","Triple Bogey","Birdie"], c:1},
+    {q:"Which NBA team is the only Canadian franchise currently in the league?", o:["Toronto Raptors","Toronto Maple Leafs","Vancouver Grizzlies","Montreal Canadiens"], c:0},
+    {q:"How many FIFA World Cups had Argentina won as of the 2022 final?", o:["2","3","4","1"], c:1},
+    {q:"Which English club is nicknamed 'The Gunners'?", o:["Tottenham","Arsenal","Chelsea","West Ham"], c:1}
+  ],
+  5: [
+    {q:"Which nation has won the most Cricket World Cups?", o:["England","India","Australia","West Indies"], c:2},
+    {q:"Which NFL quarterback has won the most Super Bowl titles?", o:["Joe Montana","Tom Brady","Peyton Manning","Aaron Rodgers"], c:1},
+    {q:"Which country hosted the 2014 FIFA World Cup?", o:["Brazil","South Africa","Russia","Qatar"], c:0},
+    {q:"In rugby union, how many points is a try worth?", o:["3","4","5","7"], c:2},
+    {q:"Which club has won the most English top-flight titles overall?", o:["Manchester United","Liverpool","Arsenal","Chelsea"], c:0},
+    {q:"Which NBA team did Michael Jordan win all six of his championships with?", o:["Washington Wizards","Chicago Bulls","Miami Heat","LA Lakers"], c:1},
+    {q:"Which club holds the record for the most premierships in Australian rugby league history?", o:["South Sydney Rabbitohs","Sydney Roosters","St George Dragons","Melbourne Storm"], c:0},
+    {q:"Which boxer famously declared 'I am the greatest' before becoming world champion?", o:["Mike Tyson","Muhammad Ali","George Foreman","Joe Frazier"], c:1},
+    {q:"Which swimmer has won more Olympic gold medals than any other athlete in history?", o:["Mark Spitz","Ian Thorpe","Michael Phelps","Katie Ledecky"], c:2},
+    {q:"Which country has won the Ashes cricket series more times than any other?", o:["England","Australia","Tied equally","South Africa"], c:1},
+    {q:"Which NBA team did Magic Johnson play his entire career for?", o:["Boston Celtics","LA Lakers","Detroit Pistons","Philadelphia 76ers"], c:1},
+    {q:"How many players take the court per side in a netball match?", o:["5","6","7","8"], c:2},
+    {q:"Which country won the 2022 FIFA World Cup?", o:["France","Argentina","Brazil","Croatia"], c:1},
+    {q:"Which driver won the Formula 1 World Drivers\u2019 Championship in 2021?", o:["Lewis Hamilton","Max Verstappen","Valtteri Bottas","Charles Leclerc"], c:1},
+    {q:"Which NBA team did Larry Bird play his entire career for?", o:["Boston Celtics","LA Lakers","Indiana Pacers","Detroit Pistons"], c:0},
+    {q:"In rugby union, how many points is a successful conversion worth?", o:["1","2","3","4"], c:1},
+    {q:"Who won the men\u2019s singles title at Wimbledon in 2023?", o:["Carlos Alcaraz","Novak Djokovic","Daniil Medvedev","Jannik Sinner"], c:0},
+    {q:"Which country won the 2023 ODI Cricket World Cup, defeating India in the final?", o:["England","Australia","South Africa","New Zealand"], c:1}
+,
+    {q:"Which nation has won the most Rugby League World Cups?", o:["England","New Zealand","Australia","Papua New Guinea"], c:2},
+    {q:"Which golfer is known as 'The Golden Bear'?", o:["Arnold Palmer","Jack Nicklaus","Gary Player","Tom Watson"], c:1},
+    {q:"How many Test matches make up a standard Ashes series?", o:["3","4","5","6"], c:2},
+    {q:"The LA Lakers franchise was originally based in which city?", o:["Minneapolis","Detroit","Chicago","San Francisco"], c:0},
+    {q:"What nationality was F1 legend Ayrton Senna?", o:["Argentine","Brazilian","Portuguese","Spanish"], c:1},
+    {q:"In which city is Augusta National Golf Club, home of The Masters?", o:["Augusta, Georgia","Augusta, Maine","Pebble Beach","Orlando"], c:0}
+  ],
+  6: [
+    {q:"Who holds the record for most goals in a single FIFA World Cup tournament, with 13?", o:["Pelé","Ronaldo","Just Fontaine","Miroslav Klose"], c:2},
+    {q:"Which team has won the most Formula 1 Constructors' Championships?", o:["McLaren","Williams","Ferrari","Mercedes"], c:2},
+    {q:"Which nation has won the most Rugby World Cups?", o:["New Zealand","South Africa","Australia","England"], c:1},
+    {q:"Who is the all-time leading scorer in NBA regular season history?", o:["Kareem Abdul-Jabbar","LeBron James","Karl Malone","Kobe Bryant"], c:1},
+    {q:"Which nation won the first ever Cricket World Cup in 1975?", o:["Australia","West Indies","England","India"], c:1},
+    {q:"Which NFL team drafted Tom Brady in the sixth round of the 2000 NFL Draft?", o:["New England Patriots","Cleveland Browns","San Francisco 49ers","Indianapolis Colts"], c:0},
+    {q:"Which country has won the most Rugby League World Cups?", o:["England","New Zealand","Australia","Tonga"], c:2},
+    {q:"Since the 2022-23 season, how many substitutes can Premier League teams use in a match?", o:["3","5","7","9"], c:1},
+    {q:"Which swimmer won a record eight gold medals at a single Olympics, in Beijing 2008?", o:["Ian Thorpe","Ryan Lochte","Michael Phelps","Mark Spitz"], c:2},
+    {q:"In cricket, what is it called when a bowler takes three wickets with three consecutive deliveries?", o:["Hat-trick","Triple strike","Maiden over","Golden duck"], c:0},
+    {q:"Which NBA team set the all-time regular season wins record by going 73-9 in 2015-16?", o:["Golden State Warriors","Chicago Bulls","LA Lakers","Boston Celtics"], c:0},
+    {q:"Which country won the 2023 Women's FIFA World Cup?", o:["USA","England","Spain","Australia"], c:2},
+    {q:"Which club won the 2023 AFL Grand Final?", o:["Collingwood","Brisbane Lions","Carlton","Geelong"], c:0},
+    {q:"Which ice hockey legend is widely known as \u2018The Great One\u2019?", o:["Wayne Gretzky","Bobby Orr","Mario Lemieux","Gordie Howe"], c:0},
+    {q:"Which golfer has won the most Masters Tournament green jackets?", o:["Jack Nicklaus","Tiger Woods","Arnold Palmer","Phil Mickelson"], c:0},
+    {q:"In which city are the Wimbledon Championships held?", o:["Manchester","London","Birmingham","Edinburgh"], c:1},
+    {q:"Which position typically wears the number 7 jersey in rugby league?", o:["Hooker","Halfback","Fullback","Lock"], c:1},
+    {q:"How many Super Bowls have the Pittsburgh Steelers won?", o:["5","6","4","7"], c:1}
+,
+    {q:"Which country won the 2019 Cricket World Cup final on a boundary countback after a tied Super Over?", o:["England","Australia","India","South Africa"], c:0},
+    {q:"Which NFL franchise relocated from St. Louis to Los Angeles in 2016?", o:["Raiders","Chargers","Rams","49ers"], c:2},
+    {q:"Which swimmer is the most decorated Olympian of all time with 23 gold medals?", o:["Mark Spitz","Michael Phelps","Carl Lewis","Usain Bolt"], c:1},
+    {q:"Who won the famous 'Rumble in the Jungle' boxing match in 1974?", o:["Muhammad Ali","George Foreman","Joe Frazier","Ken Norton"], c:0},
+    {q:"In which sport is the Stanley Cup awarded?", o:["Ice Hockey","Basketball","Baseball","Lacrosse"], c:0},
+    {q:"Which nation won the first ever Rugby League World Cup in 1954?", o:["Great Britain","Australia","France","New Zealand"], c:0}
+  ],
+  7: [
+    {q:"Which footballer has won the most Ballon d'Or awards, with 8?", o:["Cristiano Ronaldo","Lionel Messi","Michel Platini","Johan Cruyff"], c:1},
+    {q:"In which year did the NBA introduce the three-point line?", o:["1973","1979","1985","1992"], c:1},
+    {q:"Which club has won the most European Cup / Champions League titles?", o:["AC Milan","Bayern Munich","Real Madrid","Liverpool"], c:2},
+    {q:"Who is the only boxer to retire as undefeated heavyweight champion of the world?", o:["Mike Tyson","Rocky Marciano","Muhammad Ali","Lennox Lewis"], c:1},
+    {q:"Which nation won the inaugural Rugby World Cup in 1987?", o:["Australia","New Zealand","South Africa","France"], c:1},
+    {q:"What was the score when Germany beat Brazil in the 2014 World Cup semi-final?", o:["5-1","6-1","7-1","8-0"], c:2},
+    {q:"Which club won the first ever NRL premiership in 1998?", o:["Brisbane Broncos","Canterbury Bulldogs","Sydney Roosters","Melbourne Storm"], c:0},
+    {q:"Which country has won the most medals overall at the Commonwealth Games?", o:["England","Australia","Canada","India"], c:1},
+    {q:"In golf's Ryder Cup, which two regions compete against each other?", o:["USA vs Europe","USA vs World","Europe vs Asia","USA vs UK"], c:0},
+    {q:"Which NFL stadium is nicknamed 'The Frozen Tundra'?", o:["Soldier Field","Lambeau Field","Arrowhead Stadium","Heinz Field"], c:1},
+    {q:"Which swimmer won five individual Olympic golds across the 2016 and 2020 Games in distance freestyle?", o:["Katie Ledecky","Missy Franklin","Federica Pellegrini","Sarah Sjostrom"], c:0},
+    {q:"In which decade did the VFL rebrand as the AFL?", o:["1980s","1990s","1970s","2000s"], c:1},
+    {q:"Who holds the record for the most Grand Slam singles titles in men\u2019s tennis history?", o:["Roger Federer","Rafael Nadal","Novak Djokovic","Pete Sampras"], c:2},
+    {q:"In which year did Sydney last host the Summer Olympic Games?", o:["1996","2000","2004","2008"], c:1},
+    {q:"Which Premier League club is nicknamed \u2018The Red Devils\u2019?", o:["Manchester United","Liverpool","Arsenal","Nottingham Forest"], c:0},
+    {q:"Michael Schumacher won five consecutive Drivers\u2019 Championships with which team?", o:["Benetton","Ferrari","Mercedes","McLaren"], c:1},
+    {q:"Which country won the Rugby League World Cup in 2017?", o:["Australia","England","New Zealand","Tonga"], c:0},
+    {q:"Which AFL award is given to the league\u2019s best and fairest player each season?", o:["Coleman Medal","Brownlow Medal","Norm Smith Medal","Madden Medal"], c:1}
+,
+    {q:"Which tennis Grand Slam is played on clay courts?", o:["Wimbledon","US Open","French Open","Australian Open"], c:2},
+    {q:"Which country won the 2022 FIFA World Cup, held in Qatar?", o:["France","Argentina","Brazil","Croatia"], c:1},
+    {q:"Which NBA player is nicknamed \u2018The Mailman\u2019?", o:["Karl Malone","Charles Barkley","Patrick Ewing","Dominique Wilkins"], c:0},
+    {q:"Which team selected Michael Jordan with the 3rd overall pick in the 1984 NBA Draft?", o:["Chicago Bulls","Portland Trail Blazers","Houston Rockets","Philadelphia 76ers"], c:0},
+    {q:"In which sport would a competitor perform a 'triple axel'?", o:["Gymnastics","Figure Skating","Diving","Skiing"], c:1},
+    {q:"Which NFL team is based in Foxborough, Massachusetts?", o:["New England Patriots","Boston Celtics","New York Jets","Buffalo Bills"], c:0}
+  ],
+  8: [
+    {q:"Who scored the fastest hat-trick in Premier League history?", o:["Sergio Agüero","Sadio Mané","Robbie Fowler","Alan Shearer"], c:1},
+    {q:"Who holds the record for most points in a single NBA game, with 100?", o:["Kobe Bryant","Wilt Chamberlain","Michael Jordan","David Thompson"], c:1},
+    {q:"Which horse won the Grand National a record three times?", o:["Red Rum","Tiger Roll","Desert Orchid","Kauto Star"], c:0},
+    {q:"Which nation won the 2024 Men's T20 Cricket World Cup?", o:["England","India","Australia","South Africa"], c:1},
+    {q:"Who holds the record for the most career Test cricket runs?", o:["Sachin Tendulkar","Ricky Ponting","Jacques Kallis","Brian Lara"], c:0},
+    {q:"Which nation has won the most Olympic gold medals of all time?", o:["USA","Soviet Union","China","Great Britain"], c:0},
+    {q:"Which nation won the first Rugby League World Cup in 1954?", o:["Australia","Great Britain","France","New Zealand"], c:1},
+    {q:"Which country has won the most medals overall at the Winter Olympics?", o:["Norway","USA","Germany","Russia/Soviet Union"], c:0},
+    {q:"Which tennis player completed the 'Golden Slam' (all four majors plus Olympic gold) in 1988?", o:["Steffi Graf","Martina Navratilova","Monica Seles","Serena Williams"], c:0},
+    {q:"Which format of international cricket was introduced first?", o:["One Day Internationals","Test cricket","Same year","T20"], c:1},
+    {q:"Which NBA player has won the most Defensive Player of the Year awards?", o:["Dikembe Mutombo","Ben Wallace","Rudy Gobert","Dwight Howard"], c:2},
+    {q:"Which country won the 2023 men's Cricket World Cup final?", o:["India","Australia","England","New Zealand"], c:1},
+    {q:"Which country has won the most Rugby League World Cup titles?", o:["Australia","New Zealand","England","Great Britain"], c:0},
+    {q:"Who holds the record for the most career points in NHL history?", o:["Wayne Gretzky","Mario Lemieux","Gordie Howe","Jaromir Jagr"], c:0},
+    {q:"Which country won the 2019 Rugby Union World Cup?", o:["England","South Africa","New Zealand","Wales"], c:1},
+    {q:"How many players are on the field for each team in an AFL match?", o:["15","16","18","20"], c:2},
+    {q:"Which golfer equalled Sam Snead\u2019s record of 82 PGA Tour wins in 2019?", o:["Tiger Woods","Phil Mickelson","Rory McIlroy","Dustin Johnson"], c:0},
+    {q:"Which is the heaviest weight division in professional boxing?", o:["Cruiserweight","Heavyweight","Super-heavyweight","Light-heavyweight"], c:1}
+,
+    {q:"Which NBA player is known as 'The Black Mamba'?", o:["Kobe Bryant","Michael Jordan","Allen Iverson","Tracy McGrady"], c:0},
+    {q:"Which nation won the 2021/2022 Rugby League World Cup, beating Samoa in the final?", o:["Australia","England","New Zealand","Tonga"], c:0},
+    {q:"Which F1 driver won a record-equalling 7th World Championship in 2020?", o:["Lewis Hamilton","Max Verstappen","Michael Schumacher","Sebastian Vettel"], c:0},
+    {q:"Which cricketer is known as 'The Don', regarded by many as the greatest batter ever?", o:["Don Bradman","Brian Lara","Sachin Tendulkar","Viv Richards"], c:0},
+    {q:"Which boxer is nicknamed 'Iron Mike'?", o:["Mike Tyson","Evander Holyfield","George Foreman","Lennox Lewis"], c:0},
+    {q:"Which Premier League club is nicknamed 'The Reds' and plays at Anfield?", o:["Liverpool","Manchester United","Arsenal","Nottingham Forest"], c:0}
+  ],
+  9: [
+    {q:"Which footballer holds the record for most career goals across club and country combined?", o:["Lionel Messi","Cristiano Ronaldo","Pelé","Romário"], c:1},
+    {q:"What is the highest individual score ever recorded in Test cricket?", o:["375","400","417","365"], c:1},
+    {q:"Which team won the first ever Super Bowl in 1967?", o:["Kansas City Chiefs","Green Bay Packers","Oakland Raiders","Dallas Cowboys"], c:1},
+    {q:"Which driver holds the record for the most Formula 1 race wins of all time?", o:["Michael Schumacher","Lewis Hamilton","Sebastian Vettel","Alain Prost"], c:1},
+    {q:"What is the maximum possible break in snooker?", o:["147","155","140","180"], c:0},
+    {q:"Which boxer was nicknamed 'The Greatest'?", o:["Mike Tyson","Muhammad Ali","Sugar Ray Leonard","Joe Frazier"], c:1},
+    {q:"Which Formula 1 driver holds the record for the most career podium finishes?", o:["Michael Schumacher","Lewis Hamilton","Sebastian Vettel","Alain Prost"], c:1},
+    {q:"Which boxer did Muhammad Ali defeat to win his first world heavyweight title in 1964?", o:["Joe Frazier","George Foreman","Sonny Liston","Floyd Patterson"], c:2},
+    {q:"Which country has won gold in men's Rugby Sevens at both the 2016 and 2020 Olympics?", o:["Fiji","New Zealand","South Africa","Great Britain"], c:0},
+    {q:"Which NBA player holds the record for most career steals?", o:["Michael Jordan","John Stockton","Gary Payton","Magic Johnson"], c:1},
+    {q:"How many players make up a starting offensive lineup in American football?", o:["9","10","11","12"], c:2},
+    {q:"Which country has won the most Cricket World Cup titles overall?", o:["Australia","England","India","West Indies"], c:0},
+    {q:"Which NHL team has won the most Stanley Cups in history?", o:["Montreal Canadiens","Toronto Maple Leafs","Detroit Red Wings","Boston Bruins"], c:0},
+    {q:"Which country has won the most Rugby Championship (formerly Tri-Nations) titles?", o:["New Zealand","South Africa","Australia","Argentina"], c:0},
+    {q:"Which NBA player holds the record for the most career playoff points?", o:["Michael Jordan","LeBron James","Kobe Bryant","Kareem Abdul-Jabbar"], c:1},
+    {q:"In which year did the VFL officially rebrand as the AFL?", o:["1990","1985","1995","2000"], c:0},
+    {q:"Which country won the first ever State of Origin rugby league match in 1980?", o:["Queensland","New South Wales","Victoria","Western Australia"], c:0},
+    {q:"Which country has won the most medals overall in Commonwealth Games history?", o:["Australia","England","Canada","India"], c:0}
+,
+    {q:"Which country won the 2003 Rugby World Cup, beating Australia in extra time?", o:["England","New Zealand","South Africa","France"], c:0},
+    {q:"Which NBA player is nicknamed 'The Greek Freak'?", o:["Giannis Antetokounmpo","Nikola Jokic","Joel Embiid","Luka Doncic"], c:0},
+    {q:"Which country won the 2023 Cricket World Cup, held in India?", o:["India","Australia","England","New Zealand"], c:1},
+    {q:"Which F1 circuit is famous for its 'Eau Rouge' corner?", o:["Monza","Spa-Francorchamps","Silverstone","Suzuka"], c:1},
+    {q:"Which sport features a competition called 'The Ryder Cup'?", o:["Golf","Tennis","Cricket","Rugby"], c:0},
+    {q:"Which AFL club is nicknamed the 'Magpies'?", o:["Carlton","Collingwood","Essendon","Richmond"], c:1}
+  ],
+  10: [
+    {q:"Who holds the Premier League record for most goals in a 38-game season?", o:["Erling Haaland","Alan Shearer","Mohamed Salah","Thierry Henry"], c:0},
+    {q:"Which nation has won the most Davis Cup titles in tennis?", o:["USA","Australia","France","Spain"], c:0},
+    {q:"Which NBA franchise has won the most championships of all time?", o:["Boston Celtics","LA Lakers","Chicago Bulls","Golden State Warriors"], c:0},
+    {q:"What is the highest score possible from a single dart?", o:["50","60","57","25"], c:1},
+    {q:"Who is cricket's all-time leading wicket-taker in Test history?", o:["Shane Warne","Muttiah Muralitharan","Anil Kumble","James Anderson"], c:1},
+    {q:"Which NFL player holds the record for most career touchdown passes?", o:["Tom Brady","Peyton Manning","Drew Brees","Aaron Rodgers"], c:0},
+    {q:"Which country has won the most medals overall at the Summer Olympics throughout history?", o:["USA","Soviet Union","China","Great Britain"], c:0},
+    {q:"Which NBA player holds the record for most career games played?", o:["Robert Parish","Vince Carter","LeBron James","Kareem Abdul-Jabbar"], c:2},
+    {q:"Which country has won the most Olympic gold medals in men's ice hockey?", o:["Canada","USA","Soviet Union/Russia","Sweden"], c:0},
+    {q:"Which golfer holds the record for the most major championship wins by a left-handed player?", o:["Phil Mickelson","Bubba Watson","Mike Weir","Bob Charles"], c:0},
+    {q:"Which player holds the record for most NRL games played in history?", o:["Cameron Smith","Darren Lockyer","Brad Fittler","Andrew Johns"], c:0},
+    {q:"Which Formula 1 circuit is nicknamed the 'Temple of Speed'?", o:["Monza","Spa-Francorchamps","Silverstone","Suzuka"], c:0},
+    {q:"Which trophy is awarded to the NHL\u2019s regular season Most Valuable Player?", o:["Hart Trophy","Norris Trophy","Vezina Trophy","Calder Trophy"], c:0},
+    {q:"Which trophy is awarded to the AFL\u2019s leading goalkicker each season?", o:["Brownlow Medal","Coleman Medal","Norm Smith Medal","Doig Medal"], c:1},
+    {q:"Who holds the record for the most individual Olympic gold medals won by any athlete?", o:["Michael Phelps","Usain Bolt","Carl Lewis","Larisa Latynina"], c:0},
+    {q:"How many clubs compete in the English Premier League?", o:["18","20","22","24"], c:1},
+    {q:"Which tennis player has won the most Australian Open men\u2019s singles titles in the Open Era?", o:["Novak Djokovic","Roger Federer","Roy Emerson","Rafael Nadal"], c:0},
+    {q:"Which NHL trophy is awarded to the playoffs\u2019 Most Valuable Player?", o:["Hart Trophy","Conn Smythe Trophy","Vezina Trophy","Selke Trophy"], c:1}
+,
+    {q:"Which footballer holds the record for most international goals scored for any men's national team?", o:["Cristiano Ronaldo","Lionel Messi","Ali Daei","Romelu Lukaku"], c:0},
+    {q:"Which NBA player holds the record for most three-pointers made in league history?", o:["Ray Allen","Stephen Curry","James Harden","Klay Thompson"], c:1},
+    {q:"Which F1 driver holds the record for the most career podium finishes?", o:["Michael Schumacher","Lewis Hamilton","Sebastian Vettel","Alain Prost"], c:1},
+    {q:"Which boxer handed Mike Tyson a shock defeat in 1990 in one of sport's biggest upsets?", o:["Buster Douglas","Evander Holyfield","Lennox Lewis","Riddick Bowe"], c:0},
+    {q:"Which tennis player holds the record for most career Grand Slam singles titles among men, with 24?", o:["Roger Federer","Rafael Nadal","Novak Djokovic","Pete Sampras"], c:2},
+    {q:"Which team won Super Bowl LVIII, played in February 2024?", o:["Kansas City Chiefs","San Francisco 49ers","Baltimore Ravens","Detroit Lions"], c:0}
+  ],
+  11: [
+    {q:"How many Formula 1 Drivers' Championships has Lewis Hamilton won?", o:["6","7","8","5"], c:1},
+    {q:"Which golfer has won the most men's Major championships in history?", o:["Tiger Woods","Jack Nicklaus","Arnold Palmer","Rory McIlroy"], c:1},
+    {q:"Which club won the first ever Premier League title in 1992-93?", o:["Arsenal","Manchester United","Blackburn Rovers","Liverpool"], c:1},
+    {q:"What is the standard diameter of a basketball hoop, in inches?", o:["16","18","20","24"], c:1},
+    {q:"Which nation has won the most Olympic gold medals in athletics history?", o:["USA","Kenya","Jamaica","Soviet Union"], c:0},
+    {q:"Which NFL team has appeared in the most Super Bowls?", o:["New England Patriots","Dallas Cowboys","Pittsburgh Steelers","Denver Broncos"], c:0},
+    {q:"Which AFL player holds the record for most career goals kicked?", o:["Tony Lockett","Gordon Coventry","Jason Dunstall","Lance Franklin"], c:0},
+    {q:"Which NFL quarterback has thrown the most career interceptions?", o:["Brett Favre","Tom Brady","Peyton Manning","Vinny Testaverde"], c:0},
+    {q:"Which country has won the most medals overall at the World Athletics Championships?", o:["USA","Russia","Kenya","Jamaica"], c:0},
+    {q:"Which golfer holds the record for the most wins at The Open Championship?", o:["Tom Watson","Harry Vardon","Tiger Woods","Jack Nicklaus"], c:1},
+    {q:"Which boxer retired with a perfect 50-0 professional record in 2017?", o:["Floyd Mayweather Jr","Andre Ward","Wladimir Klitschko","Terence Crawford"], c:0},
+    {q:"Which country has won the most Olympic gold medals in men's basketball?", o:["USA","Soviet Union","Argentina","Spain"], c:0},
+    {q:"Which country has won the most medals in Winter Olympics history?", o:["Norway","USA","Germany","Soviet Union/Russia"], c:0},
+    {q:"Which player has scored the most international goals for any men\u2019s national football team in history?", o:["Cristiano Ronaldo","Lionel Messi","Ali Daei","Romelu Lukaku"], c:0},
+    {q:"Which club won the first ever NRL Grand Final in 1998?", o:["Brisbane Broncos","Canterbury Bulldogs","Sydney Roosters","Cronulla Sharks"], c:0},
+    {q:"Which stadium is widely known as the home of English rugby union?", o:["Twickenham","Wembley","Murrayfield","Principality Stadium"], c:0},
+    {q:"Which Formula 1 circuit is nicknamed the \u2018Temple of Speed\u2019?", o:["Monza","Spa-Francorchamps","Silverstone","Suzuka"], c:0},
+    {q:"Which coach holds the record for the most NBA championships won, with 11?", o:["Phil Jackson","Red Auerbach","Gregg Popovich","Pat Riley"], c:0}
+,
+    {q:"Which footballer scored the controversial 'Hand of God' goal at the 1986 World Cup?", o:["Diego Maradona","Pel\u00e9","Lionel Messi","Ronaldinho"], c:0},
+    {q:"Which country won the first Cricket World Cup hosted in Asia, the 1987 Reliance World Cup?", o:["Australia","West Indies","India","Pakistan"], c:0},
+    {q:"With which team did Michael Schumacher win five consecutive Drivers' Championships from 2000 to 2004?", o:["McLaren","Ferrari","Williams","Benetton"], c:1},
+    {q:"Which sport is governed by the 'Marquess of Queensberry Rules'?", o:["Boxing","Wrestling","Fencing","MMA"], c:0},
+    {q:"In rugby league, which shirt number is traditionally worn by the fullback?", o:["1","6","7","13"], c:0},
+    {q:"Which NFL position is responsible for snapping the ball to the quarterback?", o:["Center","Guard","Tackle","Tight End"], c:0}
+  ],
+  12: [
+    {q:"Which nation famously won the Rugby World Cup on home soil in 1995, presented by Nelson Mandela?", o:["New Zealand","South Africa","Australia","England"], c:1},
+    {q:"What is the maximum possible checkout in darts?", o:["167","170","180","160"], c:1},
+    {q:"Who holds the record for the most career assists in NBA history?", o:["Magic Johnson","John Stockton","Chris Paul","Steve Nash"], c:1},
+    {q:"How many Grand Slam singles titles did Serena Williams win in her career?", o:["21","22","23","24"], c:2},
+    {q:"Which nation won the first ever T20 Cricket World Cup in 2007?", o:["India","Pakistan","Australia","West Indies"], c:0},
+    {q:"Which tennis player has won the most Wimbledon men's singles titles?", o:["Pete Sampras","Roger Federer","Novak Djokovic","Bjorn Borg"], c:1},
+    {q:"Which boxer famously knocked out Mike Tyson in one of the biggest upsets in boxing history, in 1990?", o:["Evander Holyfield","Buster Douglas","Lennox Lewis","Riddick Bowe"], c:1},
+    {q:"Which country has won the most medals overall at the World Aquatics (swimming) Championships?", o:["USA","Australia","China","Russia"], c:0},
+    {q:"Which player holds the record for most career tries scored in Australian rugby league history?", o:["Brett Morris","Ken Irvine","Brian Bevan","Greg Inglis"], c:1},
+    {q:"Which Formula 1 driver became the youngest World Champion in history, in 2010?", o:["Lewis Hamilton","Sebastian Vettel","Max Verstappen","Fernando Alonso"], c:1},
+    {q:"Which boxing weight division has no upper weight limit?", o:["Cruiserweight","Heavyweight","Super Heavyweight","Light Heavyweight"], c:1},
+    {q:"Which country has won the most Netball World Cup titles?", o:["Australia","New Zealand","England","Jamaica"], c:0},
+    {q:"Which nation has won the most Women\u2019s Cricket World Cup titles?", o:["Australia","England","India","New Zealand"], c:0},
+    {q:"Who holds the record for the most career assists in NHL history?", o:["Wayne Gretzky","Ron Francis","Mark Messier","Mario Lemieux"], c:0},
+    {q:"Which jockey holds the record for the most career wins in British jump racing, with over 4,000?", o:["Sir Anthony McCoy","Frankie Dettori","Ruby Walsh","Richard Johnson"], c:0},
+    {q:"Which team won the first ever Rugby League World Cup, held in 1954?", o:["Great Britain","Australia","France","New Zealand"], c:0},
+    {q:"Who was the most recent player to complete a calendar-year Grand Slam in tennis singles, in 1988?", o:["Martina Navratilova","Steffi Graf","Monica Seles","Margaret Court"], c:1},
+    {q:"Which NFL team is the only one to complete a perfect season, including winning the Super Bowl, in 1972?", o:["Miami Dolphins","Pittsburgh Steelers","Dallas Cowboys","Minnesota Vikings"], c:0}
+,
+    {q:"Which country hosted the very first Cricket World Cup in 1975?", o:["England","Australia","India","West Indies"], c:0},
+    {q:"Which F1 driver became the youngest ever World Champion when he won the 2010 title aged 23?", o:["Lewis Hamilton","Sebastian Vettel","Max Verstappen","Fernando Alonso"], c:1},
+    {q:"Which country won the 1992 Cricket World Cup, the first played with coloured kits and a white ball?", o:["Pakistan","Australia","England","New Zealand"], c:0},
+    {q:"The AFL Grand Final is traditionally held on which day of the week?", o:["Saturday","Sunday","Friday","Monday"], c:0},
+    {q:"Which is the only Grand Slam tennis tournament played on grass courts?", o:["Wimbledon","French Open","US Open","Australian Open"], c:0},
+    {q:"Who captained India to victory in the 1983 Cricket World Cup?", o:["Kapil Dev","Sunil Gavaskar","Mohinder Amarnath","Sachin Tendulkar"], c:0}
+  ],
+  13: [
+    {q:"Who holds the record for most career rebounds in NBA history?", o:["Bill Russell","Wilt Chamberlain","Kareem Abdul-Jabbar","Dennis Rodman"], c:1},
+    {q:"Which German captained his country to World Cup glory in 1974 and later managed them to victory in 1990?", o:["Franz Beckenbauer","Lothar Matthäus","Gerd Müller","Sepp Maier"], c:0},
+    {q:"Who holds the record for the fastest Test cricket century, by balls faced?", o:["Brendon McCullum","Viv Richards","Misbah-ul-Haq","David Warner"], c:0},
+    {q:"Who holds the record for most career goals in UEFA Champions League history?", o:["Lionel Messi","Cristiano Ronaldo","Robert Lewandowski","Karim Benzema"], c:1},
+    {q:"Which NFL quarterback holds the record for most career passing yards?", o:["Tom Brady","Drew Brees","Peyton Manning","Brett Favre"], c:0},
+    {q:"Anil Kumble famously took all ten wickets in a Test innings against which nation?", o:["Australia","Pakistan","England","South Africa"], c:1},
+    {q:"Which boxer holds the record for the most heavyweight title defences, with 25?", o:["Joe Louis","Larry Holmes","Muhammad Ali","Wladimir Klitschko"], c:0},
+    {q:"Which country hosted the first ever Cricket World Cup in 1975?", o:["Australia","India","England","West Indies"], c:2},
+    {q:"Which boxer holds the record for winning world titles in eight different weight divisions?", o:["Floyd Mayweather Jr","Manny Pacquiao","Oscar De La Hoya","Roy Jones Jr"], c:1},
+    {q:"Which Australian stadium has the largest capacity?", o:["MCG","Marvel Stadium","Adelaide Oval","Optus Stadium"], c:0},
+    {q:"Which NBA player holds the record for most consecutive games played, the league's 'Iron Man' streak?", o:["A.C. Green","Randy Smith","Brook Lopez","John Havlicek"], c:0},
+    {q:"Which country won the first ever Women's Cricket World Cup, in 1973?", o:["Australia","England","India","West Indies"], c:1},
+    {q:"Which nation hosted the very first modern Olympic Games in 1896?", o:["Greece","France","UK","USA"], c:0},
+    {q:"Who holds the record for the most goals scored in English football league history, with 434?", o:["Arthur Rowley","Jimmy Greaves","Dixie Dean","Steve Bull"], c:0},
+    {q:"Which world-famous horse race is run annually at Flemington in Melbourne?", o:["Cox Plate","Melbourne Cup","Caulfield Cup","Golden Slipper"], c:1},
+    {q:"Who holds the official record for the most career blocked shots in NBA history?", o:["Hakeem Olajuwon","Dikembe Mutombo","Kareem Abdul-Jabbar","Tim Duncan"], c:0},
+    {q:"Among nations that have previously won the FIFA World Cup, which has the longest wait since their last title, in 1966?", o:["England","France","Argentina","Spain"], c:0},
+    {q:"Who holds the record for the most career wins by a goaltender in NHL history?", o:["Martin Brodeur","Patrick Roy","Ed Belfour","Roberto Luongo"], c:0}
+,
+    {q:"Which footballer became Brazil's all-time leading international goalscorer in 2023, surpassing Pel\u00e9?", o:["Neymar","Ronaldinho","Romario","Ronaldo"], c:0},
+    {q:"Which NBA player holds the record for most career playoff points?", o:["LeBron James","Michael Jordan","Kobe Bryant","Kareem Abdul-Jabbar"], c:0},
+    {q:"Which F1 driver holds the record for the most career fastest laps?", o:["Michael Schumacher","Lewis Hamilton","Kimi Raikkonen","Max Verstappen"], c:1},
+    {q:"Which cricketer became the all-time leader in ODI centuries in 2023, reaching his 50th hundred?", o:["Virat Kohli","Sachin Tendulkar","Rohit Sharma","Babar Azam"], c:0},
+    {q:"Which boxer is the only fighter to win world titles in eight different weight divisions?", o:["Manny Pacquiao","Floyd Mayweather Jr.","Oscar De La Hoya","Sugar Ray Leonard"], c:0},
+    {q:"Which golfer won the 2019 Masters, his first major title in 11 years, in a famous comeback?", o:["Tiger Woods","Phil Mickelson","Dustin Johnson","Brooks Koepka"], c:0}
+  ],
+  14: [
+    {q:"Which footballer holds the record for most career goals for a single club, across all competitions?", o:["Lionel Messi","Cristiano Ronaldo","Pelé","Romário"], c:0},
+    {q:"Which NBA player holds the record for most career triple-doubles?", o:["Magic Johnson","Russell Westbrook","Oscar Robertson","LeBron James"], c:1},
+    {q:"Which goalkeeper holds the Premier League record for most career clean sheets?", o:["Petr Čech","David James","David Seaman","Joe Hart"], c:0},
+    {q:"Which nation won the 2023 Rugby World Cup?", o:["New Zealand","South Africa","England","France"], c:1},
+    {q:"Which Formula 1 driver holds the record for most career pole positions?", o:["Michael Schumacher","Lewis Hamilton","Ayrton Senna","Sebastian Vettel"], c:1},
+    {q:"In which year was the Premier League formed as England's new top flight?", o:["1990","1992","1995","1988"], c:1},
+    {q:"Which country has won Olympic gold in men's football a record three times, all before World War II?", o:["Hungary","Great Britain","Argentina","Brazil"], c:1},
+    {q:"Which country has won the most medals overall at the World Swimming Championships?", o:["USA","Australia","China","Hungary"], c:0},
+    {q:"Which NFL player holds the record for most career rushing yards?", o:["Emmitt Smith","Walter Payton","Barry Sanders","Adrian Peterson"], c:0},
+    {q:"Which golfer is the only player to win the Masters Tournament six times?", o:["Arnold Palmer","Jack Nicklaus","Tiger Woods","Sam Snead"], c:1},
+    {q:"Which country has topped the medal table at the Paralympic Games in recent editions?", o:["USA","China","Great Britain","Soviet Union/Russia"], c:1},
+    {q:"The 1987 Cricket World Cup was the first held outside England. Which two countries co-hosted it?", o:["India and Pakistan","Australia and New Zealand","West Indies and USA","South Africa and Zimbabwe"], c:0},
+    {q:"Which Brazilian footballer became Brazil\u2019s all-time leading international goalscorer in 2023, surpassing Pel\u00e9?", o:["Neymar","Ronaldinho","Romario","Kaka"], c:0},
+    {q:"Which Australian spin bowler retired with a then-record 708 Test wickets?", o:["Shane Warne","Nathan Lyon","Stuart MacGill","Brad Hogg"], c:0},
+    {q:"In which year was the first official Test cricket match played, between England and Australia?", o:["1877","1882","1900","1860"], c:0},
+    {q:"What is the record for the most goals kicked by a player in a single VFL/AFL match, set in 1947?", o:["16","18","20","15"], c:1},
+    {q:"Which Formula 1 driver holds the record for the most career fastest laps?", o:["Lewis Hamilton","Michael Schumacher","Kimi R\u00e4ikk\u00f6nen","Max Verstappen"], c:0},
+    {q:"Which NBA player holds the record for the most consecutive games played, earning him the nickname \u2018Iron Man\u2019?", o:["A.C. Green","Randy Smith","John Stockton","Karl Malone"], c:0}
+,
+    {q:"Which footballer holds the Guinness World Record for most goals scored in a calendar year, with 91 in 2012?", o:["Lionel Messi","Cristiano Ronaldo","Robert Lewandowski","Gerd Muller"], c:0},
+    {q:"Which NBA team holds the record for most wins in a single regular season, going 73-9 in 2015-16?", o:["Golden State Warriors","Chicago Bulls","Boston Celtics","LA Lakers"], c:0},
+    {q:"Which F1 driver won a record 19 races in the 2023 season?", o:["Max Verstappen","Lewis Hamilton","Michael Schumacher","Sebastian Vettel"], c:0},
+    {q:"Which rugby player holds the record for the most points scored in international Test history?", o:["Jonny Wilkinson","Dan Carter","Neil Jenkins","Diego Dominguez"], c:1},
+    {q:"Which NFL player holds the career record for most receiving yards?", o:["Jerry Rice","Randy Moss","Terrell Owens","Larry Fitzgerald"], c:0},
+    {q:"Which country has won the most Olympic gold medals in swimming history?", o:["USA","Australia","Hungary","China"], c:0}
+  ],
+  15: [
+    {q:"Which English club became the first to win the league, FA Cup and European Cup treble in the same season?", o:["Manchester United","Liverpool","Chelsea","Arsenal"], c:0},
+    {q:"Who holds the record for the most international centuries across all cricket formats?", o:["Sachin Tendulkar","Virat Kohli","Ricky Ponting","Kumar Sangakkara"], c:0},
+    {q:"Who holds the record for the most NBA regular season MVP awards, with 6?", o:["Michael Jordan","Kareem Abdul-Jabbar","LeBron James","Bill Russell"], c:1},
+    {q:"Which nation is the only one to have competed in every FIFA World Cup tournament since 1930?", o:["Brazil","Germany","Argentina","Italy"], c:0},
+    {q:"Who holds the record for the most Test cricket wickets by a fast bowler?", o:["Glenn McGrath","James Anderson","Courtney Walsh","Dale Steyn"], c:1},
+    {q:"Which NFL head coach has won the most Super Bowl titles?", o:["Bill Belichick","Vince Lombardi","Chuck Noll","Don Shula"], c:0},
+    {q:"Which country has won the most Olympic gold medals in field hockey?", o:["India","Pakistan","Netherlands","Australia"], c:0},
+    {q:"Which country won the first ever Olympic gold medal in women's football, at Atlanta 1996?", o:["USA","Norway","China","Germany"], c:0},
+    {q:"Which NFL coach holds the record for the most career regular season wins?", o:["Don Shula","Bill Belichick","George Halas","Tom Landry"], c:0},
+    {q:"Which country has won the most ICC Women's T20 World Cup titles?", o:["Australia","England","India","West Indies"], c:0},
+    {q:"Which golfer holds the record for the most weeks spent as world number one?", o:["Tiger Woods","Greg Norman","Dustin Johnson","Rory McIlroy"], c:0},
+    {q:"Which cricketer became the only player to take 800 Test wickets, doing so in his final Test in 2010?", o:["James Anderson","Muttiah Muralitharan","Shane Warne","Anil Kumble"], c:1},
+    {q:"Which jockey rode Secretariat to the 1973 Triple Crown, the fastest Kentucky Derby winner of all time?", o:["Ron Turcotte","Willie Shoemaker","Eddie Arcaro","Bill Shoemaker"], c:0},
+    {q:"Which country won the men\u2019s football gold medal at the 2024 Paris Olympics?", o:["Spain","France","Brazil","Argentina"], c:0},
+    {q:"Who holds the record for the most wickets taken in a single Test match, with 19?", o:["Jim Laker","Anil Kumble","Shane Warne","Muttiah Muralitharan"], c:0},
+    {q:"Which golfer became the first to complete the career Grand Slam of all four modern majors, in 1935?", o:["Gene Sarazen","Walter Hagen","Bobby Jones","Ben Hogan"], c:0},
+    {q:"Which tennis player holds the record for the most Grand Slam titles overall, combining singles, doubles and mixed doubles?", o:["Margaret Court","Serena Williams","Martina Navratilova","Steffi Graf"], c:0},
+    {q:"Which NFL team completed the largest comeback in Super Bowl history, from 28-3 down?", o:["New England Patriots","Philadelphia Eagles","Atlanta Falcons","Denver Broncos"], c:0}
+,
+    {q:"Which cricketer holds the record for the highest individual score in ODI history, with 264?", o:["Rohit Sharma","Martin Guptill","Virender Sehwag","Chris Gayle"], c:0},
+    {q:"Which F1 constructor won a record eight consecutive Constructors' Championships from 2014 to 2021?", o:["Mercedes","Ferrari","Red Bull","McLaren"], c:0},
+    {q:"Which rugby nation has won the Rugby Championship (formerly the Tri Nations) more times than any other?", o:["New Zealand","South Africa","Australia","Argentina"], c:0},
+    {q:"Which snooker player made the first televised maximum 147 break, in 1982?", o:["Steve Davis","Cliff Thorburn","Alex Higgins","Jimmy White"], c:0},
+    {q:"Which country won the most gold medals at the first modern Olympic Games in Athens in 1896?", o:["USA","Greece","Germany","Great Britain"], c:0},
+    {q:"Which darts player has won the most PDC World Championship titles in history?", o:["Phil Taylor","Raymond van Barneveld","Michael van Gerwen","Eric Bristow"], c:0}
+  ]
+};
+
+let deck = [], curIdx = 0, score = 0, gameActive = true;
+let usedFifty = false, usedCrowd = false, usedPhone = false;
+let removedOpts = [];
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function buildDeck(){
+  const d = [];
+  for(let lvl=1; lvl<=15; lvl++){
+    const pool = QUESTION_BANK[lvl];
+    const pick = pool[Math.floor(Math.random()*pool.length)];
+    const optOrder = shuffle([0,1,2,3]);
+    const opts = optOrder.map(i => pick.o[i]);
+    const correct = optOrder.indexOf(pick.c);
+    d.push({level:lvl, q:pick.q, opts:opts, correct:correct});
+  }
+  return d;
+}
+
+function buildTower(){
+  const tower = document.getElementById('tower');
+  tower.innerHTML = '';
+  for(let i=1;i<=15;i++){
+    const block = document.createElement('div');
+    block.className = 'tower-block';
+    block.id = 'tblock-'+i;
+    if(i===5 || i===10) block.classList.add('checkpoint');
+    tower.appendChild(block);
+  }
+}
+
+function updateTower(){
+  for(let i=1;i<=15;i++){
+    const block = document.getElementById('tblock-'+i);
+    block.classList.remove('current','filled');
+    if(i < deck[curIdx].level) block.classList.add('filled');
+    if(i === deck[curIdx].level) block.classList.add('current');
+  }
+}
+
+function startGame(){
+  deck = buildDeck();
+  curIdx = 0; score = 0; gameActive = true;
+  usedFifty = false; usedCrowd = false; usedPhone = false;
+  const modal = document.querySelector('.go-modal');
+  if(modal) modal.classList.remove('completed');
+  document.getElementById('lifeline-fifty').disabled = false;
+  document.getElementById('lifeline-crowd').disabled = false;
+  document.getElementById('lifeline-phone').disabled = false;
+  document.getElementById('lifeline-fifty').classList.remove('used');
+  document.getElementById('lifeline-crowd').classList.remove('used');
+  document.getElementById('lifeline-phone').classList.remove('used');
+  document.getElementById('game-over-overlay').classList.remove('show');
+  document.getElementById('crowd-result').classList.remove('show');
+  document.getElementById('phone-result').classList.remove('show');
+  document.getElementById('continue-row').classList.remove('show');
+  buildTower();
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const item = deck[curIdx];
+  removedOpts = [];
+  document.getElementById('q-level').textContent = 'Question '+item.level+' of 15';
+  document.getElementById('q-text').textContent = item.q;
+  document.getElementById('crowd-result').classList.remove('show');
+  document.getElementById('phone-result').classList.remove('show');
+  document.getElementById('continue-row').classList.remove('show');
+  updateTower();
+
+  const labels = ['A','B','C','D'];
+  for(let i=0;i<4;i++){
+    const btn = document.getElementById('opt-'+i);
+    btn.className = 'opt-btn';
+    btn.disabled = false;
+    btn.style.visibility = 'visible';
+    document.getElementById('opt-'+i+'-text').textContent = item.opts[i];
+    document.getElementById('opt-'+i+'-label').textContent = labels[i]+')';
+  }
+}
+
+function selectAnswer(i){
+  if(!gameActive) return;
+  if(removedOpts.indexOf(i) !== -1) return;
+  gameActive = false;
+
+  const item = deck[curIdx];
+  for(let j=0;j<4;j++){
+    document.getElementById('opt-'+j).disabled = true;
+  }
+
+  const chosenBtn = document.getElementById('opt-'+i);
+  const correctBtn = document.getElementById('opt-'+item.correct);
+
+  setTimeout(() => {
+    if(i === item.correct){
+      chosenBtn.classList.add('correct-opt');
+      score = item.level;
+      setTimeout(() => {
+        if(item.level === 15){
+          endGame(15, true);
+        } else {
+          document.getElementById('continue-row').classList.add('show');
+        }
+      }, 700);
+    } else {
+      chosenBtn.classList.add('wrong-opt');
+      correctBtn.classList.add('correct-opt');
+      setTimeout(() => endGame(score, false), 1200);
+    }
+  }, 400);
+}
+
+function continueGame(){
+  curIdx++;
+  gameActive = true;
+  renderQuestion();
+}
+
+function walkAway(){
+  endGame(score, false);
+}
+
+function useFifty(){
+  if(usedFifty || !gameActive) return;
+  usedFifty = true;
+  const btn = document.getElementById('lifeline-fifty');
+  btn.disabled = true; btn.classList.add('used');
+
+  const item = deck[curIdx];
+  const wrongIdxs = [0,1,2,3].filter(x => x !== item.correct);
+  const toRemove = shuffle(wrongIdxs).slice(0,2);
+  removedOpts = toRemove;
+  toRemove.forEach(idx => {
+    document.getElementById('opt-'+idx).style.visibility = 'hidden';
+  });
+}
+
+function useCrowd(){
+  if(usedCrowd || !gameActive) return;
+  usedCrowd = true;
+  const btn = document.getElementById('lifeline-crowd');
+  btn.disabled = true; btn.classList.add('used');
+
+  const item = deck[curIdx];
+  const correctPct = 30 + Math.floor(Math.random()*31);
+  let remaining = 100 - correctPct;
+  const others = [0,1,2,3].filter(x => x !== item.correct && removedOpts.indexOf(x) === -1);
+  const pcts = {};
+  pcts[item.correct] = correctPct;
+  others.forEach((idx,n) => {
+    if(n === others.length-1){ pcts[idx] = remaining; }
+    else {
+      const share = Math.floor(Math.random() * (remaining/(others.length-n)) * 1.5);
+      const v = Math.min(share, remaining-1);
+      pcts[idx] = v;
+      remaining -= v;
+    }
+  });
+
+  const container = document.getElementById('crowd-bars');
+  container.innerHTML = '';
+  const labels = ['A','B','C','D'];
+  for(let i=0;i<4;i++){
+    if(removedOpts.indexOf(i) !== -1) continue;
+    const pct = pcts[i] || 0;
+    const row = document.createElement('div');
+    row.className = 'crowd-row';
+    row.innerHTML = '<span class="crowd-label">'+labels[i]+'</span><div class="crowd-track"><div class="crowd-fill" style="width:'+pct+'%"></div></div><span class="crowd-pct">'+pct+'%</span>';
+    container.appendChild(row);
+  }
+  document.getElementById('crowd-result').classList.add('show');
+}
+
+function usePhone(){
+  if(usedPhone || !gameActive) return;
+  usedPhone = true;
+  const btn = document.getElementById('lifeline-phone');
+  btn.disabled = true; btn.classList.add('used');
+
+  const item = deck[curIdx];
+  const labels = ['A','B','C','D'];
+  document.getElementById('phone-text').textContent =
+    "I'm not 100% sure, but I think it's " + labels[item.correct] + ') ' + item.opts[item.correct] + '...';
+  document.getElementById('phone-result').classList.add('show');
+}
+
+function launchConfetti(){
+  const colors=['#f5c842','#4ade80','#60a5fa','#f87171','#a78bfa','#fb923c','#ffffff'];
+  const wrap=document.createElement('div');
+  wrap.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:500;overflow:hidden';
+  document.body.appendChild(wrap);
+  for(let i=0;i<100;i++){
+    const p=document.createElement('div');
+    const color=colors[Math.floor(Math.random()*colors.length)];
+    const size=5+Math.random()*9;
+    const x=Math.random()*100;
+    const delay=Math.random()*2.2;
+    const dur=2.2+Math.random()*2;
+    const shape=Math.random()<0.5?'50%':'3px';
+    p.style.cssText=`position:absolute;width:${size}px;height:${size}px;background:${color};left:${x}%;top:-24px;border-radius:${shape};animation:confetti-fall ${dur}s ${delay}s ease-in forwards`;
+    wrap.appendChild(p);
+  }
+  setTimeout(()=>wrap.remove(),6000);
+}
+
+function endGame(finalScore, completed){
+  gameActive = false;
+  document.getElementById('final-score').textContent = finalScore;
+  const msgEl = document.getElementById('go-msg');
+  const titleEl = document.getElementById('go-title');
+  const modal = document.querySelector('.go-modal');
+  if(completed){
+    modal.classList.add('completed');
+    launchConfetti();
+    titleEl.textContent = "🏆 THE STACK COMPLETE!";
+    msgEl.textContent = "All 15 questions answered. You are the Stack Master — legendary.";
+  } else if(finalScore >= 10){
+    titleEl.textContent = "So close!";
+    msgEl.textContent = "Level "+finalScore+" is a brilliant result \u2014 give it another go and go all the way.";
+  } else if(finalScore >= 5){
+    titleEl.textContent = "Solid stack!";
+    msgEl.textContent = "You made it past the first checkpoint. Can you reach level 10 next time?";
+  } else {
+    titleEl.textContent = "Stack collapsed!";
+    msgEl.textContent = "Everyone starts somewhere \u2014 have another go and build your stack higher.";
+  }
+  document.getElementById('game-over-overlay').classList.add('show');
+
+  if(typeof saveResult === 'function'){
+    saveResult('the-stack','The Stack',finalScore,15,completed);
+  }
+}
+
+function shareResult(){
+  const text = "SportsStack \ud83c\udfc6 The Stack\nI reached level "+score+" of 15!\nCan you go higher? sportsstack.com.au/the-stack.html";
+  if(navigator.share){
+    navigator.share({text:text}).catch(()=>{});
+    const c = document.getElementById('copied-msg');
+    if(c){ c.textContent = '✓ Shared!'; setTimeout(()=>c.textContent='',2000); }
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(() => {
+      const c = document.getElementById('copied-msg');
+      if(c){ c.textContent = 'Copied to clipboard!'; setTimeout(()=>c.textContent='',2000); }
+    });
+  }
+}
+
+document.getElementById('opt-0').addEventListener('click', () => selectAnswer(0));
+document.getElementById('opt-1').addEventListener('click', () => selectAnswer(1));
+document.getElementById('opt-2').addEventListener('click', () => selectAnswer(2));
+document.getElementById('opt-3').addEventListener('click', () => selectAnswer(3));
+document.getElementById('lifeline-fifty').addEventListener('click', useFifty);
+document.getElementById('lifeline-crowd').addEventListener('click', useCrowd);
+document.getElementById('lifeline-phone').addEventListener('click', usePhone);
+document.getElementById('continue-btn').addEventListener('click', continueGame);
+document.getElementById('walkaway-btn').addEventListener('click', walkAway);
+document.getElementById('play-again-btn').addEventListener('click', startGame);
+
+startGame();
+
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

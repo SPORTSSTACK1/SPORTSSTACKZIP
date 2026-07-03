@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta name="description" content="Free daily sports quizzes and games. Test your knowledge with Who Am I?, Clubble, the 38-0 PL Challenge, the World Cup Quiz of the Day, and 250+ more. New questions every day."/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="SportsStack"/>
+<meta property="og:title" content="SportsStack — Free Daily Sports Quizzes"/>
+<meta property="og:description" content="Free daily sports quizzes and games covering football, NFL, NBA, cricket, F1 and more. 289+ quizzes. Play free at sportsstack.com.au"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:site" content="@sportsstack"/>
+<meta name="twitter:title" content="SportsStack — Free Daily Sports Quizzes"/>
+<meta name="twitter:description" content="Free daily sports quizzes covering football, NFL, NBA, cricket, F1 and more. 289+ quizzes, new questions every day."/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>SportsStack – Free Sports Quizzes</title>
+<meta name="description" content="Free sports quizzes — Football, AFL, NBA, NFL, MLB, Cricket, Rugby and more. 289+ quizzes."/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px}
+
+
+
+.hero{position:relative;overflow:hidden;padding:80px 24px 72px;text-align:center;background:radial-gradient(ellipse at 50% 0%,#0d2040 0%,var(--bg) 70%)}
+.hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(56px,13vw,112px);font-weight:900;font-style:normal;line-height:.88;text-transform:uppercase;margin-bottom:22px;color:var(--gold)}
+.hero-sub{font-size:clamp(15px,2.5vw,18px);color:var(--text-muted);max-width:520px;margin:0 auto 36px;line-height:1.6}
+.hero-cta{display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-primary{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;padding:14px 32px;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-primary:hover{background:#ffd700;transform:translateY(-2px)}
+.btn-secondary{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text);border:1.5px solid var(--border-bright);padding:14px 32px;border-radius:10px;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-secondary:hover{background:rgba(255,255,255,.04)}
+.hub{max-width:980px;margin:0 auto;padding:48px 20px 80px}
+.section-header{display:flex;align-items:center;gap:10px;margin:36px 0 10px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding-left:10px;border-left:3px solid}
+.section-count{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:6px}
+.quiz-card{--accent:#f5c842;display:block;padding:10px 13px;background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);text-decoration:none;font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;letter-spacing:.01em;transition:all .18s;line-height:1.35}
+.quiz-card:hover{background:var(--surface2);border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;color:var(--text-dim);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+footer span{color:var(--gold)}
+
+
+
+.btn-random{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;padding:7px 16px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap}
+.btn-random:hover{background:#ffd700}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:8px;color:#7a9ab8;border:1.5px solid #1a3a6a;text-decoration:none;background:transparent;transition:all .15s;white-space:nowrap}.btn-lb:visited{color:#7a9ab8}
+.btn-lb:hover{color:var(--gold);border-color:var(--gold)}
+
+
+.quiz-card.sticker-game{position:relative;padding-top:20px!important}.quiz-card.sticker-game::before{content:"WC Stickers";position:absolute;top:0;left:0;right:0;background:#0a1f3a;color:#f5c842;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:3px 2px;border-radius:9px 9px 0 0;line-height:1.5}
+
+.quiz-card.sticker-game{position:relative;padding-top:20px!important}.quiz-card.sticker-game::before{content:"WC Stickers";position:absolute;top:0;left:0;right:0;background:#0a1f3a;color:#f5c842;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:3px 2px;border-radius:9px 9px 0 0;line-height:1.5}
+.wc-section-header{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:14px 16px;background:linear-gradient(135deg,rgba(61,220,110,.08) 0%,rgba(245,200,66,.06) 100%);border:1px solid rgba(61,220,110,.2);border-radius:12px}
+.wc-section-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;font-style:italic;letter-spacing:.06em;color:#3ddc6e;flex:1}
+.wc-section-title span{color:var(--gold)}
+.wc-live-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;background:rgba(61,220,110,.15);border:1px solid rgba(61,220,110,.4);color:#3ddc6e;padding:3px 10px;border-radius:20px;animation:wc-pulse 2s ease-in-out infinite}
+@keyframes wc-pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.wc-featured-card{display:block;padding:14px 16px;background:linear-gradient(135deg,rgba(61,220,110,.1),rgba(4,8,15,.8));border:1px solid rgba(61,220,110,.35);border-radius:10px;color:var(--text);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.04em;transition:all .18s;position:relative;overflow:hidden}
+.wc-featured-card:hover{border-color:#3ddc6e;background:linear-gradient(135deg,rgba(61,220,110,.18),rgba(4,8,15,.8));transform:translateY(-1px)}
+.wc-card-label{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#3ddc6e;margin-bottom:4px}
+.wc-card-title{font-size:17px;font-weight:900}
+.wc-card-sub{font-size:11px;color:var(--text-muted);margin-top:3px;font-weight:500}
+
+.hero-stats{display:flex;gap:8px 28px;justify-content:center;flex-wrap:wrap;margin-top:16px;align-items:center}
+.hero-stat{display:flex;flex-direction:column;align-items:center;gap:2px}
+.hero-stat-num{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;color:#f5c842;line-height:1}
+.hero-stat-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#4a6a8a}
+.hero-stat-divider{width:1px;height:32px;background:#1a3a6a}
+@media(max-width:400px){.hero-stat-divider{display:none}}
+
+.goat-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9500;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px);animation:gm-fade .3s ease}
+@keyframes gm-fade{from{opacity:0}to{opacity:1}}
+.goat-modal{background:#04080f;border:1px solid rgba(245,200,66,.45);border-radius:18px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 0 80px rgba(245,200,66,.15);animation:gm-up .35s ease}
+@keyframes gm-up{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+.goat-modal img{width:100%;display:block}
+.goat-modal-body{padding:20px 24px 24px;text-align:center}
+.goat-modal-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#00a651;margin-bottom:8px}
+.goat-modal-headline{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,5vw,32px);font-weight:900;font-style:italic;color:#f5c842;margin-bottom:8px;line-height:1.1}
+.goat-modal-sub{font-size:14px;color:#7a9ab8;margin-bottom:20px;line-height:1.5}
+.goat-modal-cta{display:block;padding:14px 28px;background:#f5c842;color:#04080f;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;transition:opacity .15s}
+.goat-modal-cta:hover{opacity:.9}
+.goat-modal-later{background:none;border:none;color:#4a6a8a;font-size:12px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.goat-modal-later:hover{color:#7a9ab8}
+
+/* ── Featured WC Cards ───────────────────────────────── */
+.featured-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 16px 24px}
+@media(max-width:600px){.featured-row{grid-template-columns:1fr}}
+a.featured-card{display:flex;flex-direction:column;justify-content:space-between;border-radius:14px;padding:22px 20px;min-height:170px;text-decoration:none;background:linear-gradient(135deg,rgba(245,200,66,.1),rgba(245,200,66,.02));border:2px solid rgba(245,200,66,.35);transition:border-color .2s,transform .15s,box-shadow .2s;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+a.featured-card:hover{border-color:rgba(245,200,66,.7);transform:translateY(-3px);box-shadow:0 8px 32px rgba(245,200,66,.12)}
+a.featured-card .fc-emoji{font-size:32px;margin-bottom:8px;display:block}
+a.featured-card .fc-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(20px,3.5vw,28px);font-weight:900;font-style:italic;color:#f5c842;line-height:1.1;margin-bottom:8px;display:block}
+a.featured-card .fc-desc{font-size:13px;color:#4a6a8a;line-height:1.5;display:block;margin-bottom:14px}
+a.featured-card .fc-cta{display:inline-block;background:#f5c842;color:#04080f;border-radius:7px;padding:9px 18px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:.03em;align-self:flex-start}
+a.featured-card.green{background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(34,197,94,.02));border-color:rgba(34,197,94,.35)}
+a.featured-card.green:hover{border-color:rgba(34,197,94,.7);box-shadow:0 8px 32px rgba(34,197,94,.1)}
+a.featured-card.green .fc-title{color:#22c55e}
+a.featured-card.green .fc-cta{background:#22c55e}
+
+
+.sport-accordion{border-bottom:1px solid var(--border)}
+.acc-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:50px;max-width:1200px;margin:0 auto;width:100%}
+a.acc-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;font-style:italic;color:var(--sport-clr);text-decoration:none;letter-spacing:.03em}
+a.acc-name:hover{opacity:.8}
+.acc-btn{background:none;border:1.5px solid rgba(255,255,255,.12);border-radius:6px;color:var(--muted);cursor:pointer;padding:6px 8px;display:flex;align-items:center;transition:border-color .15s,color .15s}
+.acc-btn:hover,.acc-btn[aria-expanded="true"]{border-color:var(--sport-clr);color:var(--sport-clr)}
+.acc-btn svg{transition:transform .2s}
+.acc-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.acc-body{background:var(--surface)}
+
+.nav-pills-scroll{display:none;align-items:center;gap:5px;overflow-x:auto;flex:1;min-width:0;padding:0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+@media(min-width:700px){.nav-pills-scroll{display:flex}}
+.nav-pills-scroll::-webkit-scrollbar{display:none}
+a.nav-pill{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:4px 10px;border-radius:14px;border:1.5px solid rgba(255,255,255,.1);color:var(--muted);text-decoration:none;white-space:nowrap;transition:border-color .15s,color .15s;flex-shrink:0}
+a.nav-pill:hover{border-color:var(--pc,#f5c842);color:var(--pc,#f5c842)}
+
+.mobile-pill-row{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--surface)}
+.mobile-pill-row::-webkit-scrollbar{display:none}
+@media(min-width:700px){.mobile-pill-row{display:none}}
+
+.email-hook{background:var(--surface);border:1.5px solid var(--gold);border-radius:14px;padding:20px 20px 18px;margin:18px 0 4px}
+.email-hook-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.email-hook-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text);line-height:1.15;margin-bottom:4px}
+.email-hook-sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.email-hook-row{display:flex;gap:8px;align-items:center}
+.email-hook-input{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;font-size:14px;color:var(--text);font-family:'Barlow',sans-serif;outline:none;transition:border .2s;min-width:0}
+.email-hook-input::placeholder{color:var(--muted)}
+.email-hook-input:focus{border-color:var(--gold)}
+.email-hook-btn{flex-shrink:0;background:var(--gold);color:#04080f;border:none;border-radius:9px;padding:10px 18px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap}
+.email-hook-btn:hover{background:#ffd700}
+.email-hook-btn:disabled{opacity:.6;cursor:not-allowed}
+.email-hook-status{font-size:12px;margin-top:9px;min-height:16px;font-family:'Barlow',sans-serif}
+.email-hook-status.ok{color:var(--green)}
+.email-hook-status.err{color:#f87171}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "SportsStack",
+  "url": "https://sportsstack.com.au",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://sportsstack.com.au/logo.png",
+    "width": 192,
+    "height": 192
+  },
+  "sameAs": []
+}
+</script>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div class="nav-pills-scroll"><a href="football.html" class="nav-pill" style="--pc:#22c55e">⚽ Football</a><a href="nfl.html" class="nav-pill" style="--pc:#ef4444">🏈 NFL</a><a href="nba.html" class="nav-pill" style="--pc:#f97316">🏀 NBA</a><a href="mlb.html" class="nav-pill" style="--pc:#3b82f6">⚾ MLB</a><a href="cricket.html" class="nav-pill" style="--pc:#84cc16">🏏 Cricket</a><a href="rugby.html" class="nav-pill" style="--pc:#a855f7">🏉 Rugby</a><a href="afl.html" class="nav-pill" style="--pc:#06b6d4">🦘 AFL</a><a href="golf.html" class="nav-pill" style="--pc:#14b8a6">⛳ Golf</a><a href="f1.html" class="nav-pill" style="--pc:#f43f5e">🏎️ F1</a><a href="tennis.html" class="nav-pill" style="--pc:#8b5cf6">🎾 Tennis</a><a href="sports-awards.html" class="nav-pill" style="--pc:#f5c842">🏆 Awards</a><a href="quiz-of-the-week.html" class="nav-pill" style="--pc:#f5c842">📅 Quiz of the Week</a></div>
+  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <a href="vote-goat.html" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:7px 16px;border-radius:8px;color:#f5c842;border:1.5px solid rgba(245,200,66,.4);text-decoration:none;background:transparent;white-space:nowrap">Vote 🐐</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="mobile-pill-row"><a href="football.html" class="nav-pill" style="--pc:#22c55e">⚽ Football</a><a href="nfl.html" class="nav-pill" style="--pc:#ef4444">🏈 NFL</a><a href="nba.html" class="nav-pill" style="--pc:#f97316">🏀 NBA</a><a href="mlb.html" class="nav-pill" style="--pc:#3b82f6">⚾ MLB</a><a href="cricket.html" class="nav-pill" style="--pc:#84cc16">🏏 Cricket</a><a href="rugby.html" class="nav-pill" style="--pc:#a855f7">🏉 Rugby</a><a href="afl.html" class="nav-pill" style="--pc:#06b6d4">🦘 AFL</a><a href="golf.html" class="nav-pill" style="--pc:#14b8a6">⛳ Golf</a><a href="f1.html" class="nav-pill" style="--pc:#f43f5e">🏎️ F1</a><a href="tennis.html" class="nav-pill" style="--pc:#8b5cf6">🎾 Tennis</a><a href="sports-awards.html" class="nav-pill" style="--pc:#f5c842">🏆 Awards</a><a href="quiz-of-the-week.html" class="nav-pill" style="--pc:#f5c842">📅 Quiz of the Week</a></div>
+<section class="hero">
+  <div class="hero-eyebrow">The home of sports quizzes</div>
+  <h1 class="hero-title">Sports<br>Stack</h1>
+  <p class="hero-sub">Football, AFL, NBA, NFL, MLB, Cricket, Rugby and more — 289+ free quizzes and counting.</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="goRandom()">Play Random Quiz</button>
+    <a class="btn-secondary" href="#quizzes">Browse All Quizzes</a>
+    <a class="btn-secondary" href="vote-goat.html" style="border-color:rgba(245,200,66,.5);color:#f5c842">Have Your Say 🐐</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num" id="ss-play-count">—</span>
+      <span class="hero-stat-label">Quizzes Played</span>
+    </div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" id="quiz-count-stat">250+</span>
+      <span class="hero-stat-label">Free Quizzes</span>
+    </div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" id="ss-member-count">—</span>
+      <span class="hero-stat-label">Members</span>
+    </div>
+  </div>
+</section>
+<div class="hub" id="quizzes">
+  <div style="margin:36px 0 10px">
+    <div class="wc-section-header">
+      <div class="wc-section-title">&#x26BD; 2026 <span>FIFA World Cup</span></div>
+      <div class="wc-live-badge">Live Now</div>
+    </div>
+    
+    <div class="featured-row" style="margin:0 0 12px;grid-template-columns:1fr">
+      <a class="featured-card green" href="wc-predictor.html">
+        <div>
+          <div class="fc-emoji">🎯</div>
+          <div class="fc-title">World Cup Match Predictor</div>
+          <div class="fc-desc">Predict the score of every knockout match — 3 pts for exact score, 1 pt for correct result</div>
+        </div>
+        <span class="fc-cta">Start Predicting →</span>
+      </a>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <a class="wc-featured-card" href="wc-quiz-of-day.html">
+        <div class="wc-card-label">&#x1F4C5; Daily</div>
+        <div class="wc-card-title">World Cup Quiz of the Day</div>
+        <div class="wc-card-sub">5 new questions every day</div>
+      </a>
+      <a class="wc-featured-card" href="wc-8-zero.html">
+        <div class="wc-card-label">&#x26BD; Challenge</div>
+        <div class="wc-card-title">World Cup 8-0 Challenge</div>
+        <div class="wc-card-sub">Build an all-star XI &amp; simulate the tournament</div>
+      </a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:6px">
+      <a class="quiz-card" href="wc-nations-wins-quiz.html" style="--accent:#3ddc6e">Most WC Wins</a>
+      <a class="quiz-card" href="wc-appearances-quiz.html" style="--accent:#3ddc6e">Most Appearances</a>
+      <a class="quiz-card" href="wc-host-nations-quiz.html" style="--accent:#3ddc6e">Host Nations</a>
+      <a class="quiz-card" href="wc-winners-quiz.html" style="--accent:#3ddc6e">WC Winners</a>
+      <a class="quiz-card" href="wc-finalists-quiz.html" style="--accent:#3ddc6e">WC Finalists</a>
+      <a class="quiz-card" href="wc-top-scorers-quiz.html" style="--accent:#3ddc6e">Top Scorers</a>
+      <a class="quiz-card" href="wc-final-scorers-quiz.html" style="--accent:#3ddc6e">Final Scorers</a>
+      <a class="quiz-card" href="wc-8-zero.html" style="--accent:#3ddc6e">8-0 Challenge</a>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title" style="border-color:#f5c842;color:#f5c842">Daily Games</div>
+    <div class="section-count">11</div>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+    <a class="quiz-card sticker-game" href="career-path.html" style="--accent:#f5c842">Career Path</a>
+    <a class="quiz-card sticker-game" href="transferotd.html" style="--accent:#f5c842">Deal of the Day</a>
+    <a class="quiz-card sticker-game" href="sportsman-pl.html" style="--accent:#f5c842">Sportsman PL</a>
+    <a class="quiz-card" href="who-am-i-quiz.html" style="--accent:#8b5cf6">Who Am I?</a>
+    <a class="quiz-card" href="the-stack.html" style="--accent:#f5c842">The Stack</a>
+    <a class="quiz-card" href="pl-38-zero.html" style="--accent:#f5c842">38-0 PL Challenge</a>
+    <a class="quiz-card" href="pl-higher-lower.html" style="--accent:#f5c842">Higher or Lower</a>
+    <a class="quiz-card" href="clubble.html" style="--accent:#f5c842">Clubble</a>
+    <a class="quiz-card" href="sportsman-au.html" style="--accent:#f5c842">Sportsman AUS</a>
+    <a class="quiz-card" href="sportsman-us.html" style="--accent:#f5c842">Sportsman USA</a>
+    <a class="quiz-card" href="stadium-map-quiz.html" style="--accent:#f5c842">Stadium Spotter 🗺️</a>
+  </div>
+  <div class="section-header">
+    <div class="section-title" style="border-color:#f5c842;color:#f5c842">Quiz of the Week</div>
+    <div class="section-count">5</div>
+  </div>
+  <div class="grid">
+    <a class="quiz-card" href="weekly-quiz-2026-07-01.html" style="--accent:#f5c842">Quiz of the Week #5</a>
+    <a class="quiz-card" href="weekly-quiz-2026-06-23.html" style="--accent:#f5c842">Quiz of the Week #4</a>
+    <a class="quiz-card" href="weekly-quiz-2026-06-16.html" style="--accent:#f5c842">Quiz of the Week #3</a>
+    <a class="quiz-card" href="weekly-quiz-2026-06-10.html" style="--accent:#f5c842">Quiz of the Week #2</a>
+    <a class="quiz-card" href="weekly-quiz-2026-05-19.html" style="--accent:#f5c842">Quiz of the Week #1</a>
+  </div>
+
+  
+
+  <div id="sport-list" style="margin-top:28px">
+<div class="sport-accordion" style="--sport-clr:#22c55e"><div class="acc-hdr"><a href="football.html" class="acc-name">⚽ Football</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="pl-teams-quiz.html">All PL Clubs</a>
+          <a class="quiz-card" href="pl-100-club-quiz.html">PL 100 Club</a>
+          <a class="quiz-card" href="pl-golden-boot-quiz.html">PL Golden Boot</a>
+          <a class="quiz-card" href="pl-poty-quiz.html">PL POTY Winners</a>
+          <a class="quiz-card" href="pl-ypoty-quiz.html">Name the PL YPOTYs</a>
+          <a class="quiz-card" href="pl-top-assisters-quiz.html">PL All Time Assist Leaders</a>
+          <a class="quiz-card" href="pl-highest-paid-quiz.html">PL Highest Paid 2025/26</a>
+          <a class="quiz-card" href="pl-managers-quiz.html">PL Winning Managers</a>
+          <a class="quiz-card" href="pl-toty-appearances-quiz.html">PL TOTY Most Appearances</a>
+          <a class="quiz-card" href="ballon-dor-quiz.html">Ballon d'Or Winners</a>
+          <a class="quiz-card" href="ucl-winners-quiz.html">UCL Winners</a>
+          <a class="quiz-card" href="ucl-top-scorers-quiz.html">UCL All Time Top Scorers</a>
+          <a class="quiz-card" href="ucl-winning-managers-quiz.html">UCL Winning Managers Since 2000</a>
+          <a class="quiz-card" href="ucl-final-cities-quiz.html">UCL Final Host Cities Since 2000</a>
+          <a class="quiz-card" href="wc-top-scorers-quiz.html">WC Top Goal Scorers</a>
+          <a class="quiz-card" href="wc-winners-quiz.html">WC Winning Nations</a>
+          <a class="quiz-card" href="wc-finalists-quiz.html">WC Finalist Nations</a>
+          <a class="quiz-card" href="wc-final-scorers-quiz.html">WC Final Scorers Since 1990</a>
+          <a class="quiz-card" href="expensive-transfers-quiz.html">15 Most Expensive Transfers</a>
+          <a class="quiz-card" href="wsl-top-scorers-quiz.html">WSL All-Time Top Scorers</a>
+          <a class="quiz-card" href="wsl-golden-boot-quiz.html">WSL Golden Boot Winners</a>
+          <a class="quiz-card" href="lionesses-euro-2025-quiz.html">Lionesses Euro 2025 Squad</a>
+          <a class="quiz-card" href="nwsl-champions-quiz.html">NWSL Championship Winners</a>
+          <a class="quiz-card" href="womens-world-cup-quiz.html">Women's World Cup Winners</a>
+          <a class="quiz-card" href="pl-tots-1990-1991.html">1990/1991</a>
+          <a class="quiz-card" href="pl-tots-1991-1992.html">1991/1992</a>
+          <a class="quiz-card" href="pl-tots-1992-1993.html">1992/1993</a>
+          <a class="quiz-card" href="pl-tots-1993-1994.html">1993/1994</a>
+          <a class="quiz-card" href="pl-tots-1994-1995.html">1994/1995</a>
+          <a class="quiz-card" href="pl-tots-1995-1996.html">1995/1996</a>
+          <a class="quiz-card" href="pl-tots-1996-1997.html">1996/1997</a>
+          <a class="quiz-card" href="pl-tots-1997-1998.html">1997/1998</a>
+          <a class="quiz-card" href="pl-tots-1998-1999.html">1998/1999</a>
+          <a class="quiz-card" href="pl-tots-1999-2000.html">1999/2000</a>
+          <a class="quiz-card" href="pl-tots-2000-2001.html">2000/2001</a>
+          <a class="quiz-card" href="pl-tots-2001-2002.html">2001/2002</a>
+          <a class="quiz-card" href="pl-tots-2002-2003.html">2002/2003</a>
+          <a class="quiz-card" href="pl-tots-2003-2004.html">2003/2004</a>
+          <a class="quiz-card" href="pl-tots-2004-2005.html">2004/2005</a>
+          <a class="quiz-card" href="pl-tots-2005-2006.html">2005/2006</a>
+          <a class="quiz-card" href="pl-tots-2006-2007.html">2006/2007</a>
+          <a class="quiz-card" href="pl-tots-2007-2008.html">2007/2008</a>
+          <a class="quiz-card" href="pl-tots-2008-2009.html">2008/2009</a>
+          <a class="quiz-card" href="pl-tots-2009-2010.html">2009/2010</a>
+          <a class="quiz-card" href="pl-tots-2010-2011.html">2010/2011</a>
+          <a class="quiz-card" href="pl-tots-2011-2012.html">2011/2012</a>
+          <a class="quiz-card" href="pl-tots-2012-2013.html">2012/2013</a>
+          <a class="quiz-card" href="pl-tots-2013-2014.html">2013/2014</a>
+          <a class="quiz-card" href="pl-tots-2014-2015.html">2014/2015</a>
+          <a class="quiz-card" href="pl-tots-2015-2016.html">2015/2016</a>
+          <a class="quiz-card" href="pl-tots-2016-2017.html">2016/2017</a>
+          <a class="quiz-card" href="pl-tots-2017-2018.html">2017/2018</a>
+          <a class="quiz-card" href="pl-tots-2018-2019.html">2018/2019</a>
+          <a class="quiz-card" href="pl-tots-2019-2020.html">2019/2020</a>
+          <a class="quiz-card" href="pl-tots-2020-2021.html">2020/2021</a>
+          <a class="quiz-card" href="pl-tots-2021-2022.html">2021/2022</a>
+          <a class="quiz-card" href="pl-tots-2022-2023.html">2022/2023</a>
+          <a class="quiz-card" href="pl-tots-2023-2024.html">2023/2024</a>
+          <a class="quiz-card" href="pl-tots-2024-2025.html">2024/2025</a>
+          <a class="quiz-card" href="ucl-tots-2001.html">UEFA 2001</a>
+          <a class="quiz-card" href="ucl-tots-2002.html">UEFA 2002</a>
+          <a class="quiz-card" href="ucl-tots-2003.html">UEFA 2003</a>
+          <a class="quiz-card" href="ucl-tots-2004.html">UEFA 2004</a>
+          <a class="quiz-card" href="ucl-tots-2005.html">UEFA 2005</a>
+          <a class="quiz-card" href="ucl-tots-2006.html">UEFA 2006</a>
+          <a class="quiz-card" href="ucl-tots-2007.html">UEFA 2007</a>
+          <a class="quiz-card" href="ucl-tots-2008.html">UEFA 2008</a>
+          <a class="quiz-card" href="ucl-tots-2009.html">UEFA 2009</a>
+          <a class="quiz-card" href="ucl-tots-2010.html">UEFA 2010</a>
+          <a class="quiz-card" href="ucl-tots-2011.html">UEFA 2011</a>
+          <a class="quiz-card" href="ucl-tots-2012.html">UEFA 2012</a>
+          <a class="quiz-card" href="ucl-tots-2013.html">UEFA 2013</a>
+          <a class="quiz-card" href="ucl-tots-2014.html">UEFA 2014</a>
+          <a class="quiz-card" href="ucl-tots-2015.html">UEFA 2015</a>
+          <a class="quiz-card" href="ucl-tots-2016.html">UEFA 2016</a>
+          <a class="quiz-card" href="ucl-tots-2017.html">UEFA 2017</a>
+          <a class="quiz-card" href="ucl-tots-2018.html">UEFA 2018</a>
+          <a class="quiz-card" href="ucl-tots-2019.html">UEFA 2019</a>
+          <a class="quiz-card" href="ucl-tots-2020.html">UEFA 2020</a>
+          <a class="quiz-card" href="ucl-tots-2020-21.html">2020/21</a>
+          <a class="quiz-card" href="ucl-tots-2021-22.html">2021/22</a>
+          <a class="quiz-card" href="ucl-tots-2022-23.html">2022/23</a>
+          <a class="quiz-card" href="ucl-tots-2023-24.html">2023/24</a>
+          <a class="quiz-card" href="ucl-tots-2024-25.html">2024/25</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#ef4444"><div class="acc-hdr"><a href="nfl.html" class="acc-name">🏈 NFL</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="nfl-passing-yards-quiz.html">All-Time Passing Yards</a>
+          <a class="quiz-card" href="nfl-100-receiving-td-quiz.html">100+ Receiving Touchdowns</a>
+          <a class="quiz-card" href="nfl-dpoty-quiz.html">Every DPOTY Since 2000</a>
+          <a class="quiz-card" href="nfl-droy-quiz.html">Every DROTY Since 2000</a>
+          <a class="quiz-card" href="nfl-franchise-passing-quiz.html">Franchise Passing Yards Leaders</a>
+          <a class="quiz-card" href="nfl-franchise-td-leaders-quiz.html">Each Franchise's TD Leaders</a>
+          <a class="quiz-card" href="nfl-highest-paid-position-quiz.html">Highest Paid at Each Position</a>
+          <a class="quiz-card" href="nfl-highest-paid-quiz.html">10 Highest Paid Players</a>
+          <a class="quiz-card" href="nfl-interception-leaders-quiz.html">All Time Interception Leaders</a>
+          <a class="quiz-card" href="nfl-mvp-quiz.html">Every NFL MVP Since 2000</a>
+          <a class="quiz-card" href="nfl-number-1-picks-quiz.html">Every No.1 Pick Since 2000</a>
+          <a class="quiz-card" href="nfl-opoy-quiz.html">Every OPOY Since 2000</a>
+          <a class="quiz-card" href="nfl-oroy-quiz.html">Every OROY Since 2000</a>
+          <a class="quiz-card" href="nfl-qb-super-bowls-quiz.html">QBs With Multiple Super Bowls</a>
+          <a class="quiz-card" href="nfl-sack-leaders-quiz.html">All Time Sack Leaders</a>
+          <a class="quiz-card" href="nfl-sb-coaches-quiz.html">Super Bowl Coaches Since 2000</a>
+          <a class="quiz-card" href="nfl-stadiums-quiz.html">Every NFL Stadium</a>
+          <a class="quiz-card" href="nfl-superbowl-mvp-quiz.html">Every Super Bowl MVP Since 2000</a>
+          <a class="quiz-card" href="nfl-teams-quiz.html">Every NFL Team</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#f97316"><div class="acc-hdr"><a href="nba.html" class="acc-name">🏀 NBA</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="nba-appearances-quiz.html">All-Time Appearances</a>
+          <a class="quiz-card" href="nba-3point-leaders-quiz.html">All Time 3-Point Leaders</a>
+          <a class="quiz-card" href="nba-50point-games-quiz.html">Most 50-Point Games</a>
+          <a class="quiz-card" href="nba-block-leaders-quiz.html">All Time Block Leaders</a>
+          <a class="quiz-card" href="nba-finals-mvp-quiz.html">Every Finals MVP</a>
+          <a class="quiz-card" href="nba-franchise-leading-scorers-quiz.html">Each Franchise's Leading Scorer</a>
+          <a class="quiz-card" href="nba-highest-paid-quiz.html">Highest Paid 2025-26</a>
+          <a class="quiz-card" href="nba-home-arenas-quiz.html">Every Home Arena</a>
+          <a class="quiz-card" href="nba-mvp-since-2000-quiz.html">MVPs Since 2000</a>
+          <a class="quiz-card" href="nba-number-1-picks-quiz.html">Every No.1 Pick Since 2000</a>
+          <a class="quiz-card" href="nba-rebound-leaders-quiz.html">All Time Rebound Leaders</a>
+          <a class="quiz-card" href="nba-roty-quiz.html">Every ROTY Since 2000</a>
+          <a class="quiz-card" href="nba-teams-quiz.html">Every NBA Team</a>
+          <a class="quiz-card" href="nba-top-20-assists-quiz.html">Top 20 Assisters All Time</a>
+          <a class="quiz-card" href="nba-top-20-scorers-quiz.html">Top 20 Scorers All Time</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#3b82f6"><div class="acc-hdr"><a href="mlb.html" class="acc-name">⚾ MLB</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="al-cy-young-quiz.html">AL Cy Young Winners since 2000</a>
+          <a class="quiz-card" href="al-mvp-quiz.html">AL MVPs since 2000</a>
+          <a class="quiz-card" href="mlb-300-wins-quiz.html">Every Pitcher with 300 Wins</a>
+          <a class="quiz-card" href="mlb-active-hr-leaders-quiz.html">Active HR Leaders</a>
+          <a class="quiz-card" href="mlb-cy-young-quiz.html">NL & AL Cy Young Winners</a>
+          <a class="quiz-card" href="mlb-hr-leaders-quiz.html">All Time HR Leaders</a>
+          <a class="quiz-card" href="mlb-number-1-picks-quiz.html">Number 1 Picks since 2000</a>
+          <a class="quiz-card" href="mlb-stadiums-quiz.html">Every MLB Stadium</a>
+          <a class="quiz-card" href="mlb-teams-quiz.html">Every MLB Team</a>
+          <a class="quiz-card" href="nl-cy-young-quiz.html">NL Cy Young Winners since 2000</a>
+          <a class="quiz-card" href="nl-mvp-quiz.html">NL MVP since 2000</a>
+          <a class="quiz-card" href="world-series-mvp-quiz.html">World Series MVP since 2000</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#84cc16"><div class="acc-hdr"><a href="cricket.html" class="acc-name">🏏 Cricket</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="ipl-teams-quiz.html">Every IPL Team</a>
+          <a class="quiz-card" href="county-cricket-teams-quiz.html">Every County Cricket Team</a>
+          <a class="quiz-card" href="big-bash-teams-quiz.html">Every Big Bash Team</a>
+          <a class="quiz-card" href="the-hundred-teams-quiz.html">Every Hundred Team</a>
+          <a class="quiz-card" href="ipl-most-expensive-quiz.html">Most Expensive IPL Signings</a>
+          <a class="quiz-card" href="t20i-fastest-hundreds-quiz.html">Fastest T20I Centuries</a>
+          <a class="quiz-card" href="test-wicket-takers-quiz.html">Test All Time Wicket Takers</a>
+          <a class="quiz-card" href="odi-wicket-takers-quiz.html">ODI All Time Wicket Takers</a>
+          <a class="quiz-card" href="t20i-wicket-takers-quiz.html">T20I All Time Wicket Takers</a>
+          <a class="quiz-card" href="test-run-scorers-quiz.html">Test All Time Run Scorers</a>
+          <a class="quiz-card" href="odi-run-scorers-quiz.html">ODI All Time Run Scorers</a>
+          <a class="quiz-card" href="t20i-run-scorers-quiz.html">T20I All Time Run Scorers</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#a855f7"><div class="acc-hdr"><a href="rugby.html" class="acc-name">🏉 Rugby</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="prem-rugby-teams-quiz.html">Every Prem Rugby Team</a>
+          <a class="quiz-card" href="urc-teams-quiz.html">Every URC Team</a>
+          <a class="quiz-card" href="super-rugby-teams-quiz.html">Every Super Rugby Team</a>
+          <a class="quiz-card" href="super-league-teams-quiz.html">Every Super League Team</a>
+          <a class="quiz-card" href="nrl-teams-quiz.html">Every NRL Team</a>
+          <a class="quiz-card" href="nrl-dally-m-quiz.html">NRL Dally M Winners Since 2000</a>
+          <a class="quiz-card" href="state-of-origin-tryscorers-quiz.html">State of Origin Top Try Scorers</a>
+          <a class="quiz-card" href="nrl-tryscorers-quiz.html">NRL All Time Try Scorers</a>
+          <a class="quiz-card" href="nrlw-premiers-quiz.html">NRLW Premiership Winners</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#06b6d4"><div class="acc-hdr"><a href="afl.html" class="acc-name">🦘 AFL</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="afl-800-goals-quiz.html">Complete the 800 Goal Club</a>
+          <a class="quiz-card" href="afl-appearances-quiz.html">All Time Appearance Leaders</a>
+          <a class="quiz-card" href="afl-club-goalkickers-quiz.html">Each Club's Leading Goal Kicker</a>
+          <a class="quiz-card" href="afl-coleman-medal-quiz.html">Coleman Winners since 2000</a>
+          <a class="quiz-card" href="afl-highest-paid-2026-quiz.html">Highest Paid Players of 2026</a>
+          <a class="quiz-card" href="afl-norm-smith-quiz.html">Norm Smith Winners since 2000</a>
+          <a class="quiz-card" href="afl-premiership-coaches-quiz.html">Premiership Coaches since 2000</a>
+          <a class="quiz-card" href="afl-teams-quiz.html">Name Every AFL Team</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#14b8a6"><div class="acc-hdr"><a href="golf.html" class="acc-name">⛳ Golf</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="masters-golf-quiz.html">The Masters</a>
+          <a class="quiz-card" href="us-open-golf-quiz.html">US Open</a>
+          <a class="quiz-card" href="open-golf-quiz.html">The Open</a>
+          <a class="quiz-card" href="pga-golf-quiz.html">PGA Championship</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#f43f5e"><div class="acc-hdr"><a href="f1.html" class="acc-name">🏎️ F1</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="f1-champions-quiz.html">World Champions Since 1990</a>
+          <a class="quiz-card" href="f1-constructors-quiz.html">Constructors' Championships</a>
+          <a class="quiz-card" href="f1-race-wins-quiz.html">Most Race Wins All Time</a>
+          <a class="quiz-card" href="f1-pole-positions-quiz.html">Most Pole Positions All Time</a>
+          <a class="quiz-card" href="f1-fastest-laps-quiz.html">Fastest Lap Records</a>
+          <a class="quiz-card" href="monaco-winners-quiz.html">Monaco GP Winners</a>
+          <a class="quiz-card" href="f1-circuits-quiz.html">F1 Calendar Circuits</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#8b5cf6"><div class="acc-hdr"><a href="tennis.html" class="acc-name">🎾 Tennis</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="tennis-majors-quiz.html">Men's Grand Slam Winners</a>
+          <a class="quiz-card" href="wimbledon-womens-quiz.html">Women's Wimbledon Since 2000</a></div></div></div>
+<div class="sport-accordion" style="--sport-clr:#f5c842"><div class="acc-hdr"><a href="sports-awards.html" class="acc-name">🏆 Sports Awards</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="bbc-spoty-quiz.html">BBC SPOTY Winners Since 2000</a>
+          <a class="quiz-card" href="laureus-sportsman-quiz.html">Laureus Sportsman of the Year</a>
+          <a class="quiz-card" href="si-sportsperson-quiz.html">SI Sportsperson of the Year</a></div></div></div>
+</div>
+
+
+<script>
+(function(){
+  var SS_URL='https://syntfyfsyjiuowclarpf.supabase.co';
+  var SS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+  function animateCount(el,target){
+    if(!el||!target)return;
+    var start=Math.max(0,target-Math.min(800,target*0.04));
+    var dur=1800;var t0=Date.now();
+    (function tick(){
+      var p=Math.min(1,(Date.now()-t0)/dur);
+      var e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(start+(target-start)*e).toLocaleString();
+      if(p<1)requestAnimationFrame(tick);
+    })();
+  }
+  fetch(SS_URL+'/rest/v1/play_events?select=id',{
+    headers:{
+      'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,
+      'Prefer':'count=exact','Range':'0-0'
+    }
+  }).then(function(r){
+    var cr=r.headers.get('content-range');
+    if(cr){
+      var n=parseInt(cr.split('/')[1]);
+      if(!isNaN(n)) animateCount(document.getElementById('ss-play-count'), n+10000);
+    }
+  }).catch(function(){});
+  fetch(SS_URL+'/rest/v1/profiles?select=id',{
+    headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Prefer':'count=exact'}
+  }).then(function(r){
+    var c=r.headers.get('content-range');
+    if(c){var n=parseInt(c.split('/')[1]);if(n>0)animateCount(document.getElementById('ss-member-count'),n);}
+  }).catch(function(){});
+})();
+</script>
+
+<!-- GOAT Vote Modal -->
+<div class="goat-modal-overlay" id="goat-modal" style="display:none">
+  <div class="goat-modal">
+    <img src="goat-banner.jpg" alt="Vote the GOAT"/>
+    <div class="goat-modal-body">
+      <div class="goat-modal-eyebrow">Have Your Say</div>
+      <div class="goat-modal-headline">Sign in now to Vote the GOAT</div>
+      <div class="goat-modal-sub">Who is the Greatest Athlete of All Time? Cast your vote and see how the community decides — one vote per member.</div>
+<footer>&copy; 2026 <span>SportsStack</span> &nbsp;&middot;&nbsp; sportsstack.com.au &nbsp;&middot;&nbsp; <a href="privacy.html" style="color:var(--text-dim);text-decoration:none">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="terms.html" style="color:var(--text-dim);text-decoration:none">Terms of Service</a></footer>
+<script>
+const ALL_QUIZZES=["afl-800-goals-quiz.html", "afl-appearances-quiz.html", "afl-club-goalkickers-quiz.html", "afl-coleman-medal-quiz.html", "afl-highest-paid-2026-quiz.html", "afl-norm-smith-quiz.html", "afl-premiership-coaches-quiz.html", "afl-teams-quiz.html", "al-cy-young-quiz.html", "al-mvp-quiz.html", "all-nba-1979-80.html", "all-nba-1980-81.html", "all-nba-1981-82.html", "all-nba-1982-83.html", "all-nba-1983-84.html", "all-nba-1984-85.html", "all-nba-1985-86.html", "all-nba-1986-87.html", "all-nba-1987-88.html", "all-nba-1988-89.html", "all-nba-1989-90.html", "all-nba-1990-91.html", "all-nba-1991-92.html", "all-nba-1992-93.html", "all-nba-1993-94.html", "all-nba-1994-95.html", "all-nba-1995-96.html", "all-nba-1996-97.html", "all-nba-1997-98.html", "all-nba-1998-99.html", "all-nba-1999-00.html", "all-nba-2000-01.html", "all-nba-2001-02.html", "all-nba-2002-03.html", "all-nba-2003-04.html", "all-nba-2004-05.html", "all-nba-2005-06.html", "all-nba-2006-07.html", "all-nba-2007-08.html", "all-nba-2008-09.html", "all-nba-2009-10.html", "all-nba-2010-11.html", "all-nba-2011-12.html", "all-nba-2012-13.html", "all-nba-2013-14.html", "all-nba-2014-15.html", "all-nba-2015-16.html", "all-nba-2016-17.html", "all-nba-2017-18.html", "all-nba-2018-19.html", "all-nba-2019-20.html", "all-nba-2020-21.html", "all-nba-2021-22.html", "all-nba-2022-23.html", "all-nba-2023-24.html", "all-nba-2024-25.html", "all-nba-2025-26.html", "ap-all-pro-1990.html", "ap-all-pro-1991.html", "ap-all-pro-1992.html", "ap-all-pro-1993.html", "ap-all-pro-1994.html", "ap-all-pro-1995.html", "ap-all-pro-1996.html", "ap-all-pro-1997.html", "ap-all-pro-1998.html", "ap-all-pro-1999.html", "ap-all-pro-2000.html", "ap-all-pro-2001.html", "ap-all-pro-2002.html", "ap-all-pro-2003.html", "ap-all-pro-2004.html", "ap-all-pro-2005.html", "ap-all-pro-2006.html", "ap-all-pro-2007.html", "ap-all-pro-2008.html", "ap-all-pro-2009.html", "ap-all-pro-2010.html", "ap-all-pro-2011.html", "ap-all-pro-2012.html", "ap-all-pro-2013.html", "ap-all-pro-2014.html", "ap-all-pro-2015.html", "ap-all-pro-2016.html", "ap-all-pro-2017.html", "ap-all-pro-2018.html", "ap-all-pro-2019.html", "ap-all-pro-2020.html", "ap-all-pro-2021.html", "ap-all-pro-2022.html", "ap-all-pro-2023.html", "ap-all-pro-2024.html", "ap-all-pro-2025.html", "ballon-dor-quiz.html", "bbc-spoty-quiz.html", "big-bash-teams-quiz.html", "championship-poty-quiz.html", "championship-tots-2021.html", "championship-tots-2022.html", "championship-tots-2023.html", "championship-tots-2024.html", "championship-tots-2025.html", "championship-tots-2026.html", "clubble.html", "county-cricket-teams-quiz.html", "efl-tots-2016.html", "efl-tots-2017.html", "efl-tots-2018.html", "efl-tots-2019.html", "efl-young-poty-quiz.html", "expensive-transfers-quiz.html", "f1-champions-quiz.html", "f1-circuits-quiz.html", "f1-constructors-quiz.html", "f1-fastest-laps-quiz.html", "f1-pole-positions-quiz.html", "f1-race-wins-quiz.html", "football-league-team-of-decade-2015.html", "ipl-most-expensive-quiz.html", "ipl-teams-quiz.html", "laureus-sportsman-quiz.html", "lionesses-euro-2025-quiz.html", "masters-golf-quiz.html", "mlb-300-wins-quiz.html", "mlb-active-hr-leaders-quiz.html", "mlb-cy-young-quiz.html", "mlb-hr-leaders-quiz.html", "mlb-number-1-picks-quiz.html", "mlb-stadiums-quiz.html", "mlb-teams-quiz.html", "monaco-winners-quiz.html", "nba-3point-leaders-quiz.html", "nba-50point-games-quiz.html", "nba-appearances-quiz.html", "nba-block-leaders-quiz.html", "nba-finals-mvp-quiz.html", "nba-franchise-leading-scorers-quiz.html", "nba-highest-paid-quiz.html", "nba-home-arenas-quiz.html", "nba-mvp-since-2000-quiz.html", "nba-number-1-picks-quiz.html", "nba-rebound-leaders-quiz.html", "nba-roty-quiz.html", "nba-teams-quiz.html", "nba-top-20-assists-quiz.html", "nba-top-20-scorers-quiz.html", "nfl-100-receiving-td-quiz.html", "nfl-dpoty-quiz.html", "nfl-droy-quiz.html", "nfl-franchise-passing-quiz.html", "nfl-franchise-td-leaders-quiz.html", "nfl-highest-paid-position-quiz.html", "nfl-highest-paid-quiz.html", "nfl-interception-leaders-quiz.html", "nfl-mvp-quiz.html", "nfl-number-1-picks-quiz.html", "nfl-opoy-quiz.html", "nfl-oroy-quiz.html", "nfl-passing-yards-quiz.html", "nfl-qb-super-bowls-quiz.html", "nfl-sack-leaders-quiz.html", "nfl-sb-coaches-quiz.html", "nfl-stadiums-quiz.html", "nfl-superbowl-mvp-quiz.html", "nfl-teams-quiz.html", "nl-cy-young-quiz.html", "nl-mvp-quiz.html", "nrl-dally-m-quiz.html", "nrl-teams-quiz.html", "nrl-tryscorers-quiz.html", "nrlw-premiers-quiz.html", "nwsl-champions-quiz.html", "odi-run-scorers-quiz.html", "odi-wicket-takers-quiz.html", "open-golf-quiz.html", "pga-golf-quiz.html", "pl-100-club-quiz.html", "pl-38-zero.html", "pl-golden-boot-quiz.html", "pl-higher-lower.html", "pl-highest-paid-quiz.html", "pl-managers-quiz.html", "pl-poty-quiz.html", "pl-teams-quiz.html", "pl-top-assisters-quiz.html", "pl-tots-1990-1991.html", "pl-tots-1991-1992.html", "pl-tots-1992-1993.html", "pl-tots-1993-1994.html", "pl-tots-1994-1995.html", "pl-tots-1995-1996.html", "pl-tots-1996-1997.html", "pl-tots-1997-1998.html", "pl-tots-1998-1999.html", "pl-tots-1999-2000.html", "pl-tots-2000-2001.html", "pl-tots-2001-2002.html", "pl-tots-2002-2003.html", "pl-tots-2003-2004.html", "pl-tots-2004-2005.html", "pl-tots-2005-2006.html", "pl-tots-2006-2007.html", "pl-tots-2007-2008.html", "pl-tots-2008-2009.html", "pl-tots-2009-2010.html", "pl-tots-2010-2011.html", "pl-tots-2011-2012.html", "pl-tots-2012-2013.html", "pl-tots-2013-2014.html", "pl-tots-2014-2015.html", "pl-tots-2015-2016.html", "pl-tots-2016-2017.html", "pl-tots-2017-2018.html", "pl-tots-2018-2019.html", "pl-tots-2019-2020.html", "pl-tots-2020-2021.html", "pl-tots-2021-2022.html", "pl-tots-2022-2023.html", "pl-tots-2023-2024.html", "pl-tots-2024-2025.html", "pl-toty-appearances-quiz.html", "pl-ypoty-quiz.html", "prem-rugby-teams-quiz.html", "si-sportsperson-quiz.html", "sportsman-au.html", "sportsman-pl.html", "sportsman-us.html", "state-of-origin-tryscorers-quiz.html", "super-league-teams-quiz.html", "super-rugby-teams-quiz.html", "t20i-fastest-hundreds-quiz.html", "t20i-run-scorers-quiz.html", "t20i-wicket-takers-quiz.html", "test-run-scorers-quiz.html", "test-wicket-takers-quiz.html", "the-hundred-teams-quiz.html", "ucl-final-cities-quiz.html", "ucl-top-scorers-quiz.html", "ucl-tots-2001.html", "ucl-tots-2002.html", "ucl-tots-2003.html", "ucl-tots-2004.html", "ucl-tots-2005.html", "ucl-tots-2006.html", "ucl-tots-2007.html", "ucl-tots-2008.html", "ucl-tots-2009.html", "ucl-tots-2010.html", "ucl-tots-2011.html", "ucl-tots-2012.html", "ucl-tots-2013.html", "ucl-tots-2014.html", "ucl-tots-2015.html", "ucl-tots-2016.html", "ucl-tots-2017.html", "ucl-tots-2018.html", "ucl-tots-2019.html", "ucl-tots-2020-21.html", "ucl-tots-2020.html", "ucl-tots-2021-22.html", "ucl-tots-2022-23.html", "ucl-tots-2023-24.html", "ucl-tots-2024-25.html", "ucl-winners-quiz.html", "ucl-winning-managers-quiz.html", "urc-teams-quiz.html", "us-open-golf-quiz.html", "wc-8-zero.html", "wc-appearances-quiz.html", "wc-final-scorers-quiz.html", "wc-finalists-quiz.html", "wc-host-nations-quiz.html", "wc-nations-wins-quiz.html", "wc-predictor.html", "wc-quiz-of-day.html", "wc-top-scorers-quiz.html", "wc-winners-quiz.html", "weekly-quiz-2026-05-19.html", "weekly-quiz-2026-06-10.html", "weekly-quiz-2026-06-16.html", "weekly-quiz-2026-07-01.html", "weekly-quiz-2026-06-23.html", "wimbledon-womens-quiz.html", "womens-wimbledon-quiz.html", "womens-world-cup-quiz.html", "world-series-mvp-quiz.html", "ws-mvp-quiz.html", "wsl-golden-boot-quiz.html", "wsl-top-scorers-quiz.html"];
+function goRandom(){window.location.href=ALL_QUIZZES[Math.floor(Math.random()*ALL_QUIZZES.length)];}
+async function subscribeQOTW(){
+  var email=(document.getElementById('qotw-email').value||'').trim();
+  var status=document.getElementById('qotw-status');
+  var btn=document.getElementById('qotw-btn');
+  status.className='email-hook-status';status.textContent='';
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    status.className='email-hook-status err';status.textContent='Please enter a valid email address.';return;
+  }
+  btn.disabled=true;btn.textContent='Subscribing…';
+  try{
+    var res=await fetch('https://syntfyfsyjiuowclarpf.supabase.co/rest/v1/subscribers',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig','Prefer':'return=minimal'},
+      body:JSON.stringify({email:email,source:'quiz-of-the-week'})
+    });
+    if(res.status===201){
+      status.className='email-hook-status ok';status.textContent='✓ You’re in! See you Monday.';
+      document.getElementById('qotw-email').value='';btn.textContent='Subscribed ✓';
+    } else if(res.status===409){
+      status.className='email-hook-status ok';status.textContent='You’re already subscribed ✓';
+      btn.disabled=false;btn.textContent='Subscribe';
+    } else {
+      throw new Error('err');
+    }
+  } catch(e){
+    status.className='email-hook-status err';status.textContent='Something went wrong — please try again.';
+    btn.disabled=false;btn.textContent='Subscribe';
+  }
+}
+function toggleSport(btn){var b=btn.closest('.sport-accordion').querySelector('.acc-body');var o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',o?'false':'true');b.hidden=o;}
+</script>
+<script src="sportstack-member.js?v=4"></script>
+
+<style>
+.social-footer{text-align:center;padding:40px 16px 48px;border-top:1px solid #0d2040;margin-top:24px}
+.social-footer-label{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#6b8abf;margin-bottom:16px}
+.social-links{display:flex;justify-content:center;align-items:center;gap:20px}
+.social-link{display:flex;align-items:center;gap:9px;padding:10px 20px;background:#080f1c;border:1px solid #0d2040;border-radius:50px;text-decoration:none;color:#e8f0fe;font-family:'Barlow',sans-serif;font-size:14px;font-weight:600;transition:all .2s}
+.social-link:hover{border-color:#f5c842;color:#f5c842;background:#0d1829}
+.social-link svg{flex-shrink:0}
+</style>
+<div class="social-footer">
+  <div class="social-footer-label">Follow SportsStack</div>
+  <div class="social-links">
+    <a class="social-link" href="https://www.instagram.com/sportsstack/" target="_blank" rel="noopener">
+      <!-- Instagram SVG -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
+            <stop offset="0%" stop-color="#fdf497"/>
+            <stop offset="5%" stop-color="#fdf497"/>
+            <stop offset="45%" stop-color="#fd5949"/>
+            <stop offset="60%" stop-color="#d6249f"/>
+            <stop offset="90%" stop-color="#285AEB"/>
+          </radialGradient>
+        </defs>
+        <rect x="2" y="2" width="20" height="20" rx="5.5" ry="5.5" fill="url(#ig-grad)"/>
+        <circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/>
+        <circle cx="17.2" cy="6.8" r="1.1" fill="white"/>
+      </svg>
+      Instagram
+    </a>
+    <a class="social-link" href="https://www.tiktok.com/@sportsstack1?lang=en-GB" target="_blank" rel="noopener">
+      <!-- TikTok SVG -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.26 8.26 0 004.84 1.55V6.85a4.85 4.85 0 01-1.07-.16z"/>
+      </svg>
+      TikTok
+    </a>
+  </div>
+</div>
+
+
+
+<script>
+(function(){
+  var SS_URL='https://syntfyfsyjiuowclarpf.supabase.co';
+  var SS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+  function animateCount(el,target){
+    if(!el||!target)return;
+    var start=Math.max(0,target-Math.min(800,target*0.04));
+    var dur=1800;var t0=Date.now();
+    (function tick(){
+      var p=Math.min(1,(Date.now()-t0)/dur);
+      var e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(start+(target-start)*e).toLocaleString();
+      if(p<1)requestAnimationFrame(tick);
+    })();
+  }
+  fetch(SS_URL+'/rest/v1/play_events?select=id',{
+    headers:{
+      'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,
+      'Prefer':'count=exact','Range':'0-0'
+    }
+  }).then(function(r){
+    var cr=r.headers.get('content-range');
+    if(cr){
+      var n=parseInt(cr.split('/')[1]);
+      if(!isNaN(n)) animateCount(document.getElementById('ss-play-count'), n+10000);
+    }
+  }).catch(function(){});
+  fetch(SS_URL+'/rest/v1/profiles?select=id',{
+    headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Prefer':'count=exact'}
+  }).then(function(r){
+    var c=r.headers.get('content-range');
+    if(c){var n=parseInt(c.split('/')[1]);if(n>0)animateCount(document.getElementById('ss-member-count'),n);}
+  }).catch(function(){});
+})();
+</script>
+
+<!-- GOAT Vote Modal -->
+<div class="goat-modal-overlay" id="goat-modal" style="display:none">
+  <div class="goat-modal">
+    <img src="goat-banner.jpg" alt="Vote the GOAT"/>
+    <div class="goat-modal-body">
+      <div class="goat-modal-eyebrow">Have Your Say</div>
+      <div class="goat-modal-headline">Sign in now to Vote the GOAT</div>
+      <div class="goat-modal-sub">Who is the Greatest Athlete of All Time? Cast your vote and see how the community decides — one vote per member.</div>
+      <a href="vote-goat.html" class="goat-modal-cta">Vote Now 🐐</a>
+      <button class="goat-modal-later" onclick="dismissGoatModal()">Maybe later</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('goat-modal-seen')){
+    setTimeout(function(){
+      var m=document.getElementById('goat-modal');
+      if(m) m.style.display='flex';
+    }, 2500);
+  }
+  document.addEventListener('click',function(e){
+    var m=document.getElementById('goat-modal');
+    if(m && e.target===m) dismissGoatModal();
+  });
+})();
+function dismissGoatModal(){
+  localStorage.setItem('goat-modal-seen','1');
+  var m=document.getElementById('goat-modal');
+  if(m){ m.style.opacity='0'; m.style.transition='opacity .25s'; setTimeout(function(){m.style.display='none';},260); }
+}
+
+</script>
+</body></html>

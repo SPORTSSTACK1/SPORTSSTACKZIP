@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Transferotd — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/transferotd.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>Deal of the Day &#8211; SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#04080f;--sf:#080f1c;--sf2:#0d1829;--gold:#f5c842;--text:#e8f0fe;--mut:#6b8abf;--dim:#1e3355;--bd:#0d2040;--brt:#1a3a6a;--gb:rgba(34,197,94,.12);--gbd:rgba(34,197,94,.4);--rb:rgba(239,68,68,.08);--rbd:rgba(239,68,68,.3)}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:560px;margin:0 auto;padding:24px 16px 80px}
+.hdr{text-align:center;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--bd)}
+.eye{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:5px}
+.ttl{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5.5vw,34px);font-weight:900;text-transform:uppercase;color:var(--text)}
+.ttl .hl{color:var(--gold)} .dl{font-size:12px;color:var(--dim);margin-top:3px}
+.hints{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.tile{display:flex;align-items:center;gap:12px;padding:11px 15px;background:var(--sf);border:1px solid var(--bd);border-radius:10px;transition:all .35s}
+.tile.on{background:var(--sf2);border-color:var(--brt)}
+.ticon{font-size:18px;width:26px;text-align:center;flex-shrink:0}
+.tlbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);width:110px;flex-shrink:0}
+.tile.on .tlbl{color:var(--mut)} .tval{font-family:'Barlow',sans-serif;font-size:15px;font-weight:400;color:var(--gold);letter-spacing:.01em;opacity:0;transition:opacity .5s .15s;flex:1}
+.tile.on .tval{opacity:1} .tmask{display:flex;gap:5px} .tdot{width:6px;height:6px;border-radius:50%;background:var(--dim)}
+.grows{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.grow{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:8px;border:1px solid;animation:pop .18s ease}
+.grow.ok{background:var(--gb);border-color:var(--gbd)} .grow.no{background:var(--rb);border-color:var(--rbd)}
+.gico{font-size:14px;flex-shrink:0} .gnm{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;letter-spacing:.03em}
+.grow.ok .gnm{color:#86efac} .grow.no .gnm{color:#fca5a5}
+@keyframes pop{from{transform:translateX(-6px);opacity:0}to{transform:translateX(0);opacity:1}}
+.pips{display:flex;justify-content:center;gap:7px;margin-bottom:14px}
+.pip{width:10px;height:10px;border-radius:50%;background:var(--dim);transition:background .25s}
+.pip.no{background:#ef4444} .pip.ok{background:#22c55e}
+.iwrap{position:relative}
+.ginput{width:100%;font-family:'Barlow Condensed',sans-serif;font-size:clamp(15px,4vw,20px);font-weight:700;padding:12px 16px;border:2px solid var(--brt);border-radius:12px;background:var(--sf2);color:var(--text);outline:none;text-align:center;transition:border-color .2s}
+.ginput:focus{border-color:var(--gold)} .ginput:disabled{opacity:.38;cursor:not-allowed}
+.sbox{position:absolute;top:100%;left:0;right:0;z-index:50;background:var(--sf);border:1px solid var(--brt);border-radius:10px;margin-top:4px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.si{padding:10px 16px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--text);cursor:pointer;border-bottom:1px solid var(--bd)}
+.si:last-child{border-bottom:none} .si:hover{background:var(--sf2);color:var(--gold)}
+.rbox{border-radius:14px;padding:20px;text-align:center;margin-top:16px;border:1px solid}
+.rbox.win{border-color:var(--gbd);background:var(--gb)} .rbox.lose{border-color:var(--rbd);background:var(--rb)}
+.ricon{font-size:38px;margin-bottom:6px} .rtitle{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:4px}
+.rbox.win .rtitle{color:#86efac} .rbox.lose .rtitle{color:#fca5a5}
+.rsub{font-size:13px;color:var(--mut);line-height:1.6;margin-bottom:14px} .rsub b{color:var(--text)}
+.sbtn{padding:9px 22px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--brt);background:transparent;color:var(--text)}
+.back{display:block;text-align:center;margin-top:18px;font-size:12px;color:var(--mut);text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+.back:hover{color:var(--gold)}
+nav{position:sticky;top
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hdr"><div class="eye">Daily Game</div><div class="ttl">Deal <span class="hl">of the Day</span></div><div class="dl" id="dl"></div></div>
+  <div class="hints">
+    <div class="tile" id="t0"><div class="ticon">&#x27A1;&#xFE0F;</div><div class="tlbl">New Club</div><div class="tmask"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div><div class="tval" id="v0"></div></div>
+    <div class="tile" id="t1"><div class="ticon">&#x2B05;&#xFE0F;</div><div class="tlbl">Previous Club</div><div class="tmask"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div><div class="tval" id="v1"></div></div>
+    <div class="tile" id="t2"><div class="ticon">&#x1F30D;</div><div class="tlbl">Nationality</div><div class="tmask"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div><div class="tval" id="v2"></div></div>
+    <div class="tile" id="t3"><div class="ticon">&#x1F4B0;</div><div class="tlbl">Transfer Fee</div><div class="tmask"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div><div class="tval" id="v3"></div></div>
+    <div class="tile" id="t4"><div class="ticon">&#x1F4C5;</div><div class="tlbl">Year</div><div class="tmask"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div><div class="tval" id="v4"></div></div>
+  </div>
+  <div id="grows" class="grows"></div>
+  <div class="pips" id="pips"><div class="pip" id="p0"></div><div class="pip" id="p1"></div><div class="pip" id="p2"></div><div class="pip" id="p3"></div><div class="pip" id="p4"></div><div class="pip" id="p5"></div></div>
+  <div class="iwrap" id="iwrap">
+    <input id="ginput" class="ginput" type="text" placeholder="Guess the player&#8230;" autocomplete="off" spellcheck="false"/>
+    <div id="sbox" class="sbox" style="display:none"></div>
+  </div>
+  <div id="rarea"></div>
+  <a class="back" href="index.html">&#8592; Back to all quizzes</a>
+</div>
+<script>
+var T=[
+{n:"Neymar",f:"FC Barcelona",t:"Paris Saint-Germain",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC222.00m",y:2017,a:["neymar"]},
+{n:"Kylian Mbappe",f:"AS Monaco",t:"Paris Saint-Germain",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC180.00m",y:2018,a:["kylian mbappe","mbappe","kylian"]},
+{n:"Ousmane Dembele",f:"Borussia Dortmund",t:"FC Barcelona",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC148.00m",y:2017,a:["ousmane dembele","dembele","ousmane"]},
+{n:"Alexander Isak",f:"Newcastle United",t:"Liverpool FC",fl:"\uD83C\uDDF8\uD83C\uDDEA",na:"Sweden",fe:"\u20AC145.00m",y:2025,a:["alexander isak","isak","alexander"]},
+{n:"Philippe Coutinho",f:"Liverpool FC",t:"FC Barcelona",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC135.00m",y:2017,a:["philippe coutinho","coutinho","philippe"]},
+{n:"Joao Felix",f:"SL Benfica",t:"Atletico de Madrid",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC127.20m",y:2019,a:["joao felix","felix","joao"]},
+{n:"Jude Bellingham",f:"Borussia Dortmund",t:"Real Madrid",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC127.00m",y:2023,a:["jude bellingham","bellingham","jude"]},
+{n:"Florian Wirtz",f:"Bayer 04 Leverkusen",t:"Liverpool FC",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC125.00m",y:2025,a:["florian wirtz","wirtz","florian"]},
+{n:"Enzo Fernandez",f:"SL Benfica",t:"Chelsea FC",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC121.00m",y:2022,a:["enzo fernandez","fernandez","enzo"]},
+{n:"Eden Hazard",f:"Chelsea FC",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC120.80m",y:2019,a:["eden hazard","hazard","eden"]},
+{n:"Antoine Griezmann",f:"Atletico de Madrid",t:"FC Barcelona",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC120.00m",y:2019,a:["antoine griezmann","griezmann","antoine"]},
+{n:"Jack Grealish",f:"Aston Villa",t:"Manchester City",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC117.50m",y:2021,a:["jack grealish","grealish","jack"]},
+{n:"Cristiano Ronaldo",f:"Real Madrid",t:"Juventus FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC117.00m",y:2018,a:["cristiano ronaldo","ronaldo","cristiano"]},
+{n:"Declan Rice",f:"West Ham United",t:"Arsenal FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC116.60m",y:2023,a:["declan rice","rice","declan"]},
+{n:"Moises Caicedo",f:"Brighton & Hove Albion",t:"Chelsea FC",fl:"\uD83C\uDDEA\uD83C\uDDE8",na:"Ecuador",fe:"\u20AC116.00m",y:2023,a:["moises caicedo","caicedo","moises"]},
+{n:"Romelu Lukaku",f:"Inter Milan",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC113.00m",y:2021,a:["romelu lukaku","lukaku","romelu"]},
+{n:"Paul Pogba",f:"Juventus FC",t:"Manchester United",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC105.00m",y:2016,a:["paul pogba","pogba","paul"]},
+{n:"Gareth Bale",f:"Tottenham Hotspur",t:"Real Madrid",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC77\uDB40\uDC6C\uDB40\uDC73\uDB40\uDC7F",na:"Wales",fe:"\u20AC101.00m",y:2013,a:["gareth bale","bale","gareth"]},
+{n:"Kai Havertz",f:"Bayer 04 Leverkusen",t:"Chelsea FC",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC100.00m",y:2020,a:["kai havertz","havertz","kai"]},
+{n:"Hugo Ekitike",f:"Eintracht Frankfurt",t:"Liverpool FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC95.00m",y:2025,a:["hugo ekitike","ekitike","hugo"]},
+{n:"Harry Kane",f:"Tottenham Hotspur",t:"Bayern Munich",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC95.00m",y:2023,a:["harry kane","kane","harry"]},
+{n:"Randal Kolo Muani",f:"Eintracht Frankfurt",t:"Paris Saint-Germain",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC95.00m",y:2023,a:["randal kolo muani","muani","randal"]},
+{n:"Antony",f:"Ajax Amsterdam",t:"Manchester United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC95.00m",y:2022,a:["antony"]},
+{n:"Cristiano Ronaldo",f:"Manchester United",t:"Real Madrid",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC94.00m",y:2009,a:["cristiano ronaldo","ronaldo","cristiano"]},
+{n:"Josko Gvardiol",f:"RB Leipzig",t:"Manchester City",fl:"\uD83C\uDDED\uD83C\uDDF7",na:"Croatia",fe:"\u20AC90.00m",y:2023,a:["josko gvardiol","gvardiol","josko"]},
+{n:"Neymar",f:"Paris Saint-Germain",t:"Al-Hilal SFC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC90.00m",y:2023,a:["neymar"]},
+{n:"Gonzalo Higuain",f:"SSC Napoli",t:"Juventus FC",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC90.00m",y:2016,a:["gonzalo higuain","higuain","gonzalo"]},
+{n:"Neymar",f:"Santos FC",t:"FC Barcelona",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC88.00m",y:2013,a:["neymar"]},
+{n:"Harry Maguire",f:"Leicester City",t:"Manchester United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC87.00m",y:2019,a:["harry maguire","maguire","harry"]},
+{n:"Frenkie de Jong",f:"Ajax Amsterdam",t:"FC Barcelona",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC86.00m",y:2019,a:["frenkie de jong","jong","frenkie"]},
+{n:"Matthijs de Ligt",f:"Ajax Amsterdam",t:"Juventus FC",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC85.50m",y:2019,a:["matthijs de ligt","ligt","matthijs"]},
+{n:"Dusan Vlahovic",f:"ACF Fiorentina",t:"Juventus FC",fl:"\uD83C\uDDF7\uD83C\uDDF8",na:"Serbia",fe:"\u20AC85.40m",y:2021,a:["dusan vlahovic","vlahovic","dusan"]},
+{n:"Darwin Nunez",f:"SL Benfica",t:"Liverpool FC",fl:"\uD83C\uDDFA\uD83C\uDDFE",na:"Uruguay",fe:"\u20AC85.00m",y:2022,a:["darwin nunez","nunez","darwin"]},
+{n:"Jadon Sancho",f:"Borussia Dortmund",t:"Manchester United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC85.00m",y:2021,a:["jadon sancho","sancho","jadon"]},
+{n:"Romelu Lukaku",f:"Everton FC",t:"Manchester United",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC84.70m",y:2017,a:["romelu lukaku","lukaku","romelu"]},
+{n:"Virgil van Dijk",f:"Southampton FC",t:"Liverpool FC",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC84.65m",y:2017,a:["virgil van dijk","dijk","virgil"]},
+{n:"Luis Suarez",f:"Liverpool FC",t:"FC Barcelona",fl:"\uD83C\uDDFA\uD83C\uDDFE",na:"Uruguay",fe:"\u20AC81.72m",y:2014,a:["luis suarez","suarez","luis"]},
+{n:"Arthur Melo",f:"FC Barcelona",t:"Juventus FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC80.60m",y:2020,a:["arthur melo","melo","arthur"]},
+{n:"Wesley Fofana",f:"Leicester City",t:"Chelsea FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC80.40m",y:2022,a:["wesley fofana","fofana","wesley"]},
+{n:"Anthony Gordon",f:"Newcastle United",t:"FC Barcelona",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC80.00m",y:2026,a:["anthony gordon","gordon","anthony"]},
+{n:"Khvicha Kvaratskhelia",f:"SSC Napoli",t:"Paris Saint-Germain",fl:"\uD83C\uDDEC\uD83C\uDDEA",na:"Georgia",fe:"\u20AC80.00m",y:2024,a:["khvicha kvaratskhelia","kvaratskhelia","khvicha"]},
+{n:"Aurelien Tchouameni",f:"AS Monaco",t:"Real Madrid",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC80.00m",y:2022,a:["aurelien tchouameni","tchouameni","aurelien"]},
+{n:"Lucas Hernandez",f:"Atletico de Madrid",t:"Bayern Munich",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC80.00m",y:2019,a:["lucas hernandez","hernandez","lucas"]},
+{n:"Nicolas Pepe",f:"LOSC Lille",t:"Arsenal FC",fl:"\uD83C\uDDE8\uD83C\uDDEE",na:"Ivory Coast",fe:"\u20AC80.00m",y:2019,a:["nicolas pepe","pepe","nicolas"]},
+{n:"Kepa Arrizabalaga",f:"Athletic Bilbao",t:"Chelsea FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC80.00m",y:2018,a:["kepa arrizabalaga","arrizabalaga","kepa"]},
+{n:"Victor Osimhen",f:"LOSC Lille",t:"SSC Napoli",fl:"\uD83C\uDDF3\uD83C\uDDEC",na:"Nigeria",fe:"\u20AC78.90m",y:2020,a:["victor osimhen","osimhen","victor"]},
+{n:"Rasmus Hojlund",f:"Atalanta BC",t:"Manchester United",fl:"\uD83C\uDDE9\uD83C\uDDF0",na:"Denmark",fe:"\u20AC77.80m",y:2023,a:["rasmus hojlund","hojlund","rasmus"]},
+{n:"Alexander Isak",f:"Real Sociedad",t:"Newcastle United",fl:"\uD83C\uDDF8\uD83C\uDDEA",na:"Sweden",fe:"\u20AC77.50m",y:2022,a:["alexander isak","isak","alexander"]},
+{n:"Zinedine Zidane",f:"Juventus FC",t:"Real Madrid",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC77.50m",y:2001,a:["zinedine zidane","zidane","zinedine"]},
+{n:"Jhon Duran",f:"Aston Villa",t:"Al-Nassr FC",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC77.00m",y:2024,a:["jhon duran","duran","jhon"]},
+{n:"Benjamin Sesko",f:"RB Leipzig",t:"Manchester United",fl:"\uD83C\uDDF8\uD83C\uDDEE",na:"Slovenia",fe:"\u20AC76.50m",y:2025,a:["benjamin sesko","sesko","benjamin"]},
+{n:"Kevin De Bruyne",f:"VfL Wolfsburg",t:"Manchester City",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC76.00m",y:2015,a:["kevin de bruyne","bruyne","kevin"]},
+{n:"Victor Osimhen",f:"SSC Napoli",t:"Galatasaray",fl:"\uD83C\uDDF3\uD83C\uDDEC",na:"Nigeria",fe:"\u20AC75.00m",y:2025,a:["victor osimhen","osimhen","victor"]},
+{n:"Bryan Mbeumo",f:"Brentford FC",t:"Manchester United",fl:"\uD83C\uDDE8\uD83C\uDDF2",na:"Cameroon",fe:"\u20AC75.00m",y:2025,a:["bryan mbeumo","mbeumo","bryan"]},
+{n:"Nick Woltemade",f:"VfB Stuttgart",t:"Newcastle United",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC75.00m",y:2025,a:["nick woltemade","woltemade","nick"]},
+{n:"Julian Alvarez",f:"Manchester City",t:"Atletico de Madrid",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC75.00m",y:2024,a:["julian alvarez","alvarez","julian"]},
+{n:"Omar Marmoush",f:"Eintracht Frankfurt",t:"Manchester City",fl:"\uD83C\uDDEA\uD83C\uDDEC",na:"Egypt",fe:"\u20AC75.00m",y:2024,a:["omar marmoush","marmoush","omar"]},
+{n:"Kai Havertz",f:"Chelsea FC",t:"Arsenal FC",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC75.00m",y:2023,a:["kai havertz","havertz","kai"]},
+{n:"James Rodriguez",f:"AS Monaco",t:"Real Madrid",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC75.00m",y:2014,a:["james rodriguez","rodriguez","james"]},
+{n:"Angel Di Maria",f:"Real Madrid",t:"Manchester United",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC75.00m",y:2014,a:["angel di maria","maria","angel"]},
+{n:"Matheus Cunha",f:"Wolverhampton Wanderers",t:"Manchester United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC74.20m",y:2025,a:["matheus cunha","cunha","matheus"]},
+{n:"Romelu Lukaku",f:"Manchester United",t:"Inter Milan",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC74.00m",y:2019,a:["romelu lukaku","lukaku","romelu"]},
+{n:"Alisson",f:"AS Roma",t:"Liverpool FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC72.50m",y:2018,a:["alisson"]},
+{n:"Antoine Semenyo",f:"AFC Bournemouth",t:"Manchester City",fl:"\uD83C\uDDEC\uD83C\uDDED",na:"Ghana",fe:"\u20AC72.00m",y:2025,a:["antoine semenyo","semenyo","antoine"]},
+{n:"Thomas Lemar",f:"AS Monaco",t:"Atletico de Madrid",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC72.00m",y:2018,a:["thomas lemar","lemar","thomas"]},
+{n:"Ruben Dias",f:"SL Benfica",t:"Manchester City",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC71.60m",y:2020,a:["ruben dias","dias","ruben"]},
+{n:"Casemiro",f:"Real Madrid",t:"Manchester United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC70.65m",y:2022,a:["casemiro"]},
+{n:"Luis Diaz",f:"Liverpool FC",t:"Bayern Munich",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC70.00m",y:2025,a:["luis diaz","diaz","luis"]},
+{n:"Martin Zubimendi",f:"Real Sociedad",t:"Arsenal FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC70.00m",y:2025,a:["martin zubimendi","zubimendi","martin"]},
+{n:"Dominik Szoboszlai",f:"RB Leipzig",t:"Liverpool FC",fl:"\uD83C\uDDED\uD83C\uDDFA",na:"Hungary",fe:"\u20AC70.00m",y:2023,a:["dominik szoboszlai","szoboszlai","dominik"]},
+{n:"Mykhaylo Mudryk",f:"Shakhtar Donetsk",t:"Chelsea FC",fl:"\uD83C\uDDFA\uD83C\uDDE6",na:"Ukraine",fe:"\u20AC70.00m",y:2022,a:["mykhaylo mudryk","mudryk","mykhaylo"]},
+{n:"Rodri",f:"Atletico de Madrid",t:"Manchester City",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC70.00m",y:2019,a:["rodri"]},
+{n:"Zlatan Ibrahimovic",f:"Inter Milan",t:"FC Barcelona",fl:"\uD83C\uDDF8\uD83C\uDDEA",na:"Sweden",fe:"\u20AC69.50m",y:2009,a:["zlatan ibrahimovic","ibrahimovic","zlatan"]},
+{n:"Eberechi Eze",f:"Crystal Palace",t:"Arsenal FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC69.30m",y:2025,a:["eberechi eze","eze","eberechi"]},
+{n:"Achraf Hakimi",f:"Inter Milan",t:"Paris Saint-Germain",fl:"\uD83C\uDDF2\uD83C\uDDE6",na:"Morocco",fe:"\u20AC68.00m",y:2021,a:["achraf hakimi","hakimi","achraf"]},
+{n:"Riyad Mahrez",f:"Leicester City",t:"Manchester City",fl:"\uD83C\uDDE9\uD83C\uDDFF",na:"Algeria",fe:"\u20AC67.80m",y:2018,a:["riyad mahrez","mahrez","riyad"]},
+{n:"Mason Mount",f:"Chelsea FC",t:"Manchester United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC67.70m",y:2023,a:["mason mount","mount","mason"]},
+{n:"Matthijs de Ligt",f:"Juventus FC",t:"Bayern Munich",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC67.00m",y:2022,a:["matthijs de ligt","ligt","matthijs"]},
+{n:"Kaka",f:"AC Milan",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC67.00m",y:2009,a:["kaka"]},
+{n:"Viktor Gyokeres",f:"Sporting CP",t:"Arsenal FC",fl:"\uD83C\uDDF8\uD83C\uDDEA",na:"Sweden",fe:"\u20AC66.90m",y:2025,a:["viktor gyokeres","gyokeres","viktor"]},
+{n:"Alvaro Morata",f:"Real Madrid",t:"Chelsea FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC66.00m",y:2017,a:["alvaro morata","morata","alvaro"]},
+{n:"Joao Neves",f:"SL Benfica",t:"Paris Saint-Germain",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC65.92m",y:2024,a:["joao neves","neves","joao"]},
+{n:"Marc Cucurella",f:"Brighton & Hove Albion",t:"Chelsea FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC65.30m",y:2022,a:["marc cucurella","cucurella","marc"]},
+{n:"Xavi Simons",f:"RB Leipzig",t:"Tottenham Hotspur",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC65.00m",y:2025,a:["xavi simons","simons","xavi"]},
+{n:"Goncalo Ramos",f:"SL Benfica",t:"Paris Saint-Germain",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC65.00m",y:2023,a:["goncalo ramos","ramos","goncalo"]},
+{n:"Bruno Fernandes",f:"Sporting CP",t:"Manchester United",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC65.00m",y:2019,a:["bruno fernandes","fernandes","bruno"]},
+{n:"Joao Cancelo",f:"Juventus FC",t:"Manchester City",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC65.00m",y:2019,a:["joao cancelo","cancelo","joao"]},
+{n:"Aymeric Laporte",f:"Athletic Bilbao",t:"Manchester City",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC65.00m",y:2017,a:["aymeric laporte","laporte","aymeric"]},
+{n:"Edinson Cavani",f:"SSC Napoli",t:"Paris Saint-Germain",fl:"\uD83C\uDDFA\uD83C\uDDFE",na:"Uruguay",fe:"\u20AC64.50m",y:2013,a:["edinson cavani","cavani","edinson"]},
+{n:"Dominic Solanke",f:"AFC Bournemouth",t:"Tottenham Hotspur",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC64.30m",y:2024,a:["dominic solanke","solanke","dominic"]},
+{n:"Christian Pulisic",f:"Borussia Dortmund",t:"Chelsea FC",fl:"\uD83C\uDDFA\uD83C\uDDF8",na:"USA",fe:"\u20AC64.00m",y:2018,a:["christian pulisic","pulisic","christian"]},
+{n:"Mohammed Kudus",f:"West Ham United",t:"Tottenham Hotspur",fl:"\uD83C\uDDEC\uD83C\uDDED",na:"Ghana",fe:"\u20AC63.80m",y:2025,a:["mohammed kudus","kudus","mohammed"]},
+{n:"Pierre-Emerick Aubameyang",f:"Borussia Dortmund",t:"Arsenal FC",fl:"\uD83C\uDDEC\uD83C\uDDE6",na:"Gabon",fe:"\u20AC63.75m",y:2017,a:["pierre emerick aubameyang","aubameyang","pierre"]},
+{n:"Joao Pedro",f:"Brighton & Hove Albion",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC63.70m",y:2025,a:["joao pedro","pedro","joao"]},
+{n:"Raheem Sterling",f:"Liverpool FC",t:"Manchester City",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC63.70m",y:2015,a:["raheem sterling","sterling","raheem"]},
+{n:"Jeremy Jacquet",f:"Stade Rennais FC",t:"Liverpool FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC63.60m",y:2026,a:["jeremy jacquet","jacquet","jeremy"]},
+{n:"Ilya Zabarnyi",f:"AFC Bournemouth",t:"Paris Saint-Germain",fl:"\uD83C\uDDFA\uD83C\uDDE6",na:"Ukraine",fe:"\u20AC63.00m",y:2025,a:["ilya zabarnyi","zabarnyi","ilya"]},
+{n:"Luka Jovic",f:"Eintracht Frankfurt",t:"Real Madrid",fl:"\uD83C\uDDF7\uD83C\uDDF8",na:"Serbia",fe:"\u20AC63.00m",y:2019,a:["luka jovic","jovic","luka"]},
+{n:"Angel Di Maria",f:"Manchester United",t:"Paris Saint-Germain",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC63.00m",y:2015,a:["angel di maria","maria","angel"]},
+{n:"Dean Huijsen",f:"AFC Bournemouth",t:"Real Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC62.50m",y:2025,a:["dean huijsen","huijsen","dean"]},
+{n:"Romeo Lavia",f:"Southampton FC",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC62.10m",y:2023,a:["romeo lavia","lavia","romeo"]},
+{n:"Leny Yoro",f:"LOSC Lille",t:"Manchester United",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC62.00m",y:2024,a:["leny yoro","yoro","leny"]},
+{n:"Matheus Nunes",f:"Wolverhampton Wanderers",t:"Manchester City",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC62.00m",y:2023,a:["matheus nunes","nunes","matheus"]},
+{n:"Tanguy Ndombele",f:"Olympique Lyon",t:"Tottenham Hotspur",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC62.00m",y:2019,a:["tanguy ndombele","ndombele","tanguy"]},
+{n:"Mateo Retegui",f:"Atalanta BC",t:"Al-Qadsiah FC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC68.25m",y:2025,a:["mateo retegui","retegui","mateo"]},
+{n:"Anthony Elanga",f:"Nottingham Forest",t:"Newcastle United",fl:"\uD83C\uDDF8\uD83C\uDDEA",na:"Sweden",fe:"\u20AC61.40m",y:2025,a:["anthony elanga","elanga","anthony"]},
+{n:"Dani Olmo",f:"RB Leipzig",t:"FC Barcelona",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC61.00m",y:2024,a:["dani olmo","olmo","dani"]},
+{n:"Sandro Tonali",f:"AC Milan",t:"Newcastle United",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC60.80m",y:2023,a:["sandro tonali","tonali","sandro"]},
+{n:"Moussa Diaby",f:"Aston Villa",t:"Al-Ittihad Club",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC60.00m",y:2024,a:["moussa diaby","diaby","moussa"]},
+{n:"Pedro Neto",f:"Wolverhampton Wanderers",t:"Chelsea FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC60.00m",y:2024,a:["pedro neto","neto","pedro"]},
+{n:"Nico Gonzalez",f:"FC Porto",t:"Manchester City",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC60.00m",y:2024,a:["nico gonzalez","gonzalez","nico"]},
+{n:"Christopher Nkunku",f:"RB Leipzig",t:"Chelsea FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC60.00m",y:2023,a:["christopher nkunku","nkunku","christopher"]},
+{n:"Manuel Ugarte",f:"Sporting CP",t:"Paris Saint-Germain",fl:"\uD83C\uDDFA\uD83C\uDDFE",na:"Uruguay",fe:"\u20AC60.00m",y:2023,a:["manuel ugarte","ugarte","manuel"]},
+{n:"Otavio",f:"FC Porto",t:"Al-Nassr FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC60.00m",y:2023,a:["otavio"]},
+{n:"Malcom",f:"Zenit St. Petersburg",t:"Al-Hilal SFC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC60.00m",y:2023,a:["malcom"]},
+{n:"Jeremy Doku",f:"Stade Rennais FC",t:"Manchester City",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC60.00m",y:2023,a:["jeremy doku","doku","jeremy"]},
+{n:"Erling Haaland",f:"Borussia Dortmund",t:"Manchester City",fl:"\uD83C\uDDF3\uD83C\uDDF4",na:"Norway",fe:"\u20AC60.00m",y:2022,a:["erling haaland","haaland","erling"]},
+{n:"Miralem Pjanic",f:"Juventus FC",t:"FC Barcelona",fl:"\uD83C\uDDE7\uD83C\uDDE6",na:"Bosnia",fe:"\u20AC60.00m",y:2020,a:["miralem pjanic","pjanic","miralem"]},
+{n:"Naby Keita",f:"RB Leipzig",t:"Liverpool FC",fl:"\uD83C\uDDEC\uD83C\uDDF3",na:"Guinea",fe:"\u20AC60.00m",y:2018,a:["naby keita","keita","naby"]},
+{n:"Diego Costa",f:"Chelsea FC",t:"Atletico de Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC60.00m",y:2017,a:["diego costa","costa","diego"]},
+{n:"Oscar",f:"Chelsea FC",t:"Shanghai Port",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC60.00m",y:2016,a:["oscar"]},
+{n:"Anthony Martial",f:"AS Monaco",t:"Manchester United",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC60.00m",y:2015,a:["anthony martial","martial","anthony"]},
+{n:"Luis Figo",f:"FC Barcelona",t:"Real Madrid",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC60.00m",y:2000,a:["luis figo","figo","luis"]},
+{n:"Amadou Onana",f:"Everton FC",t:"Aston Villa",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC59.35m",y:2024,a:["amadou onana","onana","amadou"]},
+{n:"Fred",f:"Shakhtar Donetsk",t:"Manchester United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC59.00m",y:2018,a:["fred"]},
+{n:"Ben White",f:"Brighton & Hove Albion",t:"Arsenal FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC58.50m",y:2021,a:["ben white","white","ben"]},
+{n:"Fernando Torres",f:"Liverpool FC",t:"Chelsea FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC58.50m",y:2010,a:["fernando torres","torres","fernando"]},
+{n:"Teun Koopmeiners",f:"Atalanta BC",t:"Juventus FC",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC58.40m",y:2024,a:["teun koopmeiners","koopmeiners","teun"]},
+{n:"Richarlison",f:"Everton FC",t:"Tottenham Hotspur",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC58.00m",y:2022,a:["richarlison"]},
+{n:"Raphinha",f:"Leeds United",t:"FC Barcelona",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC58.00m",y:2022,a:["raphinha"]},
+{n:"Yoane Wissa",f:"Brentford FC",t:"Newcastle United",fl:"\uD83C\uDDE8\uD83C\uDDE9",na:"DR Congo",fe:"\u20AC57.70m",y:2025,a:["yoane wissa","wissa","yoane"]},
+{n:"Benjamin Mendy",f:"AS Monaco",t:"Manchester City",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC57.50m",y:2017,a:["benjamin mendy","mendy","benjamin"]},
+{n:"Lisandro Martinez",f:"Ajax Amsterdam",t:"Manchester United",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC57.37m",y:2022,a:["lisandro martinez","martinez","lisandro"]},
+{n:"Jorginho",f:"SSC Napoli",t:"Chelsea FC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC57.00m",y:2018,a:["jorginho"]},
+{n:"Hernan Crespo",f:"Parma Calcio",t:"SS Lazio",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC56.81m",y:2000,a:["hernan crespo","crespo","hernan"]},
+{n:"Raheem Sterling",f:"Manchester City",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC56.20m",y:2022,a:["raheem sterling","sterling","raheem"]},
+{n:"Jamie Gittens",f:"Borussia Dortmund",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC56.00m",y:2025,a:["jamie gittens","gittens","jamie"]},
+{n:"Noni Madueke",f:"Chelsea FC",t:"Arsenal FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC56.00m",y:2025,a:["noni madueke","madueke","noni"]},
+{n:"Hulk",f:"Zenit St. Petersburg",t:"Shanghai Port",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC56.00m",y:2016,a:["hulk"]},
+{n:"John Stones",f:"Everton FC",t:"Manchester City",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC55.60m",y:2016,a:["john stones","stones","john"]},
+{n:"Moussa Diaby",f:"Bayer 04 Leverkusen",t:"Aston Villa",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC55.00m",y:2023,a:["moussa diaby","diaby","moussa"]},
+{n:"Ruben Neves",f:"Wolverhampton Wanderers",t:"Al-Hilal SFC",fl:"\uD83C\uDF0D",na:"Unknown",fe:"\u20AC55.00m",y:2023,a:["ruben neves","neves","ruben"]},
+{n:"Brennan Johnson",f:"Nottingham Forest",t:"Tottenham Hotspur",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC77\uDB40\uDC6C\uDB40\uDC73\uDB40\uDC7F",na:"Wales",fe:"\u20AC55.00m",y:2023,a:["brennan johnson","johnson","brennan"]},
+{n:"Ferran Torres",f:"Manchester City",t:"FC Barcelona",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC55.00m",y:2021,a:["ferran torres","torres","ferran"]},
+{n:"Aaron Wan-Bissaka",f:"Crystal Palace",t:"Manchester United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC55.00m",y:2019,a:["aaron wan bissaka","bissaka","aaron"]},
+{n:"Tijjani Reijnders",f:"AC Milan",t:"Manchester City",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC54.90m",y:2025,a:["tijjani reijnders","reijnders","tijjani"]},
+{n:"Antoine Griezmann",f:"Real Sociedad",t:"Atletico de Madrid",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC54.00m",y:2014,a:["antoine griezmann","griezmann","antoine"]},
+{n:"Cristian Romero",f:"Atalanta BC",t:"Tottenham Hotspur",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC53.80m",y:2022,a:["cristian romero","romero","cristian"]},
+{n:"Darwin Nunez",f:"Liverpool FC",t:"Al-Hilal SFC",fl:"\uD83C\uDDFA\uD83C\uDDFE",na:"Uruguay",fe:"\u20AC53.00m",y:2025,a:["darwin nunez","nunez","darwin"]},
+{n:"Michel Olise",f:"Crystal Palace",t:"Bayern Munich",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC53.00m",y:2024,a:["michel olise","olise","michel"]},
+{n:"Timo Werner",f:"RB Leipzig",t:"Chelsea FC",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC53.00m",y:2020,a:["timo werner","werner","timo"]},
+{n:"Alexandre Lacazette",f:"Olympique Lyon",t:"Arsenal FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC53.00m",y:2017,a:["alexandre lacazette","lacazette","alexandre"]},
+{n:"Gianluigi Buffon",f:"Parma Calcio",t:"Juventus FC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC52.88m",y:2001,a:["gianluigi buffon","buffon","gianluigi"]},
+{n:"Kyle Walker",f:"Tottenham Hotspur",t:"Manchester City",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC52.70m",y:2017,a:["kyle walker","walker","kyle"]},
+{n:"Aleksandar Mitrovic",f:"Fulham FC",t:"Al-Hilal SFC",fl:"\uD83C\uDDF7\uD83C\uDDF8",na:"Serbia",fe:"\u20AC52.60m",y:2023,a:["aleksandar mitrovic","mitrovic","aleksandar"]},
+{n:"Gabriel Jesus",f:"Manchester City",t:"Arsenal FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC52.20m",y:2022,a:["gabriel jesus","jesus","gabriel"]},
+{n:"Piero Hincapie",f:"Bayer 04 Leverkusen",t:"Arsenal FC",fl:"\uD83C\uDDEA\uD83C\uDDE8",na:"Ecuador",fe:"\u20AC52.00m",y:2026,a:["piero hincapie","hincapie","piero"]},
+{n:"Joao Felix",f:"Atletico de Madrid",t:"Chelsea FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC52.00m",y:2024,a:["joao felix","felix","joao"]},
+{n:"Leroy Sane",f:"FC Schalke 04",t:"Manchester City",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC52.00m",y:2016,a:["leroy sane","sane","leroy"]},
+{n:"Douglas Luiz",f:"Aston Villa",t:"Juventus FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC51.50m",y:2024,a:["douglas luiz","luiz","douglas"]},
+{n:"Bremer",f:"Torino FC",t:"Juventus FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC51.30m",y:2022,a:["bremer"]},
+{n:"Joao Palhinha",f:"Fulham FC",t:"Bayern Munich",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC51.00m",y:2024,a:["joao palhinha","palhinha","joao"]},
+{n:"Geovany Quenda",f:"Sporting CP",t:"Chelsea FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC50.70m",y:2026,a:["geovany quenda","quenda","geovany"]},
+{n:"Andre Onana",f:"Inter Milan",t:"Manchester United",fl:"\uD83C\uDDE8\uD83C\uDDF2",na:"Cameroon",fe:"\u20AC50.20m",y:2023,a:["andre onana","onana","andre"]},
+{n:"Ben Chilwell",f:"Leicester City",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC50.20m",y:2020,a:["ben chilwell","chilwell","ben"]},
+{n:"Alvaro Carreras",f:"SL Benfica",t:"Real Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC50.00m",y:2025,a:["alvaro carreras","carreras","alvaro"]},
+{n:"Xavi Simons",f:"Paris Saint-Germain",t:"RB Leipzig",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC50.00m",y:2024,a:["xavi simons","simons","xavi"]},
+{n:"Manuel Ugarte",f:"Paris Saint-Germain",t:"Manchester United",fl:"\uD83C\uDDFA\uD83C\uDDFE",na:"Uruguay",fe:"\u20AC50.00m",y:2024,a:["manuel ugarte","ugarte","manuel"]},
+{n:"Desire Doue",f:"Stade Rennais FC",t:"Paris Saint-Germain",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC50.00m",y:2024,a:["desire doue","doue","desire"]},
+{n:"Galeno",f:"FC Porto",t:"Al-Ahli SFC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC50.00m",y:2024,a:["galeno"]},
+{n:"Min-jae Kim",f:"SSC Napoli",t:"Bayern Munich",fl:"\uD83C\uDDF0\uD83C\uDDF7",na:"South Korea",fe:"\u20AC50.00m",y:2023,a:["min jae kim","kim","min"]},
+{n:"Ousmane Dembele",f:"FC Barcelona",t:"Paris Saint-Germain",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC50.00m",y:2023,a:["ousmane dembele","dembele","ousmane"]},
+{n:"Matheus Cunha",f:"Atletico de Madrid",t:"Wolverhampton Wanderers",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC50.00m",y:2023,a:["matheus cunha","cunha","matheus"]},
+{n:"Jules Kounde",f:"Sevilla FC",t:"FC Barcelona",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC50.00m",y:2022,a:["jules kounde","kounde","jules"]},
+{n:"Mauro Icardi",f:"Inter Milan",t:"Paris Saint-Germain",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC50.00m",y:2020,a:["mauro icardi","icardi","mauro"]},
+{n:"Thomas Partey",f:"Atletico de Madrid",t:"Arsenal FC",fl:"\uD83C\uDDEC\uD83C\uDDED",na:"Ghana",fe:"\u20AC50.00m",y:2020,a:["thomas partey","partey","thomas"]},
+{n:"Eder Militao",f:"FC Porto",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC50.00m",y:2019,a:["eder militao","militao","eder"]},
+{n:"Sebastien Haller",f:"Eintracht Frankfurt",t:"West Ham United",fl:"\uD83C\uDDE8\uD83C\uDDEE",na:"Ivory Coast",fe:"\u20AC50.00m",y:2019,a:["sebastien haller","haller","sebastien"]},
+{n:"Hirving Lozano",f:"PSV Eindhoven",t:"SSC Napoli",fl:"\uD83C\uDDF2\uD83C\uDDFD",na:"Mexico",fe:"\u20AC50.00m",y:2019,a:["hirving lozano","lozano","hirving"]},
+{n:"Bernardo Silva",f:"AS Monaco",t:"Manchester City",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC50.00m",y:2017,a:["bernardo silva","silva","bernardo"]},
+{n:"Alex Teixeira",f:"Shakhtar Donetsk",t:"Jiangsu FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC50.00m",y:2015,a:["alex teixeira","teixeira","alex"]},
+{n:"Jorgen Strand Larsen",f:"Wolverhampton Wanderers",t:"Crystal Palace",fl:"\uD83C\uDDF3\uD83C\uDDF4",na:"Norway",fe:"\u20AC49.70m",y:2025,a:["jorgen strand larsen","larsen","jorgen"]},
+{n:"Rafael Leao",f:"LOSC Lille",t:"AC Milan",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC49.50m",y:2019,a:["rafael leao","leao","rafael"]},
+{n:"David Luiz",f:"Chelsea FC",t:"Paris Saint-Germain",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC49.50m",y:2014,a:["david luiz","luiz","david"]},
+{n:"Gylfi Sigurdsson",f:"Swansea City",t:"Everton FC",fl:"\uD83C\uDDEE\uD83C\uDDF8",na:"Iceland",fe:"\u20AC49.40m",y:2017,a:["gylfi sigurdsson","sigurdsson","gylfi"]},
+{n:"Kalvin Phillips",f:"Leeds United",t:"Manchester City",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC49.00m",y:2022,a:["kalvin phillips","phillips","kalvin"]},
+{n:"Luis Diaz",f:"FC Porto",t:"Liverpool FC",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC49.00m",y:2021,a:["luis diaz","diaz","luis"]},
+{n:"Leroy Sane",f:"Manchester City",t:"Bayern Munich",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC49.00m",y:2020,a:["leroy sane","sane","leroy"]},
+{n:"Ferland Mendy",f:"Olympique Lyon",t:"Real Madrid",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC48.00m",y:2019,a:["ferland mendy","mendy","ferland"]},
+{n:"Gaizka Mendieta",f:"Valencia CF",t:"SS Lazio",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC48.00m",y:2001,a:["gaizka mendieta","mendieta","gaizka"]},
+{n:"Endrick",f:"Palmeiras",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC47.50m",y:2024,a:["endrick"]},
+{n:"Max Kilman",f:"Wolverhampton Wanderers",t:"West Ham United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC47.50m",y:2024,a:["max kilman","kilman","max"]},
+{n:"Matheus Nunes",f:"Sporting CP",t:"Wolverhampton Wanderers",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC47.40m",y:2022,a:["matheus nunes","nunes","matheus"]},
+{n:"Cole Palmer",f:"Manchester City",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC47.00m",y:2023,a:["cole palmer","palmer","cole"]},
+{n:"Mesut Ozil",f:"Real Madrid",t:"Arsenal FC",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC47.00m",y:2013,a:["mesut ozil","ozil","mesut"]},
+{n:"Milos Kerkez",f:"AFC Bournemouth",t:"Liverpool FC",fl:"\uD83C\uDDED\uD83C\uDDFA",na:"Hungary",fe:"\u20AC46.90m",y:2025,a:["milos kerkez","kerkez","milos"]},
+{n:"Georginio Rutter",f:"Leeds United",t:"Brighton & Hove Albion",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC46.70m",y:2024,a:["georginio rutter","rutter","georginio"]},
+{n:"Fabinho",f:"Liverpool FC",t:"Al-Ittihad Club",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC46.70m",y:2023,a:["fabinho"]},
+{n:"Christian Benteke",f:"Aston Villa",t:"Liverpool FC",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC46.50m",y:2015,a:["christian benteke","benteke","christian"]},
+{n:"Christian Vieri",f:"SS Lazio",t:"Inter Milan",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC46.48m",y:1999,a:["christian vieri","vieri","christian"]},
+{n:"James Maddison",f:"Leicester City",t:"Tottenham Hotspur",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC46.30m",y:2023,a:["james maddison","maddison","james"]},
+{n:"Alejandro Garnacho",f:"Manchester United",t:"Chelsea FC",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC46.20m",y:2025,a:["alejandro garnacho","garnacho","alejandro"]},
+{n:"Rio Ferdinand",f:"Leeds United",t:"Manchester United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC46.00m",y:2002,a:["rio ferdinand","ferdinand","rio"]},
+{n:"Anthony Gordon",f:"Everton FC",t:"Newcastle United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC45.60m",y:2022,a:["anthony gordon","gordon","anthony"]},
+{n:"Nathan Ake",f:"AFC Bournemouth",t:"Manchester City",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC45.30m",y:2020,a:["nathan ake","ake","nathan"]},
+{n:"Jacob Ramsey",f:"Aston Villa",t:"Newcastle United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC45.15m",y:2025,a:["jacob ramsey","ramsey","jacob"]},
+{n:"Estevao",f:"Palmeiras",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC45.00m",y:2025,a:["estevao"]},
+{n:"Franco Mastantuono",f:"CA River Plate",t:"Real Madrid",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC45.00m",y:2025,a:["franco mastantuono","mastantuono","franco"]},
+{n:"Matthijs de Ligt",f:"Bayern Munich",t:"Manchester United",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC45.00m",y:2024,a:["matthijs de ligt","ligt","matthijs"]},
+{n:"Lucas Hernandez",f:"Bayern Munich",t:"Paris Saint-Germain",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC45.00m",y:2023,a:["lucas hernandez","hernandez","lucas"]},
+{n:"Marco Verratti",f:"Paris Saint-Germain",t:"Al-Arabi SC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC45.00m",y:2023,a:["marco verratti","verratti","marco"]},
+{n:"Axel Disasi",f:"AS Monaco",t:"Chelsea FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC45.00m",y:2023,a:["axel disasi","disasi","axel"]},
+{n:"Bradley Barcola",f:"Olympique Lyon",t:"Paris Saint-Germain",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC45.00m",y:2023,a:["bradley barcola","barcola","bradley"]},
+{n:"Robert Lewandowski",f:"Bayern Munich",t:"FC Barcelona",fl:"\uD83C\uDDF5\uD83C\uDDF1",na:"Poland",fe:"\u20AC45.00m",y:2022,a:["robert lewandowski","lewandowski","robert"]},
+{n:"Rodrygo",f:"Santos FC",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC45.00m",y:2019,a:["rodrygo"]},
+{n:"Youri Tielemans",f:"AS Monaco",t:"Leicester City",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC45.00m",y:2019,a:["youri tielemans","tielemans","youri"]},
+{n:"Mateo Kovacic",f:"Real Madrid",t:"Chelsea FC",fl:"\uD83C\uDDED\uD83C\uDDF7",na:"Croatia",fe:"\u20AC45.00m",y:2019,a:["mateo kovacic","kovacic","mateo"]},
+{n:"Fabinho",f:"AS Monaco",t:"Liverpool FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC45.00m",y:2018,a:["fabinho"]},
+{n:"Vinicius Junior",f:"CR Flamengo",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC45.00m",y:2018,a:["vinicius junior","junior","vinicius"]},
+{n:"Granit Xhaka",f:"Borussia Monchengladbach",t:"Arsenal FC",fl:"\uD83C\uDDE8\uD83C\uDDED",na:"Switzerland",fe:"\u20AC45.00m",y:2016,a:["granit xhaka","xhaka","granit"]},
+{n:"Eliaquim Mangala",f:"FC Porto",t:"Manchester City",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC45.00m",y:2014,a:["eliaquim mangala","mangala","eliaquim"]},
+{n:"James Rodriguez",f:"FC Porto",t:"AS Monaco",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC45.00m",y:2013,a:["james rodriguez","rodriguez","james"]},
+{n:"Ronaldo",f:"Inter Milan",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC45.00m",y:2002,a:["ronaldo"]},
+{n:"Pavel Nedved",f:"SS Lazio",t:"Juventus FC",fl:"\uD83C\uDDE8\uD83C\uDDFF",na:"Czech Republic",fe:"\u20AC45.00m",y:2001,a:["pavel nedved","nedved","pavel"]},
+{n:"Joao Mario",f:"Sporting CP",t:"Inter Milan",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC44.78m",y:2016,a:["joao mario","mario","joao"]},
+{n:"Juan Mata",f:"Chelsea FC",t:"Manchester United",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC44.73m",y:2013,a:["juan mata","mata","juan"]},
+{n:"Diogo Jota",f:"Wolverhampton Wanderers",t:"Liverpool FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC44.70m",y:2020,a:["diogo jota","jota","diogo"]},
+{n:"Nemanja Matic",f:"Chelsea FC",t:"Manchester United",fl:"\uD83C\uDDF7\uD83C\uDDF8",na:"Serbia",fe:"\u20AC44.70m",y:2017,a:["nemanja matic","matic","nemanja"]},
+{n:"Federico Chiesa",f:"ACF Fiorentina",t:"Juventus FC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC44.60m",y:2022,a:["federico chiesa","chiesa","federico"]},
+{n:"Ian Maatsen",f:"Chelsea FC",t:"Aston Villa",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC44.50m",y:2024,a:["ian maatsen","maatsen","ian"]},
+{n:"Nicolas Otamendi",f:"Valencia CF",t:"Manchester City",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC44.50m",y:2015,a:["nicolas otamendi","otamendi","nicolas"]},
+{n:"Enzo Fernandez",f:"CA River Plate",t:"SL Benfica",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC44.25m",y:2022,a:["enzo fernandez","fernandez","enzo"]},
+{n:"Jorrel Hato",f:"Ajax Amsterdam",t:"Chelsea FC",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC44.18m",y:2025,a:["jorrel hato","hato","jorrel"]},
+{n:"Rasmus Hojlund",f:"Manchester United",t:"SSC Napoli",fl:"\uD83C\uDDE9\uD83C\uDDF0",na:"Denmark",fe:"\u20AC44.00m",y:2026,a:["rasmus hojlund","hojlund","rasmus"]},
+{n:"Mateus Fernandes",f:"Southampton FC",t:"West Ham United",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC44.00m",y:2025,a:["mateus fernandes","fernandes","mateus"]},
+{n:"Harvey Barnes",f:"Leicester City",t:"Newcastle United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC44.00m",y:2023,a:["harvey barnes","barnes","harvey"]},
+{n:"Andriy Shevchenko",f:"AC Milan",t:"Chelsea FC",fl:"\uD83C\uDDFA\uD83C\uDDE6",na:"Ukraine",fe:"\u20AC43.88m",y:2006,a:["andriy shevchenko","shevchenko","andriy"]},
+{n:"Riccardo Calafiori",f:"Bologna FC",t:"Arsenal FC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC43.70m",y:2024,a:["riccardo calafiori","calafiori","riccardo"]},
+{n:"Joelinton",f:"TSG 1899 Hoffenheim",t:"Newcastle United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC43.50m",y:2019,a:["joelinton"]},
+{n:"Omari Hutchinson",f:"Ipswich Town",t:"Nottingham Forest",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC43.40m",y:2025,a:["omari hutchinson","hutchinson","omari"]},
+{n:"Mohammed Kudus",f:"Ajax Amsterdam",t:"West Ham United",fl:"\uD83C\uDDEC\uD83C\uDDED",na:"Ghana",fe:"\u20AC43.00m",y:2023,a:["mohammed kudus","kudus","mohammed"]},
+{n:"Achraf Hakimi",f:"Real Madrid",t:"Inter Milan",fl:"\uD83C\uDDF2\uD83C\uDDE6",na:"Morocco",fe:"\u20AC43.00m",y:2020,a:["achraf hakimi","hakimi","achraf"]},
+{n:"Julian Draxler",f:"FC Schalke 04",t:"VfL Wolfsburg",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC43.00m",y:2015,a:["julian draxler","draxler","julian"]},
+{n:"Radamel Falcao",f:"Atletico de Madrid",t:"AS Monaco",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC43.00m",y:2013,a:["radamel falcao","falcao","radamel"]},
+{n:"Robinho",f:"Real Madrid",t:"Manchester City",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC43.00m",y:2008,a:["robinho"]},
+{n:"Lucas Paqueta",f:"Olympique Lyon",t:"West Ham United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC42.95m",y:2022,a:["lucas paqueta","paqueta","lucas"]},
+{n:"Dango Ouattara",f:"AFC Bournemouth",t:"Brentford FC",fl:"\uD83C\uDDE7\uD83C\uDDEB",na:"Burkina Faso",fe:"\u20AC42.80m",y:2025,a:["dango ouattara","ouattara","dango"]},
+{n:"Lois Openda",f:"RB Leipzig",t:"Juventus FC",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC42.75m",y:2026,a:["lois openda","openda","lois"]},
+{n:"Juan Sebastian Veron",f:"SS Lazio",t:"Manchester United",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC42.60m",y:2001,a:["juan sebastian veron","veron","juan"]},
+{n:"Joshua Zirkzee",f:"Bologna FC",t:"Manchester United",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC42.50m",y:2024,a:["joshua zirkzee","zirkzee","joshua"]},
+{n:"Dayot Upamecano",f:"RB Leipzig",t:"Bayern Munich",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC42.50m",y:2021,a:["dayot upamecano","upamecano","dayot"]},
+{n:"Alexis Sanchez",f:"FC Barcelona",t:"Arsenal FC",fl:"\uD83C\uDDE8\uD83C\uDDF1",na:"Chile",fe:"\u20AC42.50m",y:2014,a:["alexis sanchez","sanchez","alexis"]},
+{n:"Bruno Guimaraes",f:"Olympique Lyon",t:"Newcastle United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC42.10m",y:2021,a:["bruno guimaraes","guimaraes","bruno"]},
+{n:"Alex Baena",f:"Villarreal CF",t:"Atletico de Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC42.00m",y:2025,a:["alex baena","baena","alex"]},
+{n:"Lucas Paqueta",f:"West Ham United",t:"CR Flamengo",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC42.00m",y:2025,a:["lucas paqueta","paqueta","lucas"]},
+{n:"Dan Ndoye",f:"Bologna FC",t:"Nottingham Forest",fl:"\uD83C\uDDE8\uD83C\uDDED",na:"Switzerland",fe:"\u20AC42.00m",y:2025,a:["dan ndoye","ndoye","dan"]},
+{n:"Ivan Toney",f:"Brentford FC",t:"Al-Ahli SFC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC42.00m",y:2024,a:["ivan toney","toney","ivan"]},
+{n:"Conor Gallagher",f:"Chelsea FC",t:"Atletico de Madrid",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC42.00m",y:2024,a:["conor gallagher","gallagher","conor"]},
+{n:"Alexis Mac Allister",f:"Brighton & Hove Albion",t:"Liverpool FC",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC42.00m",y:2023,a:["alexis mac allister","allister","alexis"]},
+{n:"Cody Gakpo",f:"PSV Eindhoven",t:"Liverpool FC",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC42.00m",y:2022,a:["cody gakpo","gakpo","cody"]},
+{n:"Paulinho",f:"FC Barcelona",t:"Guangzhou FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC42.00m",y:2018,a:["paulinho"]},
+{n:"Patrik Schick",f:"UC Sampdoria",t:"AS Roma",fl:"\uD83C\uDDE8\uD83C\uDDFF",na:"Czech Republic",fe:"\u20AC42.00m",y:2018,a:["patrik schick","schick","patrik"]},
+{n:"Leonardo Bonucci",f:"Juventus FC",t:"AC Milan",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC42.00m",y:2017,a:["leonardo bonucci","bonucci","leonardo"]},
+{n:"Mohamed Salah",f:"AS Roma",t:"Liverpool FC",fl:"\uD83C\uDDEA\uD83C\uDDEC",na:"Egypt",fe:"\u20AC42.00m",y:2017,a:["mohamed salah","salah","mohamed"]},
+{n:"Davinson Sanchez",f:"Ajax Amsterdam",t:"Tottenham Hotspur",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC42.00m",y:2017,a:["davinson sanchez","sanchez","davinson"]},
+{n:"Henrikh Mkhitaryan",f:"Borussia Dortmund",t:"Manchester United",fl:"\uD83C\uDDE6\uD83C\uDDF2",na:"Armenia",fe:"\u20AC42.00m",y:2016,a:["henrikh mkhitaryan","mkhitaryan","henrikh"]},
+{n:"Jackson Martinez",f:"Atletico de Madrid",t:"Guangzhou FC",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC42.00m",y:2015,a:["jackson martinez","martinez","jackson"]},
+{n:"Thiago Silva",f:"AC Milan",t:"Paris Saint-Germain",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC42.00m",y:2012,a:["thiago silva","silva","thiago"]},
+{n:"Javier Pastore",f:"Palermo FC",t:"Paris Saint-Germain",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC42.00m",y:2011,a:["javier pastore","pastore","javier"]},
+{n:"Kalidou Koulibaly",f:"SSC Napoli",t:"Chelsea FC",fl:"\uD83C\uDDF8\uD83C\uDDF3",na:"Senegal",fe:"\u20AC41.90m",y:2022,a:["kalidou koulibaly","koulibaly","kalidou"]},
+{n:"Vitinha",f:"FC Porto",t:"Paris Saint-Germain",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC41.50m",y:2022,a:["vitinha"]},
+{n:"Malcom",f:"FC Barcelona",t:"Zenit St. Petersburg",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC41.50m",y:2019,a:["malcom"]},
+{n:"Corentin Tolisso",f:"Olympique Lyon",t:"Bayern Munich",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC41.50m",y:2017,a:["corentin tolisso","tolisso","corentin"]},
+{n:"Rui Costa",f:"ACF Fiorentina",t:"AC Milan",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC41.32m",y:2001,a:["rui costa","costa","rui"]},
+{n:"Archie Gray",f:"Leeds United",t:"Tottenham Hotspur",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC41.25m",y:2024,a:["archie gray","gray","archie"]},
+{n:"Elliot Anderson",f:"Newcastle United",t:"Nottingham Forest",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC41.20m",y:2024,a:["elliot anderson","anderson","elliot"]},
+{n:"Sadio Mane",f:"Southampton FC",t:"Liverpool FC",fl:"\uD83C\uDDF8\uD83C\uDDF3",na:"Senegal",fe:"\u20AC41.20m",y:2016,a:["sadio mane","mane","sadio"]},
+{n:"Tammy Abraham",f:"Chelsea FC",t:"AS Roma",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC41.00m",y:2021,a:["tammy abraham","abraham","tammy"]},
+{n:"Malcom",f:"FC Girondins Bordeaux",t:"FC Barcelona",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC41.00m",y:2018,a:["malcom"]},
+{n:"Shkodran Mustafi",f:"Valencia CF",t:"Arsenal FC",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC41.00m",y:2016,a:["shkodran mustafi","mustafi","shkodran"]},
+{n:"Paulo Dybala",f:"Palermo FC",t:"Juventus FC",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC41.00m",y:2015,a:["paulo dybala","dybala","paulo"]},
+{n:"Robert Firmino",f:"TSG 1899 Hoffenheim",t:"Liverpool FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC41.00m",y:2015,a:["robert firmino","firmino","robert"]},
+{n:"Andy Carroll",f:"Newcastle United",t:"Liverpool FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC41.00m",y:2010,a:["andy carroll","carroll","andy"]},
+{n:"Tyler Dibling",f:"Southampton FC",t:"Everton FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC40.50m",y:2025,a:["tyler dibling","dibling","tyler"]},
+{n:"Georginio Rutter",f:"TSG 1899 Hoffenheim",t:"Leeds United",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC40.50m",y:2022,a:["georginio rutter","rutter","georginio"]},
+{n:"Joao Cancelo",f:"Valencia CF",t:"Juventus FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC40.40m",y:2018,a:["joao cancelo","cancelo","joao"]},
+{n:"Jeremie Frimpong",f:"Bayer 04 Leverkusen",t:"Liverpool FC",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC40.00m",y:2025,a:["jeremie frimpong","frimpong","jeremie"]},
+{n:"Brennan Johnson",f:"Tottenham Hotspur",t:"Crystal Palace",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC77\uDB40\uDC6C\uDB40\uDC73\uDB40\uDC7F",na:"Wales",fe:"\u20AC40.00m",y:2025,a:["brennan johnson","johnson","brennan"]},
+{n:"Conor Gallagher",f:"Atletico de Madrid",t:"Tottenham Hotspur",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC40.00m",y:2025,a:["conor gallagher","gallagher","conor"]},
+{n:"Lucas Chevalier",f:"LOSC Lille",t:"Paris Saint-Germain",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC40.00m",y:2025,a:["lucas chevalier","chevalier","lucas"]},
+{n:"Jean-Clair Todibo",f:"OGC Nice",t:"West Ham United",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC40.00m",y:2025,a:["jean clair todibo","todibo","jean"]},
+{n:"Kevin",f:"Shakhtar Donetsk",t:"Fulham FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC40.00m",y:2025,a:["kevin"]},
+{n:"Willian Pacho",f:"Eintracht Frankfurt",t:"Paris Saint-Germain",fl:"\uD83C\uDDEA\uD83C\uDDE8",na:"Ecuador",fe:"\u20AC40.00m",y:2024,a:["willian pacho","pacho","willian"]},
+{n:"Marcos Leonardo",f:"SL Benfica",t:"Al-Hilal SFC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC40.00m",y:2024,a:["marcos leonardo","leonardo","marcos"]},
+{n:"Abdukodir Khusanov",f:"RC Lens",t:"Manchester City",fl:"\uD83C\uDDFA\uD83C\uDDFF",na:"Uzbekistan",fe:"\u20AC40.00m",y:2024,a:["abdukodir khusanov","khusanov","abdukodir"]},
+{n:"Sergej Milinkovic-Savic",f:"SS Lazio",t:"Al-Hilal SFC",fl:"\uD83C\uDDF7\uD83C\uDDF8",na:"Serbia",fe:"\u20AC40.00m",y:2023,a:["sergej milinkovic savic","savic","sergej"]},
+{n:"Jurrien Timber",f:"Ajax Amsterdam",t:"Arsenal FC",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC40.00m",y:2023,a:["jurrien timber","timber","jurrien"]},
+{n:"Pedro Porro",f:"Sporting CP",t:"Tottenham Hotspur",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC40.00m",y:2023,a:["pedro porro","porro","pedro"]},
+{n:"Lois Openda",f:"RC Lens",t:"RB Leipzig",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC40.00m",y:2023,a:["lois openda","openda","lois"]},
+{n:"Micky van de Ven",f:"VfL Wolfsburg",t:"Tottenham Hotspur",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC40.00m",y:2023,a:["micky van de ven","ven","micky"]},
+{n:"Ryan Gravenberch",f:"Bayern Munich",t:"Liverpool FC",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC40.00m",y:2023,a:["ryan gravenberch","gravenberch","ryan"]},
+{n:"Raphael Varane",f:"Real Madrid",t:"Manchester United",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC40.00m",y:2021,a:["raphael varane","varane","raphael"]},
+{n:"Ibrahima Konate",f:"RB Leipzig",t:"Liverpool FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC40.00m",y:2021,a:["ibrahima konate","konate","ibrahima"]},
+{n:"Hakim Ziyech",f:"Ajax Amsterdam",t:"Chelsea FC",fl:"\uD83C\uDDF2\uD83C\uDDE6",na:"Morocco",fe:"\u20AC40.00m",y:2020,a:["hakim ziyech","ziyech","hakim"]},
+{n:"Fabio Silva",f:"FC Porto",t:"Wolverhampton Wanderers",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC40.00m",y:2020,a:["fabio silva","silva","fabio"]},
+{n:"Wissam Ben Yedder",f:"Sevilla FC",t:"AS Monaco",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC40.00m",y:2019,a:["wissam ben yedder","yedder","wissam"]},
+{n:"Douglas Costa",f:"Bayern Munich",t:"Juventus FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC40.00m",y:2018,a:["douglas costa","costa","douglas"]},
+{n:"Goncalo Guedes",f:"Paris Saint-Germain",t:"Valencia CF",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC40.00m",y:2018,a:["goncalo guedes","guedes","goncalo"]},
+{n:"Leandro Paredes",f:"Zenit St. Petersburg",t:"Paris Saint-Germain",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC40.00m",y:2018,a:["leandro paredes","paredes","leandro"]},
+{n:"Federico Bernardeschi",f:"ACF Fiorentina",t:"Juventus FC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC40.00m",y:2017,a:["federico bernardeschi","bernardeschi","federico"]},
+{n:"Cedric Bakambu",f:"Villarreal CF",t:"Beijing Guoan",fl:"\uD83C\uDDE8\uD83C\uDDE9",na:"DR Congo",fe:"\u20AC40.00m",y:2017,a:["cedric bakambu","bakambu","cedric"]},
+{n:"Ederson",f:"SL Benfica",t:"Manchester City",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC40.00m",y:2017,a:["ederson"]},
+{n:"Tiemoue Bakayoko",f:"AS Monaco",t:"Chelsea FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC40.00m",y:2017,a:["tiemoue bakayoko","bakayoko","tiemoue"]},
+{n:"Paulinho",f:"Guangzhou FC",t:"FC Barcelona",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC40.00m",y:2017,a:["paulinho"]},
+{n:"Fernandinho",f:"Shakhtar Donetsk",t:"Manchester City",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC40.00m",y:2013,a:["fernandinho"]},
+{n:"Hulk",f:"FC Porto",t:"Zenit St. Petersburg",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC40.00m",y:2012,a:["hulk"]},
+{n:"Lucas Moura",f:"Sao Paulo FC",t:"Paris Saint-Germain",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC40.00m",y:2012,a:["lucas moura","moura","lucas"]},
+{n:"Javi Martinez",f:"Athletic Bilbao",t:"Bayern Munich",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC40.00m",y:2012,a:["javi martinez","martinez","javi"]},
+{n:"Axel Witsel",f:"SL Benfica",t:"Zenit St. Petersburg",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC40.00m",y:2012,a:["axel witsel","witsel","axel"]},
+{n:"Sergio Aguero",f:"Atletico de Madrid",t:"Manchester City",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC40.00m",y:2011,a:["sergio aguero","aguero","sergio"]},
+{n:"Radamel Falcao",f:"FC Porto",t:"Atletico de Madrid",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC40.00m",y:2011,a:["radamel falcao","falcao","radamel"]},
+{n:"David Villa",f:"Valencia CF",t:"FC Barcelona",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC40.00m",y:2010,a:["david villa","villa","david"]},
+{n:"Hernan Crespo",f:"SS Lazio",t:"Inter Milan",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC40.00m",y:2002,a:["hernan crespo","crespo","hernan"]},
+{n:"Amadou Onana",f:"LOSC Lille",t:"Everton FC",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC39.87m",y:2022,a:["amadou onana","onana","amadou"]},
+{n:"Arturo Vidal",f:"Juventus FC",t:"Bayern Munich",fl:"\uD83C\uDDE8\uD83C\uDDF1",na:"Chile",fe:"\u20AC39.25m",y:2015,a:["arturo vidal","vidal","arturo"]},
+{n:"Richarlison",f:"Watford FC",t:"Everton FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC39.20m",y:2018,a:["richarlison"]},
+{n:"Donny van de Beek",f:"Ajax Amsterdam",t:"Manchester United",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC39.00m",y:2020,a:["donny van de beek","beek","donny"]},
+{n:"Dejan Kulusevski",f:"Atalanta BC",t:"Juventus FC",fl:"\uD83C\uDDF8\uD83C\uDDEA",na:"Sweden",fe:"\u20AC39.00m",y:2019,a:["dejan kulusevski","kulusevski","dejan"]},
+{n:"Michy Batshuayi",f:"Olympique Marseille",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC39.00m",y:2016,a:["michy batshuayi","batshuayi","michy"]},
+{n:"Gonzalo Higuain",f:"Real Madrid",t:"SSC Napoli",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC39.00m",y:2013,a:["gonzalo higuain","higuain","gonzalo"]},
+{n:"Gianluca Scamacca",f:"US Sassuolo",t:"West Ham United",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC38.60m",y:2022,a:["gianluca scamacca","scamacca","gianluca"]},
+{n:"Didier Drogba",f:"Olympique Marseille",t:"Chelsea FC",fl:"\uD83C\uDDE8\uD83C\uDDEE",na:"Ivory Coast",fe:"\u20AC38.50m",y:2004,a:["didier drogba","drogba","didier"]},
+{n:"Emiliano Buendia",f:"Norwich City",t:"Aston Villa",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC38.40m",y:2021,a:["emiliano buendia","buendia","emiliano"]},
+{n:"Lucas Paqueta",f:"CR Flamengo",t:"AC Milan",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC38.40m",y:2018,a:["lucas paqueta","paqueta","lucas"]},
+{n:"Edson Alvarez",f:"Ajax Amsterdam",t:"West Ham United",fl:"\uD83C\uDDF2\uD83C\uDDFD",na:"Mexico",fe:"\u20AC38.00m",y:2023,a:["edson alvarez","alvarez","edson"]},
+{n:"Benoit Badiashile",f:"AS Monaco",t:"Chelsea FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC38.00m",y:2022,a:["benoit badiashile","badiashile","benoit"]},
+{n:"Nuno Mendes",f:"Sporting CP",t:"Paris Saint-Germain",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC38.00m",y:2022,a:["nuno mendes","mendes","nuno"]},
+{n:"Raul Jimenez",f:"SL Benfica",t:"Wolverhampton Wanderers",fl:"\uD83C\uDDF2\uD83C\uDDFD",na:"Mexico",fe:"\u20AC38.00m",y:2019,a:["raul jimenez","jimenez","raul"]},
+{n:"Radja Nainggolan",f:"AS Roma",t:"Inter Milan",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC38.00m",y:2018,a:["radja nainggolan","nainggolan","radja"]},
+{n:"Felipe Anderson",f:"SS Lazio",t:"West Ham United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC38.00m",y:2018,a:["felipe anderson","anderson","felipe"]},
+{n:"Alex Oxlade-Chamberlain",f:"Arsenal FC",t:"Liverpool FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC38.00m",y:2017,a:["alex oxlade chamberlain","chamberlain","alex"]},
+{n:"Andre Silva",f:"FC Porto",t:"AC Milan",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC38.00m",y:2017,a:["andre silva","silva","andre"]},
+{n:"Eric Bailly",f:"Villarreal CF",t:"Manchester United",fl:"\uD83C\uDDE8\uD83C\uDDEE",na:"Ivory Coast",fe:"\u20AC38.00m",y:2016,a:["eric bailly","bailly","eric"]},
+{n:"Mateo Kovacic",f:"Inter Milan",t:"Real Madrid",fl:"\uD83C\uDDED\uD83C\uDDF7",na:"Croatia",fe:"\u20AC38.00m",y:2015,a:["mateo kovacic","kovacic","mateo"]},
+{n:"Diego Costa",f:"Atletico de Madrid",t:"Chelsea FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC38.00m",y:2014,a:["diego costa","costa","diego"]},
+{n:"Dimitar Berbatov",f:"Tottenham Hotspur",t:"Manchester United",fl:"\uD83C\uDDE7\uD83C\uDDEC",na:"Bulgaria",fe:"\u20AC38.00m",y:2008,a:["dimitar berbatov","berbatov","dimitar"]},
+{n:"Fernando Torres",f:"Atletico de Madrid",t:"Liverpool FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC38.00m",y:2007,a:["fernando torres","torres","fernando"]},
+{n:"Michael Essien",f:"Olympique Lyon",t:"Chelsea FC",fl:"\uD83C\uDDEC\uD83C\uDDED",na:"Ghana",fe:"\u20AC38.00m",y:2005,a:["michael essien","essien","michael"]},
+{n:"Danny Drinkwater",f:"Leicester City",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC37.90m",y:2017,a:["danny drinkwater","drinkwater","danny"]},
+{n:"Mattia Caldara",f:"Juventus FC",t:"AC Milan",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC37.74m",y:2018,a:["mattia caldara","caldara","mattia"]},
+{n:"Charles De Ketelaere",f:"Club Brugge KV",t:"AC Milan",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC37.50m",y:2022,a:["charles de ketelaere","ketelaere","charles"]},
+{n:"Luke Shaw",f:"Southampton FC",t:"Manchester United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC37.50m",y:2014,a:["luke shaw","shaw","luke"]},
+{n:"David Beckham",f:"Manchester United",t:"Real Madrid",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC37.50m",y:2003,a:["david beckham","beckham","david"]},
+{n:"Tino Livramento",f:"Southampton FC",t:"Newcastle United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC37.20m",y:2023,a:["tino livramento","livramento","tino"]},
+{n:"Christopher Nkunku",f:"Chelsea FC",t:"AC Milan",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC37.00m",y:2025,a:["christopher nkunku","nkunku","christopher"]},
+{n:"Evanilson",f:"FC Porto",t:"AFC Bournemouth",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC37.00m",y:2024,a:["evanilson"]},
+{n:"Vitor Reis",f:"Palmeiras",t:"Manchester City",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC37.00m",y:2024,a:["vitor reis","reis","vitor"]},
+{n:"Nicolas Jackson",f:"Villarreal CF",t:"Chelsea FC",fl:"\uD83C\uDDF8\uD83C\uDDF3",na:"Senegal",fe:"\u20AC37.00m",y:2023,a:["nicolas jackson","jackson","nicolas"]},
+{n:"Sven Botman",f:"LOSC Lille",t:"Newcastle United",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC37.00m",y:2022,a:["sven botman","botman","sven"]},
+{n:"Danilo",f:"Manchester City",t:"Juventus FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC37.00m",y:2019,a:["danilo"]},
+{n:"Thilo Kehrer",f:"FC Schalke 04",t:"Paris Saint-Germain",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC37.00m",y:2018,a:["thilo kehrer","kehrer","thilo"]},
+{n:"Andre Gomes",f:"Valencia CF",t:"FC Barcelona",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC37.00m",y:2016,a:["andre gomes","gomes","andre"]},
+{n:"Mario Gotze",f:"Borussia Dortmund",t:"Bayern Munich",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC37.00m",y:2013,a:["mario gotze","gotze","mario"]},
+{n:"Edin Dzeko",f:"VfL Wolfsburg",t:"Manchester City",fl:"\uD83C\uDDE7\uD83C\uDDE6",na:"Bosnia",fe:"\u20AC37.00m",y:2010,a:["edin dzeko","dzeko","edin"]},
+{n:"Wayne Rooney",f:"Everton FC",t:"Manchester United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC37.00m",y:2004,a:["wayne rooney","rooney","wayne"]},
+{n:"Rayan Ait-Nouri",f:"Wolverhampton Wanderers",t:"Manchester City",fl:"\uD83C\uDDE9\uD83C\uDDFF",na:"Algeria",fe:"\u20AC36.80m",y:2025,a:["rayan ait nouri","nouri","rayan"]},
+{n:"Josko Gvardiol",f:"GNK Dinamo Zagreb",t:"RB Leipzig",fl:"\uD83C\uDDED\uD83C\uDDF7",na:"Croatia",fe:"\u20AC36.80m",y:2021,a:["josko gvardiol","gvardiol","josko"]},
+{n:"Rayan Cherki",f:"Olympique Lyon",t:"Manchester City",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC36.50m",y:2025,a:["rayan cherki","cherki","rayan"]},
+{n:"Manuel Locatelli",f:"US Sassuolo",t:"Juventus FC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC36.40m",y:2023,a:["manuel locatelli","locatelli","manuel"]},
+{n:"Filippo Inzaghi",f:"Juventus FC",t:"AC Milan",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC36.15m",y:2001,a:["filippo inzaghi","inzaghi","filippo"]},
+{n:"Lilian Thuram",f:"Parma Calcio",t:"Juventus FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC36.15m",y:2001,a:["lilian thuram","thuram","lilian"]},
+{n:"Gabriel Batistuta",f:"ACF Fiorentina",t:"AS Roma",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC36.15m",y:2000,a:["gabriel batistuta","batistuta","gabriel"]},
+{n:"Ardon Jashari",f:"Club Brugge KV",t:"AC Milan",fl:"\uD83C\uDDE8\uD83C\uDDED",na:"Switzerland",fe:"\u20AC36.00m",y:2025,a:["ardon jashari","jashari","ardon"]},
+{n:"Dominik Szoboszlai",f:"Red Bull Salzburg",t:"RB Leipzig",fl:"\uD83C\uDDED\uD83C\uDDFA",na:"Hungary",fe:"\u20AC36.00m",y:2020,a:["dominik szoboszlai","szoboszlai","dominik"]},
+{n:"Konstantinos Manolas",f:"AS Roma",t:"SSC Napoli",fl:"\uD83C\uDDEC\uD83C\uDDF7",na:"Greece",fe:"\u20AC36.00m",y:2019,a:["konstantinos manolas","manolas","konstantinos"]},
+{n:"Julian Draxler",f:"VfL Wolfsburg",t:"Paris Saint-Germain",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC36.00m",y:2016,a:["julian draxler","draxler","julian"]},
+{n:"Geoffrey Kondogbia",f:"AS Monaco",t:"Inter Milan",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC36.00m",y:2015,a:["geoffrey kondogbia","kondogbia","geoffrey"]},
+{n:"Ander Herrera",f:"Athletic Bilbao",t:"Manchester United",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC36.00m",y:2014,a:["ander herrera","herrera","ander"]},
+{n:"Clement Lenglet",f:"Sevilla FC",t:"FC Barcelona",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.90m",y:2018,a:["clement lenglet","lenglet","clement"]},
+{n:"Javier Saviola",f:"CA River Plate",t:"FC Barcelona",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC35.90m",y:2001,a:["javier saviola","saviola","javier"]},
+{n:"N'Golo Kante",f:"Leicester City",t:"Chelsea FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.80m",y:2016,a:["ngolo kante","kante","ngolo"]},
+{n:"Nelson Semedo",f:"SL Benfica",t:"FC Barcelona",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC35.70m",y:2017,a:["nelson semedo","semedo","nelson"]},
+{n:"Vitolo",f:"Sevilla FC",t:"Atletico de Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC35.60m",y:2017,a:["vitolo"]},
+{n:"Liam Delap",f:"Ipswich Town",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC35.50m",y:2025,a:["liam delap","delap","liam"]},
+{n:"Willian",f:"Anzhi Makhachkala",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC35.50m",y:2013,a:["willian"]},
+{n:"Dani Alves",f:"Sevilla FC",t:"FC Barcelona",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC35.50m",y:2008,a:["dani alves","alves","dani"]},
+{n:"Kiernan Dewsbury-Hall",f:"Leicester City",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC35.40m",y:2024,a:["kiernan dewsbury hall","hall","kiernan"]},
+{n:"Romelu Lukaku",f:"Chelsea FC",t:"Everton FC",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC35.36m",y:2014,a:["romelu lukaku","lukaku","romelu"]},
+{n:"Fikayo Tomori",f:"Chelsea FC",t:"AC Milan",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC35.30m",y:2021,a:["fikayo tomori","tomori","fikayo"]},
+{n:"Mathys Tel",f:"Bayern Munich",t:"Tottenham Hotspur",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2025,a:["mathys tel","tel","mathys"]},
+{n:"Malik Tillman",f:"PSV Eindhoven",t:"Bayer 04 Leverkusen",fl:"\uD83C\uDDFA\uD83C\uDDF8",na:"USA",fe:"\u20AC35.00m",y:2025,a:["malik tillman","tillman","malik"]},
+{n:"Bafode Diakite",f:"LOSC Lille",t:"AFC Bournemouth",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2025,a:["bafode diakite","diakite","bafode"]},
+{n:"Dilane Bakwa",f:"RC Strasbourg Alsace",t:"Nottingham Forest",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2025,a:["dilane bakwa","bakwa","dilane"]},
+{n:"Mohamed Simakan",f:"RB Leipzig",t:"Al-Nassr FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2025,a:["mohamed simakan","simakan","mohamed"]},
+{n:"Jarell Quansah",f:"Liverpool FC",t:"Bayer 04 Leverkusen",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC35.00m",y:2025,a:["jarell quansah","quansah","jarell"]},
+{n:"Malick Thiaw",f:"AC Milan",t:"Newcastle United",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC35.00m",y:2025,a:["malick thiaw","thiaw","malick"]},
+{n:"Charalampos Kostoulas",f:"Olympiacos Piraeus",t:"Brighton & Hove Albion",fl:"\uD83C\uDDEC\uD83C\uDDF7",na:"Greece",fe:"\u20AC35.00m",y:2025,a:["charalampos kostoulas","kostoulas","charalampos"]},
+{n:"Alessandro Buongiorno",f:"Torino FC",t:"SSC Napoli",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC35.00m",y:2024,a:["alessandro buongiorno","buongiorno","alessandro"]},
+{n:"Yankuba Minteh",f:"Newcastle United",t:"Brighton & Hove Albion",fl:"\uD83C\uDDEC\uD83C\uDDF2",na:"Gambia",fe:"\u20AC35.00m",y:2024,a:["yankuba minteh","minteh","yankuba"]},
+{n:"Ibrahim Sangare",f:"PSV Eindhoven",t:"Nottingham Forest",fl:"\uD83C\uDDE8\uD83C\uDDEE",na:"Ivory Coast",fe:"\u20AC35.00m",y:2023,a:["ibrahim sangare","sangare","ibrahim"]},
+{n:"Riyad Mahrez",f:"Manchester City",t:"Al-Ahli SFC",fl:"\uD83C\uDDE9\uD83C\uDDFF",na:"Algeria",fe:"\u20AC35.00m",y:2023,a:["riyad mahrez","mahrez","riyad"]},
+{n:"Oleksandr Zinchenko",f:"Manchester City",t:"Arsenal FC",fl:"\uD83C\uDDFA\uD83C\uDDE6",na:"Ukraine",fe:"\u20AC35.00m",y:2022,a:["oleksandr zinchenko","zinchenko","oleksandr"]},
+{n:"Fabio Vieira",f:"FC Porto",t:"Arsenal FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC35.00m",y:2022,a:["fabio vieira","vieira","fabio"]},
+{n:"Noni Madueke",f:"PSV Eindhoven",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC35.00m",y:2022,a:["noni madueke","madueke","noni"]},
+{n:"Nayef Aguerd",f:"Stade Rennais FC",t:"West Ham United",fl:"\uD83C\uDDF2\uD83C\uDDE6",na:"Morocco",fe:"\u20AC35.00m",y:2022,a:["nayef aguerd","aguerd","nayef"]},
+{n:"Martin Odegaard",f:"Real Madrid",t:"Arsenal FC",fl:"\uD83C\uDDF3\uD83C\uDDF4",na:"Norway",fe:"\u20AC35.00m",y:2021,a:["martin odegaard","odegaard","martin"]},
+{n:"Rodrigo de Paul",f:"Udinese Calcio",t:"Atletico de Madrid",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC35.00m",y:2021,a:["rodrigo de paul","paul","rodrigo"]},
+{n:"Kurt Zouma",f:"Chelsea FC",t:"West Ham United",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2021,a:["kurt zouma","zouma","kurt"]},
+{n:"Matheus Cunha",f:"Hertha BSC",t:"Atletico de Madrid",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC35.00m",y:2021,a:["matheus cunha","cunha","matheus"]},
+{n:"Alvaro Morata",f:"Chelsea FC",t:"Atletico de Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC35.00m",y:2020,a:["alvaro morata","morata","alvaro"]},
+{n:"Wesley Fofana",f:"AS Saint-Etienne",t:"Leicester City",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2020,a:["wesley fofana","fofana","wesley"]},
+{n:"Benjamin Pavard",f:"VfB Stuttgart",t:"Bayern Munich",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2019,a:["benjamin pavard","pavard","benjamin"]},
+{n:"Jasper Cillessen",f:"FC Barcelona",t:"Valencia CF",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC35.00m",y:2019,a:["jasper cillessen","cillessen","jasper"]},
+{n:"Jules Kounde",f:"FC Girondins Bordeaux",t:"Sevilla FC",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2019,a:["jules kounde","kounde","jules"]},
+{n:"Thibaut Courtois",f:"Chelsea FC",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC35.00m",y:2018,a:["thibaut courtois","courtois","thibaut"]},
+{n:"Leonardo Bonucci",f:"AC Milan",t:"Juventus FC",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC35.00m",y:2018,a:["leonardo bonucci","bonucci","leonardo"]},
+{n:"Shoya Nakajima",f:"Portimonense SC",t:"Al-Duhail SC",fl:"\uD83C\uDDEF\uD83C\uDDF5",na:"Japan",fe:"\u20AC35.00m",y:2018,a:["shoya nakajima","nakajima","shoya"]},
+{n:"Krzysztof Piatek",f:"Genoa CFC",t:"AC Milan",fl:"\uD83C\uDDF5\uD83C\uDDF1",na:"Poland",fe:"\u20AC35.00m",y:2018,a:["krzysztof piatek","piatek","krzysztof"]},
+{n:"Antonio Rudiger",f:"AS Roma",t:"Chelsea FC",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC35.00m",y:2017,a:["antonio rudiger","rudiger","antonio"]},
+{n:"Victor Lindelof",f:"SL Benfica",t:"Manchester United",fl:"\uD83C\uDDF8\uD83C\uDDEA",na:"Sweden",fe:"\u20AC35.00m",y:2017,a:["victor lindelof","lindelof","victor"]},
+{n:"Mats Hummels",f:"Borussia Dortmund",t:"Bayern Munich",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC35.00m",y:2016,a:["mats hummels","hummels","mats"]},
+{n:"David Luiz",f:"Paris Saint-Germain",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC35.00m",y:2016,a:["david luiz","luiz","david"]},
+{n:"Renato Sanches",f:"SL Benfica",t:"Bayern Munich",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC35.00m",y:2016,a:["renato sanches","sanches","renato"]},
+{n:"Moussa Sissoko",f:"Newcastle United",t:"Tottenham Hotspur",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2016,a:["moussa sissoko","sissoko","moussa"]},
+{n:"Ousmane Dembele",f:"Stade Rennais FC",t:"Borussia Dortmund",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2016,a:["ousmane dembele","dembele","ousmane"]},
+{n:"Jackson Martinez",f:"FC Porto",t:"Atletico de Madrid",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC35.00m",y:2015,a:["jackson martinez","martinez","jackson"]},
+{n:"Morgan Schneiderlin",f:"Southampton FC",t:"Manchester United",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2015,a:["morgan schneiderlin","schneiderlin","morgan"]},
+{n:"Luka Modric",f:"Tottenham Hotspur",t:"Real Madrid",fl:"\uD83C\uDDED\uD83C\uDDF7",na:"Croatia",fe:"\u20AC35.00m",y:2012,a:["luka modric","modric","luka"]},
+{n:"Eden Hazard",f:"LOSC Lille",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC35.00m",y:2012,a:["eden hazard","hazard","eden"]},
+{n:"Willian",f:"Shakhtar Donetsk",t:"Anzhi Makhachkala",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC35.00m",y:2012,a:["willian"]},
+{n:"Karim Benzema",f:"Olympique Lyon",t:"Real Madrid",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:2009,a:["karim benzema","benzema","karim"]},
+{n:"Arjen Robben",f:"Chelsea FC",t:"Real Madrid",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC35.00m",y:2007,a:["arjen robben","robben","arjen"]},
+{n:"Nicolas Anelka",f:"Arsenal FC",t:"Real Madrid",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC35.00m",y:1999,a:["nicolas anelka","anelka","nicolas"]},
+{n:"James Ward-Prowse",f:"Southampton FC",t:"West Ham United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC34.80m",y:2023,a:["james ward prowse","prowse","james"]},
+{n:"Robin Le Normand",f:"Real Sociedad",t:"Atletico de Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC34.50m",y:2024,a:["robin le normand","normand","robin"]},
+{n:"Xabi Alonso",f:"Liverpool FC",t:"Real Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC34.50m",y:2009,a:["xabi alonso","alonso","xabi"]},
+{n:"Nicolas Anelka",f:"Real Madrid",t:"Paris Saint-Germain",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC34.50m",y:2000,a:["nicolas anelka","anelka","nicolas"]},
+{n:"Joao Pedro",f:"Watford FC",t:"Brighton & Hove Albion",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC34.20m",y:2023,a:["joao pedro","pedro","joao"]},
+{n:"Dani Olmo",f:"GNK Dinamo Zagreb",t:"RB Leipzig",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC34.20m",y:2019,a:["dani olmo","olmo","dani"]},
+{n:"Ollie Watkins",f:"Brentford FC",t:"Aston Villa",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC34.00m",y:2020,a:["ollie watkins","watkins","ollie"]},
+{n:"Darwin Nunez",f:"UD Almeria",t:"SL Benfica",fl:"\uD83C\uDDFA\uD83C\uDDFE",na:"Uruguay",fe:"\u20AC34.00m",y:2020,a:["darwin nunez","nunez","darwin"]},
+{n:"Alexis Sanchez",f:"Arsenal FC",t:"Manchester United",fl:"\uD83C\uDDE8\uD83C\uDDF1",na:"Chile",fe:"\u20AC34.00m",y:2017,a:["alexis sanchez","sanchez","alexis"]},
+{n:"Henrikh Mkhitaryan",f:"Manchester United",t:"Arsenal FC",fl:"\uD83C\uDDE6\uD83C\uDDF2",na:"Armenia",fe:"\u20AC34.00m",y:2017,a:["henrikh mkhitaryan","mkhitaryan","henrikh"]},
+{n:"Milan Skriniar",f:"UC Sampdoria",t:"Inter Milan",fl:"\uD83C\uDDF8\uD83C\uDDF0",na:"Slovakia",fe:"\u20AC34.00m",y:2017,a:["milan skriniar","skriniar","milan"]},
+{n:"Arda Turan",f:"Atletico de Madrid",t:"FC Barcelona",fl:"\uD83C\uDDF9\uD83C\uDDF7",na:"Turkey",fe:"\u20AC34.00m",y:2015,a:["arda turan","turan","arda"]},
+{n:"Memphis Depay",f:"PSV Eindhoven",t:"Manchester United",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC34.00m",y:2015,a:["memphis depay","depay","memphis"]},
+{n:"Cesc Fabregas",f:"Arsenal FC",t:"FC Barcelona",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC34.00m",y:2011,a:["cesc fabregas","fabregas","cesc"]},
+{n:"Ferran Torres",f:"Valencia CF",t:"Manchester City",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC33.50m",y:2020,a:["ferran torres","torres","ferran"]},
+{n:"Ayoze Perez",f:"Newcastle United",t:"Leicester City",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC33.40m",y:2019,a:["ayoze perez","perez","ayoze"]},
+{n:"Carlos Bacca",f:"Sevilla FC",t:"AC Milan",fl:"\uD83C\uDDE8\uD83C\uDDF4",na:"Colombia",fe:"\u20AC33.30m",y:2015,a:["carlos bacca","bacca","carlos"]},
+{n:"Ugurcan Cakir",f:"Trabzonspor",t:"Galatasaray",fl:"\uD83C\uDDF9\uD83C\uDDF7",na:"Turkey",fe:"\u20AC33.00m",y:2025,a:["ugurcan cakir","cakir","ugurcan"]},
+{n:"Igor Thiago",f:"Club Brugge KV",t:"Brentford FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC33.00m",y:2024,a:["igor thiago","thiago","igor"]},
+{n:"Luiz Henrique",f:"Botafogo",t:"Zenit St. Petersburg",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC33.00m",y:2024,a:["luiz henrique","henrique","luiz"]},
+{n:"Lewis Hall",f:"Chelsea FC",t:"Newcastle United",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC33.00m",y:2024,a:["lewis hall","hall","lewis"]},
+{n:"Pau Torres",f:"Villarreal CF",t:"Aston Villa",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC33.00m",y:2023,a:["pau torres","torres","pau"]},
+{n:"Cesc Fabregas",f:"FC Barcelona",t:"Chelsea FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC33.00m",y:2014,a:["cesc fabregas","fabregas","cesc"]},
+{n:"Angel Di Maria",f:"SL Benfica",t:"Real Madrid",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC33.00m",y:2010,a:["angel di maria","maria","angel"]},
+{n:"Brenden Aaronson",f:"Red Bull Salzburg",t:"Leeds United",fl:"\uD83C\uDDFA\uD83C\uDDF8",na:"USA",fe:"\u20AC32.84m",y:2022,a:["brenden aaronson","aaronson","brenden"]},
+{n:"Goncalo Guedes",f:"Valencia CF",t:"Wolverhampton Wanderers",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC32.60m",y:2022,a:["goncalo guedes","guedes","goncalo"]},
+{n:"Nicolo Barella",f:"Cagliari Calcio",t:"Inter Milan",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC32.50m",y:2020,a:["nicolo barella","barella","nicolo"]},
+{n:"Marouane Fellaini",f:"Everton FC",t:"Manchester United",fl:"\uD83C\uDDE7\uD83C\uDDEA",na:"Belgium",fe:"\u20AC32.40m",y:2013,a:["marouane fellaini","fellaini","marouane"]},
+{n:"Wilfried Bony",f:"Swansea City",t:"Manchester City",fl:"\uD83C\uDDE8\uD83C\uDDEE",na:"Ivory Coast",fe:"\u20AC32.30m",y:2014,a:["wilfried bony","bony","wilfried"]},
+{n:"Ronaldinho",f:"Paris Saint-Germain",t:"FC Barcelona",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC32.25m",y:2003,a:["ronaldinho"]},
+{n:"Francisco Conceicao",f:"FC Porto",t:"Juventus FC",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC32.00m",y:2025,a:["francisco conceicao","conceicao","francisco"]},
+{n:"Eliesse Ben Seghir",f:"AS Monaco",t:"Bayer 04 Leverkusen",fl:"\uD83C\uDDF2\uD83C\uDDE6",na:"Morocco",fe:"\u20AC32.00m",y:2025,a:["eliesse ben seghir","seghir","eliesse"]},
+{n:"Mikel Merino",f:"Real Sociedad",t:"Arsenal FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC32.00m",y:2024,a:["mikel merino","merino","mikel"]},
+{n:"Santiago Gimenez",f:"Feyenoord Rotterdam",t:"AC Milan",fl:"\uD83C\uDDF2\uD83C\uDDFD",na:"Mexico",fe:"\u20AC32.00m",y:2024,a:["santiago gimenez","gimenez","santiago"]},
+{n:"Samu Aghehowa",f:"Atletico de Madrid",t:"FC Porto",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC32.00m",y:2024,a:["samu aghehowa","aghehowa","samu"]},
+{n:"Mats Wieffer",f:"Feyenoord Rotterdam",t:"Brighton & Hove Albion",fl:"\uD83C\uDDF3\uD83C\uDDF1",na:"Netherlands",fe:"\u20AC32.00m",y:2024,a:["mats wieffer","wieffer","mats"]},
+{n:"Alexander Sorloth",f:"Villarreal CF",t:"Atletico de Madrid",fl:"\uD83C\uDDF3\uD83C\uDDF4",na:"Norway",fe:"\u20AC32.00m",y:2024,a:["alexander sorloth","sorloth","alexander"]},
+{n:"Sadio Mane",f:"Liverpool FC",t:"Bayern Munich",fl:"\uD83C\uDDF8\uD83C\uDDF3",na:"Senegal",fe:"\u20AC32.00m",y:2022,a:["sadio mane","mane","sadio"]},
+{n:"Vitinha",f:"SC Braga",t:"Olympique Marseille",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC32.00m",y:2022,a:["vitinha"]},
+{n:"Leon Bailey",f:"Bayer 04 Leverkusen",t:"Aston Villa",fl:"\uD83C\uDDEF\uD83C\uDDF2",na:"Jamaica",fe:"\u20AC32.00m",y:2021,a:["leon bailey","bailey","leon"]},
+{n:"Nelson Semedo",f:"FC Barcelona",t:"Wolverhampton Wanderers",fl:"\uD83C\uDDF5\uD83C\uDDF9",na:"Portugal",fe:"\u20AC32.00m",y:2020,a:["nelson semedo","semedo","nelson"]},
+{n:"Giovani Lo Celso",f:"Real Betis Balompie",t:"Tottenham Hotspur",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC32.00m",y:2020,a:["giovani lo celso","celso","giovani"]},
+{n:"Abdou Diallo",f:"Borussia Dortmund",t:"Paris Saint-Germain",fl:"\uD83C\uDDF8\uD83C\uDDF3",na:"Senegal",fe:"\u20AC32.00m",y:2019,a:["abdou diallo","diallo","abdou"]},
+{n:"Franck Kessie",f:"Atalanta BC",t:"AC Milan",fl:"\uD83C\uDDE8\uD83C\uDDEE",na:"Ivory Coast",fe:"\u20AC32.00m",y:2019,a:["franck kessie","kessie","franck"]},
+{n:"Kerem Demirbay",f:"TSG 1899 Hoffenheim",t:"Bayer 04 Leverkusen",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC32.00m",y:2019,a:["kerem demirbay","demirbay","kerem"]},
+{n:"Alvaro Odriozola",f:"Real Sociedad",t:"Real Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC32.00m",y:2018,a:["alvaro odriozola","odriozola","alvaro"]},
+{n:"Inigo Martinez",f:"Real Sociedad",t:"Athletic Bilbao",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC32.00m",y:2017,a:["inigo martinez","martinez","inigo"]},
+{n:"Kevin Gameiro",f:"Sevilla FC",t:"Atletico de Madrid",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC32.00m",y:2016,a:["kevin gameiro","gameiro","kevin"]},
+{n:"Gabriel Jesus",f:"Palmeiras",t:"Manchester City",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC32.00m",y:2016,a:["gabriel jesus","jesus","gabriel"]},
+{n:"Arkadiusz Milik",f:"Ajax Amsterdam",t:"SSC Napoli",fl:"\uD83C\uDDF5\uD83C\uDDF1",na:"Poland",fe:"\u20AC32.00m",y:2016,a:["arkadiusz milik","milik","arkadiusz"]},
+{n:"Miralem Pjanic",f:"AS Roma",t:"Juventus FC",fl:"\uD83C\uDDE7\uD83C\uDDE6",na:"Bosnia",fe:"\u20AC32.00m",y:2016,a:["miralem pjanic","pjanic","miralem"]},
+{n:"Andre Schurrle",f:"Chelsea FC",t:"VfL Wolfsburg",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC32.00m",y:2014,a:["andre schurrle","schurrle","andre"]},
+{n:"Asier Illarramendi",f:"Real Sociedad",t:"Real Madrid",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC32.00m",y:2013,a:["asier illarramendi","illarramendi","asier"]},
+{n:"Oscar",f:"Sport Club Internacional",t:"Chelsea FC",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC32.00m",y:2012,a:["oscar"]},
+{n:"David Raya",f:"Brentford FC",t:"Arsenal FC",fl:"\uD83C\uDDEA\uD83C\uDDF8",na:"Spain",fe:"\u20AC31.90m",y:2024,a:["david raya","raya","david"]},
+{n:"Moussa Niaakhate",f:"Nottingham Forest",t:"Olympique Lyon",fl:"\uD83C\uDDF8\uD83C\uDDF3",na:"Senegal",fe:"\u20AC31.90m",y:2024,a:["moussa niaakhate","niaakhate","moussa"]},
+{n:"Emile Smith Rowe",f:"Arsenal FC",t:"Fulham FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC31.80m",y:2024,a:["emile smith rowe","rowe","emile"]},
+{n:"Benjamin Sesko",f:"Red Bull Salzburg",t:"RB Leipzig",fl:"\uD83C\uDDF8\uD83C\uDDEE",na:"Slovenia",fe:"\u20AC31.65m",y:2023,a:["benjamin sesko","sesko","benjamin"]},
+{n:"Habib Diarra",f:"RC Strasbourg Alsace",t:"Sunderland AFC",fl:"\uD83C\uDDF8\uD83C\uDDF3",na:"Senegal",fe:"\u20AC31.50m",y:2025,a:["habib diarra","diarra","habib"]},
+{n:"Brajan Gruda",f:"1.FSV Mainz 05",t:"Brighton & Hove Albion",fl:"\uD83C\uDDE9\uD83C\uDDEA",na:"Germany",fe:"\u20AC31.50m",y:2024,a:["brajan gruda","gruda","brajan"]},
+{n:"Hugo Ekitike",f:"Paris Saint-Germain",t:"Eintracht Frankfurt",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC31.50m",y:2024,a:["hugo ekitike","ekitike","hugo"]},
+{n:"Cristian Romero",f:"Genoa CFC",t:"Juventus FC",fl:"\uD83C\uDDE6\uD83C\uDDF7",na:"Argentina",fe:"\u20AC31.50m",y:2019,a:["cristian romero","romero","cristian"]},
+{n:"Danilo",f:"FC Porto",t:"Real Madrid",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC31.50m",y:2015,a:["danilo"]},
+{n:"Anderson",f:"FC Porto",t:"Manchester United",fl:"\uD83C\uDDE7\uD83C\uDDF7",na:"Brazil",fe:"\u20AC31.50m",y:2007,a:["anderson"]},
+{n:"Shaun Wright-Phillips",f:"Manchester City",t:"Chelsea FC",fl:"\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F",na:"England",fe:"\u20AC31.50m",y:2005,a:["shaun wright phillips","phillips","shaun"]},
+{n:"Davide Frattesi",f:"US Sassuolo",t:"Inter Milan",fl:"\uD83C\uDDEE\uD83C\uDDF9",na:"Italy",fe:"\u20AC31.40m",y:2024,a:["davide frattesi","frattesi","davide"]},
+{n:"Benjamin Pavard",f:"Bayern Munich",t:"Inter Milan",fl:"\uD83C\uDDEB\uD83C\uDDF7",na:"France",fe:"\u20AC31.40m",y:2023,a:["benjamin pavard","pavard","benjamin"]}
+];
+var MAX=6,TILES=['t0','t1','t2','t3','t4'],VALS=['v0','v1','v2','v3','v4'];
+function todayKey(){var d=new Date();return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();}
+var PLAYER=T[todayKey()%T.length];
+var guesses=0,over=false;
+document.getElementById('dl').textContent=new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+document.getElementById('v0').textContent=PLAYER.t;
+document.getElementById('v1').textContent=PLAYER.f;
+document.getElementById('v2').textContent=PLAYER.fl+'\u00a0'+PLAYER.na;
+document.getElementById('v3').textContent=PLAYER.fe;
+document.getElementById('v4').textContent=PLAYER.y;
+function normStr(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
+function lev(a,b){
+  var m=a.length,n=b.length,i,j;if(!m)return n;if(!n)return m;
+  var p=Array(n+1),q=Array(n+1);
+  for(j=0;j<=n;j++)p[j]=j;
+  for(i=1;i<=m;i++){q[0]=i;for(j=1;j<=n;j++)q[j]=a[i-1]===b[j-1]?p[j-1]:1+Math.min(p[j],q[j-1],p[j-1]);}
+  return q[n];
+}
+function isMatch(val){var nv=normStr(val);return normStr(PLAYER.n)===nv||PLAYER.a.some(function(a){return normStr(a)===nv;});}
+function reveal(i){var tile=document.getElementById(TILES[i]);if(!tile)return;var mask=tile.querySelector('.tmask');if(mask)mask.parentNode.removeChild(mask);tile.classList.add('on');}
+function addRow(name,ok){
+  var row=document.createElement('div');
+  row.className='grow '+(ok?'ok':'no');
+  row.innerHTML='<span class="gico">'+(ok?'\u2705':'\u274c')+'</span><span class="gnm">'+name+'</span>';
+  document.getElementById('grows').appendChild(row);
+  var pip=document.getElementById('p'+(guesses-1));if(pip)pip.classList.add(ok?'ok':'no');
+}
+function finish(won){
+  over=true;document.getElementById('ginput').disabled=true;hideSugg();
+  if(typeof saveResult==='function'){saveResult('transferotd','Deal of the Day',won?1:0,1,won);}
+  if(!won){for(var i=0;i<5;i++)reveal(i);}
+  var details='<b>'+PLAYER.n+'</b><br>'+PLAYER.f+' \u2192 '+PLAYER.t+'<br>'+PLAYER.na+' \u00b7 '+PLAYER.fe+' \u00b7 '+PLAYER.y;
+  var prefix=won?'That was ':'Today\u2019s transfer was ';
+  var icon=won?'\ud83c\udfc6':'\u274c';
+  document.getElementById('rarea').innerHTML=
+    '<div class="rbox '+(won?'win':'lose')+'">'
+    +'<div class="ricon">'+icon+'</div>'
+    +'<div class="rtitle">'+(won?'Got it!':'Unlucky!')+'</div>'
+    +'<div class="rsub">'+prefix+details+'</div>'
+    +'<button class="sbtn" onclick="shareResult('+(won?'true':'false')+')">Share result</button>'
+    +'</div>';
+}
+function shareResult(won){
+  var today=new Date().toLocaleDateString('en-AU'),pips='';
+  for(var i=0;i<6;i++){var p=document.getElementById('p'+i);pips+=p.classList.contains('ok')?'\ud83d\udfe9':p.classList.contains('no')?'\ud83d\udfe5':'\u2b1c';}
+  var txt='SportsStack \u2014 Deal of the Day \u00b7 '+today+'\n'+(won?'\u2705 '+guesses+'/6':'\u274c X/6')+'\n'+pips+'\nsportsstack.com.au/transferotd.html';
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(function(){var b=document.querySelector('.sbtn');if(b){b.textContent='Copied!';setTimeout(function(){b.textContent='Share result';},2000);}});
+}
+function doGuess(){
+  if(over)return;var inp=document.getElementById('ginput'),val=inp.value.trim();if(!val)return;
+  inp.value='';hideSugg();guesses++;var ok=isMatch(val);addRow(val,ok);
+  if(ok){finish(true);return;}
+  if(guesses-1<TILES.length)reveal(guesses-1);if(guesses>=MAX)finish(false);
+}
+function hideSugg(){var b=document.getElementById('sbox');b.style.display='none';b.innerHTML='';}
+function buildSugg(val){
+  if(over||val.length<2){hideSugg();return;}
+  var nv=normStr(val),seen={},hits=[];
+  for(var i=0;i<T.length;i++){
+    var t=T[i];if(seen[t.n])continue;
+    var nm=normStr(t.n);
+    if(nm.indexOf(nv)===0||t.a.some(function(a){return normStr(a).indexOf(nv)===0;})||lev(nv,nm)<=2){seen[t.n]=1;hits.push(t);}
+    if(hits.length>=6)break;
+  }
+  if(!hits.length){hideSugg();return;}
+  var box=document.getElementById('sbox');
+  box.innerHTML=hits.map(function(h){var s=h.n.replace(/&/g,'&amp;').replace(/"/g,'&quot;');return '<div class="si" data-n="'+s+'">'+s+'</div>';}).join('');
+  box.style.display='block';
+  box.querySelectorAll('.si').forEach(function(el){el.addEventListener('mousedown',function(e){e.preventDefault();document.getElementById('ginput').value=el.getAttribute('data-n').replace(/&amp;/g,'&').replace(/&quot;/g,'"');hideSugg();});});
+}
+document.getElementById('ginput').addEventListener('input',function(e){buildSugg(e.target.value.trim());});
+document.getElementById('ginput').addEventListener('keydown',function(e){if(e.key==='Enter')doGuess();if(e.key==='Escape')hideSugg();});
+document.addEventListener('click',function(e){if(!e.target.closest('#iwrap'))hideSugg();});
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

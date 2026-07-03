@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Sportsman Pl — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/sportsman-pl.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>The Sportsman: PL</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
+  --blue:#2563eb;--blue-light:#3b82f6;
+  --gold:#f5c842;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,.09);--amber-border:rgba(245,158,11,.42);
+  --grey:#4b5563;--grey-bg:rgba(75,85,99,.1);--grey-border:rgba(75,85,99,.4);
+  --red:#ef4444;
+  --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;
+  --border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+.page{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:20px}
+.game-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,5vw,42px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1;color:var(--text)}
+.game-name .hl{color:var(--gold)}
+.game-sub{font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.att-badge{display:block;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 16px;border-radius:20px;background:var(--surface2);color:var(--text-muted);border:1px solid var(--border-bright);margin-bottom:14px;width:fit-content;margin-left:auto;margin-right:auto}
+.legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+.dot{width:9px;height:9px;border-radius:50%}
+.col-hdr{font-size:10px;font-weight:700;color:var(--text-muted);text-align:center;padding:2px 0;text-transform:uppercase;letter-spacing:.06em}
+.tile{border-radius:var(--radius);padding:7px 4px;text-align:center;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--border-bright);background:var(--surface2);transition:background .25s,border-color .25s}
+.tile .tv{font-size:11px;font-weight:600;line-height:1.3;color:var(--text)}
+.tile .ti{font-size:10px;color:var(--text-muted);margin-top:2px;line-height:1.2}
+.tile.g{background:var(--green-bg);border-color:var(--green-border)}.tile.g .tv{color:#86efac}.tile.g .ti{color:#4ade80}
+.tile.a{background:var(--amber-bg);border-color:var(--amber-border)}.tile.a .tv{color:#fcd34d}.tile.a .ti{color:#fbbf24}
+.tile.gr{background:var(--grey-bg);border-color:var(--grey-border)}.tile.gr .tv{color:#9ca3af}.tile.gr .ti{color:#6b7280}
+.tile.empty{background:var(--surface);border:1px dashed var(--border-bright)}
+.input-area{margin-top:14px;display:flex;gap:8px;position:relative}
+.input-area input{flex:1;font-size:15px;padding:11px 16px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.input-area input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.input-area input::placeholder{color:var(--text-dim)}
+.dropdown{position:absolute;top:100%;left:0;right:80px;background:var(--surface2);border:1.5px solid var(--border-bright);border-radius:var(--radius);z-index:99;max-height:260px;overflow-y:auto;margin-top:3px;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.dd-item{padding:9px 13px;font-size:14px;color:var(--text);cursor:pointer;border-bottom:1px solid var(--border)}
+.dd-item:last-child{border-bottom:none}
+.dd-item:hover,.dd-item.hl{background:var(--surface3)}
+.dd-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+.btn{padding:11px 18px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;background:var(--gold);color:var(--bg);white-space:nowrap;transition:all .2s;flex-shrink:0}
+.btn:hover{background:#ffd700;transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.result-banner{border-radius:var(--radius-lg);padding:1.1rem 1.25rem;text-align:center;margin-top:14px;border:1px solid}
+.result-banner.win{border-color:var(--green-border);background:var(--green-bg)}
+.result-banner.lose{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.06)}
+.rb-icon{font-size:32px;margin-bottom:6px}
+.rb-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-banner.win .rb-title{color:#86efac}
+.result-banner.lose .rb-title{color:#fca5a5}
+.rb-player{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:4px}
+.rb-sub{font-size:13px;color:var(--text-muted);margin-bottom:2px}
+.share-btn{margin-top:10px;display:inline-block;padding:9px 22px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+.msg{font-size:13px;color:#fca5a5;margin-top:6px;min-height:18px}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TL0NM71G5M');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div class="page">
+<header class="site-header">
+  <div class="game-name">The Sportsman: <span class="hl">PL</span></div>
+  <div class="game-sub">Guess today's Premier League player · 8 attempts</div>
+</header>
+
+<span class="att-badge" id="att-badge">8 attempts remaining</span>
+<div class="legend">
+  <span class="leg"><span class="dot" style="background:#22c55e"></span>Correct</span>
+  <span class="leg"><span class="dot" style="background:#f59e0b"></span>Close</span>
+  <span class="leg"><span class="dot" style="background:#4b5563"></span>Wrong</span>
+  <span class="leg" style="font-size:11px;color:var(--text-muted)">↑↓ age direction</span>
+</div>
+
+<div style="overflow-x:auto"><div style="min-width:300px">
+<div style="display:grid;grid-template-columns:28px repeat(4,1fr);gap:4px;margin-bottom:4px">
+  <div></div>
+  <div class="col-hdr">Position</div>
+  <div class="col-hdr">Club</div>
+  <div class="col-hdr">Nationality</div>
+  <div class="col-hdr">Age</div>
+</div>
+<div style="display:grid;grid-template-columns:28px repeat(6,1fr);gap:4px;margin-bottom:4px"><div></div><div class="col-hdr">Pos</div><div class="col-hdr">Specific</div><div class="col-hdr">Club</div><div class="col-hdr">Nation</div><div class="col-hdr">Age</div><div class="col-hdr">PL Goals</div></div>
+<div id="rows"></div>
+</div></div>
+
+<div class="input-area" id="input-area">
+  <input type="text" id="guess-input" placeholder="Type a player name..." autocomplete="off"/>
+  <div class="dropdown" id="dropdown" style="display:none"></div>
+  <button class="btn" onclick="submitGuess()">Guess</button>
+</div>
+<div class="msg" id="msg"></div>
+<div id="result"></div>
+</div>
+
+<script>
+const CONTINENTS={
+  "English":"Europe","Scottish":"Europe","Welsh":"Europe","Irish":"Europe","Northern Irish":"Europe",
+  "French":"Europe","Spanish":"Europe","German":"Europe","Portuguese":"Europe","Dutch":"Europe",
+  "Belgian":"Europe","Italian":"Europe","Norwegian":"Europe","Danish":"Europe","Swedish":"Europe",
+  "Swiss":"Europe","Austrian":"Europe","Czech":"Europe","Polish":"Europe","Croatian":"Europe",
+  "Serbian":"Europe","Slovak":"Europe","Hungarian":"Europe","Slovenian":"Europe","Bosnian":"Europe",
+  "Albanian":"Europe","Greek":"Europe","Bulgarian":"Europe","Romanian":"Europe","Ukrainian":"Europe",
+  "Turkish":"Europe","Macedonian":"Europe","Montenegrin":"Europe","Icelandic":"Europe","Finnish":"Europe",
+  "Brazilian":"South America","Argentine":"South America","Colombian":"South America","Chilean":"South America",
+  "Uruguayan":"South America","Ecuadorian":"South America","Venezuelan":"South America","Paraguayan":"South America",
+  "Peruvian":"South America","Bolivian":"South America",
+  "Mexican":"North America","American":"North America","Canadian":"North America","Haitian":"North America",
+  "Jamaican":"North America","Trinidadian":"North America","Costa Rican":"North America",
+  "Egyptian":"Africa","Senegalese":"Africa","Ivorian":"Africa","Cameroonian":"Africa","Ghanaian":"Africa",
+  "Nigerian":"Africa","Moroccan":"Africa","Algerian":"Africa","Malian":"Africa","Guinean":"Africa",
+  "South African":"Africa","Congolese":"Africa","Zimbabwean":"Africa","Tunisian":"Africa","Togolese":"Africa",
+  "Burkinabe":"Africa","Gabonese":"Africa","Mozambican":"Africa","Guinean-Bissauan":"Africa","Liberian":"Africa",
+  "Gambian":"Africa",
+  "Japanese":"Asia","South Korean":"Asia","Chinese":"Asia","Iranian":"Asia","Uzbek":"Asia",
+  "Australian":"Oceania","New Zealander":"Oceania",
+};
+
+const ALL_PLAYERS = [
+  {name:"Martin Dúbravka",aliases:["dubravka","dúbravka","martin","martin dubravka","martin dúbravka"],pos:"GK",club:"Burnley",nat:"Slovak",age:36,specificPos:"GK",plGoals:0},
+  {name:"Bernd Leno",aliases:["bernd","bernd leno","leno"],pos:"GK",club:"Fulham",nat:"German",age:32,specificPos:"GK",plGoals:0},
+  {name:"Nikola Milenković",aliases:["milenkovic","milenković","nikola","nikola milenkovic","nikola milenković"],pos:"DF",club:"Nottingham Forest",nat:"Serbian",age:27,specificPos:"CB",plGoals:3},
+  {name:"Đorđe Petrović",aliases:["petrovic","petrović","đorđe","đorđe petrovic","đorđe petrović"],pos:"GK",club:"Bournemouth",nat:"Serbian",age:24,specificPos:"GK",plGoals:0},
+  {name:"Jordan Pickford",aliases:["jordan","jordan pickford","pickford"],pos:"GK",club:"Everton",nat:"English",age:31,specificPos:"GK",plGoals:0},
+  {name:"David Raya",aliases:["david","david raya","raya"],pos:"GK",club:"Arsenal",nat:"Spanish",age:30,specificPos:"GK",plGoals:0},
+  {name:"Virgil van Dijk",aliases:["dijk","virgil","virgil van dijk"],pos:"DF",club:"Liverpool",nat:"Dutch",age:33,specificPos:"CB",plGoals:5},
+  {name:"Bart Verbruggen",aliases:["bart","bart verbruggen","verbruggen"],pos:"GK",club:"Brighton",nat:"Dutch",age:22,specificPos:"GK",plGoals:0},
+  {name:"James Garner",aliases:["garner","james","james garner"],pos:"MF",club:"Everton",nat:"English",age:23,specificPos:"CM",plGoals:4},
+  {name:"Jarrod Bowen",aliases:["bowen","jarrod","jarrod bowen"],pos:"MF",club:"West Ham United",nat:"English",age:28,specificPos:"RW",plGoals:43},
+  {name:"Elliot Anderson",aliases:["anderson","elliot","elliot anderson"],pos:"MF",club:"Nottingham Forest",nat:"English",age:22,specificPos:"CM",plGoals:4},
+  {name:"Adrien Truffert",aliases:["adrien","adrien truffert","truffert"],pos:"DF",club:"Bournemouth",nat:"French",age:23,specificPos:"LB",plGoals:1},
+  {name:"Morgan Rogers",aliases:["morgan","morgan rogers","rogers"],pos:"MF",club:"Aston Villa",nat:"English",age:22,specificPos:"CAM",plGoals:11},
+  {name:"Caoimhín Kelleher",aliases:["caoimhin","caoimhin kelleher","caoimhín","caoimhín kelleher","kelleher"],pos:"GK",club:"Brentford",nat:"Irish",age:26,specificPos:"GK",plGoals:0},
+  {name:"James Tarkowski",aliases:["james","james tarkowski","tarkowski"],pos:"DF",club:"Everton",nat:"English",age:32,specificPos:"CB",plGoals:4},
+  {name:"Tyrick Mitchell",aliases:["mitchell","tyrick","tyrick mitchell"],pos:"MF",club:"Crystal Palace",nat:"English",age:25,specificPos:"LB",plGoals:1},
+  {name:"Marcos Senesi",aliases:["marcos","marcos senesi","senesi"],pos:"DF",club:"Bournemouth",nat:"Argentine",age:27,specificPos:"CB",plGoals:1},
+  {name:"Igor Thiago",aliases:["igor","igor thiago","thiago"],pos:"FW",club:"Brentford",nat:"Brazilian",age:23,specificPos:"ST",plGoals:9},
+  {name:"Morgan Gibbs-White",aliases:["gibbs-white","morgan","morgan gibbs-white"],pos:"MF",club:"Nottingham Forest",nat:"English",age:25,specificPos:"CAM",plGoals:16},
+  {name:"Michael Kayode",aliases:["kayode","michael","michael kayode"],pos:"DF",club:"Brentford",nat:"Italian",age:20,specificPos:"RB",plGoals:0},
+  {name:"Neco Williams",aliases:["neco","neco williams","williams"],pos:"DF",club:"Nottingham Forest",nat:"Welsh",age:23,specificPos:"RB",plGoals:2},
+  {name:"Luke Shaw",aliases:["luke","luke shaw","shaw"],pos:"DF",club:"Manchester Utd",nat:"English",age:29,specificPos:"LB",plGoals:6},
+  {name:"Dean Henderson",aliases:["dean","dean henderson","henderson"],pos:"GK",club:"Crystal Palace",nat:"English",age:27,specificPos:"GK",plGoals:0},
+  {name:"Guglielmo Vicario",aliases:["guglielmo","guglielmo vicario","vicario"],pos:"GK",club:"Tottenham Hotspur",nat:"Italian",age:28,specificPos:"GK",plGoals:0},
+  {name:"Dominik Szoboszlai",aliases:["dominik","dominik szoboszlai","szoboszlai"],pos:"MF",club:"Liverpool",nat:"Hungarian",age:24,specificPos:"CAM",plGoals:10},
+  {name:"Ezri Konsa",aliases:["ezri","ezri konsa","konsa"],pos:"DF",club:"Aston Villa",nat:"English",age:27,specificPos:"CB",plGoals:5},
+  {name:"Declan Rice",aliases:["declan","declan rice","rice"],pos:"MF",club:"Arsenal",nat:"English",age:26,specificPos:"CDM",plGoals:17},
+  {name:"Jan Paul van Hecke",aliases:["hecke","jan","jan paul van hecke"],pos:"DF",club:"Brighton",nat:"Dutch",age:24,specificPos:"CB",plGoals:2},
+  {name:"Martín Zubimendi",aliases:["martin","martin zubimendi","martín","martín zubimendi","zubimendi"],pos:"MF",club:"Arsenal",nat:"Spanish",age:25,specificPos:"CDM",plGoals:1},
+  {name:"Jake O'Brien",aliases:["jake","jake o'brien","o'brien"],pos:"DF",club:"Everton",nat:"Irish",age:23,specificPos:"CB",plGoals:1},
+  {name:"Robert Sánchez",aliases:["robert","robert sanchez","robert sánchez","sanchez","sánchez"],pos:"GK",club:"Chelsea",nat:"Spanish",age:27,specificPos:"GK",plGoals:0},
+  {name:"Robin Roefs",aliases:["robin","robin roefs","roefs"],pos:"GK",club:"Sunderland",nat:"Dutch",age:25,specificPos:"GK",plGoals:0},
+  {name:"Ferdi Kadioglu",aliases:["ferdi","ferdi kadioglu","kadioglu"],pos:"DF",club:"Brighton",nat:"Turkish",age:25,specificPos:"LB",plGoals:2},
+  {name:"Sander Berge",aliases:["berge","sander","sander berge"],pos:"MF",club:"Fulham",nat:"Norwegian",age:26,specificPos:"CDM",plGoals:5},
+  {name:"Ethan Ampadu",aliases:["ampadu","ethan","ethan ampadu"],pos:"MF",club:"Leeds United",nat:"Welsh",age:24,specificPos:"CDM",plGoals:4},
+  {name:"Enzo Fernández",aliases:["enzo","enzo fernandez","enzo fernández","fernandez","fernández"],pos:"MF",club:"Chelsea",nat:"Argentine",age:23,specificPos:"CM",plGoals:9},
+  {name:"Maxence Lacroix",aliases:["lacroix","maxence","maxence lacroix"],pos:"DF",club:"Crystal Palace",nat:"French",age:25,specificPos:"CB",plGoals:1},
+  {name:"Ibrahima Konaté",aliases:["ibrahima","ibrahima konate","ibrahima konaté","konate","konaté"],pos:"DF",club:"Liverpool",nat:"French",age:25,specificPos:"CB",plGoals:4},
+  {name:"Ryan Gravenberch",aliases:["gravenberch","ryan","ryan gravenberch"],pos:"MF",club:"Liverpool",nat:"Dutch",age:22,specificPos:"CDM",plGoals:3},
+  {name:"Joachim Andersen",aliases:["andersen","joachim","joachim andersen"],pos:"DF",club:"Fulham",nat:"Danish",age:28,specificPos:"CB",plGoals:4},
+  {name:"Kyle Walker",aliases:["kyle","kyle walker","walker"],pos:"DF",club:"Burnley",nat:"English",age:34,specificPos:"RB",plGoals:5},
+  {name:"Matty Cash",aliases:["cash","matty","matty cash"],pos:"DF",club:"Aston Villa",nat:"Polish",age:27,specificPos:"RB",plGoals:5},
+  {name:"Trai Hume",aliases:["hume","trai","trai hume"],pos:"DF",club:"Sunderland",nat:"Northern Irish",age:22,specificPos:"RB",plGoals:1},
+  {name:"Bruno Fernandes",aliases:["bruno","bruno fernandes","fernandes"],pos:"MF",club:"Manchester Utd",nat:"Portuguese",age:30,specificPos:"CAM",plGoals:62},
+  {name:"Pascal Struijk",aliases:["pascal","pascal struijk","struijk"],pos:"DF",club:"Leeds United",nat:"Dutch",age:25,specificPos:"CB",plGoals:2},
+  {name:"Gianluigi Donnarumma",aliases:["donnarumma","gianluigi","gianluigi donnarumma"],pos:"GK",club:"Manchester City",nat:"Italian",age:26,specificPos:"GK",plGoals:0},
+  {name:"Erling Haaland",aliases:["erling","erling haaland","haaland"],pos:"FW",club:"Manchester City",nat:"Norwegian",age:24,specificPos:"ST",plGoals:91},
+  {name:"Micky van de Ven",aliases:["micky","micky van de ven","ven"],pos:"DF",club:"Tottenham Hotspur",nat:"Dutch",age:23,specificPos:"CB",plGoals:2},
+  {name:"Jayden Bogle",aliases:["bogle","jayden","jayden bogle"],pos:"MF",club:"Leeds United",nat:"English",age:25,specificPos:"RB",plGoals:3},
+  {name:"Maxime Estève",aliases:["esteve","estève","maxime","maxime esteve","maxime estève"],pos:"DF",club:"Burnley",nat:"French",age:22,specificPos:"CB",plGoals:0},
+  {name:"Mateus Fernandes",aliases:["fernandes","mateus","mateus fernandes"],pos:"MF",club:"West Ham United",nat:"Portuguese",age:21,specificPos:"CM",plGoals:2},
+  {name:"Lewis Dunk",aliases:["dunk","lewis","lewis dunk"],pos:"DF",club:"Brighton",nat:"English",age:33,specificPos:"CB",plGoals:6},
+  {name:"Trevoh Chalobah",aliases:["chalobah","trevoh","trevoh chalobah"],pos:"DF",club:"Chelsea",nat:"English",age:25,specificPos:"CB",plGoals:4},
+  {name:"Joe Rodon",aliases:["joe","joe rodon","rodon"],pos:"DF",club:"Leeds United",nat:"Welsh",age:27,specificPos:"CB",plGoals:2},
+  {name:"Gabriel Gudmundsson",aliases:["gabriel","gabriel gudmundsson","gudmundsson"],pos:"DF",club:"Leeds United",nat:"Swedish",age:24,specificPos:"LB",plGoals:2},
+  {name:"Nathan Collins",aliases:["collins","nathan","nathan collins"],pos:"DF",club:"Brentford",nat:"Irish",age:23,specificPos:"CB",plGoals:2},
+  {name:"Malick Thiaw",aliases:["malick","malick thiaw","thiaw"],pos:"DF",club:"Newcastle United",nat:"German",age:23,specificPos:"CB",plGoals:1},
+  {name:"Chris Richards",aliases:["chris","chris richards","richards"],pos:"DF",club:"Crystal Palace",nat:"American",age:24,specificPos:"CB",plGoals:1},
+  {name:"Vitaliy Mykolenko",aliases:["mykolenko","vitaliy","vitaliy mykolenko"],pos:"DF",club:"Everton",nat:"Ukrainian",age:25,specificPos:"LB",plGoals:1},
+  {name:"Omar Alderete",aliases:["alderete","omar","omar alderete"],pos:"DF",club:"Sunderland",nat:"Paraguayan",age:28,specificPos:"CB",plGoals:0},
+  {name:"Alex Scott",aliases:["alex","alex scott","scott"],pos:"MF",club:"Bournemouth",nat:"English",age:21,specificPos:"CM",plGoals:4},
+  {name:"Sepp van den Berg",aliases:["berg","sepp","sepp van den berg"],pos:"DF",club:"Brentford",nat:"Dutch",age:23,specificPos:"CB",plGoals:2},
+  {name:"Enzo Le Fée",aliases:["enzo","enzo le fee","enzo le fée","fee","fée"],pos:"MF",club:"Sunderland",nat:"French",age:24,specificPos:"CAM",plGoals:2},
+  {name:"Emiliano Martínez",aliases:["emiliano","emiliano martinez","emiliano martínez","martinez","martínez"],pos:"GK",club:"Aston Villa",nat:"Argentine",age:32,specificPos:"GK",plGoals:0},
+  {name:"Noah Sadiki",aliases:["noah","noah sadiki","sadiki"],pos:"MF",club:"Sunderland",nat:"Congolese",age:22,specificPos:"CDM",plGoals:0},
+  {name:"João Gomes",aliases:["gomes","joao","joao gomes","joão","joão gomes"],pos:"MF",club:"Wolves",nat:"Brazilian",age:23,specificPos:"CDM",plGoals:4},
+  {name:"Ollie Watkins",aliases:["ollie","ollie watkins","watkins"],pos:"FW",club:"Aston Villa",nat:"English",age:29,specificPos:"ST",plGoals:61},
+  {name:"Jurriën Timber",aliases:["jurrien","jurrien timber","jurriën","jurriën timber","timber"],pos:"DF",club:"Arsenal",nat:"Dutch",age:23,specificPos:"RB",plGoals:4},
+  {name:"Granit Xhaka",aliases:["granit","granit xhaka","xhaka"],pos:"MF",club:"Sunderland",nat:"Swiss",age:32,specificPos:"CM",plGoals:27},
+  {name:"Matheus Nunes",aliases:["matheus","matheus nunes","nunes"],pos:"DF",club:"Manchester City",nat:"Portuguese",age:26,specificPos:"CM",plGoals:4},
+  {name:"Senne Lammens",aliases:["lammens","senne","senne lammens"],pos:"GK",club:"Manchester Utd",nat:"Belgian",age:23,specificPos:"GK",plGoals:0},
+  {name:"Harry Wilson",aliases:["harry","harry wilson","wilson"],pos:"MF",club:"Fulham",nat:"Welsh",age:27,specificPos:"RW",plGoals:12},
+  {name:"Bernardo Silva",aliases:["bernardo","bernardo silva","silva"],pos:"MF",club:"Manchester City",nat:"Portuguese",age:30,specificPos:"CAM",plGoals:44},
+  {name:"João Pedro",aliases:["joao","joao pedro","joão","joão pedro","pedro"],pos:"FW",club:"Chelsea",nat:"Brazilian",age:23,specificPos:"ST",plGoals:15},
+  {name:"Pedro Neto",aliases:["neto","pedro","pedro neto"],pos:"MF",club:"Chelsea",nat:"Portuguese",age:24,specificPos:"LW",plGoals:16},
+  {name:"Kevin Schade",aliases:["kevin","kevin schade","schade"],pos:"MF",club:"Brentford",nat:"German",age:23,specificPos:"RW",plGoals:5},
+  {name:"Evanilson",aliases:["evanilson"],pos:"FW",club:"Bournemouth",nat:"Brazilian",age:25,specificPos:"ST",plGoals:9},
+  {name:"Moisés Caicedo",aliases:["caicedo","moises","moises caicedo","moisés","moisés caicedo"],pos:"MF",club:"Chelsea",nat:"Ecuadorian",age:23,specificPos:"CDM",plGoals:5},
+  {name:"Gabriel Magalhães",aliases:["gabriel","gabriel magalhaes","gabriel magalhães","magalhaes","magalhães"],pos:"DF",club:"Arsenal",nat:"Brazilian",age:27,specificPos:"CB",plGoals:14},
+  {name:"Pedro Porro",aliases:["pedro","pedro porro","porro"],pos:"DF",club:"Tottenham Hotspur",nat:"Spanish",age:25,specificPos:"RB",plGoals:11},
+  {name:"Diogo Dalot",aliases:["dalot","diogo","diogo dalot"],pos:"MF",club:"Manchester Utd",nat:"Portuguese",age:25,specificPos:"RB",plGoals:9},
+  {name:"Nordi Mukiele",aliases:["mukiele","nordi","nordi mukiele"],pos:"DF",club:"Sunderland",nat:"French",age:27,specificPos:"RB",plGoals:1},
+  {name:"Iliman Ndiaye",aliases:["iliman","iliman ndiaye","ndiaye"],pos:"MF",club:"Everton",nat:"Senegalese",age:24,specificPos:"CAM",plGoals:10},
+  {name:"Cody Gakpo",aliases:["cody","cody gakpo","gakpo"],pos:"MF",club:"Liverpool",nat:"Dutch",age:25,specificPos:"LW",plGoals:22},
+  {name:"Yehor Yarmoliuk",aliases:["yarmoliuk","yehor","yehor yarmoliuk"],pos:"MF",club:"Brentford",nat:"Ukrainian",age:22,specificPos:"CM",plGoals:1},
+  {name:"André",aliases:["andre","andré"],pos:"MF",club:"Wolves",nat:"Brazilian",age:23,specificPos:"CDM",plGoals:4},
+  {name:"Casemiro",aliases:["casemiro"],pos:"MF",club:"Manchester Utd",nat:"Brazilian",age:33,specificPos:"CDM",plGoals:13},
+  {name:"Marcus Tavernier",aliases:["marcus","marcus tavernier","tavernier"],pos:"MF",club:"Bournemouth",nat:"English",age:25,specificPos:"RW",plGoals:16},
+  {name:"Dominic Calvert-Lewin",aliases:["calvert-lewin","dominic","dominic calvert-lewin"],pos:"FW",club:"Leeds United",nat:"English",age:27,specificPos:"ST",plGoals:63},
+  {name:"Bryan Mbeumo",aliases:["bryan","bryan mbeumo","mbeumo"],pos:"MF",club:"Manchester Utd",nat:"Cameroonian",age:25,specificPos:"RW",plGoals:43},
+  {name:"Jaidon Anthony",aliases:["anthony","jaidon","jaidon anthony"],pos:"MF",club:"Burnley",nat:"English",age:24,specificPos:"LW",plGoals:4},
+  {name:"Nico O'Reilly",aliases:["nico","nico o'reilly","o'reilly"],pos:"DF",club:"Manchester City",nat:"English",age:20,specificPos:"CM",plGoals:1},
+  {name:"El Hadji Malick Diouf",aliases:["diouf","el","el hadji malick diouf"],pos:"DF",club:"West Ham United",nat:"Senegalese",age:22,specificPos:"RB",plGoals:1},
+  {name:"Alex Iwobi",aliases:["alex","alex iwobi","iwobi"],pos:"MF",club:"Fulham",nat:"Nigerian",age:28,specificPos:"CAM",plGoals:22},
+  {name:"Marc Cucurella",aliases:["cucurella","marc","marc cucurella"],pos:"DF",club:"Chelsea",nat:"Spanish",age:26,specificPos:"LB",plGoals:4},
+  {name:"William Saliba",aliases:["saliba","william","william saliba"],pos:"DF",club:"Arsenal",nat:"French",age:23,specificPos:"CB",plGoals:2},
+  {name:"Alisson",aliases:["alisson"],pos:"GK",club:"Liverpool",nat:"Brazilian",age:32,specificPos:"GK",plGoals:1},
+  {name:"Matheus Cunha",aliases:["cunha","matheus","matheus cunha"],pos:"MF",club:"Manchester Utd",nat:"Brazilian",age:25,specificPos:"ST",plGoals:28},
+  {name:"Matz Sels",aliases:["matz","matz sels","sels"],pos:"GK",club:"Nottingham Forest",nat:"Belgian",age:32,specificPos:"GK",plGoals:0},
+  {name:"Sandro Tonali",aliases:["sandro","sandro tonali","tonali"],pos:"MF",club:"Newcastle United",nat:"Italian",age:24,specificPos:"CM",plGoals:4},
+  {name:"Alexis Mac Allister",aliases:["alexis","alexis mac allister","allister"],pos:"MF",club:"Liverpool",nat:"Argentine",age:26,specificPos:"CM",plGoals:21},
+  {name:"Ladislav Krejčí",aliases:["krejci","krejčí","ladislav","ladislav krejci","ladislav krejčí"],pos:"DF",club:"Wolves",nat:"Czech",age:23,specificPos:"CB",plGoals:1},
+  {name:"Adam Wharton",aliases:["adam","adam wharton","wharton"],pos:"MF",club:"Crystal Palace",nat:"English",age:20,specificPos:"CDM",plGoals:2},
+  {name:"Kiernan Dewsbury-Hall",aliases:["dewsbury-hall","kiernan","kiernan dewsbury-hall"],pos:"MF",club:"Everton",nat:"English",age:27,specificPos:"CM",plGoals:22},
+  {name:"Florian Wirtz",aliases:["florian","florian wirtz","wirtz"],pos:"MF",club:"Liverpool",nat:"German",age:21,specificPos:"CAM",plGoals:1},
+  {name:"Michael Keane",aliases:["keane","michael","michael keane"],pos:"DF",club:"Everton",nat:"English",age:31,specificPos:"CB",plGoals:11},
+  {name:"Brenden Aaronson",aliases:["aaronson","brenden","brenden aaronson"],pos:"MF",club:"Leeds United",nat:"American",age:24,specificPos:"CAM",plGoals:4},
+  {name:"Álex Jiménez",aliases:["alex","alex jimenez","jimenez","jiménez","álex","álex jiménez"],pos:"DF",club:"Bournemouth",nat:"Spanish",age:19,specificPos:"LB",plGoals:1},
+  {name:"Anton Stach",aliases:["anton","anton stach","stach"],pos:"MF",club:"Leeds United",nat:"German",age:26,specificPos:"CDM",plGoals:1},
+  {name:"Hugo Bueno",aliases:["bueno","hugo","hugo bueno"],pos:"MF",club:"Wolves",nat:"Spanish",age:23,specificPos:"LB",plGoals:1},
+  {name:"Murillo",aliases:["murillo"],pos:"DF",club:"Nottingham Forest",nat:"Brazilian",age:23,specificPos:"CB",plGoals:1},
+  {name:"Lesley Ugochukwu",aliases:["lesley","lesley ugochukwu","ugochukwu"],pos:"MF",club:"Burnley",nat:"French",age:22,specificPos:"CDM",plGoals:1},
+  {name:"Santiago Bueno",aliases:["bueno","santiago","santiago bueno"],pos:"DF",club:"Wolves",nat:"Uruguayan",age:26,specificPos:"CB",plGoals:2},
+  {name:"Calvin Bassey",aliases:["bassey","calvin","calvin bassey"],pos:"DF",club:"Fulham",nat:"Nigerian",age:25,specificPos:"CB",plGoals:1},
+  {name:"Konstantinos Mavropanos",aliases:["konstantinos","konstantinos mavropanos","mavropanos"],pos:"DF",club:"West Ham United",nat:"Greek",age:27,specificPos:"CB",plGoals:2},
+  {name:"Rúben Dias",aliases:["dias","ruben","ruben dias","rúben","rúben dias"],pos:"DF",club:"Manchester City",nat:"Portuguese",age:27,specificPos:"CB",plGoals:6},
+  {name:"Bruno Guimarães",aliases:["bruno","bruno guimaraes","bruno guimarães","guimaraes","guimarães"],pos:"MF",club:"Newcastle United",nat:"Brazilian",age:27,specificPos:"CM",plGoals:16},
+  {name:"Daniel Ballard",aliases:["ballard","daniel","daniel ballard"],pos:"DF",club:"Sunderland",nat:"Northern Irish",age:25,specificPos:"CB",plGoals:1},
+  {name:"Diego Gómez",aliases:["diego","diego gomez","diego gómez","gomez","gómez"],pos:"MF",club:"Brighton",nat:"Paraguayan",age:22,specificPos:"CM",plGoals:1},
+  {name:"Milos Kerkez",aliases:["kerkez","milos","milos kerkez"],pos:"DF",club:"Liverpool",nat:"Hungarian",age:21,specificPos:"LB",plGoals:3},
+  {name:"Crysencio Summerville",aliases:["crysencio","crysencio summerville","summerville"],pos:"MF",club:"West Ham United",nat:"Dutch",age:23,specificPos:"LW",plGoals:14},
+  {name:"Raúl Jiménez",aliases:["jimenez","jiménez","raul","raul jimenez","raúl","raúl jiménez"],pos:"FW",club:"Fulham",nat:"Mexican",age:33,specificPos:"ST",plGoals:42},
+  {name:"Idrissa Gana Gueye",aliases:["gueye","idrissa","idrissa gana gueye"],pos:"MF",club:"Everton",nat:"Senegalese",age:35,specificPos:"CDM",plGoals:10},
+  {name:"Yankuba Minteh",aliases:["minteh","yankuba","yankuba minteh"],pos:"MF",club:"Brighton",nat:"Gambian",age:20,specificPos:"RW",plGoals:4},
+  {name:"Bukayo Saka",aliases:["bukayo","bukayo saka","saka"],pos:"FW",club:"Arsenal",nat:"English",age:23,specificPos:"RW",plGoals:67},
+  {name:"Mohamed Salah",aliases:["mohamed","mohamed salah","salah"],pos:"MF",club:"Liverpool",nat:"Egyptian",age:32,specificPos:"RW",plGoals:212},
+  {name:"Amad Diallo",aliases:["amad","amad diallo","diallo"],pos:"MF",club:"Manchester Utd",nat:"Ivorian",age:22,specificPos:"RW",plGoals:14},
+  {name:"Jean-Philippe Mateta",aliases:["jean-philippe","jean-philippe mateta","mateta"],pos:"FW",club:"Crystal Palace",nat:"French",age:27,specificPos:"ST",plGoals:30},
+  {name:"Viktor Gyökeres",aliases:["gyokeres","gyökeres","viktor","viktor gyokeres","viktor gyökeres"],pos:"FW",club:"Arsenal",nat:"Swedish",age:26,specificPos:"ST",plGoals:3},
+  {name:"Danny Welbeck",aliases:["danny","danny welbeck","welbeck"],pos:"FW",club:"Brighton",nat:"English",age:34,specificPos:"ST",plGoals:52},
+  {name:"Nick Pope",aliases:["nick","nick pope","pope"],pos:"GK",club:"Newcastle United",nat:"English",age:32,specificPos:"GK",plGoals:0},
+  {name:"Daniel Muñoz",aliases:["daniel","daniel munoz","daniel muñoz","munoz","muñoz"],pos:"MF",club:"Crystal Palace",nat:"Colombian",age:28,specificPos:"RB",plGoals:4},
+  {name:"Ibrahim Sangaré",aliases:["ibrahim","ibrahim sangare","ibrahim sangaré","sangare","sangaré"],pos:"MF",club:"Nottingham Forest",nat:"Ivorian",age:26,specificPos:"CDM",plGoals:2},
+  {name:"Igor Jesus",aliases:["igor","igor jesus","jesus"],pos:"FW",club:"Nottingham Forest",nat:"Brazilian",age:23,specificPos:"ST",plGoals:9},
+  {name:"Malo Gusto",aliases:["gusto","malo","malo gusto"],pos:"DF",club:"Chelsea",nat:"French",age:21,specificPos:"RB",plGoals:3},
+  {name:"Aaron Wan-Bissaka",aliases:["aaron","aaron wan-bissaka","wan-bissaka"],pos:"DF",club:"West Ham United",nat:"Congolese",age:27,specificPos:"RB",plGoals:4},
+  {name:"Yasin Ayari",aliases:["ayari","yasin","yasin ayari"],pos:"MF",club:"Brighton",nat:"Swedish",age:21,specificPos:"CM",plGoals:1},
+  {name:"Reece James",aliases:["james","reece","reece james"],pos:"DF",club:"Chelsea",nat:"English",age:25,specificPos:"RB",plGoals:14},
+  {name:"Dango Ouattara",aliases:["dango","dango ouattara","ouattara"],pos:"MF",club:"Brentford",nat:"Burkinabe",age:22,specificPos:"RW",plGoals:11},
+  {name:"Lewis Hall",aliases:["hall","lewis","lewis hall"],pos:"DF",club:"Newcastle United",nat:"English",age:21,specificPos:"LB",plGoals:1},
+  {name:"John McGinn",aliases:["john","john mcginn","mcginn"],pos:"MF",club:"Aston Villa",nat:"Scottish",age:30,specificPos:"CM",plGoals:20},
+  {name:"Cristian Romero",aliases:["cristian","cristian romero","romero"],pos:"DF",club:"Tottenham Hotspur",nat:"Argentine",age:26,specificPos:"CB",plGoals:5},
+  {name:"Yeremi Pino",aliases:["pino","yeremi","yeremi pino"],pos:"MF",club:"Crystal Palace",nat:"Spanish",age:22,specificPos:"RW",plGoals:1},
+  {name:"Callum Hudson-Odoi",aliases:["callum","callum hudson-odoi","hudson-odoi"],pos:"MF",club:"Nottingham Forest",nat:"English",age:25,specificPos:"RW",plGoals:17},
+  {name:"Jackson Tchatchoua",aliases:["jackson","jackson tchatchoua","tchatchoua"],pos:"MF",club:"Wolves",nat:"Cameroonian",age:24,specificPos:"RB",plGoals:1},
+  {name:"Mathias Jensen",aliases:["jensen","mathias","mathias jensen"],pos:"MF",club:"Brentford",nat:"Danish",age:28,specificPos:"CM",plGoals:6},
+  {name:"Phil Foden",aliases:["foden","phil","phil foden"],pos:"MF",club:"Manchester City",nat:"English",age:24,specificPos:"CAM",plGoals:73},
+  {name:"João Palhinha",aliases:["joao","joao palhinha","joão","joão palhinha","palhinha"],pos:"MF",club:"Tottenham Hotspur",nat:"Portuguese",age:29,specificPos:"CDM",plGoals:4},
+  {name:"Dan Burn",aliases:["burn","dan","dan burn"],pos:"DF",club:"Newcastle United",nat:"English",age:32,specificPos:"CB",plGoals:3},
+  {name:"Djed Spence",aliases:["djed","djed spence","spence"],pos:"DF",club:"Tottenham Hotspur",nat:"English",age:24,specificPos:"RB",plGoals:1},
+  {name:"Jordan Henderson",aliases:["henderson","jordan","jordan henderson"],pos:"MF",club:"Brentford",nat:"English",age:34,specificPos:"CM",plGoals:36},
+  {name:"Florentino Luís",aliases:["florentino","florentino luis","florentino luís","luis","luís"],pos:"MF",club:"Burnley",nat:"Portuguese",age:25,specificPos:"CDM",plGoals:1},
+  {name:"Hugo Ekitike",aliases:["ekitike","hugo","hugo ekitike"],pos:"FW",club:"Liverpool",nat:"French",age:22,specificPos:"ST",plGoals:4},
+  {name:"Alphonse Areola",aliases:["alphonse","alphonse areola","areola"],pos:"GK",club:"West Ham United",nat:"French",age:31,specificPos:"GK",plGoals:0},
+  {name:"Marc Guéhi",aliases:["guehi","guéhi","marc","marc guehi","marc guéhi"],pos:"DF",club:"Crystal Palace",nat:"English",age:24,specificPos:"CB",plGoals:5},
+  {name:"José Sá",aliases:["jose","jose sa","josé","josé sá","sa","sá"],pos:"GK",club:"Wolves",nat:"Portuguese",age:31,specificPos:"GK",plGoals:0},
+  
+  {name:"Anthony Gordon",aliases:["anthony","anthony gordon","gordon"],pos:"FW",club:"Newcastle United",nat:"English",age:23,specificPos:"LW",plGoals:25},
+  {name:"Kenny Tete",aliases:["kenny","kenny tete","tete"],pos:"DF",club:"Fulham",nat:"Dutch",age:29,specificPos:"RB",plGoals:3},
+  {name:"Ismaila Sarr",aliases:["ismaila","ismaila sarr","sarr"],pos:"MF",club:"Crystal Palace",nat:"Senegalese",age:26,specificPos:"RW",plGoals:17},
+  {name:"Tomáš Souček",aliases:["soucek","souček","tomas","tomas soucek","tomáš","tomáš souček"],pos:"MF",club:"West Ham United",nat:"Czech",age:29,specificPos:"CM",plGoals:31},
+  {name:"Yerson Mosquera",aliases:["mosquera","yerson","yerson mosquera"],pos:"DF",club:"Wolves",nat:"Colombian",age:23,specificPos:"CB",plGoals:1},
+  {name:"Joelinton",aliases:["joelinton"],pos:"MF",club:"Newcastle United",nat:"Brazilian",age:28,specificPos:"CM",plGoals:19},
+  {name:"Harvey Barnes",aliases:["barnes","harvey","harvey barnes"],pos:"FW",club:"Newcastle United",nat:"English",age:27,specificPos:"LW",plGoals:46},
+  {name:"Mats Wieffer",aliases:["mats","mats wieffer","wieffer"],pos:"DF",club:"Brighton",nat:"Dutch",age:24,specificPos:"CDM",plGoals:1},
+  {name:"Ryan Sessegnon",aliases:["ryan","ryan sessegnon","sessegnon"],pos:"DF",club:"Fulham",nat:"English",age:24,specificPos:"LB",plGoals:6},
+  {name:"Amadou Onana",aliases:["amadou","amadou onana","onana"],pos:"MF",club:"Aston Villa",nat:"Belgian",age:23,specificPos:"CDM",plGoals:4},
+  {name:"Leandro Trossard",aliases:["leandro","leandro trossard","trossard"],pos:"FW",club:"Arsenal",nat:"Belgian",age:30,specificPos:"LW",plGoals:37},
+  {name:"Mikkel Damsgaard",aliases:["damsgaard","mikkel","mikkel damsgaard"],pos:"MF",club:"Brentford",nat:"Danish",age:24,specificPos:"CM",plGoals:4},
+  {name:"Leny Yoro",aliases:["leny","leny yoro","yoro"],pos:"DF",club:"Manchester Utd",nat:"French",age:19,specificPos:"CB",plGoals:0},
+  {name:"Jean-Clair Todibo",aliases:["jean-clair","jean-clair todibo","todibo"],pos:"DF",club:"West Ham United",nat:"French",age:25,specificPos:"CB",plGoals:1},
+  {name:"Xavi Simons",aliases:["simons","xavi","xavi simons"],pos:"MF",club:"Tottenham Hotspur",nat:"Dutch",age:21,specificPos:"CAM",plGoals:1},
+  {name:"Nick Woltemade",aliases:["nick","nick woltemade","woltemade"],pos:"FW",club:"Newcastle United",nat:"German",age:22,specificPos:"ST",plGoals:4},
+  {name:"Thierno Barry",aliases:["barry","thierno","thierno barry"],pos:"FW",club:"Everton",nat:"French",age:22,specificPos:"ST",plGoals:4},
+  {name:"Quilindschy Hartman",aliases:["hartman","quilindschy","quilindschy hartman"],pos:"DF",club:"Burnley",nat:"Dutch",age:23,specificPos:"RB",plGoals:1},
+  {name:"James Hill",aliases:["hill","james","james hill"],pos:"DF",club:"Bournemouth",nat:"English",age:23,specificPos:"CB",plGoals:1},
+  {name:"Lucas Digne",aliases:["digne","lucas","lucas digne"],pos:"DF",club:"Aston Villa",nat:"French",age:31,specificPos:"LB",plGoals:11},
+  {name:"Georginio Rutter",aliases:["georginio","georginio rutter","rutter"],pos:"MF",club:"Brighton",nat:"French",age:22,specificPos:"CAM",plGoals:14},
+  {name:"Kristoffer Ajer",aliases:["ajer","kristoffer","kristoffer ajer"],pos:"DF",club:"Brentford",nat:"Norwegian",age:26,specificPos:"CB",plGoals:4},
+  {name:"Jack Grealish",aliases:["grealish","jack","jack grealish"],pos:"MF",club:"Everton",nat:"English",age:29,specificPos:"LW",plGoals:28},
+  {name:"Cole Palmer",aliases:["cole","cole palmer","palmer"],pos:"MF",club:"Chelsea",nat:"English",age:22,specificPos:"CAM",plGoals:39},
+  {name:"Piero Hincapié",aliases:["hincapie","hincapié","piero","piero hincapie","piero hincapié"],pos:"DF",club:"Arsenal",nat:"Ecuadorian",age:22,specificPos:"LB",plGoals:1},
+  {name:"Josh Laurent",aliases:["josh","josh laurent","laurent"],pos:"DF",club:"Burnley",nat:"English",age:27,specificPos:"CDM",plGoals:1},
+  {name:"Reinildo Mandava",aliases:["mandava","reinildo","reinildo mandava"],pos:"DF",club:"Sunderland",nat:"Mozambican",age:30,specificPos:"LB",plGoals:1},
+  {name:"Emile Smith Rowe",aliases:["emile","emile smith rowe","rowe"],pos:"MF",club:"Fulham",nat:"English",age:24,specificPos:"CAM",plGoals:23},
+  {name:"Richarlison",aliases:["richarlison"],pos:"FW",club:"Tottenham Hotspur",nat:"Brazilian",age:27,specificPos:"ST",plGoals:20},
+  {name:"Max Kilman",aliases:["kilman","max","max kilman"],pos:"DF",club:"West Ham United",nat:"English",age:27,specificPos:"CB",plGoals:4},
+  {name:"Brian Brobbey",aliases:["brian","brian brobbey","brobbey"],pos:"FW",club:"Sunderland",nat:"Dutch",age:22,specificPos:"ST",plGoals:1},
+  {name:"Mohammed Kudus",aliases:["kudus","mohammed","mohammed kudus"],pos:"MF",club:"Tottenham Hotspur",nat:"Ghanaian",age:24,specificPos:"CAM",plGoals:21},
+  {name:"Karl Darlow",aliases:["darlow","karl","karl darlow"],pos:"GK",club:"Leeds United",nat:"Welsh",age:34,specificPos:"GK",plGoals:0},
+  {name:"Eberechi Eze",aliases:["eberechi","eberechi eze","eze"],pos:"MF",club:"Arsenal",nat:"English",age:26,specificPos:"CAM",plGoals:36},
+  {name:"Daichi Kamada",aliases:["daichi","daichi kamada","kamada"],pos:"MF",club:"Crystal Palace",nat:"Japanese",age:28,specificPos:"CAM",plGoals:5},
+  {name:"Keane Lewis-Potter",aliases:["keane","keane lewis-potter","lewis-potter"],pos:"DF",club:"Brentford",nat:"English",age:23,specificPos:"LW",plGoals:5},
+  {name:"Josh Cullen",aliases:["cullen","josh","josh cullen"],pos:"MF",club:"Burnley",nat:"Irish",age:28,specificPos:"CDM",plGoals:2},
+  {name:"Lucas Paquetá",aliases:["lucas","lucas paqueta","lucas paquetá","paqueta","paquetá"],pos:"MF",club:"West Ham United",nat:"Brazilian",age:27,specificPos:"CAM",plGoals:11},
+  {name:"Benjamin Šeško",aliases:["benjamin","benjamin sesko","benjamin šeško","sesko","šeško"],pos:"FW",club:"Manchester Utd",nat:"Slovenian",age:21,specificPos:"ST",plGoals:1},
+  {name:"Youri Tielemans",aliases:["tielemans","youri","youri tielemans"],pos:"MF",club:"Aston Villa",nat:"Belgian",age:27,specificPos:"CM",plGoals:42},
+  {name:"Kieran Trippier",aliases:["kieran","kieran trippier","trippier"],pos:"DF",club:"Newcastle United",nat:"English",age:34,specificPos:"RB",plGoals:16},
+  {name:"Ola Aina",aliases:["aina","ola","ola aina"],pos:"DF",club:"Nottingham Forest",nat:"Nigerian",age:28,specificPos:"RB",plGoals:5},
+  {name:"Tijjani Reijnders",aliases:["reijnders","tijjani","tijjani reijnders"],pos:"MF",club:"Manchester City",nat:"Dutch",age:26,specificPos:"CM",plGoals:1},
+  {name:"Kaoru Mitoma",aliases:["kaoru","kaoru mitoma","mitoma"],pos:"MF",club:"Brighton",nat:"Japanese",age:27,specificPos:"LW",plGoals:21},
+  {name:"Curtis Jones",aliases:["curtis","curtis jones","jones"],pos:"MF",club:"Liverpool",nat:"English",age:23,specificPos:"CM",plGoals:16},
+  {name:"Jaka Bijol",aliases:["bijol","jaka","jaka bijol"],pos:"DF",club:"Leeds United",nat:"Slovenian",age:25,specificPos:"CB",plGoals:1},
+  {name:"Emi Buendía",aliases:["buendia","buendía","emi","emi buendia","emi buendía"],pos:"MF",club:"Aston Villa",nat:"Argentine",age:28,specificPos:"CAM",plGoals:16},
+  {name:"Pau Torres",aliases:["pau","pau torres","torres"],pos:"DF",club:"Aston Villa",nat:"Spanish",age:27,specificPos:"CB",plGoals:5},
+  {name:"Rodrigo Bentancur",aliases:["bentancur","rodrigo","rodrigo bentancur"],pos:"MF",club:"Tottenham Hotspur",nat:"Uruguayan",age:27,specificPos:"CM",plGoals:10},
+  {name:"Archie Gray",aliases:["archie","archie gray","gray"],pos:"MF",club:"Tottenham Hotspur",nat:"English",age:18,specificPos:"CM",plGoals:1},
+  {name:"Rayan Cherki",aliases:["cherki","rayan","rayan cherki"],pos:"MF",club:"Manchester City",nat:"French",age:21,specificPos:"CAM",plGoals:1},
+  {name:"Tyler Adams",aliases:["adams","tyler","tyler adams"],pos:"MF",club:"Bournemouth",nat:"American",age:25,specificPos:"CDM",plGoals:1},
+  {name:"James Justin",aliases:["james","james justin","justin"],pos:"DF",club:"Leeds United",nat:"English",age:26,specificPos:"RB",plGoals:5},
+  {name:"Riccardo Calafiori",aliases:["calafiori","riccardo","riccardo calafiori"],pos:"DF",club:"Arsenal",nat:"Italian",age:22,specificPos:"LB",plGoals:4},
+  {name:"Wesley Fofana",aliases:["fofana","wesley","wesley fofana"],pos:"DF",club:"Chelsea",nat:"French",age:24,specificPos:"CB",plGoals:2},
+  {name:"Lucas Perri",aliases:["lucas","lucas perri","perri"],pos:"GK",club:"Leeds United",nat:"Brazilian",age:27,specificPos:"GK",plGoals:0},
+  {name:"Omari Hutchinson",aliases:["hutchinson","omari","omari hutchinson"],pos:"MF",club:"Nottingham Forest",nat:"English",age:22,specificPos:"RW",plGoals:4},
+  {name:"Jefferson Lerma",aliases:["jefferson","jefferson lerma","lerma"],pos:"MF",club:"Crystal Palace",nat:"Colombian",age:30,specificPos:"CDM",plGoals:11},
+  {name:"Noah Okafor",aliases:["noah","noah okafor","okafor"],pos:"FW",club:"Leeds United",nat:"Swiss",age:24,specificPos:"LW",plGoals:1},
+  {name:"Lutsharel Geertruida",aliases:["geertruida","lutsharel","lutsharel geertruida"],pos:"DF",club:"Sunderland",nat:"Dutch",age:24,specificPos:"RB",plGoals:1},
+  {name:"Will Hughes",aliases:["hughes","will","will hughes"],pos:"MF",club:"Crystal Palace",nat:"English",age:29,specificPos:"CM",plGoals:5},
+  {name:"Rodri",aliases:["rodri"],pos:"MF",club:"Manchester City",nat:"Spanish",age:28,specificPos:"CDM",plGoals:26},
+  {name:"Boubacar Kamara",aliases:["boubacar","boubacar kamara","kamara"],pos:"MF",club:"Aston Villa",nat:"French",age:24,specificPos:"CDM",plGoals:1},
+  {name:"Jørgen Strand Larsen",aliases:["jørgen","jørgen strand larsen","larsen"],pos:"FW",club:"Wolves",nat:"Norwegian",age:24,specificPos:"ST",plGoals:10},
+  {name:"Timothy Castagne",aliases:["castagne","timothy","timothy castagne"],pos:"DF",club:"Fulham",nat:"Belgian",age:29,specificPos:"RB",plGoals:4},
+  {name:"Jeremy Doku",aliases:["doku","jeremy","jeremy doku"],pos:"MF",club:"Manchester City",nat:"Belgian",age:22,specificPos:"LW",plGoals:9},
+  {name:"Sven Botman",aliases:["botman","sven","sven botman"],pos:"DF",club:"Newcastle United",nat:"Dutch",age:24,specificPos:"CB",plGoals:1},
+  {name:"Nicolás González",aliases:["gonzalez","gonzález","nicolas","nicolas gonzalez","nicolás","nicolás gonzález"],pos:"MF",club:"Manchester City",nat:"Spanish",age:26,specificPos:"LW",plGoals:1},
+  {name:"Randal Kolo Muani",aliases:["muani","randal","randal kolo muani"],pos:"FW",club:"Tottenham Hotspur",nat:"French",age:26,specificPos:"ST",plGoals:1},
+  {name:"Saša Lukić",aliases:["lukic","lukić","sasa","sasa lukic","saša","saša lukić"],pos:"MF",club:"Fulham",nat:"Serbian",age:28,specificPos:"CM",plGoals:4},
+  {name:"Mateus Mane",aliases:["mane","mateus","mateus mane"],pos:"MF",club:"Wolves",nat:"Portuguese",age:23,specificPos:"LW",plGoals:1},
+  {name:"Jacob Murphy",aliases:["jacob","jacob murphy","murphy"],pos:"FW",club:"Newcastle United",nat:"English",age:29,specificPos:"RW",plGoals:22},
+  {name:"Zian Flemming",aliases:["flemming","zian","zian flemming"],pos:"FW",club:"Burnley",nat:"Dutch",age:25,specificPos:"CAM",plGoals:9},
+  {name:"Chemsdine Talbi",aliases:["chemsdine","chemsdine talbi","talbi"],pos:"MF",club:"Sunderland",nat:"Moroccan",age:23,specificPos:"LW",plGoals:1},
+  {name:"Hjalmar Ekdal",aliases:["ekdal","hjalmar","hjalmar ekdal"],pos:"DF",club:"Burnley",nat:"Swedish",age:24,specificPos:"CB",plGoals:1},
+  {name:"Beto",aliases:["beto"],pos:"FW",club:"Everton",nat:"Bissau-Guinean",age:26,specificPos:"ST",plGoals:16},
+  {name:"Pape Matar Sarr",aliases:["pape","pape matar sarr","sarr"],pos:"MF",club:"Tottenham Hotspur",nat:"Senegalese",age:22,specificPos:"CM",plGoals:4},
+  {name:"Ian Maatsen",aliases:["ian","ian maatsen","maatsen"],pos:"DF",club:"Aston Villa",nat:"Dutch",age:22,specificPos:"LB",plGoals:4},
+  {name:"Patrick Dorgu",aliases:["dorgu","patrick","patrick dorgu"],pos:"MF",club:"Manchester Utd",nat:"Danish",age:20,specificPos:"LB",plGoals:4},
+  {name:"Lyle Foster",aliases:["foster","lyle","lyle foster"],pos:"FW",club:"Burnley",nat:"South African",age:24,specificPos:"ST",plGoals:10},
+  {name:"Rico Henry",aliases:["henry","rico","rico henry"],pos:"DF",club:"Brentford",nat:"Jamaican",age:27,specificPos:"LB",plGoals:2},
+  {name:"Valentino Livramento",aliases:["livramento","valentino","valentino livramento"],pos:"DF",club:"Newcastle United",nat:"English",age:22,specificPos:"RB",plGoals:2},
+  {name:"Jack Hinshelwood",aliases:["hinshelwood","jack","jack hinshelwood"],pos:"MF",club:"Brighton",nat:"English",age:19,specificPos:"CM",plGoals:2},
+  {name:"Ilia Gruev",aliases:["gruev","ilia","ilia gruev"],pos:"MF",club:"Leeds United",nat:"Bulgarian",age:23,specificPos:"CDM",plGoals:1},
+  {name:"Bashir Humphreys",aliases:["bashir","bashir humphreys","humphreys"],pos:"DF",club:"Burnley",nat:"English",age:21,specificPos:"CB",plGoals:1},
+  {name:"Lewis Miley",aliases:["lewis","lewis miley","miley"],pos:"MF",club:"Newcastle United",nat:"English",age:19,specificPos:"CM",plGoals:1},
+  {name:"Eli Junior Kroupi",aliases:["eli","eli junior kroupi","kroupi"],pos:"MF",club:"Bournemouth",nat:"French",age:22,specificPos:"LW",plGoals:1},
+  {name:"Joško Gvardiol",aliases:["gvardiol","josko","josko gvardiol","joško","joško gvardiol"],pos:"DF",club:"Manchester City",nat:"Croatian",age:22,specificPos:"LB",plGoals:5},
+  {name:"Carlos Baleba",aliases:["baleba","carlos","carlos baleba"],pos:"MF",club:"Brighton",nat:"Cameroonian",age:21,specificPos:"CDM",plGoals:1},
+  {name:"Anthony Elanga",aliases:["anthony","anthony elanga","elanga"],pos:"FW",club:"Newcastle United",nat:"Swedish",age:22,specificPos:"RW",plGoals:16},
+  {name:"Habib Diarra",aliases:["diarra","habib","habib diarra"],pos:"MF",club:"Sunderland",nat:"Senegalese",age:20,specificPos:"CM",plGoals:1},
+  {name:"Bafodé Diakité",aliases:["bafode","bafode diakite","bafodé","bafodé diakité","diakite","diakité"],pos:"DF",club:"Bournemouth",nat:"French",age:23,specificPos:"CB",plGoals:1},
+  {name:"Tolu Arokodare",aliases:["arokodare","tolu","tolu arokodare"],pos:"FW",club:"Wolves",nat:"Nigerian",age:25,specificPos:"ST",plGoals:1},
+  {name:"Vitaly Janelt",aliases:["janelt","vitaly","vitaly janelt"],pos:"MF",club:"Brentford",nat:"German",age:26,specificPos:"CDM",plGoals:5},
+  {name:"Alejandro Garnacho",aliases:["alejandro","alejandro garnacho","garnacho"],pos:"MF",club:"Chelsea",nat:"Argentine",age:20,specificPos:"LW",plGoals:18},
+  {name:"Jean-Ricner Bellegarde",aliases:["bellegarde","jean-ricner","jean-ricner bellegarde"],pos:"MF",club:"Wolves",nat:"Haitian",age:26,specificPos:"CM",plGoals:4},
+  {name:"Kobbie Mainoo",aliases:["kobbie","kobbie mainoo","mainoo"],pos:"MF",club:"Manchester Utd",nat:"English",age:19,specificPos:"CM",plGoals:10},
+  {name:"Joshua King",aliases:["joshua","joshua king","king"],pos:"MF",club:"Fulham",nat:"English",age:33,specificPos:"ST",plGoals:32},
+  {name:"Harry Maguire",aliases:["harry","harry maguire","maguire"],pos:"DF",club:"Manchester Utd",nat:"English",age:31,specificPos:"CB",plGoals:14},
+  {name:"Pascal Groß",aliases:["groß","pascal","pascal groß"],pos:"MF",club:"Brighton",nat:"German",age:33,specificPos:"CM",plGoals:26},
+  {name:"Hwang Hee-chan",aliases:["hee-chan","hwang","hwang hee-chan"],pos:"FW",club:"Wolves",nat:"South Korean",age:28,specificPos:"ST",plGoals:28},
+  {name:"Dan Ndoye",aliases:["dan","dan ndoye","ndoye"],pos:"MF",club:"Nottingham Forest",nat:"Swiss",age:24,specificPos:"RW",plGoals:1},
+  {name:"Mads Hermansen",aliases:["hermansen","mads","mads hermansen"],pos:"GK",club:"West Ham United",nat:"Danish",age:24,specificPos:"GK",plGoals:0},
+  {name:"Matthijs de Ligt",aliases:["ligt","matthijs","matthijs de ligt"],pos:"DF",club:"Manchester Utd",nat:"Dutch",age:25,specificPos:"CB",plGoals:2},
+  {name:"Maxim De Cuyper",aliases:["cuyper","maxim","maxim de cuyper"],pos:"DF",club:"Brighton",nat:"Belgian",age:24,specificPos:"LB",plGoals:1},
+  {name:"Martin Ødegaard",aliases:["martin","martin ødegaard","ødegaard"],pos:"MF",club:"Arsenal",nat:"Norwegian",age:26,specificPos:"CAM",plGoals:37},
+  {name:"Freddie Potts",aliases:["freddie","freddie potts","potts"],pos:"MF",club:"West Ham United",nat:"English",age:21,specificPos:"CM",plGoals:1},
+  {name:"Jacob Ramsey",aliases:["jacob","jacob ramsey","ramsey"],pos:"MF",club:"Newcastle United",nat:"English",age:23,specificPos:"CM",plGoals:10},
+  {name:"Kyle Walker-Peters",aliases:["kyle","kyle walker-peters","walker-peters"],pos:"DF",club:"West Ham United",nat:"English",age:27,specificPos:"RB",plGoals:5},
+  {name:"Toti Gomes",aliases:["gomes","toti","toti gomes"],pos:"DF",club:"Wolves",nat:"Portuguese",age:25,specificPos:"CB",plGoals:2},
+  {name:"Tim Iroegbunam",aliases:["iroegbunam","tim","tim iroegbunam"],pos:"MF",club:"Everton",nat:"English",age:21,specificPos:"CM",plGoals:1},
+  {name:"Jhon Arias",aliases:["arias","jhon","jhon arias"],pos:"FW",club:"Wolves",nat:"Colombian",age:27,specificPos:"RW",plGoals:1},
+  {name:"Antonee Robinson",aliases:["antonee","antonee robinson","robinson"],pos:"DF",club:"Fulham",nat:"American",age:27,specificPos:"LB",plGoals:4},
+  {name:"Lucas",aliases:["lucas"],pos:"MF",club:"Burnley",nat:"Brazilian",age:28,specificPos:"LB",plGoals:1},
+  {name:"Emmanuel Agbadou",aliases:["agbadou","emmanuel","emmanuel agbadou"],pos:"DF",club:"Wolves",nat:"Ivorian",age:27,specificPos:"CB",plGoals:1},
+  {name:"Dwight McNeil",aliases:["dwight","dwight mcneil","mcneil"],pos:"MF",club:"Everton",nat:"English",age:25,specificPos:"LW",plGoals:21},
+  {name:"David Brooks",aliases:["brooks","david","david brooks"],pos:"MF",club:"Bournemouth",nat:"Welsh",age:27,specificPos:"RW",plGoals:16},
+  {name:"Fabian Schär",aliases:["fabian","fabian schar","fabian schär","schar","schär"],pos:"DF",club:"Newcastle United",nat:"Swiss",age:33,specificPos:"CB",plGoals:11},
+  {name:"Sam Johnstone",aliases:["johnstone","sam","sam johnstone"],pos:"GK",club:"Wolves",nat:"English",age:31,specificPos:"GK",plGoals:0},
+  {name:"Wilson Isidor",aliases:["isidor","wilson","wilson isidor"],pos:"FW",club:"Sunderland",nat:"Haitian",age:24,specificPos:"ST",plGoals:1},
+  {name:"Andrey Santos",aliases:["andrey","andrey santos","santos"],pos:"MF",club:"Chelsea",nat:"Brazilian",age:20,specificPos:"CM",plGoals:1},
+  {name:"Callum Wilson",aliases:["callum","callum wilson","wilson"],pos:"FW",club:"West Ham United",nat:"English",age:32,specificPos:"ST",plGoals:69},
+  {name:"Abdukodir Khusanov",aliases:["abdukodir","abdukodir khusanov","khusanov"],pos:"DF",club:"Manchester City",nat:"Uzbek",age:23,specificPos:"CB",plGoals:1},
+  {name:"Tyrone Mings",aliases:["mings","tyrone","tyrone mings"],pos:"DF",club:"Aston Villa",nat:"English",age:31,specificPos:"CB",plGoals:10},
+  {name:"Marcus Edwards",aliases:["edwards","marcus","marcus edwards"],pos:"MF",club:"Burnley",nat:"English",age:26,specificPos:"RW",plGoals:4},
+  {name:"Kevin Danso",aliases:["danso","kevin","kevin danso"],pos:"DF",club:"Tottenham Hotspur",nat:"Austrian",age:25,specificPos:"CB",plGoals:1},
+  {name:"Amine Adli",aliases:["adli","amine","amine adli"],pos:"MF",club:"Bournemouth",nat:"Moroccan",age:24,specificPos:"LW",plGoals:10},
+  {name:"Nicolò Savona",aliases:["nicolo","nicolo savona","nicolò","nicolò savona","savona"],pos:"DF",club:"Nottingham Forest",nat:"Italian",age:21,specificPos:"RB",plGoals:0},
+  {name:"Valentín Castellanos",aliases:["castellanos","valentin","valentin castellanos","valentín","valentín castellanos"],pos:"FW",club:"West Ham United",nat:"Argentine",age:26,specificPos:"ST",plGoals:1},
+  {name:"Jacob Bruun Larsen",aliases:["jacob","jacob bruun larsen","larsen"],pos:"MF",club:"Burnley",nat:"Danish",age:26,specificPos:"RW",plGoals:4},
+  {name:"Destiny Udogie",aliases:["destiny","destiny udogie","udogie"],pos:"DF",club:"Tottenham Hotspur",nat:"Italian",age:22,specificPos:"LB",plGoals:4},
+  {name:"Mikel Merino",aliases:["merino","mikel","mikel merino"],pos:"MF",club:"Arsenal",nat:"Spanish",age:28,specificPos:"CM",plGoals:11},
+  {name:"Aaron Ramsdale",aliases:["aaron","aaron ramsdale","ramsdale"],pos:"GK",club:"Newcastle United",nat:"English",age:26,specificPos:"GK",plGoals:0},
+  {name:"Noni Madueke",aliases:["madueke","noni","noni madueke"],pos:"FW",club:"Arsenal",nat:"English",age:22,specificPos:"RW",plGoals:20},
+  {name:"Hannibal Mejbri",aliases:["hannibal","hannibal mejbri","mejbri"],pos:"MF",club:"Burnley",nat:"Tunisian",age:21,specificPos:"CM",plGoals:2},
+  {name:"Wilson Odobert",aliases:["odobert","wilson","wilson odobert"],pos:"MF",club:"Tottenham Hotspur",nat:"French",age:20,specificPos:"LW",plGoals:2},
+  {name:"Soungoutou Magassa",aliases:["magassa","soungoutou","soungoutou magassa"],pos:"MF",club:"West Ham United",nat:"French",age:22,specificPos:"CM",plGoals:1},
+  {name:"Mathys Tel",aliases:["mathys","mathys tel","tel"],pos:"MF",club:"Tottenham Hotspur",nat:"French",age:19,specificPos:"ST",plGoals:1},
+  {name:"Lisandro Martínez",aliases:["lisandro","lisandro martinez","lisandro martínez","martinez","martínez"],pos:"DF",club:"Manchester Utd",nat:"Argentine",age:26,specificPos:"CB",plGoals:4},
+  {name:"Dominic Solanke",aliases:["dominic","dominic solanke","solanke"],pos:"FW",club:"Tottenham Hotspur",nat:"English",age:27,specificPos:"ST",plGoals:63},
+  {name:"Sean Longstaff",aliases:["longstaff","sean","sean longstaff"],pos:"MF",club:"Leeds United",nat:"English",age:26,specificPos:"CM",plGoals:10},
+  {name:"Gabriel Martinelli",aliases:["gabriel","gabriel martinelli","martinelli"],pos:"FW",club:"Arsenal",nat:"Brazilian",age:23,specificPos:"LW",plGoals:45},
+  {name:"Andrew Robertson",aliases:["andrew","andrew robertson","robertson"],pos:"DF",club:"Liverpool",nat:"Scottish",age:30,specificPos:"LB",plGoals:15},
+  {name:"Nicolás Domínguez",aliases:["dominguez","domínguez","nicolas","nicolas dominguez","nicolás","nicolás domínguez"],pos:"MF",club:"Nottingham Forest",nat:"Argentine",age:26,specificPos:"CM",plGoals:1},
+  {name:"Morato",aliases:["morato"],pos:"DF",club:"Nottingham Forest",nat:"Brazilian",age:25,specificPos:"CB",plGoals:1},
+  {name:"Jorge Cuenca",aliases:["cuenca","jorge","jorge cuenca"],pos:"DF",club:"Fulham",nat:"Spanish",age:25,specificPos:"CB",plGoals:1},
+  {name:"Ao Tanaka",aliases:["ao","ao tanaka","tanaka"],pos:"MF",club:"Leeds United",nat:"Japanese",age:26,specificPos:"CDM",plGoals:1},
+  {name:"Axel Tuanzebe",aliases:["axel","axel tuanzebe","tuanzebe"],pos:"DF",club:"Burnley",nat:"Congolese",age:27,specificPos:"CB",plGoals:2},
+  {name:"Conor Bradley",aliases:["bradley","conor","conor bradley"],pos:"DF",club:"Liverpool",nat:"Northern Irish",age:21,specificPos:"RB",plGoals:4},
+  {name:"Lucas Bergvall",aliases:["bergvall","lucas","lucas bergvall"],pos:"MF",club:"Tottenham Hotspur",nat:"Swedish",age:18,specificPos:"CM",plGoals:1},
+  {name:"Justin Kluivert",aliases:["justin","justin kluivert","kluivert"],pos:"MF",club:"Bournemouth",nat:"Dutch",age:25,specificPos:"LW",plGoals:16},
+  {name:"Kevin",aliases:["kevin"],pos:"MF",club:"Fulham",nat:"Brazilian",age:22,specificPos:"RW",plGoals:1},
+  {name:"Liam Delap",aliases:["delap","liam","liam delap"],pos:"FW",club:"Chelsea",nat:"English",age:21,specificPos:"ST",plGoals:14},
+  {name:"Manuel Ugarte",aliases:["manuel","manuel ugarte","ugarte"],pos:"MF",club:"Manchester Utd",nat:"Uruguayan",age:23,specificPos:"CDM",plGoals:1},
+  {name:"Jaydee Canvot",aliases:["canvot","jaydee","jaydee canvot"],pos:"DF",club:"Crystal Palace",nat:"French",age:21,specificPos:"LB",plGoals:1},
+  {name:"Lukas Nmecha",aliases:["lukas","lukas nmecha","nmecha"],pos:"FW",club:"Leeds United",nat:"German",age:25,specificPos:"ST",plGoals:4},
+  {name:"Marshall Munetsi",aliases:["marshall","marshall munetsi","munetsi"],pos:"MF",club:"Wolves",nat:"Zimbabwean",age:28,specificPos:"CM",plGoals:4},
+  {name:"Lewis Cook",aliases:["cook","lewis","lewis cook"],pos:"MF",club:"Bournemouth",nat:"English",age:27,specificPos:"CDM",plGoals:5},
+  {name:"Samuel Chukwueze",aliases:["chukwueze","samuel","samuel chukwueze"],pos:"MF",club:"Fulham",nat:"Nigerian",age:25,specificPos:"RW",plGoals:4},
+  {name:"Loum Tchaouna",aliases:["loum","loum tchaouna","tchaouna"],pos:"MF",club:"Burnley",nat:"French",age:22,specificPos:"LW",plGoals:1},
+  {name:"Ryan Christie",aliases:["christie","ryan","ryan christie"],pos:"MF",club:"Bournemouth",nat:"Scottish",age:29,specificPos:"CAM",plGoals:11},
+  {name:"Joël Veltman",aliases:["joel","joel veltman","joël","joël veltman","veltman"],pos:"DF",club:"Brighton",nat:"Dutch",age:32,specificPos:"RB",plGoals:4},
+  {name:"Estêvão Willian",aliases:["estevao","estevao willian","estêvão","estêvão willian","willian"],pos:"MF",club:"Chelsea",nat:"Brazilian",age:17,specificPos:"RW",plGoals:1},
+  {name:"David Møller Wolfe",aliases:["david","david møller wolfe","wolfe"],pos:"MF",club:"Wolves",nat:"Norwegian",age:25,specificPos:"CM",plGoals:1},
+  {name:"Armando Broja",aliases:["armando","armando broja","broja"],pos:"FW",club:"Burnley",nat:"Albanian",age:23,specificPos:"ST",plGoals:10},
+  {name:"Jeremie Frimpong",aliases:["frimpong","jeremie","jeremie frimpong"],pos:"DF",club:"Liverpool",nat:"Dutch",age:25,specificPos:"RB",plGoals:4},
+  {name:"Jorrel Hato",aliases:["hato","jorrel","jorrel hato"],pos:"DF",club:"Chelsea",nat:"Dutch",age:20,specificPos:"LB",plGoals:1},
+  {name:"Mason Mount",aliases:["mason","mason mount","mount"],pos:"MF",club:"Manchester Utd",nat:"English",age:25,specificPos:"CAM",plGoals:36},
+  {name:"Axel Disasi",aliases:["axel","axel disasi","disasi"],pos:"DF",club:"West Ham United",nat:"French",age:26,specificPos:"CB",plGoals:1},
+  {name:"Adam Smith",aliases:["adam","adam smith","smith"],pos:"DF",club:"Bournemouth",nat:"English",age:33,specificPos:"RB",plGoals:9},
+  {name:"Lamare Bogarde",aliases:["bogarde","lamare","lamare bogarde"],pos:"MF",club:"Aston Villa",nat:"Dutch",age:20,specificPos:"CB",plGoals:1},
+  {name:"Rayan Aït-Nouri",aliases:["ait-nouri","aït-nouri","rayan","rayan ait-nouri","rayan aït-nouri"],pos:"DF",club:"Manchester City",nat:"Algerian",age:23,specificPos:"LB",plGoals:4},
+  {name:"Noussair Mazraoui",aliases:["mazraoui","noussair","noussair mazraoui"],pos:"DF",club:"Manchester Utd",nat:"Moroccan",age:27,specificPos:"RB",plGoals:4},
+  {name:"Jadon Sancho",aliases:["jadon","jadon sancho","sancho"],pos:"MF",club:"Aston Villa",nat:"English",age:24,specificPos:"LW",plGoals:16},
+  {name:"Rayan",aliases:["rayan"],pos:"MF",club:"Bournemouth",nat:"Brazilian",age:24,specificPos:"ST",plGoals:1},
+  {name:"Brennan Johnson",aliases:["brennan","brennan johnson","johnson"],pos:"MF",club:"Crystal Palace",nat:"Welsh",age:23,specificPos:"RW",plGoals:20},
+  {name:"Cristhian Mosquera",aliases:["cristhian","cristhian mosquera","mosquera"],pos:"DF",club:"Arsenal",nat:"Spanish",age:21,specificPos:"CB",plGoals:1},
+  {name:"Omar Marmoush",aliases:["marmoush","omar","omar marmoush"],pos:"FW",club:"Manchester City",nat:"Egyptian",age:25,specificPos:"ST",plGoals:13},
+  {name:"Antoine Semenyo",aliases:["antoine","antoine semenyo","semenyo"],pos:"MF",club:"Manchester City",nat:"Ghanaian",age:24,specificPos:"RW",plGoals:16}
+];
+
+const seen=new Set();
+const PLAYERS=ALL_PLAYERS.filter(p=>{if(seen.has(p.name))return false;seen.add(p.name);return true;});
+
+function getDayIndex(){
+  const epoch=new Date('2026-01-01');
+  return Math.floor((new Date()-epoch)/86400000)%PLAYERS.length;
+}
+const TARGET=PLAYERS[getDayIndex()];
+const MAX=8;
+let attempts=0,done=false,guesses=[],ddHighlight=-1,ddItems=[];
+
+function normalise(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();
+}
+function findPlayer(val){
+  const nv=normalise(val);
+  return PLAYERS.find(p=>normalise(p.name)===nv||p.aliases.some(a=>normalise(a)===nv))
+    ||PLAYERS.find(p=>normalise(p.name).includes(nv)||p.aliases.some(a=>normalise(a).includes(nv)));
+}
+function sameContinent(a,b){return CONTINENTS[a]&&CONTINENTS[b]&&CONTINENTS[a]===CONTINENTS[b];}
+
+function posFamily(p){if(p==='GK')return 'GK';if(['CB','RB','LB','WB'].includes(p))return 'DEF';if(['CDM','CM','CAM'].includes(p))return 'MID';return 'ATT';}
+function scoreGuess(g){
+  const t=TARGET,diff=Math.abs(g.age-t.age),gdiff=Math.abs((g.plGoals||0)-(t.plGoals||0));
+  return{
+    pos:g.pos===t.pos?'g':'gr',
+    specificPos:g.specificPos===t.specificPos?'g':posFamily(g.specificPos)===posFamily(t.specificPos)?'a':'gr',
+    club:g.club===t.club?'g':'gr',
+    nat:g.nat===t.nat?'g':sameContinent(g.nat,t.nat)?'a':'gr',
+    age:g.age===t.age?'g':diff<=2?'a':'gr',
+    plGoals:g.plGoals===t.plGoals?'g':gdiff<=10?'a':'gr',
+  };
+}
+function goalsArrow(g){return g.plGoals===TARGET.plGoals?'':g.plGoals<TARGET.plGoals?' ↑':' ↓';}
+function ageArrow(g){return g.age===TARGET.age?'':g.age<TARGET.age?' ↑':' ↓';}
+
+function renderRows(){
+  const c=document.getElementById('rows');c.innerHTML='';
+  for(let i=0;i<MAX;i++){
+    const wrap=document.createElement('div');
+    wrap.style.cssText='display:grid;grid-template-columns:28px repeat(6,1fr);gap:4px;margin-bottom:2px';
+    const lbl=document.createElement('div');
+    lbl.style.cssText='font-size:11px;color:var(--text-muted);text-align:right;padding-right:4px;display:flex;align-items:center;justify-content:flex-end;font-family:"Barlow Condensed",sans-serif;font-weight:700';
+    lbl.textContent=i+1;wrap.appendChild(lbl);
+    if(i<guesses.length){
+      const g=guesses[i],s=scoreGuess(g);
+      [{cat:'pos',val:g.pos,sub:''},{cat:'specificPos',val:g.specificPos||'–',sub:'specific'},{cat:'club',val:g.club,sub:''},{cat:'nat',val:g.nat,sub:CONTINENTS[g.nat]||''},{cat:'age',val:g.age+(ageArrow(g)||''),sub:''},{cat:'plGoals',val:(g.plGoals||0)+(goalsArrow(g)||''),sub:'PL goals'}].forEach(def=>{
+        const tile=document.createElement('div');tile.className='tile '+s[def.cat];
+        const tv=document.createElement('div');tv.className='tv';tv.textContent=def.val;tile.appendChild(tv);
+        if(def.sub){const ti=document.createElement('div');ti.className='ti';ti.textContent=def.sub;tile.appendChild(ti);}
+        wrap.appendChild(tile);
+      });
+      c.appendChild(wrap);
+      const nr=document.createElement('div');
+      nr.style.cssText='display:grid;grid-template-columns:28px 1fr;gap:4px;margin-bottom:6px';
+      nr.innerHTML='<div></div><div style="font-size:11px;color:var(--text-muted);padding-left:2px;font-style:italic">'+g.name+'</div>';
+      c.appendChild(nr);
+    } else {
+      for(let j=0;j<6;j++){const t=document.createElement('div');t.className='tile empty';wrap.appendChild(t);}
+      c.appendChild(wrap);
+    }
+  }
+}
+
+function getFiltered(q){
+  if(!q||q.length<2)return[];
+  const nq=normalise(q);
+  return PLAYERS.filter(p=>normalise(p.name).includes(nq)||p.aliases.some(a=>normalise(a).includes(nq))).slice(0,10);
+}
+
+const input=document.getElementById('guess-input'),dd=document.getElementById('dropdown');
+function renderDD(items,hl=-1){
+  ddItems=items;
+  if(!items.length){dd.style.display='none';return;}
+  dd.innerHTML='';
+  items.forEach((p,i)=>{
+    const item=document.createElement('div');
+    item.className='dd-item'+(i===hl?' hl':'');
+    item.innerHTML='<div>'+p.name+'</div><div class="dd-meta">'+p.pos+' · '+p.club+' · '+p.nat+'</div>';
+    item.onmousedown=e=>{e.preventDefault();input.value=p.name;dd.style.display='none';ddHighlight=-1;input.focus();};
+    dd.appendChild(item);
+  });
+  dd.style.display='block';
+}
+input.addEventListener('input',()=>{ddHighlight=-1;renderDD(getFiltered(input.value));});
+input.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'){e.preventDefault();ddHighlight=Math.min(ddHighlight+1,ddItems.length-1);renderDD(ddItems,ddHighlight);}
+  else if(e.key==='ArrowUp'){e.preventDefault();ddHighlight=Math.max(ddHighlight-1,0);renderDD(ddItems,ddHighlight);}
+  else if(e.key==='Enter'){ddHighlight>=0&&ddItems[ddHighlight]?(input.value=ddItems[ddHighlight].name,dd.style.display='none',ddHighlight=-1):submitGuess();}
+  else if(e.key==='Escape')dd.style.display='none';
+});
+document.addEventListener('click',e=>{if(!e.target.closest('.input-area'))dd.style.display='none';});
+
+function submitGuess(){
+  if(done)return;
+  const val=input.value.trim();
+  if(!val){document.getElementById('msg').textContent='Type a player name first.';return;}
+  const player=findPlayer(val);
+  if(!player){document.getElementById('msg').textContent='"'+val+'" not found — try a different spelling or pick from the dropdown.';return;}
+  if(guesses.find(g=>g.name===player.name)){document.getElementById('msg').textContent='Already guessed '+player.name+'!';return;}
+  document.getElementById('msg').textContent='';
+  guesses.push(player);attempts++;
+  renderRows();
+  document.getElementById('att-badge').textContent=(MAX-attempts)+' attempt'+(MAX-attempts!==1?'s':'')+' remaining';
+  input.value='';dd.style.display='none';
+  if(player.name===TARGET.name){done=true;showResult(true);}
+  else if(attempts>=MAX){done=true;showResult(false);}
+}
+
+function showResult(won){
+  document.getElementById('input-area').style.display='none';
+  document.getElementById('att-badge').style.display='none';
+  const r=document.getElementById('result');
+  const attWord=attempts===1?'1 attempt':attempts+' attempts';
+  r.innerHTML='<div class="result-banner '+(won?'win':'lose')+'">'
+    +'<div class="rb-icon">'+(won?'🎉':'😔')+'</div>'
+    +'<div class="rb-title">'+(won?'Congratulations!':'Unlucky!')+'</div>'
+    +'<div class="rb-player">'+TARGET.name+'</div>'
+    +'<div class="rb-sub">'+(won?(7-attempts)+'/6':0+'/6')+' · '+TARGET.pos+' · '+TARGET.club+'</div>'
+    +'<div class="rb-sub" style="margin-top:4px">'+(won?'Guessed correctly in '+attWord:'Better luck tomorrow!')+'</div>'
+    +'<button class="share-btn" onclick="copyShare()">Copy result</button></div>';
+}
+
+function copyShare(){
+  const e={g:'🟩',a:'🟨',gr:'⬜'};
+  const cats=['pos','club','nat','age'];
+  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  const won=done&&guesses.length&&guesses[guesses.length-1].name===TARGET.name;
+  let txt='The Sportsman: PL — '+today+'\n'+(won?attempts:'X')+'/'+MAX+'\n\n';
+  guesses.forEach(g=>{const s=scoreGuess(g);txt+=cats.map(c=>e[s[c]]).join('')+'\n';});
+  const b=document.querySelector('.share-btn');
+  const finish=()=>{b.textContent='Copied!';setTimeout(()=>b.textContent='Copy result',2000);};
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(finish).catch(()=>fbCopy(txt,finish));
+  } else { fbCopy(txt,finish); }
+}
+function fbCopy(txt,cb){
+  const ta=document.createElement('textarea');ta.value=txt;
+  ta.style.cssText='position:fixed;top:-9999px;left:-9999px';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');if(cb)cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+renderRows();
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>

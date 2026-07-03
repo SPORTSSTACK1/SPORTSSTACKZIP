@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Prem Admin — SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--s2:#0d1a2e;--border:#0d2040;--gold:#f5c842;--text:#e8f0fe;--muted:#3a5a7a;--red:#ef4444;--green:#22c55e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;max-width:360px;width:100%;text-align:center}
+h1{font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:900;font-style:italic;color:var(--gold);margin-bottom:8px}
+.sub{color:var(--muted);font-size:14px;margin-bottom:24px}
+.pw-input{width:100%;padding:12px;background:var(--s2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;margin-bottom:12px}
+.pw-input:focus{outline:none;border-color:var(--gold)}
+.btn{width:100%;padding:12px;background:var(--gold);color:#04080f;border:none;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer}
+#admin-ui{display:none;max-width:860px;margin:0 auto;padding:24px 16px 60px}
+.admin-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+.admin-h h2{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--gold)}
+.btn-sm{padding:8px 16px;background:var(--s2);color:var(--text);border:1px solid var(--border);border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.btn-sm.danger{border-color:var(--red);color:var(--red)}
+.section-h{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin:28px 0 12px;display:flex;align-items:center;gap:8px}
+.section-h::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Final table entry */
+.table-entry{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px}
+.table-entry p{font-size:13px;color:var(--muted);margin-bottom:12px}
+.pos-rows{display:flex;flex-direction:column;gap:6px}
+.pos-row{display:grid;grid-template-columns:36px 1fr;align-items:center;gap:8px}
+.pos-num{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--muted);text-align:right}
+.team-select{width:100%;padding:8px 10px;background:var(--s2);border:1.5px solid var(--border);border-radius:7px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700}
+.team-select:focus{outline:none;border-color:var(--gold)}
+
+/* Awards entry */
+.award-row{display:grid;grid-template-columns:160px 1fr auto;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px}
+.award-lbl{font-size:13px;font-weight:600;color:var(--muted)}
+.award-inp{padding:8px 10px;background:var(--s2);border:1.5px solid var(--border);border-radius:7px;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;width:100%}
+.award-inp:focus{outline:none;border-color:var(--gold)}
+.btn-save-award{padding:8px 16px;background:var(--gold);color:#04080f;border:none;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;cursor:pointer;white-space:nowrap}
+
+/* Recalc */
+.recalc-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
+.recalc-box p{font-size:13px;color:var(--muted);margin-bottom:12px}
+.btn-recalc{padding:12px 28px;background:var(--gold);color:#04080f;border:none;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;margin-right:10px}
+.btn-lock{padding:12px 24px;background:var(--red);color:#fff;border:none;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;cursor:pointer}
+.log{margin-top:12px;font-size:12px;color:var(--muted);background:var(--s2);border-radius:6px;padding:10px;max-height:200px;overflow-y:auto;font-family:monospace;display:none}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#04080f;padding:10px 20px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;opacity:0;transition:opacity .3s;z-index:999;pointer-events:none}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <h1>SS Admin</h1>
+    <p class="sub">Prem Predictor Dashboard</p>
+    <input type="password" class="pw-input" id="pw" placeholder="Admin password" onkeydown="if(event.key==='Enter')checkPw()"/>
+    <button class="btn" onclick="checkPw()">Enter</button>
+  </div>
+</div>
+
+<div id="admin-ui">
+  <div class="admin-h">
+    <h2>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Prem Predictor Admin</h2>
+    <div style="display:flex;gap:8px">
+      <button class="btn-sm" onclick="loadAll()">↻ Refresh</button>
+      <button class="btn-sm danger" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- Final table entry -->
+  <div class="section-h">Final Table</div>
+  <div class="table-entry">
+    <p>Enter the final 2026-27 Premier League table once the season ends. Select each team in finishing order.</p>
+    <div class="pos-rows" id="pos-rows"><!-- built by JS --></div>
+    <button class="btn-sm" style="margin-top:12px;background:var(--gold);color:#04080f;border-color:var(--gold)" onclick="saveFinalTable()">Save Final Table</button>
+  </div>
+
+  <!-- Award winners -->
+  <div class="section-h">Award Winners</div>
+  <div id="awards-rows">
+    <div class="award-row"><span class="award-lbl">👟 Top Goalscorer</span><input class="award-inp" id="aw-scorer" placeholder="Player name"/><button class="btn-save-award" onclick="saveAward('top_scorer','aw-scorer')">Save</button></div>
+    <div class="award-row"><span class="award-lbl">🎯 Top Assister</span><input class="award-inp" id="aw-assister" placeholder="Player name"/><button class="btn-save-award" onclick="saveAward('top_assister','aw-assister')">Save</button></div>
+    <div class="award-row"><span class="award-lbl">⭐ Player of Year</span><input class="award-inp" id="aw-poy" placeholder="Player name"/><button class="btn-save-award" onclick="saveAward('player_of_year','aw-poy')">Save</button></div>
+    <div class="award-row"><span class="award-lbl">🌟 Young PotY</span><input class="award-inp" id="aw-ypoy" placeholder="Player name"/><button class="btn-save-award" onclick="saveAward('young_player_year','aw-ypoy')">Save</button></div>
+    <div class="award-row"><span class="award-lbl">🧤 Golden Glove</span><input class="award-inp" id="aw-glove" placeholder="Goalkeeper name"/><button class="btn-save-award" onclick="saveAward('golden_glove','aw-glove')">Save</button></div>
+  </div>
+
+  <!-- Recalculate scores -->
+  <div class="section-h">Recalculate Scores</div>
+  <div class="recalc-box">
+    <p>Run after entering the final table and award winners. Calculates every member's total score and updates the leaderboard.</p>
+    <button class="btn-recalc" onclick="recalcAll()">Recalculate All Scores</button>
+    <button class="btn-lock" onclick="lockPredictions()">🔒 Lock Predictions</button>
+    <div class="log" id="log"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SS_URL='https://syntfyfsyjiuowclarpf.supabase.co';
+const SS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+const ADMIN_PW='prem2026admin';
+
+let config={},teams=[];
+
+function checkPw(){
+  if(document.getElementById('pw').value===ADMIN_PW){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-ui').style.display='block';
+    loadAll();
+  } else alert('Wrong password');
+}
+function logout(){document.getElementById('login-screen').style.display='flex';document.getElementById('admin-ui').style.display='none';}
+
+async function loadAll(){
+  const r=await fetch(`${SS_URL}/rest/v1/prem_config?id=eq.1&select=*`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
+  const d=await r.json();
+  if(d.length){
+    config=d[0];
+    teams=config.teams||[];
+    buildPosRows();
+    // Pre-fill awards
+    ['scorer','assister','poy','ypoy','glove'].forEach((k,i)=>{
+      const keys=['top_scorer','top_assister','player_of_year','young_player_year','golden_glove'];
+      const el=document.getElementById('aw-'+k);
+      if(el&&config[keys[i]]) el.value=config[keys[i]];
+    });
+  }
+}
+
+function buildPosRows(){
+  const con=document.getElementById('pos-rows');
+  con.innerHTML='';
+  const finalTable=config.final_table||[];
+  for(let i=1;i<=20;i++){
+    const row=document.createElement('div');
+    row.className='pos-row';
+    const sel=document.createElement('select');
+    sel.className='team-select';
+    sel.id='ft-'+i;
+    sel.innerHTML='<option value="">-- Select team --</option>';
+    teams.forEach(t=>{
+      const opt=document.createElement('option');
+      opt.value=t;opt.textContent=t;
+      if(finalTable[i-1]===t) opt.selected=true;
+      sel.appendChild(opt);
+    });
+    row.innerHTML=`<div class="pos-num">${i}</div>`;
+    row.appendChild(sel);
+    con.appendChild(row);
+  }
+}
+
+async function saveFinalTable(){
+  const table=[];
+  for(let i=1;i<=20;i++){
+    const v=document.getElementById('ft-'+i)?.value;
+    table.push(v||'');
+  }
+  const r=await fetch(`${SS_URL}/rest/v1/prem_config?id=eq.1`,{
+    method:'PATCH',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Content-Type':'application/json'},
+    body:JSON.stringify({final_table:table})
+  });
+  r.ok?showToast('Final table saved ✓'):showToast('Error saving table');
+}
+
+async function saveAward(field,inputId){
+  const val=document.getElementById(inputId)?.value.trim();
+  if(!val){showToast('Enter a value first');return;}
+  const body={};body[field]=val;
+  const r=await fetch(`${SS_URL}/rest/v1/prem_config?id=eq.1`,{
+    method:'PATCH',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  r.ok?showToast(field+' saved ✓'):showToast('Error');
+}
+
+async function lockPredictions(){
+  if(!confirm('Lock all predictions? Members will no longer be able to edit their picks.')) return;
+  const r=await fetch(`${SS_URL}/rest/v1/prem_config?id=eq.1`,{
+    method:'PATCH',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Content-Type':'application/json'},
+    body:JSON.stringify({is_locked:true})
+  });
+  // Also lock all individual picks
+  await fetch(`${SS_URL}/rest/v1/prem_table_picks`,{
+    method:'PATCH',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Content-Type':'application/json'},
+    body:JSON.stringify({locked:true})
+  });
+  r.ok?showToast('Predictions locked 🔒'):showToast('Error');
+}
+
+async function recalcAll(){
+  const log=document.getElementById('log');
+  log.style.display='block';log.textContent='Starting recalculation...\n';
+
+  // Reload config
+  const cr=await fetch(`${SS_URL}/rest/v1/prem_config?id=eq.1&select=*`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
+  const cd=await cr.json();
+  config=cd[0]||{};
+  const finalTable=config.final_table||[];
+  if(!finalTable.some(t=>t)){log.textContent+='⚠ Enter final table first\n';return;}
+
+  // Recalc table scores
+  const picks=await(await fetch(`${SS_URL}/rest/v1/prem_table_picks?select=user_id,table_order`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}})).json();
+  let tUpdates=0;
+  for(const p of picks){
+    let score=0;
+    const pred=p.table_order||[];
+    pred.forEach((team,idx)=>{
+      const predPos=idx+1;
+      const actualPos=finalTable.indexOf(team)+1;
+      if(actualPos===0) return;
+      const diff=Math.abs(predPos-actualPos);
+      if(diff===0) score+=3;
+      else if(diff===1) score+=2;
+      else if(diff===2) score+=1;
+    });
+    await fetch(`${SS_URL}/rest/v1/prem_table_picks?user_id=eq.${p.user_id}`,{
+      method:'PATCH',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({table_score:score})
+    });
+    tUpdates++;
+  }
+  log.textContent+=`Updated ${tUpdates} table predictions\n`;
+
+  // Recalc bonus scores
+  const bonus=await(await fetch(`${SS_URL}/rest/v1/prem_bonus_picks?select=*`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}})).json();
+  const norm=s=>(s||'').toLowerCase().trim();
+  let bUpdates=0;
+  for(const b of bonus){
+    let bScore=0;
+    if(config.top_scorer&&norm(b.top_scorer)===norm(config.top_scorer)) bScore+=5;
+    if(config.top_assister&&norm(b.top_assister)===norm(config.top_assister)) bScore+=5;
+    if(config.player_of_year&&norm(b.player_of_year)===norm(config.player_of_year)) bScore+=5;
+    if(config.young_player_year&&norm(b.young_player_year)===norm(config.young_player_year)) bScore+=5;
+    if(config.golden_glove&&norm(b.golden_glove)===norm(config.golden_glove)) bScore+=5;
+    await fetch(`${SS_URL}/rest/v1/prem_bonus_picks?user_id=eq.${b.user_id}`,{
+      method:'PATCH',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({bonus_score:bScore})
+    });
+    bUpdates++;
+  }
+  log.textContent+=`Updated ${bUpdates} bonus predictions\n`;
+
+  // Mark scoring complete if final table is full
+  if(finalTable.filter(t=>t).length===20){
+    await fetch(`${SS_URL}/rest/v1/prem_config?id=eq.1`,{
+      method:'PATCH',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({scoring_complete:true})
+    });
+    log.textContent+='✓ Scoring marked complete\n';
+  }
+  log.textContent+='✓ Done!\n';
+  showToast('Scores recalculated ✓');
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(()=>t.className='toast',2500);}
+</script>
+</body>
+</html>
