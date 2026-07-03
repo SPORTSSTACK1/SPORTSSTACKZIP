@@ -89,6 +89,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input id="guess-input" class="guess-input" type="text" placeholder="Type a name…" autocomplete="off" spellcheck="false"/>
   </div>
   <div id="msg" style="text-align:center;font-size:13px;color:var(--gold);min-height:20px;margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;font-weight:700"></div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()" style="display:block;margin:0 auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:1px solid var(--border-bright);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
   <div class="tower">
   <div class="rank-row" id="row-1">
     <div class="rank-num">#1</div>
@@ -209,6 +210,15 @@ function tryGuess(val){
 hideSugg();
 }
 function startTimer(){gameActive=true;timerInterval=setInterval(()=>{secsLeft--;const m=Math.floor(secsLeft/60),s=secsLeft%60;document.getElementById('timer').textContent=m+':'+String(s).padStart(2,'0');if(secsLeft<=30)document.getElementById('timer-pill').classList.add('urgent');if(secsLeft<=0){clearInterval(timerInterval);endGame(false);}},1000);}
+
+function giveUp(){
+  if(!gameActive)return;
+  clearInterval(timerInterval);
+  gameActive=false;
+  const btn=document.getElementById('give-up-btn');
+  if(btn)btn.style.display='none';
+  endGame(false);
+}
 function endGame(won){gameActive=false;clearInterval(timerInterval);hideSugg();if(!won)ENTRIES.forEach(e=>{if(!foundIds.has(e.rank)){const row=document.getElementById('row-'+e.rank);if(row)row.classList.add('revealed');document.getElementById('rname-'+e.rank).textContent=e.name;document.getElementById('rval-'+e.rank).textContent=e.statDisp;const b=document.getElementById('bar-'+e.rank);if(b)b.style.width=Math.round(e.stat/3747*100)+'%';}});
 const w_em='🏆',l_em='⏱';
 document.getElementById('result').innerHTML=`<div class="result-banner ${won?'win':'lose'}"><div class="rb-icon">${won?w_em:l_em}</div><div class="rb-title">${won?'Perfect!':"Time's Up!"}</div><div class="rb-sub">${foundIds.size}/${TOTAL} named</div><button class="share-btn" onclick="copyResult()">Share result</button></div>`;}
