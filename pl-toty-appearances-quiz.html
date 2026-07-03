@@ -6,132 +6,86 @@
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-<meta property="og:title" content="Pl Toty Appearances Quiz — SportsStack"/>
+<meta property="og:title" content="PL TOTY Most Appearances — SportsStack"/>
 <meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
 <meta property="og:url" content="https://sportsstack.com.au/pl-toty-appearances-quiz.html"/>
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
-<title>PL TOTY Most Appearances – SportsStack</title>
+<title>PL Team of the Year — Most Appearances – SportsStack</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
 <style>
 :root{
   --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
   --gold:#f5c842;--blue:#2563eb;--blue-light:#3b82f6;
-  --green:#22c55e;--green-bg:rgba(34,197,94,.14);--green-border:rgba(34,197,94,.55);
-  --red:#ef4444;--red-bg:rgba(239,68,68,.12);--red-border:rgba(239,68,68,.45);
+  --green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.07);--red-border:rgba(239,68,68,.4);
   --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;
   --border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
-.page{max-width:720px;margin:0 auto;padding:16px 10px 40px}
-@media(max-width:480px){
-  .pitch-wrap{padding:16px 6px}
-  .formation{gap:10px}
-  .score-bar{gap:8px;margin-bottom:8px}
-  .score-pill,.timer-pill{padding:5px 12px;font-size:12px}
-  .btn-give-up{padding:7px 14px;font-size:12px}
-}
+.page{max-width:960px;margin:0 auto;padding:22px 14px 56px}
 .site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
-.game-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(20px,4.5vw,36px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--text);line-height:1}
-.game-name .hl{color:var(--gold)}
-.game-sub{font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:5px}
-.score-bar{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:12px;flex-wrap:wrap}
-.score-pill,.timer-pill{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 18px;border-radius:20px;background:var(--surface2);border:1px solid var(--border-bright);color:var(--text-muted)}
-.score-pill span{color:var(--gold)}
-.timer-pill span{color:var(--text)}
-.timer-pill.urgent span{color:#ef4444}
-.msg{font-size:13px;color:var(--gold);min-height:20px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,4vw,34px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.stats-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 20px;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:72px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--gold)}
+.stat-val.urgent{color:var(--red);animation:pulse .8s infinite}
+.stat-val.green{color:var(--green)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;height:38px;background:var(--border-bright);flex-shrink:0}
+.prog-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.input-wrap{position:relative;margin-bottom:16px}
+.guess-input{width:100%;font-size:16px;padding:13px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.guess-input::placeholder{color:var(--text-dim)}
+.guess-input:disabled{opacity:.4;cursor:not-allowed}
 .btn-give-up{display:block;margin:0 auto 14px;padding:8px 20px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text-muted);transition:all .2s}
 .btn-give-up:hover{border-color:var(--red);color:var(--red)}
-
-/* ── Pitch ── */
-.pitch-wrap{
-  background:repeating-linear-gradient(180deg,rgba(255,255,255,.022) 0px,rgba(255,255,255,.022) 46px,transparent 46px,transparent 92px),
-    linear-gradient(180deg,#1b4a1f 0%,#1e5222 50%,#1b4a1f 100%);
-  border-radius:14px;border:2px solid rgba(255,255,255,.1);
-  padding:24px 12px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5);
-}
-.pitch-wrap::before{content:'';position:absolute;left:6%;right:6%;top:50%;height:1px;background:rgba(255,255,255,.12);pointer-events:none}
-.pitch-wrap::after{content:'';position:absolute;left:50%;top:50%;width:72px;height:72px;margin:-36px 0 0 -36px;border:1px solid rgba(255,255,255,.12);border-radius:50%;pointer-events:none}
-.formation{display:flex;flex-direction:column;gap:14px;position:relative;z-index:1}
-.form-row{display:flex;justify-content:center;gap:clamp(4px,1.5vw,10px);align-items:flex-start}
-
-/* ── Shirt card — scales with viewport ── */
-.shirt-card{display:flex;flex-direction:column;align-items:center;width:clamp(72px,20vw,106px)}
-.shirt-svg-wrap{
-  width:clamp(64px,18vw,96px);
-  height:clamp(72px,20vw,108px);
-  position:relative;transition:filter .35s,transform .25s
-}
-.shirt-card.found .shirt-svg-wrap{filter:drop-shadow(0 0 10px rgba(34,197,94,.5));transform:scale(1.04)}
-.shirt-card.revealed .shirt-svg-wrap{filter:drop-shadow(0 0 6px rgba(239,68,68,.4))}
-
-/* pos label on shirt */
-.shirt-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:16%;pointer-events:none;z-index:2}
-.shirt-pos{font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,2.2vw,11px);font-weight:900;letter-spacing:.14em;text-transform:uppercase;text-shadow:0 1px 3px rgba(0,0,0,.6)}
-.shirt-q{font-size:clamp(20px,6vw,30px);font-weight:900;line-height:1;transition:opacity .3s;text-shadow:0 1px 4px rgba(0,0,0,.5)}
-.shirt-card.found .shirt-q,.shirt-card.revealed .shirt-q{opacity:0!important}
-
-/* ── Labels under shirt ── */
-.shirt-club-label{margin-top:5px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,2vw,11px);font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);text-align:center;line-height:1.3}
-.shirt-nat-label{font-size:clamp(12px,3.5vw,16px);text-align:center;opacity:0;transition:opacity .5s;height:20px;line-height:1}
-.shirt-nat-label.visible{opacity:1}
-.shirt-card.found .shirt-nat-label{opacity:0!important}
-
-/* ── Per-shirt input ── */
-.shirt-input-wrap{margin-top:5px;width:clamp(64px,18vw,100px)}
-.shirt-input{width:100%;font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,2.5vw,12px);font-weight:700;padding:5px 4px;border:1.5px solid var(--border-bright);border-radius:8px;background:var(--surface2);color:var(--text);outline:none;text-align:center;transition:border-color .2s,background .2s,color .2s;letter-spacing:.04em}
-.shirt-input::placeholder{color:var(--text-dim);font-weight:400;font-size:clamp(9px,2.2vw,11px)}
-.shirt-input:focus{border-color:var(--blue-light)}
-.shirt-input.correct{border-color:var(--green-border);background:var(--green-bg);color:#86efac;cursor:default}
-.shirt-input.wrong{border-color:var(--red-border);background:rgba(239,68,68,.1)}
-.shirt-input.miss{border-color:var(--red-border);background:rgba(239,68,68,.1);color:#fca5a5;cursor:default}
-
-/* ── Result ── */
-.result-banner{border-radius:var(--radius-lg);padding:1.1rem 1.25rem;text-align:center;margin-top:18px;border:1px solid}
-.result-banner.win{border-color:var(--green-border);background:var(--green-bg)}
-.result-banner.lose{border-color:var(--red-border);background:var(--red-bg)}
-.rb-icon{font-size:32px;margin-bottom:6px}
-.rb-title{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
-.result-banner.win .rb-title{color:#86efac}.result-banner.lose .rb-title{color:#fca5a5}
-.rb-sub{font-size:13px;color:var(--text-muted)}
-.share-btn{margin-top:12px;display:inline-block;padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+@media(max-width:640px){.team-grid{grid-template-columns:repeat(3,1fr);gap:7px}}
+@media(max-width:400px){.team-grid{grid-template-columns:repeat(2,1fr);gap:6px}}
+.team-card{aspect-ratio:1/1;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 6px;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;cursor:default}
+.team-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.06),transparent 70%);pointer-events:none}
+.card-trophy{font-size:clamp(14px,2.5vw,20px);margin-bottom:2px;opacity:.35}
+.card-year{font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.8vw,15px);font-weight:900;color:var(--gold);letter-spacing:.04em;margin-bottom:4px}
+.card-dots{display:flex;gap:4px;justify-content:center;margin-top:2px}
+.card-dot{width:5px;height:5px;border-radius:50%;background:var(--border-bright)}
+.team-card.found{background:var(--green-bg);border-color:var(--green-border);box-shadow:0 0 16px rgba(34,197,94,.12)}
+.team-card.found::before{background:radial-gradient(ellipse at 50% 0%,rgba(34,197,94,.08),transparent 70%)}
+.card-trophy-found{font-size:clamp(14px,2.5vw,20px);margin-bottom:2px}
+.card-year-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.6vw,13px);font-weight:900;color:var(--gold);letter-spacing:.04em;margin-bottom:2px}
+.card-name-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.8vw,15px);font-weight:900;color:var(--green);letter-spacing:.02em;line-height:1.1}
+.card-detail-found{font-size:clamp(8px,1.3vw,11px);color:var(--text-muted);margin-top:2px}
+.team-card.revealed{background:var(--red-bg);border-color:var(--red-border)}
+.card-year-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.6vw,13px);font-weight:900;color:var(--gold);letter-spacing:.04em;margin-bottom:2px}
+.card-name-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.8vw,15px);font-weight:900;color:var(--red);letter-spacing:.02em;line-height:1.1}
+.card-detail-revealed{font-size:clamp(8px,1.3vw,11px);color:var(--text-muted);margin-top:2px}
+.result-area{margin-top:20px}
+.result-card{border-radius:var(--radius-lg);padding:22px 20px;text-align:center;border:1px solid}
+.result-card.win{border-color:var(--green-border);background:var(--green-bg)}
+.result-card.lose{border-color:var(--red-border);background:var(--red-bg)}
+.result-icon{font-size:36px;margin-bottom:8px}
+.result-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-card.win .result-title{color:#86efac}
+.result-card.lose .result-title{color:#fca5a5}
+.result-sub{font-size:14px;color:var(--text-muted);margin-bottom:14px}
+.share-btn{display:inline-block;margin-top:10px;padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
 .share-btn:hover{background:rgba(255,255,255,.06)}
-
-.next-quiz-wrap{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);text-align:center}
-.next-quiz-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
-.next-quiz-link{display:inline-block;margin-top:6px;padding:10px 22px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--bg);text-decoration:none;transition:all .2s}
-.next-quiz-link:hover{background:#ffd700;transform:translateY(-1px)}
-
-.shirt-card{cursor:pointer;transition:transform .15s}
-.shirt-card.selected .shirt-svg-wrap{filter:drop-shadow(0 0 12px rgba(245,200,66,.7));transform:scale(1.08)}
-.shirt-card.selected{outline:none}
-.shirt-name-label{margin-top:3px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,2vw,11px);font-weight:800;color:var(--text-muted);text-align:center;min-height:14px;line-height:1.2}
-.input-area{display:flex;align-items:center;gap:10px;padding:10px 12px 4px;flex-shrink:0}
-.global-input{flex:1;font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,3.5vw,22px);font-weight:700;padding:10px 16px;border:2px solid var(--border-bright);border-radius:12px;background:var(--surface2);color:var(--text);outline:none;text-align:center;transition:border-color .2s,background .2s;letter-spacing:.04em}
-.global-input::placeholder{color:var(--text-dim);font-weight:400}
-.global-input:focus{border-color:var(--blue-light);background:var(--surface3)}
-.global-input.wrong{border-color:var(--red-border);background:rgba(239,68,68,.1);animation:shake .3s ease}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.shirt-nat-label.visible{opacity:1}
-
-.pitch{background:linear-gradient(180deg,#1a5c1a,#1e6b1e);border:2px solid #2a7a2a;border-radius:8px;padding:16px 8px;margin:16px 0;min-height:300px}
-.p-row{display:flex;justify-content:center;gap:8px;margin-bottom:10px}
-.p-card{width:80px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:8px;padding:8px 4px;text-align:center;transition:.3s}
-.p-card.found{background:rgba(245,200,66,0.2);border-color:#f5c842}
-.p-pos{font-size:10px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,0.7);text-transform:uppercase}
-.p-hint{font-size:11px;font-weight:700;color:#f5c842;margin-top:2px}
-.p-flag{font-size:18px}
-.p-name{font-size:10px;font-weight:700;color:#fff;margin-top:2px;line-height:1.2}
-.p-detail{font-size:9px;color:rgba(255,255,255,0.6);margin-top:1px}
-#start-area{text-align:center;padding:20px 0}
-.start-btn{padding:12px 28px;background:#f5c842;color:#04080f;border:none;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;cursor:pointer;letter-spacing:.06em}
 nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
 </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){d
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
 <nav>
   <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
     <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
@@ -141,142 +95,184 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <div id="ss-member-widget"></div>
   </div>
 </nav>
-ataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-</head>
-<body>
 <div class="page">
-<header class="site-header">
-  <div class="ucl-stars">★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★</div>
-  <div class="game-name">PL Team of the Year <span class="hl">Most Appearances</span></div>
-  <div class="game-sub">Number of TOTY appearances shown on each shirt · 4 minutes</div>
-</header>
-<div class="score-bar">
-  <div class="score-pill"><span id="found-count">0</span> / 15 players</div>
-  <div class="timer-pill" id="timer-pill">⏱ <span id="timer">4:00</span></div>
-</div>
-<div class="msg" id="msg">&nbsp;</div>
-<div class="input-area" id="input-area">
-  <input class="global-input" id="global-input" type="text" placeholder="Click a shirt, then type a name…" autocomplete="off" spellcheck="false"/>
-</div>
-<button class="btn-give-up" id="give-up-btn" onclick="giveUp()">Give up &amp; reveal</button>
-<div class="pitch-wrap"><div class="formation" id="formation"></div></div>
-<div id="result"></div>
+  <header class="site-header">
+    <div class="game-title">PL <span class="hl">TOTY Most Appearances</span></div>
+    <div class="game-subtitle">Name every player with 4+ PL Team of the Year selections · 15 players · 4 minutes</div>
+  </header>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val" id="val-found">0</div><div class="stat-label">Found</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-remain">15</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-timer">4:00</div><div class="stat-label">Time left</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  <div class="input-wrap">
+    <input class="guess-input" id="guess-input" type="text" placeholder="Type a player name…" autocomplete="off" spellcheck="false"/>
+  </div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()">Give Up &amp; Reveal</button>
+  <div class="team-grid" id="team-grid"></div>
+  <div class="result-area" id="result-area"></div>
 </div>
 <script>
-const FORMATION = [
-  [{name:"Alan Shearer",aliases:["shearer","alan shearer"],pos:"FW",club:"6x TOTY",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
-   {name:"Thierry Henry",aliases:["henry","thierry henry"],pos:"FW",club:"6x TOTY",flag:"🇫🇷"}],
-  [{name:"Cristiano Ronaldo",aliases:["ronaldo","cristiano ronaldo"],pos:"MF",club:"4x TOTY",flag:"🇵🇴"},
-   {name:"Patrick Vieira",aliases:["vieira","patrick vieira"],pos:"MF",club:"6x TOTY",flag:"🇫🇷"},
-   {name:"Steven Gerrard",aliases:["gerrard","steven gerrard"],pos:"MF",club:"8x TOTY",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
-   {name:"Ryan Giggs",aliases:["giggs","ryan giggs"],pos:"MF",club:"6x TOTY",flag:"🏴󠁧󠁢󠁷󠁬󠁳󠁿"}],
-  [{name:"Gary Neville",aliases:["neville","gary neville"],pos:"DF",club:"6x TOTY",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
-   {name:"Rio Ferdinand",aliases:["ferdinand","rio ferdinand"],pos:"DF",club:"6x TOTY",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
-   {name:"Virgil van Dijk",aliases:["van dijk","virgil van dijk"],pos:"DF",club:"5x TOTY",flag:"🇳🇱"},
-   {name:"Ashley Cole",aliases:["cole","ashley cole"],pos:"DF",club:"5x TOTY",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"}],
-  [{name:"Nigel Martyn",aliases:["martyn","nigel martyn"],pos:"GK",club:"5x TOTY",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"}],
-  [{name:"Harry Kane",aliases:["kane","harry kane"],pos:"FW",club:"6x TOTY",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
-   {name:"Roy Keane",aliases:["keane","roy keane"],pos:"MF",club:"5x TOTY",flag:"🇮🇪"},
-   {name:"David de Gea",aliases:["de gea","david de gea"],pos:"GK",club:"5x TOTY",flag:"🇪🇸"},
-   {name:"David Beckham",aliases:["beckham","david beckham"],pos:"MF",club:"4x TOTY",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"}],
+const ENTRIES = [
+  {id:1, year:"8× TOTY", name:"Steven Gerrard",       accepted:["gerrard","steven gerrard"],          pos:"Midfielder"},
+  {id:2, year:"6× TOTY", name:"Alan Shearer",          accepted:["shearer","alan shearer"],            pos:"Striker"},
+  {id:3, year:"6× TOTY", name:"Thierry Henry",         accepted:["henry","thierry henry"],             pos:"Striker"},
+  {id:4, year:"6× TOTY", name:"Patrick Vieira",        accepted:["vieira","patrick vieira"],           pos:"Midfielder"},
+  {id:5, year:"6× TOTY", name:"Ryan Giggs",            accepted:["giggs","ryan giggs"],                pos:"Midfielder"},
+  {id:6, year:"6× TOTY", name:"Gary Neville",          accepted:["neville","gary neville"],            pos:"Defender"},
+  {id:7, year:"6× TOTY", name:"Rio Ferdinand",         accepted:["ferdinand","rio ferdinand"],         pos:"Defender"},
+  {id:8, year:"6× TOTY", name:"Harry Kane",            accepted:["kane","harry kane"],                 pos:"Striker"},
+  {id:9, year:"5× TOTY", name:"Virgil van Dijk",       accepted:["van dijk","virgil van dijk","vvd"],  pos:"Defender"},
+  {id:10,year:"5× TOTY", name:"Ashley Cole",           accepted:["cole","ashley cole"],                pos:"Defender"},
+  {id:11,year:"5× TOTY", name:"Nigel Martyn",          accepted:["martyn","nigel martyn"],             pos:"Goalkeeper"},
+  {id:12,year:"5× TOTY", name:"Roy Keane",             accepted:["keane","roy keane"],                 pos:"Midfielder"},
+  {id:13,year:"5× TOTY", name:"David de Gea",          accepted:["de gea","david de gea"],             pos:"Goalkeeper"},
+  {id:14,year:"4× TOTY", name:"Cristiano Ronaldo",     accepted:["ronaldo","cristiano ronaldo","cr7"],  pos:"Forward"},
+  {id:15,year:"4× TOTY", name:"David Beckham",         accepted:["beckham","david beckham"],           pos:"Midfielder"},
 ];
 
-const ALL_PLAYERS = FORMATION.flat();
-const TOTAL = ALL_PLAYERS.length;
-const TOTAL_SECS = 240;
+const TOTAL = ENTRIES.length, TOTAL_SECS = 240;
 let secsLeft = TOTAL_SECS, timerInterval = null, gameActive = false;
-let foundNames = new Set(), done = false;
+let foundIds = new Set(), done = false;
 
-function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim(); }
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
 
-function buildPitch(){
-  const pitch = document.getElementById('pitch');
-  pitch.innerHTML = '';
-  FORMATION.forEach(function(row, ri){
-    const rowEl = document.createElement('div');
-    rowEl.className = 'p-row';
-    row.forEach(function(p){
-      const card = document.createElement('div');
-      card.id = 'pcard-' + norm(p.name).replace(/\s/g,'-');
-      card.className = 'p-card';
-      card.innerHTML = '<div class="p-pos">'+p.pos+'</div><div class="p-hint">'+p.club+'</div>';
-      rowEl.appendChild(card);
-    });
-    pitch.appendChild(rowEl);
-  });
+function cardInner(e, state){
+  if(state==='found'){
+    return `<div class="card-trophy-found">⭐</div>
+      <div class="card-year-found">${e.year}</div>
+      <div class="card-name-found">${e.name}</div>
+      <div class="card-detail-found">${e.pos}</div>`;
+  }
+  if(state==='revealed'){
+    return `<div class="card-trophy" style="opacity:.22">⭐</div>
+      <div class="card-year-revealed">${e.year}</div>
+      <div class="card-name-revealed">${e.name}</div>
+      <div class="card-detail-revealed">${e.pos}</div>`;
+  }
+  return `<div class="card-trophy">⭐</div>
+    <div class="card-year">${e.year}</div>
+    <div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>`;
 }
 
-function revealPlayer(p){
-  const id = 'pcard-' + norm(p.name).replace(/\s/g,'-');
-  const card = document.getElementById(id);
+function renderGrid(){
+  const grid = document.getElementById('team-grid');
+  grid.innerHTML = '';
+  for(const e of ENTRIES){
+    const isFound = foundIds.has(e.id);
+    const card = document.createElement('div');
+    card.className = 'team-card' + (isFound ? ' found' : '');
+    card.id = 'card-' + e.id;
+    card.innerHTML = cardInner(e, isFound ? 'found' : 'hidden');
+    grid.appendChild(card);
+  }
+}
+
+function revealCard(e){
+  const card = document.getElementById('card-' + e.id);
   if(!card) return;
-  card.className = 'p-card found';
-  card.innerHTML = '<div class="p-flag">'+p.flag+'</div><div class="p-name">'+p.name+'</div><div class="p-detail">'+p.pos+' · '+p.club+'</div>';
+  card.className = 'team-card found';
+  card.innerHTML = cardInner(e, 'found');
+}
+
+function revealAllMissed(){
+  for(const e of ENTRIES){
+    if(!foundIds.has(e.id)){
+      const card = document.getElementById('card-' + e.id);
+      if(!card) continue;
+      card.className = 'team-card revealed';
+      card.innerHTML = cardInner(e, 'revealed');
+    }
+  }
+}
+
+function updateHUD(){
+  document.getElementById('val-found').textContent = foundIds.size;
+  document.getElementById('val-remain').textContent = TOTAL - foundIds.size;
+  const pct = Math.round(foundIds.size / TOTAL * 100);
+  document.getElementById('prog-bar').style.width = pct + '%';
 }
 
 function tryGuess(val){
   if(!gameActive || !val.trim()) return;
   const nv = norm(val);
-  let matched = false;
-  ALL_PLAYERS.forEach(function(p){
-    if(foundNames.has(norm(p.name))) return;
-    if(p.aliases.some(function(a){ return norm(a) === nv; })){
-      foundNames.add(norm(p.name));
-      revealPlayer(p);
-      matched = true;
+  for(const e of ENTRIES){
+    if(foundIds.has(e.id)) continue;
+    if(e.accepted.some(a => norm(a) === nv)){
+      foundIds.add(e.id);
+      revealCard(e);
+      updateHUD();
+      document.getElementById('guess-input').value = '';
+      if(foundIds.size === TOTAL) timeUp(true);
+      return;
     }
-  });
-  if(matched){
-    document.getElementById('guess-input').value = '';
-    document.getElementById('score').textContent = foundNames.size;
-    document.getElementById('remain-count').textContent = TOTAL - foundNames.size;
-    const el = document.getElementById('timer');
-    if(el){ const m=Math.floor(secsLeft/60),s=secsLeft%60; el.textContent=m+':'+(s<10?'0':'')+s; }
-    if(foundNames.size === TOTAL) endGame(true);
   }
 }
 
-function startGame(){
-  gameActive = true;
-  document.getElementById('start-area').style.display = 'none';
-  document.getElementById('input-area').style.display = 'block';
-  timerInterval = setInterval(function(){
+function startTimer(){
+  timerInterval = setInterval(()=>{
     secsLeft--;
-    const m=Math.floor(secsLeft/60), s=secsLeft%60;
-    const el=document.getElementById('timer');
-    if(el) el.textContent=m+':'+(s<10?'0':'')+s;
-    if(secsLeft<=0){ clearInterval(timerInterval); endGame(false); }
+    const m = Math.floor(secsLeft/60), s = secsLeft % 60;
+    const timerEl = document.getElementById('val-timer');
+    if(timerEl) timerEl.textContent = m + ':' + String(s).padStart(2,'0');
+    if(secsLeft <= 30) timerEl && timerEl.classList.add('urgent');
+    if(secsLeft <= 0){ clearInterval(timerInterval); timeUp(false); }
   }, 1000);
 }
 
-function endGame(won){
-  gameActive = false; done = true;
+function giveUp(){
+  if(!gameActive) return;
   clearInterval(timerInterval);
-  document.getElementById('input-area').style.display = 'none';
-  if(!won){ ALL_PLAYERS.forEach(function(p){ if(!foundNames.has(norm(p.name))) revealPlayer(p); }); }
-  const modal = document.getElementById('modal');
-  const elapsed = TOTAL_SECS - secsLeft;
-  const mins = Math.floor(elapsed/60), secs = elapsed%60;
-  document.getElementById('modal-icon').textContent = won ? '🏆' : '⌛';
-  document.getElementById('modal-title').textContent = won ? 'Quiz Complete!' : "Time's Up!";
-  document.getElementById('modal-score').textContent = foundNames.size + ' / ' + TOTAL + ' found';
-  document.getElementById('modal-msg').textContent = won ? 'You named all ' + TOTAL + ' players in ' + mins + 'm ' + secs + 's!' : 'You found ' + foundNames.size + ' of ' + TOTAL + ' players.';
-  document.getElementById('modal-backdrop').classList.add('show');
-  if(typeof saveResult === 'function') saveResult('pl-toty-appearances','PL TOTY Appearances',foundNames.size,TOTAL,won);
+  const btn = document.getElementById('give-up-btn');
+  if(btn) btn.style.display = 'none';
+  timeUp(false);
 }
 
-function closeModal(){ document.getElementById('modal-backdrop').classList.remove('show'); }
-function resetQuiz(){ closeModal(); secsLeft=TOTAL_SECS; foundNames=new Set(); done=false; gameActive=false; document.getElementById('start-area').style.display='block'; document.getElementById('score').textContent='0'; document.getElementById('remain-count').textContent=TOTAL; document.getElementById('timer').textContent='4:00'; buildPitch(); }
-
-document.addEventListener('DOMContentLoaded', function(){
-  buildPitch();
+function timeUp(won){
+  gameActive = false;
+  done = true;
   const input = document.getElementById('guess-input');
-  if(input){
-    input.addEventListener('keydown', function(e){ if(e.key==='Enter') tryGuess(input.value); });
-    input.addEventListener('input', function(){ tryGuess(input.value); });
+  if(input) input.disabled = true;
+  const btn = document.getElementById('give-up-btn');
+  if(btn) btn.style.display = 'none';
+  if(!won) revealAllMissed();
+  const area = document.getElementById('result-area');
+  const perfect = foundIds.size === TOTAL;
+  area.innerHTML = `<div class="result-card ${perfect ? 'win' : (won ? 'win' : 'lose')}">
+    <div class="result-icon">${perfect ? '🏆' : (won ? '⭐' : '⏱')}</div>
+    <div class="result-title">${perfect ? 'Perfect!' : (won ? 'Well Done!' : "Time's Up!")}</div>
+    <div class="result-sub">${foundIds.size} / ${TOTAL} players named</div>
+    <button class="share-btn" onclick="shareResult()">Share Score 📋</button>
+  </div>`;
+  if(typeof saveResult === 'function') saveResult('pl-toty-appearances','PL TOTY Most Appearances', foundIds.size, TOTAL, perfect);
+}
+
+function shareResult(){
+  const pct = Math.round(foundIds.size/TOTAL*100);
+  const bar = Array.from({length:10},(_,i)=>i<Math.round(pct/10)?'⭐':'⬛').join('');
+  const txt = 'SportsStack — PL TOTY Most Appearances\n'+foundIds.size+' / '+TOTAL+' players ('+pct+'%)\n'+bar+'\nsportsstack.com.au/pl-toty-appearances-quiz.html';
+  const btn = document.querySelector('.share-btn');
+  if(navigator.share){
+    navigator.share({text:txt}).catch(()=>{});
+    if(btn){btn.textContent='Shared ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(()=>{
+      if(btn){btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}
+    });
   }
-});
+}
+
+renderGrid();
+gameActive = true;
+startTimer();
+
+const input = document.getElementById('guess-input');
+input.addEventListener('input', e => { if(gameActive) tryGuess(e.target.value); });
+input.addEventListener('keydown', e => { if(e.key === 'Enter' && gameActive) tryGuess(e.target.value); });
 </script>
+<script src="sportstack-member.js?v=4"></script>
 </body>
 </html>
