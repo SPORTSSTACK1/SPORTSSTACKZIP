@@ -69,7 +69,11 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'B
 .team-grid{margin-top:12px}
 .input-wrap{margin-top:8px}
 .result-banner{margin-top:12px}
-nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,
+<style>
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
+</style>
 <nav>
   <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
     <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
@@ -79,8 +83,6 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <div id="ss-member-widget"></div>
   </div>
 </nav>
-32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
-</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
