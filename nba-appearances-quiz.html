@@ -95,12 +95,21 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}r.push(arguments);}
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date()); gtag('config', 'G-TL0NM71G5M');
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
+<nav style="position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px">
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#e8f0fe;text-decoration:none;padding:6px 14px;border:1px solid #1a3a6a;border-radius:8px">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
 <div class="page">
   <header class="site-header">
     <div class="game-title">NBA <span class="hl">All-Time Appearances</span></div>
@@ -118,6 +127,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input class="guess-input" id="guess-input" type="text" placeholder="Type a name and press Enter…" autocomplete="off"/>
     <div class="suggestions" id="suggestions" style="display:none"></div>
   </div>
+  <button id="give-up-btn" onclick="giveUp()" style="display:block;margin:8px auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:#6b8abf;border:1px solid #1a3a6a;padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
   <div class="team-grid" id="team-grid"></div>
 </div>
 
@@ -274,6 +284,14 @@ function acceptSuggestion(e){
 function startTimer(){
   clearInterval(timer);
   timer = setInterval(() => { secsLeft--; updateHUD(); if(secsLeft <= 0){ clearInterval(timer); timeUp(); } }, 1000);
+}
+
+function giveUp(){
+  if(!gameActive)return;
+  clearInterval(timerInterval);
+  const btn=document.getElementById('give-up-btn');
+  if(btn)btn.style.display='none';
+  timeUp();
 }
 function timeUp(){
   gameActive = false;
