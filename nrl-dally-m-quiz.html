@@ -101,6 +101,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input id="guess-input" class="guess-input" type="text" placeholder="Type a name…" autocomplete="off" spellcheck="false"/>
   </div>
   <div id="msg" style="text-align:center;font-size:13px;color:var(--gold);min-height:20px;margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;font-weight:700"></div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()" style="display:block;margin:0 auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:1px solid var(--border-bright);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
   <div id="card-grid" class="team-grid" style="grid-template-columns:repeat(5,1fr)"></div>
   <div id="result"></div>
 </div>
@@ -228,6 +229,15 @@ function startTimer(){
   },1000);
 }
 
+
+function giveUp(){
+  if(!gameActive)return;
+  clearInterval(timerInterval);
+  gameActive=false;
+  const btn=document.getElementById('give-up-btn');
+  if(btn)btn.style.display='none';
+  endGame(false);
+}
 function endGame(won){
   gameActive=false;clearInterval(timerInterval);hideSugg();
   if(!won){
