@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Every FA Cup Winner — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/fa-cup-winners-quiz.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>Every FA Cup Winner – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;--blue:#2563eb;--blue-light:#3b82f6;--gold:#f5c842;--green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);--red:#ef4444;--red-bg:rgba(239,68,68,.07);--red-border:rgba(239,68,68,.4);--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
+.page{max-width:960px;margin:0 auto;padding:22px 14px 56px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,4vw,34px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.stats-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 20px;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:72px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--gold)}
+.stat-val.urgent{color:var(--red);animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;height:38px;background:var(--border-bright);flex-shrink:0}
+.prog-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.input-wrap{position:relative;margin-bottom:10px}
+.guess-input{width:100%;font-size:16px;padding:13px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.guess-input::placeholder{color:var(--text-dim)}
+.guess-input:disabled{opacity:.4;cursor:not-allowed}
+.btn-give-up{display:block;margin:0 auto 14px;padding:8px 20px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:#e8f0fe;transition:all .2s}
+.btn-give-up:hover{border-color:var(--red);color:var(--red)}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+@media(max-width:640px){.team-grid{grid-template-columns:repeat(3,1fr);gap:7px}}
+@media(max-width:400px){.team-grid{grid-template-columns:repeat(2,1fr);gap:6px}}
+.team-card{aspect-ratio:1/1;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 6px;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;cursor:default}
+.team-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.06),transparent 70%);pointer-events:none}
+.card-wins{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,4.5vw,32px);font-weight:900;color:var(--text-dim);line-height:1;margin-bottom:4px}
+.card-trophy{font-size:clamp(16px,3vw,22px);opacity:.18;margin-bottom:3px}
+.card-dots{display:flex;gap:3px;justify-content:center;margin-top:4px}
+.card-dot{width:5px;height:5px;border-radius:50%;background:var(--text-dim)}
+.team-card.found{background:var(--green-bg);border-color:var(--green-border);box-shadow:0 0 16px rgba(34,197,94,.12)}
+.team-card.found::before{background:radial-gradient(ellipse at 50% 0%,rgba(34,197,94,.08),transparent 70%)}
+.card-trophy-found{font-size:clamp(12px,2vw,16px);margin-bottom:3px}
+.card-name-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.9vw,14px);font-weight:800;color:#86efac;letter-spacing:.03em;line-height:1.2;margin-bottom:2px}
+.card-detail-found{font-size:clamp(7px,1.2vw,10px);color:#4ade80;letter-spacing:.05em;line-height:1.3}
+.team-card.revealed{background:var(--red-bg);border-color:var(--red-border)}
+.card-name-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.9vw,14px);font-weight:800;color:var(--red);letter-spacing:.03em;line-height:1.2;margin-bottom:2px}
+.card-detail-revealed{font-size:clamp(7px,1.2vw,10px);color:rgba(239,68,68,.7);letter-spacing:.05em;line-height:1.3}
+.modal-backdrop{position:fixed;inset:0;background:rgba(4,8,15,.85);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:999;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-backdrop.show{opacity:1;pointer-events:all}
+.modal{background:var(--surface2);border:1px solid var(--border-bright);border-radius:var(--radius-lg);padding:32px 28px;max-width:420px;width:90%;text-align:center}
+.modal.win{border-color:var(--green-border);background:rgba(34,197,94,.05)}
+.modal.lose{border-color:var(--red-border);background:var(--red-bg)}
+.modal-icon{font-size:48px;margin-bottom:12px}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.modal.win .modal-title{color:#86efac}
+.modal.lose .modal-title{color:#fca5a5}
+.modal-score{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--gold);margin-bottom:6px}
+.modal-msg{font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.5}
+.share-btn{display:inline-block;padding:11px 28px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:var(--text);transition:all .2s;margin-bottom:10px}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+.btn-replay{display:inline-block;padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:var(--text-muted);transition:all .2s}
+.btn-replay:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="page">
+  <header class="site-header">
+    <div class="game-title">🏆 Every <span class="hl">FA Cup</span> Winner</div>
+    <div class="game-subtitle">Name all 45 teams to have won the FA Cup · cards show number of wins · 7 minutes</div>
+  </header>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val" id="val-found">0</div><div class="stat-label">Found</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-remain">45</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-timer">7:00</div><div class="stat-label">Time left</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  <div class="input-wrap">
+    <input class="guess-input" id="guess-input" type="text" placeholder="Type a team name…" autocomplete="off" spellcheck="false"/>
+  </div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()">Give Up &amp; Reveal</button>
+  <div class="team-grid" id="team-grid"></div>
+</div>
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal">
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-score" id="modal-score"></div>
+    <div class="modal-msg" id="modal-msg"></div>
+    <button class="share-btn" onclick="shareScore()">Share Score 📋</button><br/>
+    <button class="btn-replay" onclick="location.reload()">Play Again</button>
+  </div>
+</div>
+<script>
+const ENTRIES = [
+  {id:1, wins:14, name:"Arsenal", accepted:["arsenal", "gunners"]},
+  {id:2, wins:13, name:"Manchester United", accepted:["manchester united", "man united", "man utd", "man u", "mufc"]},
+  {id:3, wins:8, name:"Chelsea", accepted:["chelsea"]},
+  {id:4, wins:8, name:"Liverpool", accepted:["liverpool", "the reds"]},
+  {id:5, wins:8, name:"Tottenham Hotspur", accepted:["tottenham", "spurs", "tottenham hotspur"]},
+  {id:6, wins:7, name:"Manchester City", accepted:["manchester city", "man city"]},
+  {id:7, wins:7, name:"Aston Villa", accepted:["aston villa", "villa"]},
+  {id:8, wins:6, name:"Newcastle United", accepted:["newcastle", "newcastle united", "toon"]},
+  {id:9, wins:6, name:"Blackburn Rovers", accepted:["blackburn", "blackburn rovers"]},
+  {id:10, wins:5, name:"Everton", accepted:["everton"]},
+  {id:11, wins:5, name:"West Bromwich Albion", accepted:["west brom", "west bromwich", "west bromwich albion", "wba"]},
+  {id:12, wins:5, name:"Wanderers", accepted:["wanderers"]},
+  {id:13, wins:4, name:"Wolverhampton Wanderers", accepted:["wolverhampton wanderers", "wolves", "wolverhampton"]},
+  {id:14, wins:4, name:"Bolton Wanderers", accepted:["bolton", "bolton wanderers"]},
+  {id:15, wins:4, name:"Sheffield United", accepted:["sheffield united", "blades"]},
+  {id:16, wins:3, name:"Sheffield Wednesday", accepted:["sheffield wednesday", "wednesday", "the wednesday"]},
+  {id:17, wins:3, name:"West Ham United", accepted:["west ham", "west ham united", "hammers"]},
+  {id:18, wins:2, name:"Preston North End", accepted:["preston", "preston north end", "pne"]},
+  {id:19, wins:2, name:"Old Etonians", accepted:["old etonians"]},
+  {id:20, wins:2, name:"Portsmouth", accepted:["portsmouth", "pompey"]},
+  {id:21, wins:2, name:"Sunderland", accepted:["sunderland", "black cats"]},
+  {id:22, wins:2, name:"Nottingham Forest", accepted:["nottingham forest", "forest", "notts forest"]},
+  {id:23, wins:2, name:"Bury", accepted:["bury"]},
+  {id:24, wins:1, name:"Huddersfield Town", accepted:["huddersfield", "huddersfield town"]},
+  {id:25, wins:1, name:"Leicester City", accepted:["leicester", "leicester city", "foxes"]},
+  {id:26, wins:1, name:"Oxford University", accepted:["oxford university", "oxford"]},
+  {id:27, wins:1, name:"Royal Engineers", accepted:["royal engineers"]},
+  {id:28, wins:1, name:"Derby County", accepted:["derby", "derby county", "rams"]},
+  {id:29, wins:1, name:"Leeds United", accepted:["leeds", "leeds united"]},
+  {id:30, wins:1, name:"Southampton", accepted:["southampton", "saints"]},
+  {id:31, wins:1, name:"Burnley", accepted:["burnley", "clarets"]},
+  {id:32, wins:1, name:"Cardiff City", accepted:["cardiff", "cardiff city"]},
+  {id:33, wins:1, name:"Blackpool", accepted:["blackpool", "tangerines"]},
+  {id:34, wins:1, name:"Crystal Palace", accepted:["crystal palace", "palace", "eagles"]},
+  {id:35, wins:1, name:"Clapham Rovers", accepted:["clapham rovers", "clapham"]},
+  {id:36, wins:1, name:"Notts County", accepted:["notts county", "notts"]},
+  {id:37, wins:1, name:"Barnsley", accepted:["barnsley"]},
+  {id:38, wins:1, name:"Charlton Athletic", accepted:["charlton", "charlton athletic"]},
+  {id:39, wins:1, name:"Old Carthusians", accepted:["old carthusians"]},
+  {id:40, wins:1, name:"Blackburn Olympic", accepted:["blackburn olympic"]},
+  {id:41, wins:1, name:"Bradford City", accepted:["bradford", "bradford city"]},
+  {id:42, wins:1, name:"Ipswich Town", accepted:["ipswich", "ipswich town"]},
+  {id:43, wins:1, name:"Coventry City", accepted:["coventry", "coventry city"]},
+  {id:44, wins:1, name:"Wimbledon", accepted:["wimbledon"]},
+  {id:45, wins:1, name:"Wigan Athletic", accepted:["wigan", "wigan athletic"]}
+];
+const TOTAL = ENTRIES.length, TOTAL_SECS = 420;
+let secsLeft=TOTAL_SECS, timerInterval=null, gameActive=false, foundIds=new Set();
+
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
+
+function winsLabel(w){return w+' FA Cup'+(w>1?'s':'');}
+
+function cardInner(e, state){
+  if(state==='found') return `<div class="card-trophy-found">🏆</div><div class="card-name-found">${e.name}</div><div class="card-detail-found">${winsLabel(e.wins)}</div>`;
+  if(state==='revealed') return `<div class="card-name-revealed">${e.name}</div><div class="card-detail-revealed">${winsLabel(e.wins)}</div>`;
+  return `<div class="card-wins">${e.wins}</div><div class="card-trophy">🏆</div><div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>`;
+}
+
+function renderGrid(){
+  document.getElementById('team-grid').innerHTML=ENTRIES.map(e=>
+    `<div class="team-card" id="card-${e.id}">${cardInner(e,'hidden')}</div>`
+  ).join('');
+}
+
+function revealCard(e, found){
+  const c=document.getElementById('card-'+e.id);if(!c)return;
+  c.className='team-card '+(found?'found':'revealed');
+  c.innerHTML=cardInner(e,found?'found':'revealed');
+}
+
+function updateHUD(){
+  document.getElementById('val-found').textContent=foundIds.size;
+  document.getElementById('val-remain').textContent=TOTAL-foundIds.size;
+  document.getElementById('prog-bar').style.width=(foundIds.size/TOTAL*100)+'%';
+}
+
+function tryGuess(val){
+  if(!gameActive||!val.trim())return;
+  const nv=norm(val);
+  for(const e of ENTRIES){
+    if(foundIds.has(e.id))continue;
+    if(e.accepted.some(a=>norm(a)===nv)){
+      foundIds.add(e.id);revealCard(e,true);updateHUD();
+      document.getElementById('guess-input').value='';
+      if(foundIds.size===TOTAL)timeUp(true);
+      return;
+    }
+  }
+  const inp=document.getElementById('guess-input');
+  inp.style.borderColor='var(--red)';setTimeout(()=>inp.style.borderColor='',600);
+}
+
+function startTimer(){
+  timerInterval=setInterval(()=>{
+    secsLeft--;const m=Math.floor(secsLeft/60),s=secsLeft%60;
+    const el=document.getElementById('val-timer');
+    if(el){el.textContent=m+':'+String(s).padStart(2,'0');if(secsLeft<=30)el.classList.add('urgent');}
+    if(secsLeft<=0){clearInterval(timerInterval);timeUp(false);}
+  },1000);
+}
+
+function giveUp(){
+  if(!gameActive)return;
+  gameActive=false;clearInterval(timerInterval);
+  document.getElementById('give-up-btn').style.display='none';
+  document.getElementById('guess-input').disabled=true;
+  ENTRIES.forEach(e=>{if(!foundIds.has(e.id))revealCard(e,false);});
+  showModal(false);
+}
+
+function timeUp(won){
+  gameActive=false;clearInterval(timerInterval);
+  document.getElementById('give-up-btn').style.display='none';
+  document.getElementById('guess-input').disabled=true;
+  if(!won)ENTRIES.forEach(e=>{if(!foundIds.has(e.id))revealCard(e,false);});
+  showModal(won);
+}
+
+function showModal(won){
+  const perfect=foundIds.size===TOTAL;
+  document.getElementById('modal-icon').textContent=perfect?'🏆':(won?'⭐':'⏱');
+  document.getElementById('modal-title').textContent=perfect?'Perfect!':(won?'Well Done!':"Time's Up!");
+  document.getElementById('modal-score').textContent=foundIds.size+' / '+TOTAL+' teams';
+  document.getElementById('modal-msg').innerHTML=perfect
+    ?'You named every FA Cup winner!'
+    :'You found <strong>'+foundIds.size+'</strong> of '+TOTAL+' FA Cup winners.';
+  document.getElementById('modal-backdrop').classList.add('show');
+  if(typeof saveResult==='function')saveResult('fa-cup-winners-quiz','Every FA Cup Winner',foundIds.size,TOTAL,perfect);
+}
+
+function shareScore(){
+  const pct=Math.round(foundIds.size/TOTAL*100);
+  const bar=Array.from({length:10},(_,i)=>i<Math.round(pct/10)?'🏆':'⬛').join('');
+  const txt='SportsStack — Every FA Cup Winner\n'+foundIds.size+' / '+TOTAL+' ('+pct+'%)\n'+bar+'\nsportsstack.com.au/fa-cup-winners-quiz.html';
+  const btn=document.querySelector('.share-btn');
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});if(btn){btn.textContent='Shared ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{if(btn){btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}});}
+}
+
+renderGrid();gameActive=true;startTimer();
+document.getElementById('guess-input').addEventListener('keydown',e=>{if(e.key==='Enter')tryGuess(e.target.value);});
+document.getElementById('guess-input').addEventListener('input',e=>{if(gameActive)tryGuess(e.target.value);});
+document.getElementById('modal-backdrop').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>
