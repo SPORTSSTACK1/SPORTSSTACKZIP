@@ -116,7 +116,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'B
     </div>
     <div class="stat-divider"></div>
     <div class="stat-item">
-      <div class="stat-val" id="remain-count">26</div>
+      <div class="stat-val" id="remain-count">27</div>
       <div class="stat-label">Remaining</div>
     </div>
     <div class="stat-divider"></div>
@@ -179,7 +179,8 @@ const ENTRIES=[  {id:1,year:"2000",name:"Paris",accepted:["paris","stade de fran
   {id:23,year:"2022",name:"Paris",accepted:["paris","stade de france"],detail:"Stade de France"},
   {id:24,year:"2023",name:"Istanbul",accepted:["istanbul","ataturk","ataturk olympic"],detail:"Ataturk Stadium"},
   {id:25,year:"2024",name:"London",accepted:["london","wembley"],detail:"Wembley Stadium"},
-  {id:26,year:"2025",name:"Munich",accepted:["munich","allianz arena","allianz"],detail:"Allianz Arena"}];
+  {id:26,year:"2025",name:"Munich",accepted:["munich","allianz arena","allianz"],detail:"Allianz Arena"},
+  {id:27,year:"2026",name:"Budapest",accepted:["budapest","puskas","puskas arena"],detail:"Puskás Aréna"}];
 const TOTAL=ENTRIES.length, TOTAL_SECS=300;
 let secsLeft=TOTAL_SECS, timerInterval=null, foundIds=new Set(), gameActive=false;
 
@@ -237,7 +238,7 @@ function tryGuess(val){
     if(fm.length>=3)break;
   }
   const box=document.getElementById('sugg-box');
-  if(fm.length){
+  if(fm.length&&box){
     box.innerHTML=fm.map(m=>`<div class="sugg-item" data-acc='${JSON.stringify(m.accepted)}'>→ ${m.name}</div>`).join('');
     box.style.display='block';
     box.querySelectorAll('.sugg-item').forEach(el=>el.addEventListener('mousedown',ev=>{
@@ -247,6 +248,16 @@ function tryGuess(val){
       hideSugg();
     }));
   }else hideSugg();
+}
+
+function renderGrid(){
+  const grid=document.getElementById('team-grid');
+  if(!grid)return;
+  grid.innerHTML=ENTRIES.map(e=>`<div class="team-card" id="card-${e.id}">
+    <div class="card-trophy">🏆</div>
+    <div class="card-year">${e.year}</div>
+    <div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>
+  </div>`).join('');
 }
 
 function startTimer(){
@@ -313,7 +324,7 @@ const inp=document.getElementById('guess-input');
 inp.addEventListener('input',ev=>{if(gameActive)tryGuess(ev.target.value);});
 inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')tryGuess(ev.target.value);if(ev.key==='Escape')hideSugg();});
 document.addEventListener('click',ev=>{if(!ev.target.closest('.input-wrap'))hideSugg();});
-gameActive=true;startTimer();
+renderGrid();gameActive=true;startTimer();
 
 </script>
 <script src="sportstack-member.js?v=4"></script>
