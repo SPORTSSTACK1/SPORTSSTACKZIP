@@ -62,6 +62,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'B
 .team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
 .dm-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 6px;text-align:center;transition:.3s}
 .dm-card.found{background:#0f3a1f;border-color:#22c55e}
+.dm-card.revealed{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.3)}
 .dm-year{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--gold)}
 .dm-name{font-size:11px;font-weight:600;color:var(--text);margin-top:4px;min-height:14px}
 .dm-unk{font-size:20px;color:var(--text-dim);margin-top:4px}
@@ -101,14 +102,6 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
   </div>
   <div id="msg" style="text-align:center;font-size:13px;color:var(--gold);min-height:20px;margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;font-weight:700"></div>
   <div id="card-grid" class="team-grid" style="grid-template-columns:repeat(5,1fr)"></div>
-    <div class="rank-info">
-      <div class="rank-name"><span class="rank-flag" id="flag-25"></span><span id="rname-25">?</span></div>
-      <div class="rank-stat">Year won</div>
-    </div>
-    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-25" style="width:100%"></div></div>
-    <div class="rank-val" id="rval-25">2025</div>
-  </div>
-  </div>
   <div id="result"></div>
 </div>
 <script>
@@ -163,12 +156,12 @@ function revealRow(rank){
   const e=ENTRIES.find(x=>x.rank===rank);
   if(!e||foundIds.has(rank))return;
   foundIds.add(rank);
-  const row=document.getElementById('row-'+rank);
-  if(row)row.classList.add('found');
+  const card=document.getElementById('row-'+rank);
+  if(card)card.classList.add('found');
+  const unk=document.getElementById('unk-'+rank);
+  if(unk)unk.style.display='none';
   const rn=document.getElementById('rname-'+rank);
   if(rn)rn.textContent=e.name;
-  const flagEl=document.getElementById('flag-'+rank);
-  if(flagEl)flagEl.classList.add('visible');
 }
 
 
@@ -186,6 +179,17 @@ function revealRow(rank){
 function hideSugg(){}
 
 function showSugg(){}
+
+function buildGrid(){
+  const grid=document.getElementById('card-grid');
+  if(!grid)return;
+  grid.innerHTML=ENTRIES.map(e=>`
+    <div class="dm-card" id="row-${e.rank}">
+      <div class="dm-year">${e.statDisp}</div>
+      <div class="dm-unk" id="unk-${e.rank}">?</div>
+      <div class="dm-name" id="rname-${e.rank}"></div>
+    </div>`).join('');
+}
 
 function updateHUD(){
   document.getElementById('remain-count').textContent=TOTAL-foundIds.size;
@@ -229,12 +233,12 @@ function endGame(won){
   if(!won){
     ENTRIES.forEach(e=>{
       if(!foundIds.has(e.rank)){
-        const row=document.getElementById('row-'+e.rank);
-        if(row)row.classList.add('revealed');
+        const card=document.getElementById('row-'+e.rank);
+        if(card)card.classList.add('revealed');
+        const unk=document.getElementById('unk-'+e.rank);
+        if(unk)unk.style.display='none';
         const rn=document.getElementById('rname-'+e.rank);
         if(rn)rn.textContent=e.name;
-        const flagEl=document.getElementById('flag-'+e.rank);
-        if(flagEl)flagEl.classList.add('visible');
       }
     });
   }
@@ -261,6 +265,7 @@ const inp=document.getElementById('guess-input');
 inp.addEventListener('input',e=>{if(gameActive)tryGuess(e.target.value);});
 inp.addEventListener('keydown',e=>{if(e.key==='Enter'){tryGuess(e.target.value);} if(e.key==='Escape')hideSugg();});
 document.addEventListener('click',e=>{if(!e.target.closest('.input-wrap'))hideSugg();});
+buildGrid();
 gameActive=true;startTimer();
 </script>
 <script src="sportstack-member.js?v=4"></script>
