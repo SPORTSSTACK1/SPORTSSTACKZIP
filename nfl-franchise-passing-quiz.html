@@ -266,7 +266,7 @@ function updateHUD(){
   el.className = 'stat-val' + (secsLeft <= 30 ? ' urgent' : '');
 }
 
-function hideSuggestions(){ document.getElementById('suggestions').style.display = 'none'; }
+function hideSuggestions(){ const s=document.getElementById('suggestions'); if(s)s.style.display='none'; }
 function showSuggestions(matches){
   const box = document.getElementById('suggestions');
   if(!matches.length){ hideSuggestions(); return; }
