@@ -273,7 +273,7 @@ function startTimer(){
 
 function giveUp(){
   if(!gameActive)return;
-  clearInterval(timerInterval);
+  if(typeof timerInterval!=="undefined")clearInterval(timerInterval);if(typeof timer!=="undefined")clearInterval(timer);
   const btn=document.getElementById('give-up-btn');
   if(btn)btn.style.display='none';
   timeUp();
