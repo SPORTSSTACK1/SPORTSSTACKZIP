@@ -125,7 +125,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input class="guess-input" id="guess-input" type="text" placeholder="Type a name and press Enter…" autocomplete="off"/>
     <div class="suggestions" id="suggestions" style="display:none"></div>
   </div>
-  <button id="give-up-btn" onclick="giveUp()" style="display:block;margin:8px auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:#6b8abf;border:1px solid #1a3a6a;padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
+  <button id="give-up-btn" onclick="giveUp()" style="display:block;margin:8px auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:#e8f0fe;border:1.5px solid rgba(255,255,255,.3);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='rgba(255,255,255,.3)';this.style.color='#e8f0fe'">Give Up &amp; Reveal</button>
   <div class="team-grid" id="team-grid"></div>
 </div>
 
@@ -263,7 +263,7 @@ function updateHUD(){
   el.className = 'stat-val' + (secsLeft <= 30 ? ' urgent' : '');
 }
 
-function hideSuggestions(){ document.getElementById('suggestions').style.display = 'none'; }
+function hideSuggestions(){ const s=document.getElementById('suggestions'); if(s)s.style.display='none'; }
 function showSuggestions(matches){
   const box = document.getElementById('suggestions');
   if(!matches.length){ hideSuggestions(); return; }
