@@ -49,10 +49,6 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'B
 .guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
 .guess-input::placeholder{color:var(--text-dim)}
 .guess-input:disabled{opacity:.4;cursor:not-allowed}
-.suggestions{position:absolute;top:100%;left:0;right:0;background:var(--surface2);border:1px solid var(--gold);border-radius:var(--radius);z-index:99;margin-top:3px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.45)}
-.suggestion-label{font-size:11px;color:var(--gold);padding:7px 14px 3px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;border-bottom:1px solid var(--border)}
-.suggestion-item{padding:10px 14px;font-size:14px;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .12s}
-.suggestion-item:hover{background:var(--surface3)}
 .sug-badge{font-size:10px;color:var(--gold);background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.25);border-radius:4px;padding:2px 7px;font-weight:700;flex-shrink:0}
 .team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
 @media(max-width:640px){.team-grid{grid-template-columns:repeat(3,1fr);gap:7px}}
@@ -122,7 +118,6 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
   </div>
   <div class="input-wrap">
     <input id="guess-input" class="guess-input" type="text" placeholder="Type a name…" autocomplete="off" spellcheck="false"/>
-    <div id="sugg-box" class="sugg-box" style="display:none"></div>
   </div>
   <div id="msg" style="text-align:center;font-size:13px;color:var(--gold);min-height:20px;margin-bottom:8px;
     font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;font-weight:700"></div>
@@ -373,7 +368,7 @@ function updateHUD(){
   var _tm=document.getElementById('timer');if(_tm){var _m=Math.floor(secsLeft/60),_s=secsLeft%60;_tm.textContent=_m+':'+(_s<10?'0':'')+_s;}
 }
 
-function hideSugg(){document.getElementById('sugg-box').style.display='none';document.getElementById('sugg-box').innerHTML='';}
+function hideSugg(){}
 
 function tryGuess(val){
   if(!gameActive||!val.trim())return;
