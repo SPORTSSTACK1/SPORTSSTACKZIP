@@ -116,6 +116,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input class="guess-input" id="guess-input" type="text" placeholder="Type a pitcher's name and press Enter…" autocomplete="off"/>
     <div class="suggestions" id="suggestions" style="display:none"></div>
   </div>
+  <button id="give-up-btn" onclick="giveUp()" style="display:block;margin:8px auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:1px solid var(--border-bright);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
   <div class="team-grid" id="team-grid"></div>
 </div>
 <div class="modal-backdrop" id="modal-backdrop">
@@ -189,6 +190,14 @@ function hideSuggestions(){ document.getElementById('suggestions').style.display
 function showSuggestions(matches){ const box=document.getElementById('suggestions'); if(!matches.length){hideSuggestions();return;} box.innerHTML='<div class="suggestion-label">Did you mean…</div>'; matches.forEach(p=>{ const item=document.createElement('div'); item.className='suggestion-item'; item.innerHTML=`<span>${p.name}</span><span class="sug-badge">${winsLabel(p.name)}</span>`; item.onmousedown=ev=>{ev.preventDefault();acceptSuggestion(p);}; box.appendChild(item); }); box.style.display='block'; }
 function acceptSuggestion(p){ hideSuggestions(); document.getElementById('guess-input').value=''; if(!isPlayerFullyFound(p.name)&&gameActive){revealPlayerCards(p.name);updateHUD();checkWin();} }
 function startTimer(){ clearInterval(timer); timer=setInterval(()=>{secsLeft--;updateHUD();if(secsLeft<=0){clearInterval(timer);timeUp();}},1000); }
+
+function giveUp(){
+  if(!gameActive)return;
+  clearInterval(timerInterval);
+  const btn=document.getElementById('give-up-btn');
+  if(btn)btn.style.display='none';
+  timeUp();
+}
 function timeUp(){ gameActive=false; document.getElementById('guess-input').disabled=true; hideSuggestions();revealAllMissed();showModal(false); }
 function checkWin(){ if(foundIds.size===TOTAL){clearInterval(timer);gameActive=false;document.getElementById('guess-input').disabled=true;showModal(true);} }
 function showModal(won){ const elapsed=TOTAL_SECS-secsLeft,mins=Math.floor(elapsed/60),secs=elapsed%60,timeStr=mins>0?mins+' minute'+(mins!==1?'s':'')+' and '+secs+' second'+(secs!==1?'s':''):secs+' second'+(secs!==1?'s':''),modal=document.getElementById('modal'); modal.className='modal '+(won?'win':'lose'); document.getElementById('modal-icon').textContent=won?'🎉':'⏰'; document.getElementById('modal-title').textContent=won?'Quiz Complete!':"Time's Up!"; document.getElementById('modal-score').textContent=foundIds.size+' / '+TOTAL+' found'; document.getElementById('modal-msg').innerHTML=won?'Congratulations — you completed the quiz in <strong>'+timeStr+'</strong>!<br>You named every NL Cy Young winner from 2000 to 2025!':'Better luck next time!<br>You revealed <strong>'+foundIds.size+'</strong> of '+TOTAL+' awards. Missing names are shown in <span style="color:var(--red)">red</span>.'; document.getElementById('modal-backdrop').classList.add('show'); }
