@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<meta property="og:title" content="College Football Champions Since 2000 — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/cfb-champions-quiz.html"/>
+<meta name="twitter:card" content="summary"/>
+<title>College Football Champions Since 2000 – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--blue-light:#3b82f6;--green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);--red:#ef4444;--red-bg:rgba(239,68,68,.07);--red-border:rgba(239,68,68,.4);--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
+.page{max-width:960px;margin:0 auto;padding:22px 14px 56px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,4vw,34px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.stats-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 20px;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:72px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--gold)}
+.stat-val.urgent{color:var(--red);animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;height:38px;background:var(--border-bright);flex-shrink:0}
+.prog-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.input-wrap{position:relative;margin-bottom:10px}
+.guess-input{width:100%;font-size:16px;padding:13px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.guess-input::placeholder{color:var(--text-dim)}
+.guess-input:disabled{opacity:.4;cursor:not-allowed}
+.btn-give-up{display:block;margin:0 auto 14px;padding:8px 20px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:#e8f0fe;transition:all .2s}
+.btn-give-up:hover{border-color:var(--red);color:var(--red)}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+@media(max-width:640px){.team-grid{grid-template-columns:repeat(3,1fr);gap:7px}}
+.team-card{aspect-ratio:1/1;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 6px;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.card-year{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,3.5vw,26px);font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px}
+.card-type{font-size:clamp(8px,1.2vw,10px);color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.card-dots{display:flex;gap:4px;justify-content:center;margin-top:2px}
+.card-dot{width:5px;height:5px;border-radius:50%;background:var(--border-bright)}
+.team-card.found{background:var(--green-bg);border-color:var(--green-border);box-shadow:0 0 16px rgba(34,197,94,.12)}
+.team-card.revealed{background:var(--red-bg);border-color:var(--red-border)}
+.card-year-sm{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.4vw,11px);font-weight:700;letter-spacing:.08em;margin-bottom:2px}
+.card-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.9vw,14px);font-weight:900;letter-spacing:.02em;line-height:1.2}
+.team-card.found .card-year-sm{color:#4ade80}
+.team-card.found .card-name{color:#86efac}
+.team-card.revealed .card-year-sm{color:rgba(239,68,68,.7)}
+.team-card.revealed .card-name{color:var(--red)}
+.note{font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:12px;font-style:italic}
+.result-area{margin-top:20px}
+.result-card{border-radius:var(--radius-lg);padding:22px 20px;text-align:center;border:1px solid}
+.result-card.win{border-color:var(--green-border);background:var(--green-bg)}
+.result-card.lose{border-color:var(--red-border);background:var(--red-bg)}
+.result-icon{font-size:36px;margin-bottom:8px}
+.result-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-card.win .result-title{color:#86efac}
+.result-card.lose .result-title{color:#fca5a5}
+.result-sub{font-size:14px;color:var(--text-muted);margin-bottom:14px}
+.share-btn{display:inline-block;margin-top:10px;padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:var(--text);transition:all .2s}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="page">
+  <header class="site-header">
+    <div class="game-title">🏆 CFB <span class="hl">National Champions</span></div>
+    <div class="game-subtitle">Name every college football national champion since 2000 · typing a team reveals all their titles · 5 minutes</div>
+  </header>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val" id="val-found">0</div><div class="stat-label">Found</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-remain">27</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-timer">5:00</div><div class="stat-label">Time left</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  <div class="input-wrap">
+    <input class="guess-input" id="guess-input" type="text" placeholder="Type a team name…" autocomplete="off" spellcheck="false"/>
+  </div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()">Give Up &amp; Reveal</button>
+  <p class="note">★ 2003 was a split championship — LSU won the BCS title, USC won the AP &amp; FWAA polls</p>
+  <div class="team-grid" id="team-grid"></div>
+  <div class="result-area" id="result-area"></div>
+</div>
+<script>
+const ENTRIES = [
+  {id:1,  year:"2025", type:"CFP", name:"Indiana",           accepted:["indiana","hoosiers"]},
+  {id:2,  year:"2024", type:"CFP", name:"Ohio State",        accepted:["ohio state","osu","buckeyes"]},
+  {id:3,  year:"2023", type:"CFP", name:"Michigan",          accepted:["michigan","wolverines"]},
+  {id:4,  year:"2022", type:"CFP", name:"Georgia",           accepted:["georgia","bulldogs","dawgs"]},
+  {id:5,  year:"2021", type:"CFP", name:"Georgia",           accepted:["georgia","bulldogs","dawgs"]},
+  {id:6,  year:"2020", type:"CFP", name:"Alabama",           accepted:["alabama","crimson tide","bama"]},
+  {id:7,  year:"2019", type:"CFP", name:"LSU",               accepted:["lsu","tigers","louisiana state"]},
+  {id:8,  year:"2018", type:"CFP", name:"Clemson",           accepted:["clemson","tigers"]},
+  {id:9,  year:"2017", type:"CFP", name:"Alabama",           accepted:["alabama","crimson tide","bama"]},
+  {id:10, year:"2016", type:"CFP", name:"Clemson",           accepted:["clemson","tigers"]},
+  {id:11, year:"2015", type:"CFP", name:"Alabama",           accepted:["alabama","crimson tide","bama"]},
+  {id:12, year:"2014", type:"CFP", name:"Ohio State",        accepted:["ohio state","osu","buckeyes"]},
+  {id:13, year:"2013", type:"BCS", name:"Florida State",     accepted:["florida state","fsu","seminoles"]},
+  {id:14, year:"2012", type:"BCS", name:"Alabama",           accepted:["alabama","crimson tide","bama"]},
+  {id:15, year:"2011", type:"BCS", name:"Alabama",           accepted:["alabama","crimson tide","bama"]},
+  {id:16, year:"2010", type:"BCS", name:"Auburn",            accepted:["auburn","tigers"]},
+  {id:17, year:"2009", type:"BCS", name:"Alabama",           accepted:["alabama","crimson tide","bama"]},
+  {id:18, year:"2008", type:"BCS", name:"Florida",           accepted:["florida","gators"]},
+  {id:19, year:"2007", type:"BCS", name:"LSU",               accepted:["lsu","tigers","louisiana state"]},
+  {id:20, year:"2006", type:"BCS", name:"Florida",           accepted:["florida","gators"]},
+  {id:21, year:"2005", type:"BCS", name:"Texas",             accepted:["texas","longhorns"]},
+  {id:22, year:"2004", type:"BCS", name:"USC",               accepted:["usc","trojans","southern california","southern cal"]},
+  {id:23, year:"2003", type:"BCS", name:"LSU",               accepted:["lsu","tigers","louisiana state"]},
+  {id:24, year:"2003", type:"AP",  name:"USC",               accepted:["usc","trojans","southern california","southern cal"]},
+  {id:25, year:"2002", type:"BCS", name:"Ohio State",        accepted:["ohio state","osu","buckeyes"]},
+  {id:26, year:"2001", type:"BCS", name:"Miami",             accepted:["miami","hurricanes","miami florida","the u"]},
+  {id:27, year:"2000", type:"BCS", name:"Oklahoma",          accepted:["oklahoma","sooners","ou"]},
+];
+
+const TOTAL = ENTRIES.length, TOTAL_SECS = 300;
+let secsLeft=TOTAL_SECS, timerInterval=null, gameActive=false, foundIds=new Set();
+
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
+
+function cardHTML(e, state){
+  if(state==='hidden') return `<div class="card-year">${e.year}</div><div class="card-type">${e.type}</div><div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>`;
+  return `<div class="card-year-sm">${e.year} · ${e.type}</div><div class="card-name">${e.name}</div>`;
+}
+
+function renderGrid(){
+  document.getElementById('team-grid').innerHTML = ENTRIES.map(e =>
+    `<div class="team-card" id="card-${e.id}">${cardHTML(e,'hidden')}</div>`
+  ).join('');
+}
+
+function revealCard(e, found){
+  const c = document.getElementById('card-'+e.id); if(!c) return;
+  c.className = 'team-card ' + (found ? 'found' : 'revealed');
+  c.innerHTML = cardHTML(e, found ? 'found' : 'revealed');
+}
+
+function updateHUD(){
+  document.getElementById('val-found').textContent = foundIds.size;
+  document.getElementById('val-remain').textContent = TOTAL - foundIds.size;
+  document.getElementById('prog-bar').style.width = (foundIds.size/TOTAL*100)+'%';
+}
+
+function tryGuess(val){
+  if(!gameActive || !val.trim()) return;
+  const nv = norm(val);
+  // Find ALL entries matching this name
+  const matched = ENTRIES.filter(e => !foundIds.has(e.id) && e.accepted.some(a => norm(a) === nv));
+  if(matched.length){
+    matched.forEach(e => { foundIds.add(e.id); revealCard(e, true); });
+    updateHUD();
+    document.getElementById('guess-input').value = '';
+    if(foundIds.size === TOTAL) endGame(true);
+    return;
+  }
+  const inp = document.getElementById('guess-input');
+  inp.style.borderColor = 'var(--red)';
+  setTimeout(() => inp.style.borderColor = '', 600);
+}
+
+function startTimer(){
+  timerInterval = setInterval(() => {
+    secsLeft--;
+    const m = Math.floor(secsLeft/60), s = secsLeft%60;
+    const el = document.getElementById('val-timer');
+    if(el){ el.textContent = m+':'+String(s).padStart(2,'0'); if(secsLeft<=30) el.classList.add('urgent'); }
+    if(secsLeft <= 0){ clearInterval(timerInterval); endGame(false); }
+  }, 1000);
+}
+
+function giveUp(){
+  if(!gameActive) return;
+  gameActive = false; clearInterval(timerInterval);
+  document.getElementById('give-up-btn').style.display = 'none';
+  document.getElementById('guess-input').disabled = true;
+  ENTRIES.forEach(e => { if(!foundIds.has(e.id)) revealCard(e, false); });
+  endGame(false);
+}
+
+function endGame(won){
+  gameActive = false; clearInterval(timerInterval);
+  const inp = document.getElementById('guess-input'); if(inp) inp.disabled = true;
+  const btn = document.getElementById('give-up-btn'); if(btn) btn.style.display = 'none';
+  if(!won) ENTRIES.forEach(e => { if(!foundIds.has(e.id)) revealCard(e, false); });
+  const perfect = foundIds.size === TOTAL;
+  document.getElementById('result-area').innerHTML = `<div class="result-card ${perfect||won?'win':'lose'}">
+    <div class="result-icon">${perfect?'🏆':(won?'⭐':'⏱')}</div>
+    <div class="result-title">${perfect?'Perfect!':(won?'Well Done!':"Time's Up!")}</div>
+    <div class="result-sub">${foundIds.size} / ${TOTAL} champions named</div>
+    <button class="share-btn" onclick="shareScore()">Share Score 📋</button>
+  </div>`;
+  if(typeof saveResult==='function') saveResult('cfb-champions-quiz','CFB National Champions Since 2000',foundIds.size,TOTAL,perfect);
+}
+
+function shareScore(){
+  const pct = Math.round(foundIds.size/TOTAL*100);
+  const bar = Array.from({length:10},(_,i)=>i<Math.round(pct/10)?'🏆':'⬛').join('');
+  const txt = 'SportsStack — CFB National Champions Since 2000\n'+foundIds.size+' / '+TOTAL+' ('+pct+'%)\n'+bar+'\nsportsstack.com.au/cfb-champions-quiz.html';
+  const btn = document.querySelector('.share-btn');
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});if(btn){btn.textContent='Shared ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{if(btn){btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}});}
+}
+
+renderGrid(); gameActive = true; startTimer();
+document.getElementById('guess-input').addEventListener('keydown', e => { if(e.key==='Enter') tryGuess(e.target.value); });
+document.getElementById('guess-input').addEventListener('input', e => { if(gameActive) tryGuess(e.target.value); });
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>
