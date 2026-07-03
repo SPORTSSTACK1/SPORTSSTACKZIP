@@ -144,31 +144,31 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 
 <script>
 const ENTRIES = [
-  {id:1, year:2000, name:"Marshall Faulk", accepted:["faulk","marshall faulk"], team:"St. Louis Rams"},
-  {id:2, year:2001, name:"Kurt Warner", accepted:["warner","kurt warner"]},
-  {id:3, year:2002, name:"Rich Gannon", accepted:["gannon","rich gannon"], team:"Philadelphia Eagles"},
-  {id:4, year:2003, name:"Peyton Manning", accepted:["manning","peyton manning"]},
-  {id:5, year:2004, name:"Peyton Manning", accepted:["manning","peyton manning"], team:"Indianapolis Colts"},
-  {id:6, year:2005, name:"Shaun Alexander", accepted:["alexander","shaun alexander"]},
-  {id:7, year:2006, name:"LaDainian Tomlinson", accepted:["tomlinson","ladainian tomlinson"], team:"San Diego Chargers"},
-  {id:8, year:2007, name:"Tom Brady", accepted:["brady","tom brady"]},
-  {id:9, year:2008, name:"Peyton Manning", accepted:["manning","peyton manning"], team:"Indianapolis Colts"},
-  {id:10, year:2009, name:"Peyton Manning", accepted:["manning","peyton manning"]},
-  {id:11, year:2010, name:"Tom Brady", accepted:["brady","tom brady"], team:"New England Patriots"},
-  {id:12, year:2011, name:"Aaron Rodgers", accepted:["rodgers","aaron rodgers"]},
-  {id:13, year:2012, name:"Adrian Peterson", accepted:["peterson","adrian peterson"], team:"Minnesota Vikings"},
-  {id:14, year:2013, name:"Peyton Manning", accepted:["manning","peyton manning"]},
-  {id:15, year:2014, name:"Aaron Rodgers", accepted:["rodgers","aaron rodgers"], team:"Green Bay Packers"},
-  {id:16, year:2015, name:"Cam Newton", accepted:["newton","cam newton"]},
-  {id:17, year:2016, name:"Matt Ryan", accepted:["ryan","matt ryan"], team:"Atlanta Falcons"},
-  {id:18, year:2017, name:"Tom Brady", accepted:["brady","tom brady"]},
-  {id:19, year:2018, name:"Patrick Mahomes", accepted:["mahomes","patrick mahomes"], team:"Kansas City Chiefs"},
-  {id:20, year:2019, name:"Lamar Jackson", accepted:["jackson","lamar jackson"]},
-  {id:21, year:2020, name:"Aaron Rodgers", accepted:["rodgers","aaron rodgers"], team:"Green Bay Packers"},
-  {id:22, year:2021, name:"Aaron Rodgers", accepted:["rodgers","aaron rodgers"]},
-  {id:23, year:2022, name:"Patrick Mahomes", accepted:["mahomes","patrick mahomes"], team:"Kansas City Chiefs"},
-  {id:24, year:2023, name:"Lamar Jackson", accepted:["jackson","lamar jackson"]},
-  {id:25, year:2024, name:"Josh Allen", accepted:["allen","josh allen"], team:"Buffalo Bills"},
+  {id:1,  year:2000, name:"Marshall Faulk",        accepted:["faulk","marshall faulk"],              team:"St. Louis Rams"},
+  {id:2,  year:2001, name:"Kurt Warner",            accepted:["warner","kurt warner"],                team:"St. Louis Rams"},
+  {id:3,  year:2002, name:"Rich Gannon",            accepted:["gannon","rich gannon"],               team:"Oakland Raiders"},
+  {id:4,  year:2003, name:"Peyton Manning",         accepted:["manning","peyton manning"],            team:"Indianapolis Colts"},
+  {id:5,  year:2004, name:"Peyton Manning",         accepted:["manning","peyton manning"],            team:"Indianapolis Colts"},
+  {id:6,  year:2005, name:"Shaun Alexander",        accepted:["alexander","shaun alexander"],         team:"Seattle Seahawks"},
+  {id:7,  year:2006, name:"LaDainian Tomlinson",   accepted:["tomlinson","ladainian tomlinson","ldt"],team:"San Diego Chargers"},
+  {id:8,  year:2007, name:"Tom Brady",              accepted:["brady","tom brady"],                   team:"New England Patriots"},
+  {id:9,  year:2008, name:"Peyton Manning",         accepted:["manning","peyton manning"],            team:"Indianapolis Colts"},
+  {id:10, year:2009, name:"Peyton Manning",         accepted:["manning","peyton manning"],            team:"Indianapolis Colts"},
+  {id:11, year:2010, name:"Tom Brady",              accepted:["brady","tom brady"],                   team:"New England Patriots"},
+  {id:12, year:2011, name:"Aaron Rodgers",          accepted:["rodgers","aaron rodgers"],             team:"Green Bay Packers"},
+  {id:13, year:2012, name:"Adrian Peterson",        accepted:["peterson","adrian peterson"],          team:"Minnesota Vikings"},
+  {id:14, year:2013, name:"Peyton Manning",         accepted:["manning","peyton manning"],            team:"Denver Broncos"},
+  {id:15, year:2014, name:"Aaron Rodgers",          accepted:["rodgers","aaron rodgers"],             team:"Green Bay Packers"},
+  {id:16, year:2015, name:"Cam Newton",             accepted:["newton","cam newton"],                 team:"Carolina Panthers"},
+  {id:17, year:2016, name:"Matt Ryan",              accepted:["ryan","matt ryan"],                    team:"Atlanta Falcons"},
+  {id:18, year:2017, name:"Tom Brady",              accepted:["brady","tom brady"],                   team:"New England Patriots"},
+  {id:19, year:2018, name:"Patrick Mahomes",        accepted:["mahomes","patrick mahomes"],           team:"Kansas City Chiefs"},
+  {id:20, year:2019, name:"Lamar Jackson",          accepted:["jackson","lamar jackson"],             team:"Baltimore Ravens"},
+  {id:21, year:2020, name:"Aaron Rodgers",          accepted:["rodgers","aaron rodgers"],             team:"Green Bay Packers"},
+  {id:22, year:2021, name:"Aaron Rodgers",          accepted:["rodgers","aaron rodgers"],             team:"Green Bay Packers"},
+  {id:23, year:2022, name:"Patrick Mahomes",        accepted:["mahomes","patrick mahomes"],           team:"Kansas City Chiefs"},
+  {id:24, year:2023, name:"Lamar Jackson",          accepted:["jackson","lamar jackson"],             team:"Baltimore Ravens"},
+  {id:25, year:2024, name:"Josh Allen",             accepted:["allen","josh allen"],                  team:"Buffalo Bills"},
 ];
 
 
@@ -279,7 +279,11 @@ function showSuggestions(matches){
 function acceptSuggestion(e){
   hideSuggestions();
   document.getElementById('guess-input').value = '';
-  if(!foundIds.has(e.id) && gameActive){ foundIds.add(e.id); revealCard(e); updateHUD(); checkWin(); }
+  const matched = ENTRIES.filter(p => !foundIds.has(p.id) && isExactMatch(e.name, p));
+  if(matched.length && gameActive){
+    matched.forEach(p => { foundIds.add(p.id); revealCard(p); });
+    updateHUD(); checkWin();
+  }
 }
 
 function startTimer(){
