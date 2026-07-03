@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Heisman Trophy Winners Since 2000 — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/heisman-quiz.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>Heisman Trophy Winners Since 2000 – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+:root{
+  --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
+  --gold:#f5c842;--blue:#2563eb;--blue-light:#3b82f6;
+  --green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);
+  --red:#ef4444;--red-bg:rgba(239,68,68,.07);--red-border:rgba(239,68,68,.4);
+  --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;
+  --border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
+.page{max-width:960px;margin:0 auto;padding:22px 14px 56px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,4vw,34px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.stats-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 20px;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:72px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--gold)}
+.stat-val.urgent{color:var(--red);animation:pulse .8s infinite}
+.stat-val.green{color:var(--green)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;height:38px;background:var(--border-bright);flex-shrink:0}
+.prog-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.input-wrap{position:relative;margin-bottom:16px}
+.guess-input{width:100%;font-size:16px;padding:13px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.guess-input::placeholder{color:var(--text-dim)}
+.guess-input:disabled{opacity:.4;cursor:not-allowed}
+.btn-give-up{display:block;margin:0 auto 14px;padding:8px 20px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:#e8f0fe;transition:all .2s}
+.btn-give-up:hover{border-color:var(--red);color:var(--red)}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+@media(max-width:640px){.team-grid{grid-template-columns:repeat(3,1fr);gap:7px}}
+@media(max-width:400px){.team-grid{grid-template-columns:repeat(2,1fr);gap:6px}}
+.team-card{aspect-ratio:1/1;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 6px;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.team-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.06),transparent 70%);pointer-events:none}
+.card-trophy{font-size:clamp(14px,2.5vw,20px);margin-bottom:2px;opacity:.3}
+.card-year{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,2.2vw,17px);font-weight:900;color:var(--gold);letter-spacing:.04em;margin-bottom:3px}
+.card-college{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.4vw,12px);font-weight:700;color:var(--text-muted);letter-spacing:.03em;line-height:1.2;margin-bottom:3px}
+.card-dots{display:flex;gap:4px;justify-content:center}
+.card-dot{width:5px;height:5px;border-radius:50%;background:var(--border-bright)}
+.team-card.found{background:var(--green-bg);border-color:var(--green-border);box-shadow:0 0 16px rgba(34,197,94,.12)}
+.team-card.found::before{background:radial-gradient(ellipse at 50% 0%,rgba(34,197,94,.08),transparent 70%)}
+.card-trophy-found{font-size:clamp(14px,2.5vw,20px);margin-bottom:2px}
+.card-year-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.4vw,12px);font-weight:700;color:#4ade80;letter-spacing:.06em;margin-bottom:2px}
+.card-name-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.7vw,14px);font-weight:900;color:#86efac;letter-spacing:.02em;line-height:1.1;margin-bottom:2px}
+.card-college-found{font-size:clamp(7px,1.1vw,10px);color:#4ade80;letter-spacing:.04em;line-height:1.2}
+.team-card.revealed{background:var(--red-bg);border-color:var(--red-border)}
+.card-year-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.4vw,12px);font-weight:700;color:rgba(239,68,68,.7);letter-spacing:.06em;margin-bottom:2px}
+.card-name-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.7vw,14px);font-weight:900;color:var(--red);letter-spacing:.02em;line-height:1.1;margin-bottom:2px}
+.card-college-revealed{font-size:clamp(7px,1.1vw,10px);color:rgba(239,68,68,.7);letter-spacing:.04em;line-height:1.2}
+.result-area{margin-top:20px}
+.result-card{border-radius:var(--radius-lg);padding:22px 20px;text-align:center;border:1px solid}
+.result-card.win{border-color:var(--green-border);background:var(--green-bg)}
+.result-card.lose{border-color:var(--red-border);background:var(--red-bg)}
+.result-icon{font-size:36px;margin-bottom:8px}
+.result-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-card.win .result-title{color:#86efac}
+.result-card.lose .result-title{color:#fca5a5}
+.result-sub{font-size:14px;color:var(--text-muted);margin-bottom:14px}
+.share-btn{display:inline-block;margin-top:10px;padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:var(--text);transition:all .2s}
+.share-btn:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="page">
+  <header class="site-header">
+    <div class="game-title">🏈 <span class="hl">Heisman Trophy</span> Winners</div>
+    <div class="game-subtitle">Name every Heisman Trophy winner since 2000 · 26 players · 5 minutes</div>
+  </header>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val green" id="val-found">0</div><div class="stat-label">Found</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-remain">26</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-timer">5:00</div><div class="stat-label">Time left</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  <div class="input-wrap">
+    <input class="guess-input" id="guess-input" type="text" placeholder="Type a player name…" autocomplete="off" spellcheck="false"/>
+  </div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()">Give Up &amp; Reveal</button>
+  <div class="team-grid" id="team-grid"></div>
+  <div class="result-area" id="result-area"></div>
+</div>
+<script>
+const ENTRIES = [
+  {id:1,  year:2000, name:"Chris Weinke",     accepted:["weinke","chris weinke"],                 college:"Florida State"},
+  {id:2,  year:2001, name:"Eric Crouch",       accepted:["crouch","eric crouch"],                  college:"Nebraska"},
+  {id:3,  year:2002, name:"Carson Palmer",     accepted:["palmer","carson palmer"],                college:"USC"},
+  {id:4,  year:2003, name:"Jason White",       accepted:["white","jason white"],                   college:"Oklahoma"},
+  {id:5,  year:2004, name:"Matt Leinart",      accepted:["leinart","matt leinart"],               college:"USC"},
+  {id:6,  year:2005, name:"Reggie Bush",       accepted:["bush","reggie bush"],                    college:"USC"},
+  {id:7,  year:2006, name:"Troy Smith",        accepted:["smith","troy smith"],                    college:"Ohio State"},
+  {id:8,  year:2007, name:"Tim Tebow",         accepted:["tebow","tim tebow"],                     college:"Florida"},
+  {id:9,  year:2008, name:"Sam Bradford",      accepted:["bradford","sam bradford"],               college:"Oklahoma"},
+  {id:10, year:2009, name:"Mark Ingram II",    accepted:["ingram","mark ingram","mark ingram ii"], college:"Alabama"},
+  {id:11, year:2010, name:"Cam Newton",        accepted:["newton","cam newton"],                   college:"Auburn"},
+  {id:12, year:2011, name:"Robert Griffin III",accepted:["griffin","robert griffin","rg3","robert griffin iii"], college:"Baylor"},
+  {id:13, year:2012, name:"Johnny Manziel",    accepted:["manziel","johnny manziel","johnny football"], college:"Texas A&M"},
+  {id:14, year:2013, name:"Jameis Winston",    accepted:["winston","jameis winston"],              college:"Florida State"},
+  {id:15, year:2014, name:"Marcus Mariota",    accepted:["mariota","marcus mariota"],              college:"Oregon"},
+  {id:16, year:2015, name:"Derrick Henry",     accepted:["henry","derrick henry"],                 college:"Alabama"},
+  {id:17, year:2016, name:"Lamar Jackson",     accepted:["jackson","lamar jackson"],               college:"Louisville"},
+  {id:18, year:2017, name:"Baker Mayfield",    accepted:["mayfield","baker mayfield"],             college:"Oklahoma"},
+  {id:19, year:2018, name:"Kyler Murray",      accepted:["murray","kyler murray"],                 college:"Oklahoma"},
+  {id:20, year:2019, name:"Joe Burrow",        accepted:["burrow","joe burrow"],                   college:"LSU"},
+  {id:21, year:2020, name:"DeVonta Smith",     accepted:["smith","devonta smith","de'vonta smith"],college:"Alabama"},
+  {id:22, year:2021, name:"Bryce Young",       accepted:["young","bryce young"],                   college:"Alabama"},
+  {id:23, year:2022, name:"Caleb Williams",    accepted:["williams","caleb williams"],             college:"USC"},
+  {id:24, year:2023, name:"Jayden Daniels",    accepted:["daniels","jayden daniels"],              college:"LSU"},
+  {id:25, year:2024, name:"Travis Hunter",     accepted:["hunter","travis hunter"],                college:"Colorado"},
+  {id:26, year:2025, name:"Fernando Mendoza",  accepted:["mendoza","fernando mendoza"],            college:"Indiana"},
+];
+
+const TOTAL = ENTRIES.length, TOTAL_SECS = 300;
+let secsLeft = TOTAL_SECS, timerInterval = null, gameActive = false;
+let foundIds = new Set(), done = false;
+
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
+
+function cardHTML(e, state){
+  if(state==='found') return `<div class="card-trophy-found">🏆</div>
+    <div class="card-year-found">${e.year}</div>
+    <div class="card-name-found">${e.name}</div>
+    <div class="card-college-found">${e.college}</div>`;
+  if(state==='revealed') return `<div class="card-trophy" style="opacity:.18">🏆</div>
+    <div class="card-year-revealed">${e.year}</div>
+    <div class="card-name-revealed">${e.name}</div>
+    <div class="card-college-revealed">${e.college}</div>`;
+  return `<div class="card-trophy">🏆</div>
+    <div class="card-year">${e.year}</div>
+    <div class="card-college">${e.college}</div>
+    <div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>`;
+}
+
+function renderGrid(){
+  const grid = document.getElementById('team-grid');
+  grid.innerHTML = ENTRIES.map(e => `<div class="team-card" id="card-${e.id}">${cardHTML(e,'hidden')}</div>`).join('');
+}
+
+function revealCard(e){
+  const card = document.getElementById('card-'+e.id);
+  if(!card) return;
+  card.className = 'team-card found';
+  card.innerHTML = cardHTML(e,'found');
+}
+
+function revealAllMissed(){
+  ENTRIES.forEach(e => {
+    if(!foundIds.has(e.id)){
+      const card = document.getElementById('card-'+e.id);
+      if(!card) return;
+      card.className = 'team-card revealed';
+      card.innerHTML = cardHTML(e,'revealed');
+    }
+  });
+}
+
+function updateHUD(){
+  document.getElementById('val-found').textContent = foundIds.size;
+  document.getElementById('val-remain').textContent = TOTAL - foundIds.size;
+  document.getElementById('prog-bar').style.width = (foundIds.size/TOTAL*100)+'%';
+}
+
+function tryGuess(val){
+  if(!gameActive || !val.trim()) return;
+  const nv = norm(val);
+  let matched = false;
+  for(const e of ENTRIES){
+    if(!foundIds.has(e.id) && e.accepted.some(a => norm(a) === nv)){
+      foundIds.add(e.id);
+      revealCard(e);
+      matched = true;
+    }
+  }
+  if(matched){
+    document.getElementById('guess-input').value = '';
+    updateHUD();
+    if(foundIds.size === TOTAL) endGame(true);
+  }
+}
+
+function startTimer(){
+  timerInterval = setInterval(()=>{
+    secsLeft--;
+    const m = Math.floor(secsLeft/60), s = secsLeft%60;
+    const el = document.getElementById('val-timer');
+    if(el) el.textContent = m+':'+String(s).padStart(2,'0');
+    if(secsLeft<=30 && el) el.classList.add('urgent');
+    if(secsLeft<=0){ clearInterval(timerInterval); endGame(false); }
+  },1000);
+}
+
+function giveUp(){
+  if(!gameActive) return;
+  gameActive = false;
+  done = true;
+  clearInterval(timerInterval);
+  document.getElementById('give-up-btn').style.display='none';
+  document.getElementById('guess-input').disabled = true;
+  revealAllMissed();
+  showResult(false, true);
+}
+
+function endGame(won){
+  if(done) return;
+  done = true;
+  gameActive = false;
+  clearInterval(timerInterval);
+  document.getElementById('guess-input').disabled = true;
+  document.getElementById('give-up-btn').style.display='none';
+  if(!won) revealAllMissed();
+  showResult(won, false);
+}
+
+function showResult(won, gaveUp){
+  const perfect = foundIds.size === TOTAL;
+  const area = document.getElementById('result-area');
+  area.innerHTML = `<div class="result-card ${perfect?'win':won?'win':'lose'}">
+    <div class="result-icon">${perfect?'🏆':won?'🎉':'⏱'}</div>
+    <div class="result-title">${perfect?'Perfect!':won?'Nice Work!':gaveUp?'Better Luck Next Time':'Time\'s Up!'}</div>
+    <div class="result-sub">${foundIds.size} / ${TOTAL} winners named</div>
+    <button class="share-btn" onclick="shareResult()">Share Score 📋</button>
+  </div>`;
+  if(typeof saveResult==='function') saveResult('heisman-quiz','Heisman Trophy Winners Since 2000',foundIds.size,TOTAL,perfect);
+}
+
+function shareResult(){
+  const pct = Math.round(foundIds.size/TOTAL*100);
+  const bar = Array.from({length:10},(_,i)=>i<Math.round(pct/10)?'🏈':'⬛').join('');
+  const txt = 'SportsStack — Heisman Trophy Winners Since 2000\n'+foundIds.size+' / '+TOTAL+' players ('+pct+'%)\n'+bar+'\nsportsstack.com.au/heisman-quiz.html';
+  const btn = document.querySelector('.share-btn');
+  if(navigator.share){
+    navigator.share({text:txt}).catch(()=>{});
+    if(btn){btn.textContent='Shared ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(()=>{
+      if(btn){btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}
+    });
+  }
+}
+
+renderGrid();
+gameActive = true;
+startTimer();
+
+const inp = document.getElementById('guess-input');
+inp.addEventListener('input', e => { if(gameActive) tryGuess(e.target.value); });
+inp.addEventListener('keydown', e => { if(e.key==='Enter' && gameActive) tryGuess(e.target.value); });
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>
