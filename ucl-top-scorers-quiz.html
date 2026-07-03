@@ -111,7 +111,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 <div class="page">
   <header class="site-header">
     <div class="game-title">Champions League <span class="hl">All-Time Top Scorers</span></div>
-    <div class="game-subtitle">Name the top 20 scorers in Champions League history · 5 minutes</div>
+    <div class="game-subtitle">Name all 10 all-time top scorers in Champions League history · 5:00</div>
   </header>
   <div class="stats-bar">
     <div class="stat-item"><div class="stat-val green" id="found-count">0</div><div class="stat-label">Found</div></div>
@@ -144,26 +144,16 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 
 <script>
 const ENTRIES = [
-  {id:1, year:140, name:"Cristiano Ronaldo", accepted:["ronaldo","cristiano ronaldo"], club:"Real Madrid/Man Utd", nat:"Portuguese"},
-  {id:2, year:129, name:"Lionel Messi", accepted:["messi","lionel messi"], club:"Barcelona", nat:"Argentine"},
-  {id:3, year:100, name:"Robert Lewandowski", accepted:["lewandowski","robert lewandowski"], club:"Bayern Munich", nat:"Polish"},
-  {id:4, year:90, name:"Karim Benzema", accepted:["benzema","karim benzema"], club:"Real Madrid", nat:"French"},
-  {id:5, year:71, name:"Raul", accepted:["raul"], club:"Real Madrid"},
-  {id:6, year:56, name:"Ruud van Nistelrooy", accepted:["van nistelrooy","ruud van nistelrooy"], club:"Man Utd/Real Madrid", nat:"Dutch"},
-  {id:7, year:54, name:"Thomas Muller", accepted:["muller","thomas muller"], club:"Bayern Munich"},
-  {id:8, year:50, name:"Thierry Henry", accepted:["henry","thierry henry"], club:"Arsenal", nat:"French"},
-  {id:9, year:49, name:"Alfredo Di Stefano", accepted:["di stefano","alfredo di stefano"], club:"Real Madrid", nat:"Argentine-Spanish"},
-  {id:10, year:48, name:"Andriy Shevchenko", accepted:["shevchenko","andriy shevchenko"], club:"AC Milan", nat:"Ukrainian"},
-  {id:11, year:48, name:"Zlatan Ibrahimovic", accepted:["ibrahimovic","zlatan ibrahimovic","zlatan"], club:"Multiple clubs", nat:"Swedish"},
-  {id:12, year:44, name:"Didier Drogba", accepted:["drogba","didier drogba"], club:"Chelsea", nat:"Ivorian"},
-  {id:13, year:42, name:"Alessandro Del Piero", accepted:["del piero","alessandro del piero"], club:"Juventus"},
-  {id:14, year:41, name:"Filippo Inzaghi", accepted:["inzaghi","filippo inzaghi"], club:"AC Milan", nat:"Italian"},
-  {id:15, year:40, name:"Arjen Robben", accepted:["robben","arjen robben"], club:"Bayern Munich", nat:"Dutch"},
-  {id:16, year:49, name:"Kylian Mbappe", accepted:["mbappe","kylian mbappe"], club:"Real Madrid"},
-  {id:17, year:30, name:"Edin Dzeko", accepted:["dzeko","edin dzeko"], club:"Roma"},
-  {id:18, year:28, name:"David Villa", accepted:["villa","david villa"], club:"Barcelona"},
-  {id:19, year:33, name:"Fernando Morientes", accepted:["morientes","fernando morientes"], club:"Real Madrid", nat:"Spanish"},
-  {id:20, year:28, name:"Patrick Kluivert", accepted:["kluivert","patrick kluivert"], club:"Barcelona"},
+  {id:1,  year:141, name:"Cristiano Ronaldo",    accepted:["ronaldo","cristiano ronaldo","cr7"],         club:"Real Madrid",    nat:"Portuguese"},
+  {id:2,  year:129, name:"Lionel Messi",          accepted:["messi","lionel messi"],                     club:"Barcelona",      nat:"Argentine"},
+  {id:3,  year:109, name:"Robert Lewandowski",    accepted:["lewandowski","robert lewandowski"],          club:"Bayern Munich",  nat:"Polish"},
+  {id:4,  year:90,  name:"Karim Benzema",         accepted:["benzema","karim benzema"],                  club:"Real Madrid",    nat:"French"},
+  {id:5,  year:71,  name:"Raúl",                  accepted:["raul","raul gonzalez","raul gonzalez"],      club:"Real Madrid",    nat:"Spanish"},
+  {id:6,  year:70,  name:"Kylian Mbappé",         accepted:["mbappe","kylian mbappe","mbappe"],          club:"PSG",            nat:"French"},
+  {id:7,  year:60,  name:"Ruud van Nistelrooy",   accepted:["van nistelrooy","ruud van nistelrooy"],     club:"Man Utd",        nat:"Dutch"},
+  {id:8,  year:59,  name:"Andriy Shevchenko",     accepted:["shevchenko","andriy shevchenko"],            club:"AC Milan",       nat:"Ukrainian"},
+  {id:9,  year:57,  name:"Erling Haaland",        accepted:["haaland","erling haaland"],                 club:"Man City",       nat:"Norwegian"},
+  {id:10, year:57,  name:"Thomas Müller",         accepted:["muller","thomas muller"],                   club:"Bayern Munich",  nat:"German"},
 ];
 
 
