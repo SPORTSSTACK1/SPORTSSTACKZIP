@@ -208,25 +208,6 @@ function tryGuess(val){
       if(foundIds.size===TOTAL)endGame(true);
       return;
     }
-  }
-  // Fuzzy suggestions (within 2 letters)
-  const seen=new Set();
-  const fuzzyMatches=[];
-  for(const e of ENTRIES){
-    if(foundIds.has(e.rank))continue;
-    if(seen.has(e.name))continue;
-    const close=e.accepted.some(a=>{
-      const na=norm(a);
-      return nv.length>=3&&(na.startsWith(nv)||levenshtein(nv,na)<=2);
-    });
-    if(close){
-      fuzzyMatches.push(e);
-      seen.add(e.name);
-    }
-    if(fuzzyMatches.length>=3)break;
-  }
-  if(fuzzyMatches.length){
-    showSugg(fuzzyMatches);
   }else{
     hideSugg();
   }
