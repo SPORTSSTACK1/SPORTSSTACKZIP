@@ -116,6 +116,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input class="guess-input" id="guess-input" type="text" placeholder="Type an arena name and press Enter…" autocomplete="off"/>
     <div class="suggestions" id="suggestions" style="display:none"></div>
   </div>
+  <button id="give-up-btn" onclick="giveUp()" style="display:block;margin:8px auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:1px solid var(--border-bright);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
   <div class="team-grid" id="team-grid"></div>
 </div>
 
@@ -381,6 +382,14 @@ function acceptSuggestion(p){
 function startTimer(){
   clearInterval(timer);
   timer = setInterval(() => { secsLeft--; updateHUD(); if(secsLeft <= 0){ clearInterval(timer); timeUp(); } }, 1000);
+}
+
+function giveUp(){
+  if(!gameActive)return;
+  clearInterval(timerInterval);
+  const btn=document.getElementById('give-up-btn');
+  if(btn)btn.style.display='none';
+  timeUp();
 }
 function timeUp(){
   gameActive = false;
