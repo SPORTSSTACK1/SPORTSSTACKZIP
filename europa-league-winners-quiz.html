@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<meta property="og:title" content="Europa League Winners Since 1990 — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/europa-league-winners-quiz.html"/>
+<meta name="twitter:card" content="summary"/>
+<title>Europa League Winners Since 1990 – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;--blue:#2563eb;--blue-light:#3b82f6;--gold:#f5c842;--green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);--red:#ef4444;--red-bg:rgba(239,68,68,.07);--red-border:rgba(239,68,68,.4);--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
+.page{max-width:960px;margin:0 auto;padding:22px 14px 56px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,4vw,34px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.stats-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 20px;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:72px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--gold)}
+.stat-val.urgent{color:var(--red);animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;height:38px;background:var(--border-bright);flex-shrink:0}
+.prog-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.input-wrap{position:relative;margin-bottom:10px}
+.guess-input{width:100%;font-size:16px;padding:13px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.guess-input::placeholder{color:var(--text-dim)}
+.guess-input:disabled{opacity:.4;cursor:not-allowed}
+.btn-give-up{display:block;margin:0 auto 14px;padding:8px 20px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:#e8f0fe;transition:all .2s}
+.btn-give-up:hover{border-color:var(--red);color:var(--red)}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+@media(max-width:640px){.team-grid{grid-template-columns:repeat(3,1fr);gap:7px}}
+@media(max-width:400px){.team-grid{grid-template-columns:repeat(2,1fr);gap:6px}}
+.team-card{aspect-ratio:1/1;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 6px;transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;cursor:default}
+.team-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(59,130,246,.06),transparent 70%);pointer-events:none}
+.card-year{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,3.5vw,26px);font-weight:900;color:var(--gold);line-height:1;margin-bottom:3px}
+.card-nation{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.6vw,12px);font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.card-dots{display:flex;gap:3px;justify-content:center;margin-top:3px}
+.card-dot{width:5px;height:5px;border-radius:50%;background:var(--text-dim)}
+.team-card.found{background:var(--green-bg);border-color:var(--green-border);box-shadow:0 0 16px rgba(34,197,94,.12)}
+.team-card.found::before{background:radial-gradient(ellipse at 50% 0%,rgba(34,197,94,.08),transparent 70%)}
+.card-trophy-found{font-size:clamp(10px,1.8vw,14px);margin-bottom:2px}
+.card-year-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,1.4vw,11px);font-weight:700;color:#4ade80;letter-spacing:.08em;margin-bottom:1px}
+.card-name-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.7vw,13px);font-weight:800;color:#86efac;letter-spacing:.02em;line-height:1.2;margin-bottom:1px}
+.card-detail-found{font-size:clamp(7px,1.1vw,10px);color:#4ade80;letter-spacing:.06em;text-transform:uppercase}
+.team-card.revealed{background:var(--red-bg);border-color:var(--red-border)}
+.card-year-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,1.4vw,11px);font-weight:700;color:rgba(239,68,68,.7);letter-spacing:.08em;margin-bottom:1px}
+.card-name-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1.7vw,13px);font-weight:800;color:var(--red);letter-spacing:.02em;line-height:1.2;margin-bottom:1px}
+.card-detail-revealed{font-size:clamp(7px,1.1vw,10px);color:rgba(239,68,68,.7);letter-spacing:.06em;text-transform:uppercase}
+.modal-backdrop{position:fixed;inset:0;background:rgba(4,8,15,.85);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:999;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-backdrop.show{opacity:1;pointer-events:all}
+.modal{background:var(--surface2);border:1px solid var(--border-bright);border-radius:var(--radius-lg);padding:32px 28px;max-width:420px;width:90%;text-align:center}
+.modal.win{border-color:var(--green-border);background:rgba(34,197,94,.05)}
+.modal.lose{border-color:var(--red-border);background:var(--red-bg)}
+.modal-icon{font-size:48px;margin-bottom:12px}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.modal.win .modal-title{color:#86efac}
+.modal.lose .modal-title{color:#fca5a5}
+.modal-score{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--gold);margin-bottom:6px}
+.modal-msg{font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.5}
+.share-btn{display:inline-block;padding:11px 28px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:var(--text);transition:all .2s;margin-bottom:10px}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+.btn-replay{display:inline-block;padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:var(--text-muted);transition:all .2s}
+.btn-replay:hover{border-color:var(--gold);color:var(--gold)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="page">
+  <header class="site-header">
+    <div class="game-title">🏆 Europa League <span class="hl">Winners</span> Since 1990</div>
+    <div class="game-subtitle">Name every winner since 1990 — cards show year &amp; nation · typing a team reveals all their titles · 5 minutes</div>
+  </header>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val" id="val-found">0</div><div class="stat-label">Found</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-remain">37</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-timer">5:00</div><div class="stat-label">Time left</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  <div class="input-wrap">
+    <input class="guess-input" id="guess-input" type="text" placeholder="Type a team name…" autocomplete="off" spellcheck="false"/>
+  </div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()">Give Up &amp; Reveal</button>
+  <div class="team-grid" id="team-grid"></div>
+</div>
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal">
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-score" id="modal-score"></div>
+    <div class="modal-msg" id="modal-msg"></div>
+    <button class="share-btn" onclick="shareScore()">Share Score 📋</button><br/>
+    <button class="btn-replay" onclick="location.reload()">Play Again</button>
+  </div>
+</div>
+<script>
+const ENTRIES = [
+  {id:1, year:1990, name:"Juventus", nation:"Italy", accepted:["juventus", "juve"]},
+  {id:2, year:1991, name:"Internazionale", nation:"Italy", accepted:["internazionale", "inter milan", "inter", "nerazzurri"]},
+  {id:3, year:1992, name:"Ajax", nation:"Netherlands", accepted:["ajax"]},
+  {id:4, year:1993, name:"Juventus", nation:"Italy", accepted:["juventus", "juve"]},
+  {id:5, year:1994, name:"Internazionale", nation:"Italy", accepted:["internazionale", "inter milan", "inter", "nerazzurri"]},
+  {id:6, year:1995, name:"Parma", nation:"Italy", accepted:["parma"]},
+  {id:7, year:1996, name:"Bayern Munich", nation:"Germany", accepted:["bayern munich", "bayern", "fcb"]},
+  {id:8, year:1997, name:"Schalke 04", nation:"Germany", accepted:["schalke 04", "schalke"]},
+  {id:9, year:1998, name:"Internazionale", nation:"Italy", accepted:["internazionale", "inter milan", "inter", "nerazzurri"]},
+  {id:10, year:1999, name:"Parma", nation:"Italy", accepted:["parma"]},
+  {id:11, year:2000, name:"Galatasaray", nation:"Turkey", accepted:["galatasaray"]},
+  {id:12, year:2001, name:"Liverpool", nation:"England", accepted:["liverpool"]},
+  {id:13, year:2002, name:"Feyenoord", nation:"Netherlands", accepted:["feyenoord"]},
+  {id:14, year:2003, name:"Porto", nation:"Portugal", accepted:["porto", "fc porto"]},
+  {id:15, year:2004, name:"Valencia", nation:"Spain", accepted:["valencia"]},
+  {id:16, year:2005, name:"CSKA Moscow", nation:"Russia", accepted:["cska moscow", "cska"]},
+  {id:17, year:2006, name:"Sevilla", nation:"Spain", accepted:["sevilla", "sevilla fc"]},
+  {id:18, year:2007, name:"Sevilla", nation:"Spain", accepted:["sevilla", "sevilla fc"]},
+  {id:19, year:2008, name:"Zenit St. Petersburg", nation:"Russia", accepted:["zenit saint petersburg", "zenit st petersburg", "zenit"]},
+  {id:20, year:2009, name:"Shakhtar Donetsk", nation:"Ukraine", accepted:["shakhtar donetsk", "shakhtar"]},
+  {id:21, year:2010, name:"Atlético Madrid", nation:"Spain", accepted:["atletico madrid", "atletico", "atleti", "atletico de madrid"]},
+  {id:22, year:2011, name:"Porto", nation:"Portugal", accepted:["porto", "fc porto"]},
+  {id:23, year:2012, name:"Atlético Madrid", nation:"Spain", accepted:["atletico madrid", "atletico", "atleti", "atletico de madrid"]},
+  {id:24, year:2013, name:"Chelsea", nation:"England", accepted:["chelsea"]},
+  {id:25, year:2014, name:"Sevilla", nation:"Spain", accepted:["sevilla", "sevilla fc"]},
+  {id:26, year:2015, name:"Sevilla", nation:"Spain", accepted:["sevilla", "sevilla fc"]},
+  {id:27, year:2016, name:"Sevilla", nation:"Spain", accepted:["sevilla", "sevilla fc"]},
+  {id:28, year:2017, name:"Manchester United", nation:"England", accepted:["manchester united", "man united", "man utd", "man u", "mufc"]},
+  {id:29, year:2018, name:"Atlético Madrid", nation:"Spain", accepted:["atletico madrid", "atletico", "atleti", "atletico de madrid"]},
+  {id:30, year:2019, name:"Chelsea", nation:"England", accepted:["chelsea"]},
+  {id:31, year:2020, name:"Sevilla", nation:"Spain", accepted:["sevilla", "sevilla fc"]},
+  {id:32, year:2021, name:"Villarreal", nation:"Spain", accepted:["villarreal", "yellow submarine"]},
+  {id:33, year:2022, name:"Eintracht Frankfurt", nation:"Germany", accepted:["eintracht frankfurt", "eintracht", "frankfurt"]},
+  {id:34, year:2023, name:"Sevilla", nation:"Spain", accepted:["sevilla", "sevilla fc"]},
+  {id:35, year:2024, name:"Atalanta", nation:"Italy", accepted:["atalanta"]},
+  {id:36, year:2025, name:"Tottenham Hotspur", nation:"England", accepted:["tottenham hotspur", "tottenham", "spurs"]},
+  {id:37, year:2026, name:"Aston Villa", nation:"England", accepted:["aston villa", "villa"]}
+];
+const TOTAL=ENTRIES.length, TOTAL_SECS=300;
+let secsLeft=TOTAL_SECS, timerInterval=null, gameActive=false, foundIds=new Set();
+
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
+
+function cardInner(e,state){
+  if(state==='found') return `<div class="card-trophy-found">🏆</div><div class="card-year-found">${e.year}</div><div class="card-name-found">${e.name}</div><div class="card-detail-found">${e.nation}</div>`;
+  if(state==='revealed') return `<div class="card-year-revealed">${e.year}</div><div class="card-name-revealed">${e.name}</div><div class="card-detail-revealed">${e.nation}</div>`;
+  return `<div class="card-year">${e.year}</div><div class="card-nation">${e.nation}</div><div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div>`;
+}
+
+function renderGrid(){
+  document.getElementById('team-grid').innerHTML=ENTRIES.map(e=>
+    `<div class="team-card" id="card-${e.id}">${cardInner(e,'hidden')}</div>`
+  ).join('');
+}
+
+function revealCard(e,found){
+  const c=document.getElementById('card-'+e.id);if(!c)return;
+  c.className='team-card '+(found?'found':'revealed');
+  c.innerHTML=cardInner(e,found?'found':'revealed');
+}
+
+function updateHUD(){
+  document.getElementById('val-found').textContent=foundIds.size;
+  document.getElementById('val-remain').textContent=TOTAL-foundIds.size;
+  document.getElementById('prog-bar').style.width=(foundIds.size/TOTAL*100)+'%';
+}
+
+function tryGuess(val){
+  if(!gameActive||!val.trim())return;
+  const nv=norm(val);
+  const matched=ENTRIES.filter(e=>!foundIds.has(e.id)&&e.accepted.some(a=>norm(a)===nv));
+  if(matched.length){
+    matched.forEach(e=>{foundIds.add(e.id);revealCard(e,true);});
+    updateHUD();document.getElementById('guess-input').value='';
+    if(foundIds.size===TOTAL)timeUp(true);return;
+  }
+  const inp=document.getElementById('guess-input');
+  inp.style.borderColor='var(--red)';setTimeout(()=>inp.style.borderColor='',600);
+}
+
+function startTimer(){
+  timerInterval=setInterval(()=>{
+    secsLeft--;const m=Math.floor(secsLeft/60),s=secsLeft%60;
+    const el=document.getElementById('val-timer');
+    if(el){el.textContent=m+':'+String(s).padStart(2,'0');if(secsLeft<=30)el.classList.add('urgent');}
+    if(secsLeft<=0){clearInterval(timerInterval);timeUp(false);}
+  },1000);
+}
+
+function giveUp(){
+  if(!gameActive)return;
+  gameActive=false;clearInterval(timerInterval);
+  document.getElementById('give-up-btn').style.display='none';
+  document.getElementById('guess-input').disabled=true;
+  ENTRIES.forEach(e=>{if(!foundIds.has(e.id))revealCard(e,false);});
+  showModal(false);
+}
+
+function timeUp(won){
+  gameActive=false;clearInterval(timerInterval);
+  document.getElementById('give-up-btn').style.display='none';
+  document.getElementById('guess-input').disabled=true;
+  if(!won)ENTRIES.forEach(e=>{if(!foundIds.has(e.id))revealCard(e,false);});
+  showModal(won);
+}
+
+function showModal(won){
+  const perfect=foundIds.size===TOTAL;
+  document.getElementById('modal-icon').textContent=perfect?'🏆':(won?'⭐':'⏱');
+  document.getElementById('modal-title').textContent=perfect?'Perfect!':(won?'Well Done!':"Time's Up!");
+  document.getElementById('modal-score').textContent=foundIds.size+' / '+TOTAL+' titles';
+  document.getElementById('modal-msg').innerHTML=perfect
+    ?'You named every Europa League winner since 1990!'
+    :'You found <strong>'+foundIds.size+'</strong> of '+TOTAL+' winning teams.';
+  document.getElementById('modal-backdrop').classList.add('show');
+  if(typeof saveResult==='function')saveResult('europa-league-winners-quiz','Europa League Winners Since 1990',foundIds.size,TOTAL,perfect);
+}
+
+function shareScore(){
+  const pct=Math.round(foundIds.size/TOTAL*100);
+  const bar=Array.from({length:10},(_,i)=>i<Math.round(pct/10)?'🏆':'⬛').join('');
+  const txt='SportsStack — Europa League Winners Since 1990\n'+foundIds.size+' / '+TOTAL+' ('+pct+'%)\n'+bar+'\nsportsstack.com.au/europa-league-winners-quiz.html';
+  const btn=document.querySelector('.share-btn');
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});if(btn){btn.textContent='Shared ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{if(btn){btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}});}
+}
+
+renderGrid();gameActive=true;startTimer();
+document.getElementById('guess-input').addEventListener('keydown',e=>{if(e.key==='Enter')tryGuess(e.target.value);});
+document.getElementById('guess-input').addEventListener('input',e=>{if(gameActive)tryGuess(e.target.value);});
+document.getElementById('modal-backdrop').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>
