@@ -13,93 +13,106 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
 <style>
-:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;--gold:#f5c842;--nfl-red:#ef4444;--green:#22c55e;--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--radius:12px;}
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--red:#ef4444;--green:#22c55e;--text:#e8f0fe;--muted:#6b8abf;--dim:#1e3355;--border:#0d2040;--bright:#1a3a6a;--r:12px;}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;overflow-x:hidden}
 nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
-.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--bright);border-radius:8px;transition:all .2s}
 .btn-lb:hover{border-color:var(--gold);color:var(--gold)}
-.screen{display:none;max-width:640px;margin:0 auto;padding:24px 16px 60px;min-height:calc(100vh - 52px);flex-direction:column;align-items:center;justify-content:flex-start}
+.screen{display:none;max-width:600px;margin:0 auto;padding:24px 16px 60px;min-height:calc(100vh - 52px);flex-direction:column;align-items:center;justify-content:flex-start}
 .screen.active{display:flex}
-/* ── HOME ── */
-.home-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-size:clamp(48px,12vw,88px);font-weight:900;color:var(--gold);letter-spacing:.02em;text-transform:uppercase;margin:24px 0 0;line-height:1}
-.home-sub{font-size:14px;color:var(--text-muted);text-align:center;margin:10px 0 32px;letter-spacing:.05em;text-transform:uppercase}
-.mode-cards{display:flex;flex-direction:column;gap:12px;width:100%}
-.mode-card{border-radius:var(--radius);padding:20px 24px;cursor:pointer;border:1.5px solid var(--border-bright);background:var(--surface2);transition:all .2s;text-align:left;position:relative;overflow:hidden}
+
+/* HOME */
+.home-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-size:clamp(52px,13vw,96px);font-weight:900;color:var(--gold);letter-spacing:.02em;text-transform:uppercase;margin:20px 0 0;line-height:.9}
+.home-sub{font-size:13px;color:var(--muted);text-align:center;margin:12px 0 8px;letter-spacing:.06em;text-transform:uppercase}
+.best-display{font-family:'Barlow Condensed',sans-serif;font-size:15px;color:var(--gold);margin-bottom:28px;letter-spacing:.06em}
+.mode-cards{display:flex;flex-direction:column;gap:10px;width:100%}
+.mode-card{border-radius:var(--r);padding:18px 22px;cursor:pointer;border:1.5px solid var(--bright);background:var(--surface2);transition:all .2s;text-align:left;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}
 .mode-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s}
-.mode-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.mode-card:active{transform:scale(.98)}
+.mode-easy:hover,.mode-easy:active{border-color:var(--green)}
 .mode-easy::before{background:linear-gradient(135deg,rgba(34,197,94,.08),transparent)}
-.mode-easy:hover{border-color:var(--green)}
+.mode-hard:hover,.mode-hard:active{border-color:var(--red)}
 .mode-hard::before{background:linear-gradient(135deg,rgba(239,68,68,.08),transparent)}
-.mode-hard:hover{border-color:var(--nfl-red)}
+.mode-daily:hover,.mode-daily:active{border-color:var(--gold)}
 .mode-daily::before{background:linear-gradient(135deg,rgba(245,200,66,.08),transparent)}
-.mode-daily:hover{border-color:var(--gold)}
-.mode-card:hover::before{opacity:1}
-.mode-icon{font-size:28px;margin-bottom:8px;display:block}
-.mode-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.mode-card:hover::before,.mode-card:active::before{opacity:1}
+.mode-row{display:flex;align-items:center;gap:14px}
+.mode-icon{font-size:24px;flex-shrink:0}
+.mode-text{}
+.mode-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
 .mode-easy .mode-title{color:var(--green)}
-.mode-hard .mode-title{color:var(--nfl-red)}
+.mode-hard .mode-title{color:var(--red)}
 .mode-daily .mode-title{color:var(--gold)}
-.mode-desc{font-size:13px;color:var(--text-muted);line-height:1.4}
-.daily-played-badge{display:inline-block;background:rgba(245,200,66,.15);color:var(--gold);border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
-/* ── GAME ── */
-.game-header{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.game-mode-badge{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:20px;border:1.5px solid}
+.mode-desc{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+.best-pill{display:inline-block;background:rgba(245,200,66,.12);color:var(--gold);border-radius:5px;padding:2px 8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+.played-pill{display:inline-block;background:rgba(34,197,94,.12);color:var(--green);border-radius:5px;padding:2px 8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
+
+/* GAME */
+.game-top{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.mode-badge{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:20px;border:1.5px solid}
 .badge-easy{border-color:var(--green);color:var(--green)}
-.badge-hard{border-color:var(--nfl-red);color:var(--nfl-red)}
+.badge-hard{border-color:var(--red);color:var(--red)}
 .badge-daily{border-color:var(--gold);color:var(--gold)}
-.streak-badge{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--gold)}
-.player-card{width:100%;background:var(--surface);border:1px solid var(--border-bright);border-radius:16px;padding:28px 24px;text-align:center;margin-bottom:24px;position:relative}
-.player-pos{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
-.player-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,7vw,44px);font-weight:900;color:var(--text);line-height:1.05;margin-bottom:6px}
-.player-q{font-size:13px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase}
-/* ── EASY MODE OPTIONS ── */
+.streak-block{text-align:center}
+.streak-num{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--gold);line-height:1}
+.streak-lbl{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.best-pill-sm{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.06em}
+
+/* PLAYER CARD */
+.player-card{width:100%;background:var(--surface);border:1.5px solid var(--bright);border-radius:16px;padding:28px 20px;text-align:center;margin-bottom:20px;transition:border-color .3s,background .3s}
+.player-card.flash-green{border-color:var(--green);background:rgba(34,197,94,.06)}
+.player-card.flash-red{border-color:var(--red);background:rgba(239,68,68,.06)}
+.player-pos{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.player-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(26px,6.5vw,42px);font-weight:900;color:var(--text);line-height:1.05}
+.player-q{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:8px}
+
+/* ANSWER REVEAL (after wrong) */
+.answer-reveal{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#fca5a5;margin-top:8px;display:none}
+.answer-reveal.show{display:block}
+
+/* OPTIONS */
 .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
-.opt-btn{padding:16px 12px;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,3vw,17px);font-weight:800;letter-spacing:.04em;cursor:pointer;transition:all .2s;text-align:center;line-height:1.2}
-.opt-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,.06);transform:translateY(-1px)}
-.opt-btn:disabled{cursor:default}
+.opt-btn{padding:15px 10px;border-radius:var(--r);border:1.5px solid var(--bright);background:var(--surface2);color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,3vw,16px);font-weight:800;letter-spacing:.04em;cursor:pointer;transition:all .15s;text-align:center;line-height:1.2;-webkit-tap-highlight-color:transparent}
+.opt-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.opt-btn:disabled{cursor:default;transform:none}
 .opt-btn.correct{background:rgba(34,197,94,.15);border-color:var(--green);color:#86efac}
-.opt-btn.wrong{background:rgba(239,68,68,.12);border-color:var(--nfl-red);color:var(--nfl-red)}
-.opt-btn.reveal{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:#86efac;opacity:.7}
-/* ── HARD MODE INPUT ── */
+.opt-btn.wrong{background:rgba(239,68,68,.15);border-color:var(--red);color:var(--red)}
+.opt-btn.reveal{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);color:#86efac}
+
+/* HARD INPUT */
 .hard-wrap{width:100%;display:flex;flex-direction:column;gap:10px}
-.hard-input{width:100%;font-size:18px;padding:16px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s;text-align:center}
+.hard-input{width:100%;font-size:18px;padding:15px 18px;border:1.5px solid var(--bright);border-radius:var(--r);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s,background .15s;text-align:center}
 .hard-input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
 .hard-input.correct{border-color:var(--green);background:rgba(34,197,94,.08)}
-.hard-input.wrong{border-color:var(--nfl-red);background:rgba(239,68,68,.06)}
-.hard-input::placeholder{color:var(--text-dim)}
+.hard-input.wrong{border-color:var(--red);background:rgba(239,68,68,.06)}
+.hard-input::placeholder{color:var(--dim)}
 .hard-input:disabled{opacity:.5}
-.submit-btn{padding:14px;border-radius:var(--radius);border:none;background:var(--gold);color:#04080f;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.submit-btn{padding:14px;border-radius:var(--r);border:none;background:var(--gold);color:#04080f;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
 .submit-btn:hover{background:#ffd700}
 .submit-btn:disabled{opacity:.4;cursor:not-allowed}
-/* ── FEEDBACK ── */
-.feedback{width:100%;border-radius:var(--radius);padding:14px 18px;text-align:center;margin-top:4px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:.04em;display:none}
-.feedback.show{display:block}
-.feedback.correct{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.4);color:#86efac}
-.feedback.wrong{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);color:#fca5a5}
-/* ── NEXT / SKIP ── */
-.action-row{display:flex;gap:10px;width:100%;margin-top:16px}
-.next-btn{flex:1;padding:14px;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:transparent;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.next-btn.primary{background:var(--gold);color:#04080f;border-color:var(--gold)}
-.next-btn:hover{border-color:var(--gold);color:var(--gold)}
-.next-btn.primary:hover{background:#ffd700}
-.end-btn{padding:12px 18px;border-radius:var(--radius);border:1.5px solid rgba(239,68,68,.35);background:transparent;color:rgba(239,68,68,.7);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.end-btn:hover{border-color:var(--nfl-red);color:var(--nfl-red)}
-/* ── SCORE ── */
-.score-wrap{width:100%;text-align:center;margin-top:32px}
-.score-big{font-family:'Barlow Condensed',sans-serif;font-size:72px;font-weight:900;color:var(--gold);line-height:1}
-.score-label{font-size:13px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
-.score-detail{font-size:14px;color:var(--text-muted);margin-top:8px}
-.score-bar-wrap{width:100%;height:8px;background:rgba(255,255,255,.06);border-radius:99px;margin:16px 0;overflow:hidden}
-.score-bar{height:100%;background:linear-gradient(90deg,#3b82f6,var(--gold));border-radius:99px;transition:width 1s ease}
-/* ── DAILY COMPLETE ── */
-.daily-complete{text-align:center;width:100%}
-.dc-icon{font-size:64px;margin-bottom:16px}
-.dc-title{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
-.dc-sub{font-size:14px;color:var(--text-muted);margin-bottom:24px}
-.share-btn{padding:14px 32px;border-radius:50px;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;display:block;margin:0 auto 12px}
+
+/* GAME OVER */
+.gameover-wrap{width:100%;text-align:center;padding:20px 0}
+.gameover-label{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.gameover-score{font-family:'Barlow Condensed',sans-serif;font-size:88px;font-weight:900;color:var(--gold);line-height:1}
+.gameover-streak{font-family:'Barlow Condensed',sans-serif;font-size:20px;color:var(--muted);margin-bottom:4px}
+.new-best{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--gold);background:rgba(245,200,66,.12);border:1px solid rgba(245,200,66,.3);border-radius:8px;padding:8px 18px;display:inline-block;margin:8px auto;letter-spacing:.06em;text-transform:uppercase}
+.action-stack{display:flex;flex-direction:column;gap:10px;width:100%;margin-top:20px}
+.btn-primary{padding:15px;border-radius:var(--r);border:none;background:var(--gold);color:#04080f;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-primary:hover{background:#ffd700}
+.btn-secondary{padding:13px;border-radius:var(--r);border:1.5px solid var(--bright);background:transparent;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+.share-btn{padding:13px;border-radius:50px;border:1.5px solid rgba(255,255,255,.25);background:transparent;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
 .share-btn:hover{background:rgba(255,255,255,.06)}
-.back-home{padding:12px 24px;border-radius:50px;border:none;background:transparent;color:var(--text-muted);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* DAILY */
+.daily-complete{text-align:center;width:100%;padding-top:20px}
+.dc-icon{font-size:64px;margin-bottom:12px}
+.dc-title{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.dc-sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5}
+.quit-link{font-size:12px;color:var(--muted);cursor:pointer;text-align:center;margin-top:16px;text-decoration:underline;text-underline-offset:3px}
+.quit-link:hover{color:var(--text)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -114,334 +127,331 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
   </div>
 </nav>
 
-<!-- HOME SCREEN -->
+<!-- HOME -->
 <div class="screen active" id="screen-home">
   <div class="home-title">THE<br/>COMBINE</div>
-  <div class="home-sub">Name the college — NFL edition</div>
+  <div class="home-sub">Name the college · NFL edition</div>
+  <div class="best-display" id="home-bests"></div>
   <div class="mode-cards">
     <div class="mode-card mode-easy" onclick="startGame('easy')">
-      <span class="mode-icon">🟢</span>
-      <div class="mode-title">Easy Mode</div>
-      <div class="mode-desc">Choose from 4 options. Perfect for building your knowledge.</div>
+      <div class="mode-row">
+        <span class="mode-icon">🟢</span>
+        <div class="mode-text">
+          <div class="mode-title">Easy Mode</div>
+          <div class="mode-desc">4 options to choose from. How far can your streak go?</div>
+          <div id="best-easy"></div>
+        </div>
+      </div>
     </div>
     <div class="mode-card mode-hard" onclick="startGame('hard')">
-      <span class="mode-icon">🔴</span>
-      <div class="mode-title">Hard Mode</div>
-      <div class="mode-desc">No options — type the college from memory. Real scout energy.</div>
+      <div class="mode-row">
+        <span class="mode-icon">🔴</span>
+        <div class="mode-text">
+          <div class="mode-title">Hard Mode</div>
+          <div class="mode-desc">Type the college from memory. One wrong and it's over.</div>
+          <div id="best-hard"></div>
+        </div>
+      </div>
     </div>
     <div class="mode-card mode-daily" onclick="startDaily()" id="daily-card">
-      <span class="mode-icon">📅</span>
-      <div class="mode-title">Daily Challenge</div>
-      <div class="mode-desc">One player, once a day. Same for everyone. Can you get it right?</div>
+      <div class="mode-row">
+        <span class="mode-icon">📅</span>
+        <div class="mode-text">
+          <div class="mode-title">Daily Challenge</div>
+          <div class="mode-desc">One player a day — same for everyone. Can you get it right?</div>
+          <div id="daily-status"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- GAME SCREEN -->
+<!-- GAME -->
 <div class="screen" id="screen-game">
-  <div class="game-header" style="width:100%">
-    <span class="game-mode-badge" id="mode-badge">Easy</span>
-    <span class="streak-badge" id="streak-display">🔥 0</span>
-    <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--text-muted)" id="q-counter">1 / 10</span>
+  <div class="game-top">
+    <span class="mode-badge" id="mode-badge">Easy</span>
+    <div class="streak-block">
+      <div class="streak-num" id="streak-num">0</div>
+      <div class="streak-lbl">streak</div>
+    </div>
+    <div class="best-pill-sm" id="best-sm">Best: 0</div>
   </div>
-  <div class="player-card">
+  <div class="player-card" id="player-card">
     <div class="player-pos" id="player-pos">QB</div>
     <div class="player-name" id="player-name">Patrick Mahomes</div>
-    <div class="player-q">What college did they attend?</div>
+    <div class="player-q">Which college did they attend?</div>
+    <div class="answer-reveal" id="answer-reveal"></div>
   </div>
   <div class="options-grid" id="options-grid"></div>
   <div class="hard-wrap" id="hard-wrap" style="display:none">
     <input class="hard-input" id="hard-input" type="text" placeholder="Type college name…" autocomplete="off" spellcheck="false"/>
     <button class="submit-btn" id="submit-btn" onclick="submitHard()">Submit</button>
   </div>
-  <div class="feedback" id="feedback"></div>
-  <div class="action-row" id="action-row" style="display:none">
-    <button class="next-btn primary" id="next-btn" onclick="nextQuestion()">Next Player →</button>
-    <button class="end-btn" onclick="endGame()">End Session</button>
-  </div>
-  <div id="score-mid" style="text-align:center;margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-size:14px;color:var(--text-muted)"></div>
+  <p class="quit-link" onclick="quitGame()">Give up & see score</p>
 </div>
 
-<!-- RESULTS SCREEN -->
-<div class="screen" id="screen-results">
-  <div class="score-wrap">
-    <div class="score-big" id="final-score">0</div>
-    <div class="score-label">correct answers</div>
-    <div class="score-bar-wrap"><div class="score-bar" id="score-bar" style="width:0%"></div></div>
-    <div class="score-detail" id="score-detail"></div>
+<!-- GAME OVER -->
+<div class="screen" id="screen-over">
+  <div class="gameover-wrap">
+    <div class="gameover-label">Streak ended at</div>
+    <div class="gameover-score" id="over-score">0</div>
+    <div class="gameover-streak">🔥 correct in a row</div>
+    <div id="over-best"></div>
   </div>
-  <div class="action-row" style="flex-direction:column;margin-top:24px">
+  <div class="player-card" id="over-player-card" style="margin-bottom:16px;opacity:.8">
+    <div class="player-pos" id="over-pos"></div>
+    <div class="player-name" id="over-name"></div>
+    <div class="player-q" style="color:#fca5a5" id="over-answer"></div>
+  </div>
+  <div class="action-stack">
     <button class="share-btn" onclick="shareScore()">Share Score 📋</button>
-    <button class="next-btn primary" onclick="startGame(currentMode)" style="margin-top:4px">Play Again</button>
-    <button class="back-home" onclick="showHome()">← Back to Home</button>
+    <button class="btn-primary" id="play-again-btn" onclick="playAgain()">Play Again</button>
+    <button class="btn-secondary" onclick="showHome()">Change Mode</button>
   </div>
 </div>
 
-<!-- DAILY COMPLETE SCREEN -->
+<!-- DAILY DONE -->
 <div class="screen" id="screen-daily-done">
   <div class="daily-complete">
     <div class="dc-icon" id="dc-icon">⭐</div>
-    <div class="dc-title" id="dc-title">Daily Complete!</div>
-    <div class="dc-sub" id="dc-sub">You got it right!</div>
-    <button class="share-btn" onclick="shareDaily()">Share Result 📋</button>
-    <button class="next-btn" style="display:block;width:auto;margin:0 auto 8px;padding:12px 24px" onclick="startGame('easy')">Play Free Mode →</button>
-    <button class="back-home" onclick="showHome()">← Back to Home</button>
+    <div class="dc-title" id="dc-title">Got It!</div>
+    <div class="dc-sub" id="dc-sub"></div>
+    <div class="action-stack">
+      <button class="share-btn" onclick="shareDaily()">Share Result 📋</button>
+      <button class="btn-primary" onclick="startGame('easy')">Play Easy Mode →</button>
+      <button class="btn-secondary" onclick="startGame('hard')">Play Hard Mode →</button>
+      <button class="btn-secondary" onclick="showHome()">Home</button>
+    </div>
   </div>
 </div>
 
 <script>
 const PLAYERS = [{"n": "Tom Brady", "c": "Michigan", "pos": "QB"}, {"n": "Peyton Manning", "c": "Tennessee", "pos": "QB"}, {"n": "Patrick Mahomes", "c": "Texas Tech", "pos": "QB"}, {"n": "Joe Burrow", "c": "LSU", "pos": "QB"}, {"n": "Josh Allen", "c": "Wyoming", "pos": "QB"}, {"n": "Lamar Jackson", "c": "Louisville", "pos": "QB"}, {"n": "Aaron Rodgers", "c": "California", "pos": "QB"}, {"n": "Drew Brees", "c": "Purdue", "pos": "QB"}, {"n": "Eli Manning", "c": "Ole Miss", "pos": "QB"}, {"n": "Ben Roethlisberger", "c": "Miami (OH)", "pos": "QB"}, {"n": "Cam Newton", "c": "Auburn", "pos": "QB"}, {"n": "Russell Wilson", "c": "Wisconsin", "pos": "QB"}, {"n": "Dan Marino", "c": "Pittsburgh", "pos": "QB"}, {"n": "John Elway", "c": "Stanford", "pos": "QB"}, {"n": "Brett Favre", "c": "Southern Miss", "pos": "QB"}, {"n": "Steve Young", "c": "BYU", "pos": "QB"}, {"n": "Troy Aikman", "c": "UCLA", "pos": "QB"}, {"n": "Terry Bradshaw", "c": "Louisiana Tech", "pos": "QB"}, {"n": "Joe Montana", "c": "Notre Dame", "pos": "QB"}, {"n": "Jim Kelly", "c": "Miami", "pos": "QB"}, {"n": "Dak Prescott", "c": "Mississippi State", "pos": "QB"}, {"n": "Matthew Stafford", "c": "Georgia", "pos": "QB"}, {"n": "Justin Herbert", "c": "Oregon", "pos": "QB"}, {"n": "Tua Tagovailoa", "c": "Alabama", "pos": "QB"}, {"n": "Trevor Lawrence", "c": "Clemson", "pos": "QB"}, {"n": "C.J. Stroud", "c": "Ohio State", "pos": "QB"}, {"n": "Bryce Young", "c": "Alabama", "pos": "QB"}, {"n": "Baker Mayfield", "c": "Oklahoma", "pos": "QB"}, {"n": "Kyler Murray", "c": "Oklahoma", "pos": "QB"}, {"n": "Carson Wentz", "c": "North Dakota State", "pos": "QB"}, {"n": "Andrew Luck", "c": "Stanford", "pos": "QB"}, {"n": "Sam Bradford", "c": "Oklahoma", "pos": "QB"}, {"n": "Marcus Mariota", "c": "Oregon", "pos": "QB"}, {"n": "Robert Griffin III", "c": "Baylor", "pos": "QB"}, {"n": "Jameis Winston", "c": "Florida State", "pos": "QB"}, {"n": "Kirk Cousins", "c": "Michigan State", "pos": "QB"}, {"n": "Philip Rivers", "c": "NC State", "pos": "QB"}, {"n": "Tony Romo", "c": "Eastern Illinois", "pos": "QB"}, {"n": "Donovan McNabb", "c": "Syracuse", "pos": "QB"}, {"n": "Michael Vick", "c": "Virginia Tech", "pos": "QB"}, {"n": "Steve McNair", "c": "Alcorn State", "pos": "QB"}, {"n": "Kurt Warner", "c": "Northern Iowa", "pos": "QB"}, {"n": "Rich Gannon", "c": "Delaware", "pos": "QB"}, {"n": "Daunte Culpepper", "c": "UCF", "pos": "QB"}, {"n": "Barry Sanders", "c": "Oklahoma State", "pos": "RB"}, {"n": "Walter Payton", "c": "Jackson State", "pos": "RB"}, {"n": "Emmitt Smith", "c": "Florida", "pos": "RB"}, {"n": "LaDainian Tomlinson", "c": "TCU", "pos": "RB"}, {"n": "Adrian Peterson", "c": "Oklahoma", "pos": "RB"}, {"n": "Marshall Faulk", "c": "San Diego State", "pos": "RB"}, {"n": "Eric Dickerson", "c": "SMU", "pos": "RB"}, {"n": "Jim Brown", "c": "Syracuse", "pos": "RB"}, {"n": "Marshawn Lynch", "c": "California", "pos": "RB"}, {"n": "Derrick Henry", "c": "Alabama", "pos": "RB"}, {"n": "Christian McCaffrey", "c": "Stanford", "pos": "RB"}, {"n": "Nick Chubb", "c": "Georgia", "pos": "RB"}, {"n": "Saquon Barkley", "c": "Penn State", "pos": "RB"}, {"n": "Jonathan Taylor", "c": "Wisconsin", "pos": "RB"}, {"n": "Alvin Kamara", "c": "Tennessee", "pos": "RB"}, {"n": "Leonard Fournette", "c": "LSU", "pos": "RB"}, {"n": "Ezekiel Elliott", "c": "Ohio State", "pos": "RB"}, {"n": "Le'Veon Bell", "c": "Michigan State", "pos": "RB"}, {"n": "Frank Gore", "c": "Miami", "pos": "RB"}, {"n": "Jerome Bettis", "c": "Notre Dame", "pos": "RB"}, {"n": "Curtis Martin", "c": "Pittsburgh", "pos": "RB"}, {"n": "Jamal Lewis", "c": "Tennessee", "pos": "RB"}, {"n": "Clinton Portis", "c": "Miami", "pos": "RB"}, {"n": "Warrick Dunn", "c": "Florida State", "pos": "RB"}, {"n": "Edgerrin James", "c": "Miami", "pos": "RB"}, {"n": "Ricky Williams", "c": "Texas", "pos": "RB"}, {"n": "Jamaal Charles", "c": "Texas", "pos": "RB"}, {"n": "Larry Johnson", "c": "Penn State", "pos": "RB"}, {"n": "LeSean McCoy", "c": "Pittsburgh", "pos": "RB"}, {"n": "Steven Jackson", "c": "Oregon State", "pos": "RB"}, {"n": "DeMarco Murray", "c": "Oklahoma", "pos": "RB"}, {"n": "Kareem Hunt", "c": "Toledo", "pos": "RB"}, {"n": "Josh Jacobs", "c": "Alabama", "pos": "RB"}, {"n": "Dalvin Cook", "c": "Florida State", "pos": "RB"}, {"n": "Todd Gurley", "c": "Georgia", "pos": "RB"}, {"n": "Priest Holmes", "c": "Texas", "pos": "RB"}, {"n": "Brian Westbrook", "c": "Villanova", "pos": "RB"}, {"n": "Shaun Alexander", "c": "Alabama", "pos": "RB"}, {"n": "Jerry Rice", "c": "Mississippi Valley State", "pos": "WR"}, {"n": "Randy Moss", "c": "Marshall", "pos": "WR"}, {"n": "Calvin Johnson", "c": "Georgia Tech", "pos": "WR"}, {"n": "Larry Fitzgerald", "c": "Pittsburgh", "pos": "WR"}, {"n": "Terrell Owens", "c": "Tennessee-Chattanooga", "pos": "WR"}, {"n": "Andre Johnson", "c": "Miami", "pos": "WR"}, {"n": "Cris Carter", "c": "Ohio State", "pos": "WR"}, {"n": "Michael Irvin", "c": "Miami", "pos": "WR"}, {"n": "Marvin Harrison", "c": "Syracuse", "pos": "WR"}, {"n": "Steve Smith Sr.", "c": "Utah", "pos": "WR"}, {"n": "Tim Brown", "c": "Notre Dame", "pos": "WR"}, {"n": "Antonio Brown", "c": "Central Michigan", "pos": "WR"}, {"n": "Odell Beckham Jr.", "c": "LSU", "pos": "WR"}, {"n": "DeAndre Hopkins", "c": "Clemson", "pos": "WR"}, {"n": "Julio Jones", "c": "Alabama", "pos": "WR"}, {"n": "Cooper Kupp", "c": "Eastern Washington", "pos": "WR"}, {"n": "Stefon Diggs", "c": "Maryland", "pos": "WR"}, {"n": "Davante Adams", "c": "Fresno State", "pos": "WR"}, {"n": "Justin Jefferson", "c": "LSU", "pos": "WR"}, {"n": "Ja'Marr Chase", "c": "LSU", "pos": "WR"}, {"n": "Amari Cooper", "c": "Alabama", "pos": "WR"}, {"n": "Tyreek Hill", "c": "West Alabama", "pos": "WR"}, {"n": "CeeDee Lamb", "c": "Oklahoma", "pos": "WR"}, {"n": "Deebo Samuel", "c": "South Carolina", "pos": "WR"}, {"n": "Keenan Allen", "c": "California", "pos": "WR"}, {"n": "Adam Thielen", "c": "Minnesota State Mankato", "pos": "WR"}, {"n": "T.Y. Hilton", "c": "Florida International", "pos": "WR"}, {"n": "Wes Welker", "c": "Texas Tech", "pos": "WR"}, {"n": "Reggie Wayne", "c": "Miami", "pos": "WR"}, {"n": "Anquan Boldin", "c": "Florida State", "pos": "WR"}, {"n": "Isaac Bruce", "c": "Memphis", "pos": "WR"}, {"n": "Torry Holt", "c": "NC State", "pos": "WR"}, {"n": "Brandon Marshall", "c": "UCF", "pos": "WR"}, {"n": "A.J. Green", "c": "Georgia", "pos": "WR"}, {"n": "Demaryius Thomas", "c": "Georgia Tech", "pos": "WR"}, {"n": "DK Metcalf", "c": "Ole Miss", "pos": "WR"}, {"n": "Diontae Johnson", "c": "Toledo", "pos": "WR"}, {"n": "Brandin Cooks", "c": "Oregon State", "pos": "WR"}, {"n": "Emmanuel Sanders", "c": "SMU", "pos": "WR"}, {"n": "Vincent Jackson", "c": "Northern Colorado", "pos": "WR"}, {"n": "Dez Bryant", "c": "Oklahoma State", "pos": "WR"}, {"n": "Hakeem Nicks", "c": "North Carolina", "pos": "WR"}, {"n": "Santonio Holmes", "c": "Ohio State", "pos": "WR"}, {"n": "Hines Ward", "c": "Georgia", "pos": "WR"}, {"n": "Plaxico Burress", "c": "Michigan State", "pos": "WR"}, {"n": "Chad Johnson", "c": "Oregon State", "pos": "WR"}, {"n": "Keyshawn Johnson", "c": "USC", "pos": "WR"}, {"n": "Puka Nacua", "c": "BYU", "pos": "WR"}, {"n": "Tony Gonzalez", "c": "California", "pos": "TE"}, {"n": "Rob Gronkowski", "c": "Arizona", "pos": "TE"}, {"n": "Shannon Sharpe", "c": "Savannah State", "pos": "TE"}, {"n": "Jason Witten", "c": "Tennessee", "pos": "TE"}, {"n": "Greg Olsen", "c": "Miami", "pos": "TE"}, {"n": "Travis Kelce", "c": "Cincinnati", "pos": "TE"}, {"n": "George Kittle", "c": "Iowa", "pos": "TE"}, {"n": "Mark Andrews", "c": "Oklahoma", "pos": "TE"}, {"n": "Dallas Clark", "c": "Iowa", "pos": "TE"}, {"n": "Jeremy Shockey", "c": "Miami", "pos": "TE"}, {"n": "Antonio Gates", "c": "Kent State", "pos": "TE"}, {"n": "Vernon Davis", "c": "Maryland", "pos": "TE"}, {"n": "Kyle Pitts", "c": "Florida", "pos": "TE"}, {"n": "Sam LaPorta", "c": "Iowa", "pos": "TE"}, {"n": "Evan Engram", "c": "Mississippi", "pos": "TE"}, {"n": "Darren Waller", "c": "Georgia Tech", "pos": "TE"}, {"n": "Hunter Henry", "c": "Arkansas", "pos": "TE"}, {"n": "Zach Ertz", "c": "Stanford", "pos": "TE"}, {"n": "Jimmy Graham", "c": "Miami", "pos": "TE"}, {"n": "Owen Daniels", "c": "Illinois", "pos": "TE"}, {"n": "Ben Coates", "c": "Livingstone", "pos": "TE"}, {"n": "Brent Jones", "c": "Santa Clara", "pos": "TE"}, {"n": "Anthony Munoz", "c": "USC", "pos": "OL"}, {"n": "Walter Jones", "c": "Florida State", "pos": "OL"}, {"n": "Orlando Pace", "c": "Ohio State", "pos": "OL"}, {"n": "Jonathan Ogden", "c": "UCLA", "pos": "OL"}, {"n": "Larry Allen", "c": "Sonoma State", "pos": "OL"}, {"n": "Zack Martin", "c": "Notre Dame", "pos": "OL"}, {"n": "Lane Johnson", "c": "Oklahoma", "pos": "OL"}, {"n": "Quenton Nelson", "c": "Notre Dame", "pos": "OL"}, {"n": "Tyron Smith", "c": "USC", "pos": "OL"}, {"n": "Trent Williams", "c": "Oklahoma", "pos": "OL"}, {"n": "Joe Thomas", "c": "Wisconsin", "pos": "OL"}, {"n": "Bruce Matthews", "c": "USC", "pos": "OL"}, {"n": "Randall McDaniel", "c": "Arizona State", "pos": "OL"}, {"n": "Will Shields", "c": "Nebraska", "pos": "OL"}, {"n": "Alan Faneca", "c": "LSU", "pos": "OL"}, {"n": "Chris Samuels", "c": "Alabama", "pos": "OL"}, {"n": "Mike Munchak", "c": "Penn State", "pos": "OL"}, {"n": "John Hannah", "c": "Alabama", "pos": "OL"}, {"n": "Reggie White", "c": "Tennessee", "pos": "DL"}, {"n": "Bruce Smith", "c": "Virginia Tech", "pos": "DL"}, {"n": "J.J. Watt", "c": "Wisconsin", "pos": "DL"}, {"n": "Aaron Donald", "c": "Pittsburgh", "pos": "DL"}, {"n": "Myles Garrett", "c": "Texas A&M", "pos": "DL"}, {"n": "Nick Bosa", "c": "Ohio State", "pos": "DL"}, {"n": "Joey Bosa", "c": "Ohio State", "pos": "DL"}, {"n": "Khalil Mack", "c": "Buffalo", "pos": "DL"}, {"n": "Von Miller", "c": "Texas A&M", "pos": "DL"}, {"n": "DeMarcus Ware", "c": "Troy", "pos": "DL"}, {"n": "Julius Peppers", "c": "North Carolina", "pos": "DL"}, {"n": "Dwight Freeney", "c": "Syracuse", "pos": "DL"}, {"n": "Warren Sapp", "c": "Miami", "pos": "DL"}, {"n": "Howie Long", "c": "Villanova", "pos": "DL"}, {"n": "Michael Strahan", "c": "Texas Southern", "pos": "DL"}, {"n": "Chris Doleman", "c": "Pittsburgh", "pos": "DL"}, {"n": "Maxx Crosby", "c": "Eastern Michigan", "pos": "DL"}, {"n": "T.J. Watt", "c": "Wisconsin", "pos": "DL"}, {"n": "Micah Parsons", "c": "Penn State", "pos": "DL"}, {"n": "Chase Young", "c": "Ohio State", "pos": "DL"}, {"n": "Aldon Smith", "c": "Missouri", "pos": "DL"}, {"n": "Robert Quinn", "c": "North Carolina", "pos": "DL"}, {"n": "Melvin Ingram", "c": "South Carolina", "pos": "DL"}, {"n": "Cam Jordan", "c": "California", "pos": "DL"}, {"n": "Everson Griffen", "c": "USC", "pos": "DL"}, {"n": "Jason Taylor", "c": "Akron", "pos": "DL"}, {"n": "Cortez Kennedy", "c": "Miami", "pos": "DL"}, {"n": "Dexter Lawrence", "c": "Clemson", "pos": "DL"}, {"n": "Chris Jones", "c": "Mississippi State", "pos": "DL"}, {"n": "Aidan Hutchinson", "c": "Michigan", "pos": "DL"}, {"n": "Will Anderson Jr.", "c": "Alabama", "pos": "DL"}, {"n": "Micah Hyde", "c": "Iowa", "pos": "DL"}, {"n": "Dick Butkus", "c": "Illinois", "pos": "LB"}, {"n": "Ray Lewis", "c": "Miami", "pos": "LB"}, {"n": "Brian Urlacher", "c": "New Mexico", "pos": "LB"}, {"n": "Bobby Wagner", "c": "Utah State", "pos": "LB"}, {"n": "Derrick Brooks", "c": "Florida State", "pos": "LB"}, {"n": "Junior Seau", "c": "USC", "pos": "LB"}, {"n": "Mike Singletary", "c": "Baylor", "pos": "LB"}, {"n": "Zach Thomas", "c": "Texas Tech", "pos": "LB"}, {"n": "Patrick Willis", "c": "Mississippi", "pos": "LB"}, {"n": "Luke Kuechly", "c": "Boston College", "pos": "LB"}, {"n": "NaVorro Bowman", "c": "Penn State", "pos": "LB"}, {"n": "Lavonte David", "c": "Nebraska", "pos": "LB"}, {"n": "Fred Warner", "c": "BYU", "pos": "LB"}, {"n": "Darius Leonard", "c": "South Carolina State", "pos": "LB"}, {"n": "Dont'a Hightower", "c": "Alabama", "pos": "LB"}, {"n": "Demario Davis", "c": "Arkansas State", "pos": "LB"}, {"n": "Devin White", "c": "LSU", "pos": "LB"}, {"n": "Jack Campbell", "c": "Iowa", "pos": "LB"}, {"n": "Lawrence Taylor", "c": "North Carolina", "pos": "LB"}, {"n": "Terrell Suggs", "c": "Arizona State", "pos": "LB"}, {"n": "James Harrison", "c": "Kent State", "pos": "LB"}, {"n": "Clay Matthews", "c": "USC", "pos": "LB"}, {"n": "Kevin Greene", "c": "Auburn", "pos": "LB"}, {"n": "Derrick Thomas", "c": "Alabama", "pos": "LB"}, {"n": "Mike Vrabel", "c": "Ohio State", "pos": "LB"}, {"n": "Chad Brown", "c": "Colorado", "pos": "LB"}, {"n": "Deion Sanders", "c": "Florida State", "pos": "CB"}, {"n": "Rod Woodson", "c": "Purdue", "pos": "CB"}, {"n": "Darrelle Revis", "c": "Pittsburgh", "pos": "CB"}, {"n": "Patrick Peterson", "c": "LSU", "pos": "CB"}, {"n": "Champ Bailey", "c": "Georgia", "pos": "CB"}, {"n": "Charles Woodson", "c": "Michigan", "pos": "CB"}, {"n": "Richard Sherman", "c": "Stanford", "pos": "CB"}, {"n": "Aqib Talib", "c": "Kansas", "pos": "CB"}, {"n": "Darius Slay", "c": "Mississippi State", "pos": "CB"}, {"n": "Jalen Ramsey", "c": "Florida State", "pos": "CB"}, {"n": "Patrick Surtain II", "c": "Alabama", "pos": "CB"}, {"n": "Sauce Gardner", "c": "Cincinnati", "pos": "CB"}, {"n": "Trevon Diggs", "c": "Alabama", "pos": "CB"}, {"n": "Stephon Gilmore", "c": "South Carolina", "pos": "CB"}, {"n": "Marshon Lattimore", "c": "Ohio State", "pos": "CB"}, {"n": "Denzel Ward", "c": "Ohio State", "pos": "CB"}, {"n": "Tariq Woolen", "c": "UTSA", "pos": "CB"}, {"n": "Quinyon Mitchell", "c": "Toledo", "pos": "CB"}, {"n": "Aeneas Williams", "c": "Southern", "pos": "CB"}, {"n": "Ty Law", "c": "Michigan", "pos": "CB"}, {"n": "Ronde Barber", "c": "Virginia", "pos": "CB"}, {"n": "Nnamdi Asomugha", "c": "California", "pos": "CB"}, {"n": "DeAngelo Hall", "c": "Virginia Tech", "pos": "CB"}, {"n": "Antonio Cromartie", "c": "Florida State", "pos": "CB"}, {"n": "Ronnie Lott", "c": "USC", "pos": "S"}, {"n": "Troy Polamalu", "c": "USC", "pos": "S"}, {"n": "Ed Reed", "c": "Miami", "pos": "S"}, {"n": "Brian Dawkins", "c": "Clemson", "pos": "S"}, {"n": "Earl Thomas", "c": "Texas", "pos": "S"}, {"n": "Kam Chancellor", "c": "Virginia Tech", "pos": "S"}, {"n": "Eric Weddle", "c": "Utah", "pos": "S"}, {"n": "Harrison Smith", "c": "Notre Dame", "pos": "S"}, {"n": "Minkah Fitzpatrick", "c": "Alabama", "pos": "S"}, {"n": "Derwin James", "c": "Florida State", "pos": "S"}, {"n": "Kyle Hamilton", "c": "Notre Dame", "pos": "S"}, {"n": "Jamal Adams", "c": "LSU", "pos": "S"}, {"n": "Kevin Byard", "c": "Middle Tennessee", "pos": "S"}, {"n": "Tyrann Mathieu", "c": "LSU", "pos": "S"}, {"n": "Budda Baker", "c": "Washington", "pos": "S"}, {"n": "Marcus Williams", "c": "Utah", "pos": "S"}, {"n": "Steve Atwater", "c": "Arkansas", "pos": "S"}, {"n": "Darren Sharper", "c": "William & Mary", "pos": "S"}, {"n": "LeRoy Butler", "c": "Florida State", "pos": "S"}, {"n": "John Lynch", "c": "Stanford", "pos": "S"}, {"n": "Rodney Harrison", "c": "Western Illinois", "pos": "S"}, {"n": "Eric Berry", "c": "Tennessee", "pos": "S"}, {"n": "Bob Sanders", "c": "Iowa", "pos": "S"}, {"n": "Adrian Wilson", "c": "North Carolina State", "pos": "S"}, {"n": "Michael Lewis", "c": "Washington", "pos": "S"}, {"n": "Lawyer Milloy", "c": "Washington", "pos": "S"}, {"n": "Adam Vinatieri", "c": "South Dakota State", "pos": "K"}, {"n": "Justin Tucker", "c": "Texas", "pos": "K"}, {"n": "Devin Hester", "c": "Miami", "pos": "ST"}, {"n": "Cordarrelle Patterson", "c": "Tennessee", "pos": "WR"}, {"n": "Richie Incognito", "c": "Nebraska", "pos": "OL"}, {"n": "Ndamukong Suh", "c": "Nebraska", "pos": "DL"}, {"n": "Gerald McCoy", "c": "Oklahoma", "pos": "DL"}, {"n": "Haloti Ngata", "c": "Oregon", "pos": "DL"}, {"n": "Fletcher Cox", "c": "Mississippi State", "pos": "DL"}, {"n": "Sheldon Richardson", "c": "Missouri", "pos": "DL"}, {"n": "Cameron Wake", "c": "Penn State", "pos": "DL"}, {"n": "Olivier Vernon", "c": "Miami", "pos": "DL"}, {"n": "Mario Williams", "c": "NC State", "pos": "DL"}, {"n": "Charles Haley", "c": "James Madison", "pos": "DL"}, {"n": "Neil Smith", "c": "Nebraska", "pos": "DL"}, {"n": "Jevon Kearse", "c": "Florida", "pos": "DL"}, {"n": "Justin Smith", "c": "Cincinnati", "pos": "DL"}, {"n": "Geno Atkins", "c": "Georgia", "pos": "DL"}, {"n": "Danny Shelton", "c": "Washington", "pos": "DL"}, {"n": "DeForest Buckner", "c": "Oregon", "pos": "DL"}, {"n": "Jonathan Allen", "c": "Alabama", "pos": "DL"}, {"n": "Solomon Thomas", "c": "Stanford", "pos": "DL"}, {"n": "Brian Burns", "c": "Florida State", "pos": "DL"}, {"n": "Rashan Gary", "c": "Michigan", "pos": "DL"}, {"n": "Haason Reddick", "c": "Temple", "pos": "LB"}, {"n": "Roquan Smith", "c": "Georgia", "pos": "LB"}, {"n": "Jordan Hicks", "c": "Texas", "pos": "LB"}, {"n": "Kwon Alexander", "c": "LSU", "pos": "LB"}, {"n": "C.J. Mosley", "c": "Alabama", "pos": "LB"}, {"n": "Danny Trevathan", "c": "Kentucky", "pos": "LB"}, {"n": "Alec Ogletree", "c": "Georgia", "pos": "LB"}, {"n": "Karlos Dansby", "c": "Auburn", "pos": "LB"}, {"n": "Rolando McClain", "c": "Alabama", "pos": "LB"}, {"n": "Takeo Spikes", "c": "Auburn", "pos": "LB"}, {"n": "Lofa Tatupu", "c": "USC", "pos": "LB"}, {"n": "Julian Peterson", "c": "Michigan State", "pos": "LB"}, {"n": "Peter Boulware", "c": "Florida State", "pos": "LB"}];
 const COLLEGES = ["Akron", "Alabama", "Alcorn State", "Arizona", "Arizona State", "Arkansas", "Arkansas State", "Auburn", "BYU", "Baylor", "Boston College", "Buffalo", "California", "Central Michigan", "Cincinnati", "Clemson", "Colorado", "Delaware", "Eastern Illinois", "Eastern Michigan", "Eastern Washington", "Florida", "Florida International", "Florida State", "Fresno State", "Georgia", "Georgia Tech", "Illinois", "Iowa", "Jackson State", "James Madison", "Kansas", "Kent State", "Kentucky", "LSU", "Livingstone", "Louisiana Tech", "Louisville", "Marshall", "Maryland", "Memphis", "Miami", "Miami (OH)", "Michigan", "Michigan State", "Middle Tennessee", "Minnesota State Mankato", "Mississippi", "Mississippi State", "Mississippi Valley State", "Missouri", "NC State", "Nebraska", "New Mexico", "North Carolina", "North Carolina State", "North Dakota State", "Northern Colorado", "Northern Iowa", "Notre Dame", "Ohio State", "Oklahoma", "Oklahoma State", "Ole Miss", "Oregon", "Oregon State", "Penn State", "Pittsburgh", "Purdue", "SMU", "San Diego State", "Santa Clara", "Savannah State", "Sonoma State", "South Carolina", "South Carolina State", "South Dakota State", "Southern", "Southern Miss", "Stanford", "Syracuse", "TCU", "Temple", "Tennessee", "Tennessee-Chattanooga", "Texas", "Texas A&M", "Texas Southern", "Texas Tech", "Toledo", "Troy", "UCF", "UCLA", "USC", "UTSA", "Utah", "Utah State", "Villanova", "Virginia", "Virginia Tech", "Washington", "West Alabama", "Western Illinois", "William & Mary", "Wisconsin", "Wyoming"];
-const SLUG = 'the-combine';
 
 let currentMode = 'easy';
-let sessionPlayers = [];
-let qIndex = 0;
-let score = 0;
 let streak = 0;
-let bestStreak = 0;
+let queue = [];
 let answered = false;
-let dailyPlayer = null;
-let dailyCorrect = false;
+let lastPlayer = null;
 
+/* ── UTILS ── */
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
+function colNorm(c){return norm(c).replace(/^university of /,'').replace(/ university$/,'').replace(/^the /,'').replace(/ state university$/,'').replace(/ college$/,'').replace(/-/g,' ');}
+function getBest(mode){return parseInt(localStorage.getItem('combine-best-'+mode)||'0');}
+function setBest(mode,val){if(val>getBest(mode))localStorage.setItem('combine-best-'+mode,val);}
+function isDailyDone(){try{const d=JSON.parse(localStorage.getItem('combine-daily'));return d&&d.date===new Date().toISOString().slice(0,10);}catch(e){return false;}}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 
-function colNorm(c){
-  return norm(c)
-    .replace(/^university of /, '').replace(/ university$/, '')
-    .replace(/^the /, '').replace(/ state university$/, '')
-    .replace(/ college$/, '').replace(/-/g,' ');
-}
-
-function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-
-function getDayIndex(){return Math.floor(Date.now()/86400000);}
-
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
+/* ── HOME ── */
 function showHome(){
-  const done = isDailyDone();
-  const dc = document.getElementById('daily-card');
+  const eb=getBest('easy'), hb=getBest('hard');
+  document.getElementById('best-easy').innerHTML = eb>0 ? '<div class="best-pill">Best: '+eb+'</div>' : '';
+  document.getElementById('best-hard').innerHTML = hb>0 ? '<div class="best-pill">Best: '+hb+'</div>' : '';
+  const done=isDailyDone();
   if(done){
-    let badge = dc.querySelector('.daily-played-badge');
-    if(!badge){badge=document.createElement('div');badge.className='daily-played-badge';dc.appendChild(badge);}
-    badge.textContent = '✓ Played Today';
-    dc.style.opacity='0.6';
+    const d=JSON.parse(localStorage.getItem('combine-daily'));
+    document.getElementById('daily-status').innerHTML='<div class="played-pill">'+(d.correct?'✓ Correct today':'✗ Missed today')+'</div>';
+  } else {
+    document.getElementById('daily-status').innerHTML='';
   }
   showScreen('screen-home');
 }
 
-function isDailyDone(){
-  try{const d=JSON.parse(localStorage.getItem('combine-daily'));return d&&d.date===new Date().toISOString().slice(0,10);}catch(e){return false;}
-}
+/* ── GAME START ── */
+function getQueue(){return shuffle([...PLAYERS]);}
 
 function startGame(mode){
-  currentMode = mode;
-  sessionPlayers = shuffle([...PLAYERS]).slice(0, mode==='daily' ? 1 : 15);
-  qIndex = 0; score = 0; streak = 0; bestStreak = 0;
-  const badge = document.getElementById('mode-badge');
-  badge.textContent = mode==='easy' ? 'Easy' : mode==='hard' ? 'Hard' : 'Daily';
-  badge.className = 'game-mode-badge badge-'+mode;
+  currentMode=mode;
+  streak=0;
+  queue=getQueue();
+  updateStreakDisplay();
+  const badge=document.getElementById('mode-badge');
+  badge.textContent=mode==='easy'?'Easy':mode==='hard'?'Hard':'Daily';
+  badge.className='mode-badge badge-'+mode;
+  document.getElementById('best-sm').textContent='Best: '+getBest(mode);
   showScreen('screen-game');
-  loadQuestion();
+  nextPlayer();
 }
 
 function startDaily(){
   if(isDailyDone()){
+    const d=JSON.parse(localStorage.getItem('combine-daily'));
+    document.getElementById('dc-icon').textContent=d.correct?'🏆':'❌';
+    document.getElementById('dc-title').textContent=d.correct?'Already Done!':'Already Done!';
+    document.getElementById('dc-sub').textContent=(d.correct?'You correctly got ':'You missed ')+d.player+(d.correct?'':' ('+d.college+')')+'. Come back tomorrow for a new player!';
     showScreen('screen-daily-done');
-    const data = JSON.parse(localStorage.getItem('combine-daily'));
-    document.getElementById('dc-icon').textContent = data.correct ? '🏆' : '❌';
-    document.getElementById('dc-title').textContent = data.correct ? 'Already Played!' : 'Already Played!';
-    document.getElementById('dc-sub').textContent = data.correct
-      ? `You got ${data.player} right! Come back tomorrow.`
-      : `You missed ${data.player} (${data.college}). Come back tomorrow.`;
     return;
   }
-  currentMode = 'daily';
-  const idx = getDayIndex() % PLAYERS.length;
-  dailyPlayer = PLAYERS[idx];
-  sessionPlayers = [dailyPlayer];
-  qIndex = 0; score = 0; streak = 0;
-  const badge = document.getElementById('mode-badge');
-  badge.textContent = 'Daily';
-  badge.className = 'game-mode-badge badge-daily';
+  currentMode='daily';
+  streak=0;
+  const idx=Math.floor(Date.now()/86400000)%PLAYERS.length;
+  const p=PLAYERS[idx];
+  queue=[p];
+  const badge=document.getElementById('mode-badge');
+  badge.textContent='Daily';badge.className='mode-badge badge-daily';
+  document.getElementById('best-sm').textContent='Daily Challenge';
   showScreen('screen-game');
-  loadQuestion();
+  nextPlayer();
 }
 
-function loadQuestion(){
-  answered = false;
-  const p = sessionPlayers[qIndex];
-  document.getElementById('player-pos').textContent = p.pos;
-  document.getElementById('player-name').textContent = p.n;
-  document.getElementById('q-counter').textContent = (qIndex+1)+' / '+sessionPlayers.length;
-  document.getElementById('streak-display').textContent = '🔥 '+streak;
-  document.getElementById('feedback').className = 'feedback';
-  document.getElementById('feedback').textContent = '';
-  document.getElementById('action-row').style.display = 'none';
-  document.getElementById('score-mid').textContent = score+' correct';
+/* ── QUESTION ── */
+function nextPlayer(){
+  if(queue.length===0) queue=getQueue();
+  answered=false;
+  const p=queue.shift();
+  lastPlayer=p;
+  document.getElementById('player-pos').textContent=p.pos;
+  document.getElementById('player-name').textContent=p.n;
+  document.getElementById('answer-reveal').className='answer-reveal';
+  document.getElementById('answer-reveal').textContent='';
+  const card=document.getElementById('player-card');
+  card.className='player-card';
 
-  if(currentMode === 'hard' || currentMode === 'daily'){
-    document.getElementById('options-grid').style.display = 'none';
-    document.getElementById('hard-wrap').style.display = 'flex';
-    const inp = document.getElementById('hard-input');
-    inp.value = ''; inp.disabled = false; inp.className = 'hard-input';
-    document.getElementById('submit-btn').disabled = false;
-    setTimeout(()=>inp.focus(), 100);
+  if(currentMode==='hard'||currentMode==='daily'){
+    document.getElementById('options-grid').style.display='none';
+    document.getElementById('hard-wrap').style.display='flex';
+    const inp=document.getElementById('hard-input');
+    inp.value='';inp.disabled=false;inp.className='hard-input';
+    document.getElementById('submit-btn').disabled=false;
+    setTimeout(()=>inp.focus(),120);
   } else {
-    document.getElementById('options-grid').style.display = 'grid';
-    document.getElementById('hard-wrap').style.display = 'none';
+    document.getElementById('options-grid').style.display='grid';
+    document.getElementById('hard-wrap').style.display='none';
     buildOptions(p);
   }
 }
 
 function buildOptions(p){
-  const correct = p.c;
-  const wrong = shuffle(COLLEGES.filter(c=>c!==correct)).slice(0,3);
-  const opts = shuffle([correct, ...wrong]);
-  const grid = document.getElementById('options-grid');
-  grid.innerHTML = '';
+  const correct=p.c;
+  const wrong=shuffle(COLLEGES.filter(c=>c!==correct)).slice(0,3);
+  const opts=shuffle([correct,...wrong]);
+  const grid=document.getElementById('options-grid');
+  grid.innerHTML='';
   opts.forEach(col=>{
-    const btn = document.createElement('button');
-    btn.className = 'opt-btn';
-    btn.textContent = col;
-    btn.onclick = ()=>selectOption(btn, col, correct);
+    const btn=document.createElement('button');
+    btn.className='opt-btn';
+    btn.textContent=col;
+    btn.onclick=()=>selectOption(btn,col,correct,p);
     grid.appendChild(btn);
   });
 }
 
-function selectOption(btn, chosen, correct){
+/* ── ANSWER ── */
+function selectOption(btn,chosen,correct,p){
   if(answered)return;
-  answered = true;
-  const allBtns = document.querySelectorAll('.opt-btn');
-  allBtns.forEach(b=>b.disabled=true);
+  answered=true;
+  document.querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
   if(chosen===correct){
     btn.classList.add('correct');
-    score++; streak++; bestStreak=Math.max(bestStreak,streak);
-    showFeedback(true, correct);
+    onCorrect(p);
   } else {
     btn.classList.add('wrong');
-    streak = 0;
-    allBtns.forEach(b=>{if(b.textContent===correct)b.classList.add('reveal');});
-    showFeedback(false, correct);
+    document.querySelectorAll('.opt-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('reveal');});
+    onWrong(p);
   }
-  document.getElementById('streak-display').textContent='🔥 '+streak;
-  document.getElementById('score-mid').textContent=score+' correct';
-  showActionRow();
-  if(currentMode==='daily') saveDaily(chosen===correct);
 }
 
 function submitHard(){
-  if(answered) return;
-  const val = document.getElementById('hard-input').value.trim();
-  if(!val) return;
-  const p = sessionPlayers[qIndex];
-  const correct = colNorm(p.c);
-  const guessed = colNorm(val);
-  const isRight = guessed===correct || correct.includes(guessed) || guessed.includes(correct);
-  answered = true;
-  document.getElementById('hard-input').disabled = true;
-  document.getElementById('submit-btn').disabled = true;
+  if(answered)return;
+  const val=document.getElementById('hard-input').value.trim();
+  if(!val)return;
+  answered=true;
+  document.getElementById('hard-input').disabled=true;
+  document.getElementById('submit-btn').disabled=true;
+  const p=lastPlayer;
+  const correct=colNorm(p.c),guessed=colNorm(val);
+  const isRight=guessed===correct||correct.includes(guessed)||guessed.includes(correct);
   if(isRight){
     document.getElementById('hard-input').classList.add('correct');
-    score++; streak++; bestStreak=Math.max(bestStreak,streak);
-    showFeedback(true, p.c);
+    onCorrect(p);
   } else {
     document.getElementById('hard-input').classList.add('wrong');
-    streak=0;
-    showFeedback(false, p.c);
-  }
-  document.getElementById('streak-display').textContent='🔥 '+streak;
-  document.getElementById('score-mid').textContent=score+' correct';
-  showActionRow();
-  if(currentMode==='daily') saveDaily(isRight);
-}
-
-function showFeedback(correct, college){
-  const fb = document.getElementById('feedback');
-  fb.className = 'feedback show '+(correct?'correct':'wrong');
-  fb.textContent = correct ? '✓ Correct! ' + college : '✗ The answer was ' + college;
-}
-
-function showActionRow(){
-  const row = document.getElementById('action-row');
-  row.style.display = 'flex';
-  const nextBtn = document.getElementById('next-btn');
-  const isLast = qIndex >= sessionPlayers.length - 1;
-  if(currentMode === 'daily'){
-    nextBtn.textContent = 'View Result →';
-    nextBtn.onclick = showDailyResult;
-  } else if(isLast){
-    nextBtn.textContent = 'See Results →';
-    nextBtn.onclick = endGame;
-  } else {
-    nextBtn.textContent = 'Next Player →';
-    nextBtn.onclick = nextQuestion;
+    onWrong(p);
   }
 }
 
-function nextQuestion(){
-  qIndex++;
-  if(qIndex >= sessionPlayers.length){ endGame(); return; }
-  loadQuestion();
+function onCorrect(p){
+  streak++;
+  updateStreakDisplay();
+  document.getElementById('player-card').classList.add('flash-green');
+  if(currentMode==='daily'){onDailyResult(true,p);return;}
+  // Auto-advance after 900ms
+  setTimeout(()=>{nextPlayer();},900);
 }
 
-function endGame(){
-  const pct = Math.round(score/sessionPlayers.length*100);
-  document.getElementById('final-score').textContent = score;
-  document.getElementById('score-detail').textContent =
-    score+' / '+sessionPlayers.length+' correct · Best streak: '+bestStreak+'🔥 · '+pct+'%';
-  document.getElementById('score-bar').style.width = pct+'%';
-  showScreen('screen-results');
-  if(typeof saveResult==='function') saveResult(SLUG,'The Combine',score,sessionPlayers.length,score===sessionPlayers.length);
+function onWrong(p){
+  document.getElementById('player-card').classList.add('flash-red');
+  const reveal=document.getElementById('answer-reveal');
+  reveal.textContent='Answer: '+p.c;
+  reveal.className='answer-reveal show';
+  if(currentMode==='daily'){onDailyResult(false,p);return;}
+  setBest(currentMode,streak);
+  setTimeout(()=>showGameOver(p),1400);
 }
 
-function saveDaily(correct){
-  const p = sessionPlayers[0];
-  localStorage.setItem('combine-daily', JSON.stringify({
-    date: new Date().toISOString().slice(0,10),
-    correct: correct,
-    player: p.n,
-    college: p.c
+function updateStreakDisplay(){
+  document.getElementById('streak-num').textContent=streak;
+  const flame=streak>0?'🔥 ':'';
+  document.getElementById('best-sm').textContent='Best: '+getBest(currentMode);
+}
+
+/* ── GAME OVER ── */
+function showGameOver(p){
+  const isNew=streak>0&&streak>=getBest(currentMode);
+  setBest(currentMode,streak);
+  document.getElementById('over-score').textContent=streak;
+  document.getElementById('over-pos').textContent=p.pos;
+  document.getElementById('over-name').textContent=p.n;
+  document.getElementById('over-answer').textContent='Answer: '+p.c;
+  document.getElementById('over-best').innerHTML=isNew&&streak>0?'<div class="new-best">🏆 New Best!</div>':'';
+  document.getElementById('play-again-btn').textContent='Play '+currentMode.charAt(0).toUpperCase()+currentMode.slice(1)+' Again';
+  showScreen('screen-over');
+  if(typeof saveResult==='function') saveResult('the-combine','The Combine ('+currentMode+')',streak,streak+1,false);
+}
+
+function quitGame(){
+  setBest(currentMode,streak);
+  if(lastPlayer) showGameOver(lastPlayer);
+  else showHome();
+}
+
+function playAgain(){startGame(currentMode);}
+
+/* ── DAILY ── */
+function onDailyResult(correct,p){
+  localStorage.setItem('combine-daily',JSON.stringify({
+    date:new Date().toISOString().slice(0,10),correct,player:p.n,college:p.c
   }));
+  setTimeout(()=>{
+    document.getElementById('dc-icon').textContent=correct?'🏆':'❌';
+    document.getElementById('dc-title').textContent=correct?'Nailed It!':'Not Quite!';
+    document.getElementById('dc-sub').textContent=correct
+      ?p.n+' went to '+p.c+'. Come back tomorrow!'
+      :'The answer was '+p.c+'. Come back tomorrow!';
+    showScreen('screen-daily-done');
+  },1200);
 }
 
-function showDailyResult(){
-  const data = JSON.parse(localStorage.getItem('combine-daily'));
-  document.getElementById('dc-icon').textContent = data.correct ? '🏆' : '❌';
-  document.getElementById('dc-title').textContent = data.correct ? 'Got It!' : 'Not Quite!';
-  document.getElementById('dc-sub').textContent = data.correct
-    ? `${data.player} went to ${data.college}. Come back tomorrow!`
-    : `${data.player} went to ${data.college}. Come back tomorrow!`;
-  dailyCorrect = data.correct;
-  showScreen('screen-daily-done');
-}
-
+/* ── SHARE ── */
 function shareScore(){
-  const pct = Math.round(score/sessionPlayers.length*100);
-  const bar = Array.from({length:10},(_,i)=>i<Math.round(pct/10)?'🏈':'⬛').join('');
-  const modeLabel = currentMode==='easy'?'Easy':currentMode==='hard'?'Hard':'Daily';
-  const txt = 'SportsStack — The Combine ('+modeLabel+')\n'+score+' / '+sessionPlayers.length+' ('+pct+'%)\n'+bar+'\nsportsstack.com.au/the-combine.html';
-  const btn = document.querySelector('#screen-results .share-btn');
+  const mode=currentMode.charAt(0).toUpperCase()+currentMode.slice(1);
+  const txt='SportsStack — The Combine ('+mode+')\n🔥 Streak: '+streak+'\nBest: '+getBest(currentMode)+'\nsportsstack.com.au/the-combine.html';
+  const btn=document.querySelector('#screen-over .share-btn');
   if(navigator.share){navigator.share({text:txt}).catch(()=>{});}
   else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{if(btn){btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}});}
 }
 
 function shareDaily(){
-  const data = JSON.parse(localStorage.getItem('combine-daily'));
-  const result = data.correct ? '✅ Got it!' : '❌ Missed it';
-  const txt = `SportsStack — The Combine (Daily)\n${result}\n${data.player} → ${data.college}\nsportsstack.com.au/the-combine.html`;
-  const btn = document.querySelector('#screen-daily-done .share-btn');
+  const d=JSON.parse(localStorage.getItem('combine-daily')||'{}');
+  const txt='SportsStack — The Combine (Daily)\n'+(d.correct?'✅ Correct!':'❌ Missed it')+' — '+d.player+'\nsportsstack.com.au/the-combine.html';
+  const btn=document.querySelector('#screen-daily-done .share-btn');
   if(navigator.share){navigator.share({text:txt}).catch(()=>{});}
   else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{if(btn){btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}});}
 }
 
 document.getElementById('hard-input').addEventListener('keydown',e=>{if(e.key==='Enter')submitHard();});
-
-// Init
 showHome();
 </script>
 <script src="sportstack-member.js?v=4"></script>
