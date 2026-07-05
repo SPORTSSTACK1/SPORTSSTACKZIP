@@ -217,24 +217,52 @@
     }
   }
 
-  // ── Widget (small bar under member widget) ────────────────────
+  // ── Widget — nav pill + sub-nav XP bar ──────────────────────────
   function updateWidget(xp, level) {
-    var widget = document.getElementById('ss-member-widget');
-    if (!widget) return;
     var col = levelColor(level);
     var pct = Math.round(levelProgress(xp) * 100);
-    var existing = document.getElementById('ss-xp-bar');
-    var html = '<div id="ss-xp-bar" title="Click to view profile" style="margin-top:6px;min-width:120px;cursor:pointer" onclick="window._openXPProfile && window._openXPProfile()">' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
-        '<span style="font-family:\'Barlow Condensed\',sans-serif;font-size:12px;font-weight:900;letter-spacing:.06em;color:' + col + '">LVL ' + level + ' · ' + levelTitle(level) + '</span>' +
-        '<span style="font-size:10px;color:#6b8abf;font-family:\'Barlow Condensed\',sans-serif;letter-spacing:.04em">' + xp.toLocaleString() + ' XP</span>' +
-      '</div>' +
-      '<div style="height:5px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden">' +
+
+    // 1. Nav pill — small level badge injected into nav (before member widget)
+    var nav = document.querySelector('nav');
+    var pill = document.getElementById('xp-nav-pill');
+    if (nav && !pill) {
+      pill = document.createElement('button');
+      pill.id = 'xp-nav-pill';
+      pill.onclick = function() { window._openXPProfile && window._openXPProfile(); };
+      pill.setAttribute('aria-label', 'View XP profile');
+      nav.appendChild(pill);
+    }
+    if (pill) {
+      pill.innerHTML = '<span id="xp-pill-lv">LVL ' + level + '</span>';
+      pill.style.cssText = 'background:transparent;border:1.5px solid ' + col + ';color:' + col +
+        ';font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:900;letter-spacing:.08em;' +
+        'padding:4px 12px;border-radius:50px;cursor:pointer;flex-shrink:0;transition:all .2s;' +
+        'text-transform:uppercase';
+    }
+
+    // 2. Sub-nav bar — thin XP bar that appears directly below the sticky nav
+    var bar = document.getElementById('xp-subnav-bar');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'xp-subnav-bar';
+      bar.onclick = function() { window._openXPProfile && window._openXPProfile(); };
+      bar.style.cssText = 'position:sticky;top:52px;z-index:999;cursor:pointer;' +
+        'background:#04080f;border-bottom:1px solid #0d2040;padding:5px 16px 6px;' +
+        'display:flex;align-items:center;gap:12px';
+      var navEl = document.querySelector('nav');
+      if (navEl && navEl.nextSibling) navEl.parentNode.insertBefore(bar, navEl.nextSibling);
+      else document.body.insertBefore(bar, document.body.firstChild);
+    }
+    bar.innerHTML =
+      '<span style="font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:900;' +
+        'letter-spacing:.08em;color:' + col + ';white-space:nowrap;flex-shrink:0">' +
+        'LVL ' + level + ' · ' + levelTitle(level) + '</span>' +
+      '<div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden">' +
         '<div style="height:100%;width:' + pct + '%;background:' + col + ';border-radius:99px;transition:width .6s ease"></div>' +
       '</div>' +
-    '</div>';
-    if (existing) existing.outerHTML = html;
-    else widget.insertAdjacentHTML('beforeend', html);
+      '<span style="font-size:10px;color:#6b8abf;white-space:nowrap;flex-shrink:0">' +
+        (level < 100 ? (xpToNextLevel(xp).toLocaleString() + ' to lvl ' + (level+1)) : 'Max Level!') +
+      '</span>';
   }
 
   // ── Styles ────────────────────────────────────────────────────
