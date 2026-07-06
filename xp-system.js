@@ -115,9 +115,10 @@
     var pct = Math.round(levelProgress(xp) * 100);
     var nav = document.querySelector('nav');
 
-    // Level pill in nav
+    // Level pill in nav — only on quiz/hub pages, not on homepage (which has pills nav)
+    var hasNavPills = nav && nav.querySelector('.nav-pills-scroll');
     var pill = document.getElementById('xp-nav-pill');
-    if (nav && !pill) {
+    if (nav && !pill && !hasNavPills) {
       pill = document.createElement('button');
       pill.id = 'xp-nav-pill';
       pill.onclick = openModal;
