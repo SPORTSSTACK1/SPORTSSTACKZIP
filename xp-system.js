@@ -148,8 +148,7 @@
         else nav2.parentNode.appendChild(bar);
       }
     }
-    var isQuizPage = !!(document.getElementById('team-grid') || document.getElementById('guess-input'));
-    bar.onclick = isQuizPage ? openModal : function(){ window.location.href = 'profile.html'; };
+        bar.onclick = openModal;
     if (bar) bar.innerHTML =
       '<span style="font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:900;letter-spacing:.08em;color:#f5c842;white-space:nowrap;flex-shrink:0">LVL '+level+' · '+levelTitle(level)+'</span>'
       +'<div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:#f5c842;border-radius:99px;transition:width .6s ease"></div></div>'
