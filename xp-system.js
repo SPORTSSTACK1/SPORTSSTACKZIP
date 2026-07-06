@@ -126,7 +126,7 @@
     }
     if (pill) {
       pill.textContent = 'LVL ' + level;
-      pill.style.cssText = 'background:transparent;border:1.5px solid '+col+';color:'+col
+      pill.style.cssText = 'background:transparent;border:1.5px solid #f5c842;color:#f5c842'
         +';font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:900;'
         +'letter-spacing:.08em;padding:4px 12px;border-radius:50px;cursor:pointer;'
         +'flex-shrink:0;text-transform:uppercase;transition:all .2s';
@@ -148,7 +148,7 @@
     }
     if (bar) bar.innerHTML =
       '<span style="font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:900;letter-spacing:.08em;color:'+col+';white-space:nowrap;flex-shrink:0">LVL '+level+' · '+levelTitle(level)+'</span>'
-      +'<div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:'+col+';border-radius:99px;transition:width .6s ease"></div></div>'
+      +'<div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:#f5c842;border-radius:99px;transition:width .6s ease"></div></div>'
       +'<span style="font-size:10px;color:#6b8abf;white-space:nowrap;flex-shrink:0">'+(level<100?xpToNextLevel(xp).toLocaleString()+' to lvl '+(level+1):'Max Level!')+'</span>';
   }
 
@@ -174,15 +174,15 @@
     if (!xpRow) return;
     var xp = xpRow.total_xp||0, lv = xpRow.level||1, col = levelColor(lv);
     var pct = Math.round(levelProgress(xp)*100);
-    var name = userId ? (window.ssUser && window.ssUser.email ? window.ssUser.email.split('@')[0] : userId.slice(0,8)) : 'Member';
+    var name = userEmail ? userEmail.split('@')[0] : (userId ? userId.slice(0,8) : 'Member');
     var S=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
     var C=function(id,p,v){var e=document.getElementById(id);if(e)e.style[p]=v;};
     S('xm-av',name.charAt(0).toUpperCase()); C('xm-av','background',col);
     S('xm-un',name); S('xm-ti',levelTitle(lv)); C('xm-ti','color',col);
-    S('xm-bg','LVL '+lv); C('xm-bg','background',col); C('xm-bg','color',lv>=50?'#04080f':'#e8f0fe');
+    S('xm-bg','LVL '+lv); C('xm-bg','background','#f5c842'); C('xm-bg','color','#04080f');
     S('xm-xp',xp.toLocaleString()+' XP');
     S('xm-nx',lv<100?xpToNextLevel(xp).toLocaleString()+' to Level '+(lv+1):'Max Level!');
-    C('xm-bf','width',pct+'%'); C('xm-bf','background',col);
+    C('xm-bf','width',pct+'%'); C('xm-bf','background','#f5c842');
     S('xm-lf','Level '+lv+' ('+xpForLevel(lv).toLocaleString()+' XP)');
     S('xm-lt',lv<100?'Level '+(lv+1)+' ('+xpForLevel(lv+1).toLocaleString()+' XP)':'Max Level!');
     S('xm-qz',(xpRow.quizzes_completed||0).toLocaleString());
@@ -260,10 +260,13 @@
     run();
   }
 
+  var userEmail = '';
+
   function run() {
     getUser().then(function(user) {
       if (!user) return; // not logged in
       userId = user.id;
+      userEmail = user.email || '';
       hookSaveResult();
       loadXP(userId).then(function(row) {
         if (!row) return;
