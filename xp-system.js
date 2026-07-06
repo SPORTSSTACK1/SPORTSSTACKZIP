@@ -130,8 +130,8 @@
         +';font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:900;'
         +'letter-spacing:.08em;padding:4px 12px;border-radius:50px;cursor:pointer;'
         +'flex-shrink:0;text-transform:uppercase;transition:all .2s';
-      var isQuizPage2 = !!(document.getElementById('team-grid') || document.getElementById('guess-input'));
-      pill.onclick = isQuizPage2 ? openModal : function(){ window.location.href = 'profile.html'; };
+      pill.onclick = openModal;
+      pill.onclick = openModal;
     }
 
     // Sub-nav XP bar
@@ -166,7 +166,8 @@
       +'<div class="xp-mh"><div class="xp-mav" id="xm-av">?</div><div class="xp-mid"><div class="xp-mun" id="xm-un">Member</div><div class="xp-mti" id="xm-ti">Rookie</div></div><div class="xp-mbg" id="xm-bg">LVL 1</div></div>'
       +'<div class="xp-mbr"><div class="xp-mrl"><span id="xm-xp">0 XP</span><span id="xm-nx">0 to next</span></div><div class="xp-mbt"><div class="xp-mbf" id="xm-bf"></div></div><div class="xp-mrl" style="margin-top:5px"><span id="xm-lf" style="font-size:10px;color:#6b8abf;font-family:\'Barlow Condensed\',sans-serif"></span><span id="xm-lt" style="font-size:10px;color:#6b8abf;font-family:\'Barlow Condensed\',sans-serif"></span></div></div>'
       +'<div class="xp-mst"><div class="xp-ms1"><div class="xp-msv" id="xm-qz">0</div><div class="xp-msl">Quizzes</div></div><div class="xp-ms1"><div class="xp-msv" id="xm-pf">0</div><div class="xp-msl">Perfect</div></div><div class="xp-ms1"><div class="xp-msv" id="xm-sk">0</div><div class="xp-msl">Streak</div></div><div class="xp-ms1"><div class="xp-msv" id="xm-tx">0</div><div class="xp-msl">Total XP</div></div></div>'
-      +'<div class="xp-mml"><div class="xp-mmt">Level Milestones</div><div class="xp-mmr" id="xm-ms"></div></div></div>';
+      +'<div class="xp-mml"><div class="xp-mmt">Level Milestones</div><div class="xp-mmr" id="xm-ms"></div></div>'
+      +'<a href="profile.html" style="display:block;margin-top:18px;text-align:center;padding:11px;border-radius:10px;border:1.5px solid #1a3a6a;background:transparent;color:#e8f0fe;font-family:\'Barlow Condensed\',sans-serif;font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor=\'#f5c842\';this.style.color=\'#f5c842\'" onmouseout="this.style.borderColor=\'#1a3a6a\';this.style.color=\'#e8f0fe\'">My Profile →</a></div>';
     document.body.appendChild(m);
     setTimeout(function(){ m.classList.add('xp-ms'); }, 10);
     window._openXPProfile = openModal;
