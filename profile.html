@@ -97,6 +97,49 @@ nav{background:rgba(4,8,15,.95);border-bottom:1px solid var(--border);padding:0 
       <div class="stat"><div class="stat-n" id="stat-total">312</div><div class="stat-l">Total Quizzes</div></div>
     </div>
   </div>
+
+  <!-- XP Level Section -->
+  <div id="xp-profile-section" style="display:none;background:#0d1829;border:1.5px solid #1a3a6a;border-radius:16px;padding:20px 22px;margin:0 auto 20px;max-width:680px;width:90%">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+      <div id="xp-ps-badge" style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:.06em;padding:8px 18px;border-radius:50px;flex-shrink:0">LVL 1</div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+          <span id="xp-ps-title" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">Rookie</span>
+          <span id="xp-ps-xp" style="font-size:12px;color:#6b8abf;font-family:'Barlow Condensed',sans-serif">0 XP</span>
+        </div>
+        <div style="height:10px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden">
+          <div id="xp-ps-bar" style="height:100%;width:0%;border-radius:99px;transition:width 1s ease"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:5px">
+          <span id="xp-ps-from" style="font-size:10px;color:#6b8abf;font-family:'Barlow Condensed',sans-serif"></span>
+          <span id="xp-ps-next" style="font-size:10px;color:#6b8abf;font-family:'Barlow Condensed',sans-serif"></span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
+      <div style="background:#04080f;border:1px solid #0d2040;border-radius:10px;padding:12px 8px;text-align:center">
+        <div id="xp-ps-quizzes" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#f5c842">0</div>
+        <div style="font-size:10px;color:#6b8abf;letter-spacing:.06em;text-transform:uppercase;margin-top:3px">Quizzes</div>
+      </div>
+      <div style="background:#04080f;border:1px solid #0d2040;border-radius:10px;padding:12px 8px;text-align:center">
+        <div id="xp-ps-perfect" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#f5c842">0</div>
+        <div style="font-size:10px;color:#6b8abf;letter-spacing:.06em;text-transform:uppercase;margin-top:3px">Perfect</div>
+      </div>
+      <div style="background:#04080f;border:1px solid #0d2040;border-radius:10px;padding:12px 8px;text-align:center">
+        <div id="xp-ps-streak" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#f5c842">0</div>
+        <div style="font-size:10px;color:#6b8abf;letter-spacing:.06em;text-transform:uppercase;margin-top:3px">Day Streak</div>
+      </div>
+      <div style="background:#04080f;border:1px solid #0d2040;border-radius:10px;padding:12px 8px;text-align:center">
+        <div id="xp-ps-totalxp" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#f5c842">0</div>
+        <div style="font-size:10px;color:#6b8abf;letter-spacing:.06em;text-transform:uppercase;margin-top:3px">Total XP</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #0d2040;padding-top:14px">
+      <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#6b8abf;margin-bottom:10px">Level Milestones</div>
+      <div style="display:flex;gap:8px;justify-content:space-between" id="xp-ps-milestones"></div>
+    </div>
+  </div>
+
   <div class="hub" id="badge-hub"></div>
 
     <!-- World Cup Sticker Book -->
@@ -122,15 +165,18 @@ const ALL_QUIZZES = [{"slug":"afl-800-goals-quiz","name":"800 Goal Club","colour
 
 const SECTIONS = [
   {label:'Daily & Weekly', colour:'#f5c842', slugs:['clubble','sportsman-au','sportsman-pl','sportsman-us','weekly-quiz-2026-05-19']},
-  {label:'Football', colour:'#4ade80', prefix:'', slugs:['pl-teams-quiz','pl-100-club-quiz','pl-golden-boot-quiz','pl-poty-quiz','pl-ypoty-quiz','pl-top-assisters-quiz','pl-highest-paid-quiz','pl-managers-quiz','pl-toty-appearances-quiz','ballon-dor-quiz','ucl-winners-quiz','ucl-top-scorers-quiz','ucl-winning-managers-quiz','ucl-final-cities-quiz','wc-top-scorers-quiz','wc-winners-quiz','wc-finalists-quiz','wc-final-scorers-quiz','expensive-transfers-quiz']},
+  {label:'Football', colour:'#4ade80', slugs:['pl-teams-quiz','pl-100-club-quiz','pl-golden-boot-quiz','pl-poty-quiz','pl-ypoty-quiz','pl-top-assisters-quiz','pl-highest-paid-quiz','pl-managers-quiz','pl-toty-appearances-quiz','ballon-dor-quiz','ucl-winners-quiz','ucl-top-scorers-quiz','ucl-winning-managers-quiz','ucl-final-cities-quiz','fa-cup-winners-quiz','europa-league-winners-quiz','wc-top-scorers-quiz','wc-winners-quiz','wc-finalists-quiz','wc-final-scorers-quiz','expensive-transfers-quiz']},
   {label:'PL Team of the Season', colour:'#38bdf8', slugs:ALL_QUIZZES.filter(q=>q.slug.startsWith('pl-tots-')).map(q=>q.slug)},
   {label:'UEFA Champions League', colour:'#c0d4f0', slugs:ALL_QUIZZES.filter(q=>q.slug.startsWith('ucl-tots-')).map(q=>q.slug)},
   {label:'NFL / American Football', colour:'#16a34a', slugs:['nfl-teams-quiz','nfl-stadiums-quiz','nfl-mvp-quiz','nfl-superbowl-mvp-quiz','nfl-sb-coaches-quiz','nfl-number-1-picks-quiz','nfl-oroy-quiz','nfl-opoy-quiz','nfl-droy-quiz','nfl-dpoty-quiz','nfl-highest-paid-quiz','nfl-highest-paid-position-quiz','nfl-franchise-passing-quiz','nfl-franchise-td-leaders-quiz','nfl-qb-super-bowls-quiz','nfl-100-receiving-td-quiz','nfl-sack-leaders-quiz','nfl-interception-leaders-quiz']},
+  {label:'AP All-Pro First Teams', colour:'#4ade80', slugs:ALL_QUIZZES.filter(q=>q.slug.startsWith('nfl-ap-all-pro')).map(q=>q.slug)},
+  {label:'College Football', colour:'#22c55e', slugs:['heisman-quiz','big12-teams-quiz','big10-teams-quiz','sec-teams-quiz','cfb-champions-quiz']},
+  {label:'NBA / Basketball', colour:'#f97316', slugs:['nba-teams-quiz','nba-home-arenas-quiz','nba-finals-mvp-quiz','nba-mvp-since-2000-quiz','nba-roty-quiz','nba-number-1-picks-quiz','nba-franchise-leading-scorers-quiz','nba-top-20-scorers-quiz','nba-top-20-assists-quiz','nba-highest-paid-quiz','nba-3point-leaders-quiz','nba-50point-games-quiz','nba-rebound-leaders-quiz','nba-block-leaders-quiz']},
+  {label:'All-NBA Teams', colour:'#fb923c', slugs:ALL_QUIZZES.filter(q=>q.slug.startsWith('all-nba-')).map(q=>q.slug)},
   {label:'Cricket', colour:'#22c55e', slugs:['ipl-teams-quiz','county-cricket-teams-quiz','big-bash-teams-quiz','the-hundred-teams-quiz','ipl-most-expensive-quiz','t20i-fastest-hundreds-quiz','test-wicket-takers-quiz','odi-wicket-takers-quiz','t20i-wicket-takers-quiz','test-run-scorers-quiz','odi-run-scorers-quiz','t20i-run-scorers-quiz']},
   {label:'Rugby', colour:'#a78bfa', slugs:['prem-rugby-teams-quiz','urc-teams-quiz','super-rugby-teams-quiz','super-league-teams-quiz','nrl-teams-quiz','nrl-dally-m-quiz','state-of-origin-tryscorers-quiz','nrl-tryscorers-quiz']},
   {label:'AFL', colour:'#e97c30', slugs:['afl-teams-quiz','afl-800-goals-quiz','afl-appearances-quiz','afl-club-goalkickers-quiz','afl-coleman-medal-quiz','afl-highest-paid-2026-quiz','afl-norm-smith-quiz','afl-premiership-coaches-quiz']},
-  {label:'MLB / Baseball', colour:'#e74c3c', slugs:['mlb-teams-quiz','mlb-stadiums-quiz','mlb-hr-leaders-quiz','mlb-active-hr-leaders-quiz','mlb-300-wins-quiz','mlb-number-1-picks-quiz','mlb-cy-young-quiz','al-cy-young-quiz','nl-cy-young-quiz','al-mvp-quiz','nl-mvp-quiz','world-series-mvp-quiz']},
-  {label:'NBA / Basketball', colour:'#f97316', slugs:['nba-teams-quiz','nba-home-arenas-quiz','nba-finals-mvp-quiz','nba-mvp-since-2000-quiz','nba-roty-quiz','nba-number-1-picks-quiz','nba-franchise-leading-scorers-quiz','nba-top-20-scorers-quiz','nba-top-20-assists-quiz','nba-highest-paid-quiz','nba-3point-leaders-quiz','nba-50point-games-quiz','nba-rebound-leaders-quiz','nba-block-leaders-quiz']},
+  {label:'MLB / Baseball', colour:'#e74c3c', slugs:['mlb-teams-quiz','mlb-stadiums-quiz','mlb-hr-leaders-quiz','mlb-active-hr-leaders-quiz','mlb-300-wins-quiz','mlb-number-1-picks-quiz','mlb-cy-young-quiz','al-cy-young-quiz','nl-cy-young-quiz','al-mvp-quiz','nl-mvp-quiz','world-series-mvp-quiz','ws-mvp-quiz']},
 ];
 
 const quizMap = {};
