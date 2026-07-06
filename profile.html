@@ -411,6 +411,54 @@ async function signOut() {
 
 load();
 </script>
-<script src="xp-system.js"></script>
+<script src="xp-system.js">
+// ── XP Profile Section (uses ssClient from sportstack-member.js) ─
+(function(){
+  function xpForLevel(n){return n<=1?0:Math.floor(100*Math.pow(n-1,1.85));}
+  function levelFromXP(xp){var l=1;while(l<100&&xpForLevel(l+1)<=xp)l++;return l;}
+  function levelProgress(xp){var l=levelFromXP(xp);if(l>=100)return 1;return(xp-xpForLevel(l))/(xpForLevel(l+1)-xpForLevel(l));}
+  function xpToNext(xp){var l=levelFromXP(xp);return l>=100?0:xpForLevel(l+1)-xp;}
+  function lvlColor(l){if(l>=90)return'#ff6b35';if(l>=75)return'#a855f7';if(l>=50)return'#f5c842';if(l>=25)return'#3b82f6';if(l>=10)return'#22c55e';return'#6b8abf';}
+  function lvlTitle(l){if(l>=90)return'Legend';if(l>=75)return'Elite';if(l>=50)return'Expert';if(l>=25)return'Veteran';if(l>=10)return'Regular';return'Rookie';}
+  function fillXP(d){
+    var xp=d.total_xp||0,lv=d.level||1,col=lvlColor(lv),pct=Math.round(levelProgress(xp)*100);
+    var sec=document.getElementById('xp-profile-section');
+    if(sec)sec.style.display='block';
+    var S=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
+    var C=function(id,p,v){var e=document.getElementById(id);if(e)e.style[p]=v;};
+    S('xp-ps-badge','LVL '+lv);C('xp-ps-badge','background',col);C('xp-ps-badge','color',lv>=50?'#04080f':'#e8f0fe');
+    S('xp-ps-title',lvlTitle(lv));C('xp-ps-title','color',col);
+    S('xp-ps-xp',xp.toLocaleString()+' XP');
+    C('xp-ps-bar','width',pct+'%');C('xp-ps-bar','background',col);
+    S('xp-ps-from','Level '+lv+' ('+xpForLevel(lv).toLocaleString()+' XP)');
+    S('xp-ps-next',lv<100?xpToNext(xp).toLocaleString()+' XP to Level '+(lv+1):'Max Level!');
+    S('xp-ps-quizzes',(d.quizzes_completed||0).toLocaleString());
+    S('xp-ps-perfect',(d.perfect_scores||0).toLocaleString());
+    S('xp-ps-streak',(d.login_streak||0));
+    S('xp-ps-totalxp',xp.toLocaleString());
+    var mc=document.getElementById('xp-ps-milestones');
+    if(mc)mc.innerHTML=[5,10,25,50,75,100].map(function(m){
+      var done=lv>=m,c=done?lvlColor(m):'#1a3a6a';
+      return'<div style="flex:1;border:1.5px solid '+c+';border-radius:10px;padding:8px 4px;text-align:center;background:'+(done?'rgba(0,0,0,.3)':'transparent')+'">'
+        +'<div style="font-size:16px">'+(done?'✓':'⬡')+'</div>'
+        +'<div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:'+(done?c:'#1a3a6a')+'">LVL '+m+'</div>'
+        +'<div style="font-size:10px;color:'+(done?'#6b8abf':'#1a3a6a')+'">'+lvlTitle(m)+'</div></div>';
+    }).join('');
+  }
+  var att=0,poll=setInterval(function(){
+    if(++att>40){clearInterval(poll);return;}
+    if(typeof window.ssUser==='undefined'||typeof window.ssClient==='undefined')return;
+    clearInterval(poll);
+    if(!window.ssUser||!window.ssClient)return;
+    var uid=window.ssUser.id;if(!uid)return;
+    window.ssClient.from('user_xp').select('*').eq('user_id',uid).limit(1)
+      .then(function(res){
+        if(res.data&&res.data.length){fillXP(res.data[0]);return;}
+        window.ssClient.from('user_xp').insert({user_id:uid,total_xp:0,level:1}).select()
+          .then(function(ins){fillXP((ins.data&&ins.data[0])||{total_xp:0,level:1,quizzes_completed:0,perfect_scores:0,login_streak:0});});
+      }).catch(function(e){console.warn('XP error:',e);});
+  },500);
+}());
+</script>
 </body>
 </html>
