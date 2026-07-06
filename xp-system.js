@@ -131,7 +131,6 @@
         +'letter-spacing:.08em;padding:4px 12px;border-radius:50px;cursor:pointer;'
         +'flex-shrink:0;text-transform:uppercase;transition:all .2s';
       pill.onclick = openModal;
-      pill.onclick = openModal;
     }
 
     // Sub-nav XP bar
@@ -148,11 +147,10 @@
         else nav2.parentNode.appendChild(bar);
       }
     }
-        bar.onclick = openModal;
     if (bar) bar.innerHTML =
       '<span style="font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:900;letter-spacing:.08em;color:#f5c842;white-space:nowrap;flex-shrink:0">LVL '+level+' · '+levelTitle(level)+'</span>'
       +'<div style="flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:#f5c842;border-radius:99px;transition:width .6s ease"></div></div>'
-      +'<span style="font-size:10px;color:#6b8abf;white-space:nowrap;flex-shrink:0">'+(isQuizPage?xpToNextLevel(xp).toLocaleString()+' to lvl '+(level+1):'View my profile →')+'</span>';
+      +'<span style="font-size:10px;color:#6b8abf;white-space:nowrap;flex-shrink:0">'+(level<100?xpToNextLevel(xp).toLocaleString()+' to lvl '+(level+1):'Max Level!')+'</span>';
   }
 
   // ── Profile modal ─────────────────────────────────────────────
