@@ -93,12 +93,21 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}r.push(arguments);}
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date()); gtag('config', 'G-TL0NM71G5M');
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
+<nav style="position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px">
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#e8f0fe;text-decoration:none;padding:6px 14px;border:1px solid #1a3a6a;border-radius:8px">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
 <div class="page">
   <header class="site-header">
     <div class="game-title">NFL Defensive <span class="hl">Player of the Year Since 2000</span></div>
@@ -116,6 +125,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input class="guess-input" id="guess-input" type="text" placeholder="Type a name and press Enter…" autocomplete="off"/>
     <div class="suggestions" id="suggestions" style="display:none"></div>
   </div>
+  <button id="give-up-btn" onclick="giveUp()" style="display:block;margin:8px auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:#e8f0fe;border:1.5px solid rgba(255,255,255,.3);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='rgba(255,255,255,.3)';this.style.color='#e8f0fe'">Give Up &amp; Reveal</button>
   <div class="team-grid" id="team-grid"></div>
 </div>
 
@@ -135,29 +145,29 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 <script>
 const ENTRIES = [
   {id:1, year:2000, name:"Ray Lewis", accepted:["lewis","ray lewis"], team:"Baltimore Ravens"},
-  {id:2, year:2001, name:"Michael Strahan", accepted:["strahan","michael strahan"]},
+  {id:2, year:2001, name:"Michael Strahan", accepted:["strahan","michael strahan"], team:"New York Giants"},
   {id:3, year:2002, name:"Derrick Brooks", accepted:["brooks","derrick brooks"], team:"Tampa Bay Buccaneers"},
-  {id:4, year:2003, name:"Ray Lewis", accepted:["lewis","ray lewis"]},
+  {id:4, year:2003, name:"Ray Lewis", accepted:["lewis","ray lewis"], team:"Baltimore Ravens"},
   {id:5, year:2004, name:"Ed Reed", accepted:["reed","ed reed"], team:"Pittsburgh Steelers"},
-  {id:6, year:2005, name:"Brian Urlacher", accepted:["urlacher","brian urlacher"]},
+  {id:6, year:2005, name:"Brian Urlacher", accepted:["urlacher","brian urlacher"], team:"Chicago Bears"},
   {id:7, year:2006, name:"Jason Taylor", accepted:["taylor","jason taylor"], team:"San Diego Chargers"},
-  {id:8, year:2007, name:"Bob Sanders", accepted:["sanders","bob sanders"]},
+  {id:8, year:2007, name:"Bob Sanders", accepted:["sanders","bob sanders"], team:"Indianapolis Colts"},
   {id:9, year:2008, name:"James Harrison", accepted:["harrison","james harrison"], team:"Pittsburgh Steelers"},
-  {id:10, year:2009, name:"Charles Woodson", accepted:["woodson","charles woodson"]},
+  {id:10, year:2009, name:"Charles Woodson", accepted:["woodson","charles woodson"], team:"Green Bay Packers"},
   {id:11, year:2010, name:"Troy Polamalu", accepted:["polamalu","troy polamalu"], team:"Kansas City Chiefs"},
-  {id:12, year:2011, name:"Terrell Suggs", accepted:["suggs","terrell suggs"]},
+  {id:12, year:2011, name:"Terrell Suggs", accepted:["suggs","terrell suggs"], team:"Baltimore Ravens"},
   {id:13, year:2012, name:"J.J. Watt", accepted:["watt","jj watt","j.j. watt"], team:"Houston Texans"},
-  {id:14, year:2013, name:"Luke Kuechly", accepted:["kuechly","luke kuechly"]},
+  {id:14, year:2013, name:"Luke Kuechly", accepted:["kuechly","luke kuechly"], team:"Carolina Panthers"},
   {id:15, year:2014, name:"J.J. Watt", accepted:["watt","jj watt","j.j. watt"], team:"Houston Texans"},
-  {id:16, year:2015, name:"J.J. Watt", accepted:["watt","jj watt","j.j. watt"]},
+  {id:16, year:2015, name:"J.J. Watt", accepted:["watt","jj watt","j.j. watt"], team:"Houston Texans"},
   {id:17, year:2016, name:"Khalil Mack", accepted:["mack","khalil mack"], team:"Oakland Raiders"},
-  {id:18, year:2017, name:"Aaron Donald", accepted:["donald","aaron donald"]},
+  {id:18, year:2017, name:"Aaron Donald", accepted:["donald","aaron donald"], team:"Los Angeles Rams"},
   {id:19, year:2018, name:"Aaron Donald", accepted:["donald","aaron donald"], team:"Los Angeles Rams"},
-  {id:20, year:2019, name:"Stephon Gilmore", accepted:["gilmore","stephon gilmore"]},
+  {id:20, year:2019, name:"Stephon Gilmore", accepted:["gilmore","stephon gilmore"], team:"New England Patriots"},
   {id:21, year:2020, name:"Aaron Donald", accepted:["donald","aaron donald"], team:"Los Angeles Rams"},
-  {id:22, year:2021, name:"Micah Parsons", accepted:["parsons","micah parsons"]},
+  {id:22, year:2021, name:"Micah Parsons", accepted:["parsons","micah parsons"], team:"Dallas Cowboys"},
   {id:23, year:2022, name:"Nick Bosa", accepted:["bosa","nick bosa"], team:"Dallas Cowboys"},
-  {id:24, year:2023, name:"Myles Garrett", accepted:["garrett","myles garrett"]},
+  {id:24, year:2023, name:"Myles Garrett", accepted:["garrett","myles garrett"], team:"Cleveland Browns"},
   {id:25, year:2024, name:"Rahim Mostert", accepted:["mostert","rahim mostert"], team:"Miami Dolphins"},
 ];
 
@@ -252,7 +262,7 @@ function updateHUD(){
   el.className = 'stat-val' + (secsLeft <= 30 ? ' urgent' : '');
 }
 
-function hideSuggestions(){ document.getElementById('suggestions').style.display = 'none'; }
+function hideSuggestions(){ const s=document.getElementById('suggestions'); if(s)s.style.display='none'; }
 function showSuggestions(matches){
   const box = document.getElementById('suggestions');
   if(!matches.length){ hideSuggestions(); return; }
@@ -275,6 +285,14 @@ function acceptSuggestion(e){
 function startTimer(){
   clearInterval(timer);
   timer = setInterval(() => { secsLeft--; updateHUD(); if(secsLeft <= 0){ clearInterval(timer); timeUp(); } }, 1000);
+}
+
+function giveUp(){
+  if(!gameActive)return;
+  if(typeof timerInterval!=="undefined")clearInterval(timerInterval);if(typeof timer!=="undefined")clearInterval(timer);
+  const btn=document.getElementById('give-up-btn');
+  if(btn)btn.style.display='none';
+  timeUp();
 }
 function timeUp(){
   gameActive = false;
@@ -328,5 +346,6 @@ document.addEventListener('click', e => { if(!e.target.closest('.input-wrap')) h
 renderGrid(); updateHUD(); gameActive = true; startTimer();
 </script>
 <script src="sportstack-member.js?v=4"></script>
+<script src="xp-system.js"></script>
 </body>
 </html>

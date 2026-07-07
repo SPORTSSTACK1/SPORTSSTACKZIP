@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<meta property="og:title" content="Name Every Big 12 Team — SportsStack"/>
+<meta property="og:image" content="https://sportsstack.com.au/logo.png"/>
+<meta property="og:url" content="https://sportsstack.com.au/big12-teams-quiz.html"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/logo.png"/>
+<title>Name Every Big 12 Team – SportsStack</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--blue-light:#3b82f6;--green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);--red:#ef4444;--red-bg:rgba(239,68,68,.07);--red-border:rgba(239,68,68,.4);--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#1e3355;--border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
+.page{max-width:960px;margin:0 auto;padding:22px 14px 56px}
+.site-header{text-align:center;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,4vw,34px);font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.game-title .hl{color:var(--gold)}
+.game-subtitle{font-size:12px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:5px}
+.stats-bar{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:11px 20px;margin-bottom:16px;gap:10px;flex-wrap:wrap}
+.stat-item{text-align:center;flex:1;min-width:72px}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;line-height:1;color:var(--gold)}
+.stat-val.urgent{color:var(--red);animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stat-divider{width:1px;height:38px;background:var(--border-bright);flex-shrink:0}
+.prog-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
+.input-wrap{position:relative;margin-bottom:10px}
+.guess-input{width:100%;font-size:16px;padding:13px 18px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.guess-input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.guess-input::placeholder{color:var(--text-dim)}
+.guess-input:disabled{opacity:.4;cursor:not-allowed}
+.btn-give-up{display:block;margin:0 auto 14px;padding:8px 20px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:#e8f0fe;transition:all .2s}
+.btn-give-up:hover{border-color:var(--red);color:var(--red)}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(max-width:600px){.team-grid{grid-template-columns:repeat(3,1fr);gap:7px}}
+@media(max-width:380px){.team-grid{grid-template-columns:repeat(2,1fr);gap:6px}}
+.team-card{aspect-ratio:1/1;border-radius:var(--radius);border:1.5px solid var(--border-bright);background:var(--surface2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 6px;transition:all .35s cubic-bezier(.4,0,.2,1)}
+.card-icon{font-size:22px;margin-bottom:6px;opacity:.3}
+.card-dots{display:flex;gap:4px;justify-content:center;margin-top:4px}
+.card-dot{width:5px;height:5px;border-radius:50%;background:var(--border-bright)}
+.team-card.found{background:var(--green-bg);border-color:var(--green-border);box-shadow:0 0 16px rgba(34,197,94,.12)}
+.team-card.revealed{background:var(--red-bg);border-color:var(--red-border)}
+.card-name-found{font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,2vw,15px);font-weight:900;color:#86efac;letter-spacing:.02em;line-height:1.2}
+.card-name-revealed{font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,2vw,15px);font-weight:900;color:var(--red);letter-spacing:.02em;line-height:1.2}
+.result-area{margin-top:20px}
+.result-card{border-radius:var(--radius-lg);padding:22px 20px;text-align:center;border:1px solid}
+.result-card.win{border-color:var(--green-border);background:var(--green-bg)}
+.result-card.lose{border-color:var(--red-border);background:var(--red-bg)}
+.result-icon{font-size:36px;margin-bottom:8px}
+.result-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.result-card.win .result-title{color:#86efac}
+.result-card.lose .result-title{color:#fca5a5}
+.result-sub{font-size:14px;color:var(--text-muted);margin-bottom:14px}
+.share-btn{display:inline-block;margin-top:10px;padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:var(--text);transition:all .2s}
+.share-btn:hover{background:rgba(255,255,255,.06)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<nav>
+  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
+    <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+<div class="page">
+  <header class="site-header">
+    <div class="game-title">🏈 <span class="hl">Big 12</span> Teams</div>
+    <div class="game-subtitle">Name all 16 teams in the Big 12 Conference · 3:00</div>
+  </header>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-val" id="val-found">0</div><div class="stat-label">Found</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-remain">16</div><div class="stat-label">Remaining</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-val" id="val-timer">3:00</div><div class="stat-label">Time left</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  <div class="input-wrap">
+    <input class="guess-input" id="guess-input" type="text" placeholder="Type a team name…" autocomplete="off" spellcheck="false"/>
+  </div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()">Give Up &amp; Reveal</button>
+  <div class="team-grid" id="team-grid"></div>
+  <div class="result-area" id="result-area"></div>
+</div>
+<script>
+const ENTRIES = [{"id": 1, "name": "Arizona State", "accepted": ["arizona state", "asu", "sun devils"]}, {"id": 2, "name": "Arizona", "accepted": ["arizona", "wildcats"]}, {"id": 3, "name": "BYU", "accepted": ["byu", "brigham young", "cougars"]}, {"id": 4, "name": "Baylor", "accepted": ["baylor", "bears"]}, {"id": 5, "name": "Cincinnati", "accepted": ["cincinnati", "cincy", "bearcats"]}, {"id": 6, "name": "Colorado", "accepted": ["colorado", "buffaloes", "buffs"]}, {"id": 7, "name": "Houston", "accepted": ["houston"]}, {"id": 8, "name": "Iowa State", "accepted": ["iowa state", "cyclones"]}, {"id": 9, "name": "Kansas", "accepted": ["kansas", "jayhawks", "ku"]}, {"id": 10, "name": "Kansas State", "accepted": ["kansas state", "k-state", "kstate"]}, {"id": 11, "name": "Oklahoma State", "accepted": ["oklahoma state", "osu", "cowboys"]}, {"id": 12, "name": "TCU", "accepted": ["tcu", "horned frogs", "texas christian"]}, {"id": 13, "name": "Texas Tech", "accepted": ["texas tech", "red raiders"]}, {"id": 14, "name": "UCF", "accepted": ["ucf", "knights", "central florida"]}, {"id": 15, "name": "Utah", "accepted": ["utah", "utes"]}, {"id": 16, "name": "West Virginia", "accepted": ["west virginia", "mountaineers", "wvu"]}];
+const TOTAL = ENTRIES.length, TOTAL_SECS = 180;
+let secsLeft=TOTAL_SECS, timerInterval=null, gameActive=false, foundIds=new Set();
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
+function renderGrid(){
+  document.getElementById('team-grid').innerHTML=ENTRIES.map(e=>
+    `<div class="team-card" id="card-${e.id}"><div class="card-icon">🏈</div><div class="card-dots"><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span></div></div>`
+  ).join('');
+}
+function revealCard(e,found){
+  const c=document.getElementById('card-'+e.id);if(!c)return;
+  c.className='team-card '+(found?'found':'revealed');
+  c.innerHTML=`<div class="${found?'card-name-found':'card-name-revealed'}">${e.name}</div>`;
+}
+function updateHUD(){
+  document.getElementById('val-found').textContent=foundIds.size;
+  document.getElementById('val-remain').textContent=TOTAL-foundIds.size;
+  document.getElementById('prog-bar').style.width=(foundIds.size/TOTAL*100)+'%';
+}
+function tryGuess(val){
+  if(!gameActive||!val.trim())return;
+  const nv=norm(val);
+  for(const e of ENTRIES){
+    if(foundIds.has(e.id))continue;
+    if(e.accepted.some(a=>norm(a)===nv)){
+      foundIds.add(e.id);revealCard(e,true);updateHUD();
+      document.getElementById('guess-input').value='';
+      if(foundIds.size===TOTAL)endGame(true);return;
+    }
+  }
+  const inp=document.getElementById('guess-input');
+  inp.style.borderColor='var(--red)';setTimeout(()=>inp.style.borderColor='',600);
+}
+function startTimer(){
+  timerInterval=setInterval(()=>{
+    secsLeft--;const m=Math.floor(secsLeft/60),s=secsLeft%60;
+    const el=document.getElementById('val-timer');
+    if(el){el.textContent=m+':'+String(s).padStart(2,'0');if(secsLeft<=30)el.classList.add('urgent');}
+    if(secsLeft<=0){clearInterval(timerInterval);endGame(false);}
+  },1000);
+}
+function giveUp(){
+  if(!gameActive)return;gameActive=false;clearInterval(timerInterval);
+  document.getElementById('give-up-btn').style.display='none';
+  document.getElementById('guess-input').disabled=true;
+  ENTRIES.forEach(e=>{if(!foundIds.has(e.id))revealCard(e,false);});
+  endGame(false);
+}
+function endGame(won){
+  gameActive=false;clearInterval(timerInterval);
+  const inp=document.getElementById('guess-input');if(inp)inp.disabled=true;
+  const btn=document.getElementById('give-up-btn');if(btn)btn.style.display='none';
+  if(!won)ENTRIES.forEach(e=>{if(!foundIds.has(e.id))revealCard(e,false);});
+  const perfect=foundIds.size===TOTAL;
+  const url='sportsstack.com.au/big12-teams-quiz.html';
+  document.getElementById('result-area').innerHTML=`<div class="result-card ${perfect||won?'win':'lose'}">
+    <div class="result-icon">${perfect?'🏆':(won?'⭐':'⏱')}</div>
+    <div class="result-title">${perfect?'Perfect!':(won?'Well Done!':"Time's Up!")}</div>
+    <div class="result-sub">${foundIds.size} / ${TOTAL} teams named</div>
+    <button class="share-btn" onclick="shareScore()">Share Score 📋</button>
+  </div>`;
+  if(typeof saveResult==='function')saveResult('big12-teams-quiz','Name Every Big 12 Team',foundIds.size,TOTAL,perfect);
+}
+function shareScore(){
+  const pct=Math.round(foundIds.size/TOTAL*100);
+  const bar=Array.from({length:10},(_,i)=>i<Math.round(pct/10)?'🏈':'⬛').join('');
+  const txt='SportsStack — Name Every Big 12 Team\n'+foundIds.size+' / '+TOTAL+' ('+pct+'%)\n'+bar+'\nsportsstack.com.au/big12-teams-quiz.html';
+  const btn=document.querySelector('.share-btn');
+  if(navigator.share){navigator.share({text:txt}).catch(()=>{});if(btn){btn.textContent='Shared ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{if(btn){btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Score 📋',2000);}});}
+}
+renderGrid();gameActive=true;startTimer();
+document.getElementById('guess-input').addEventListener('keydown',e=>{if(e.key==='Enter')tryGuess(e.target.value);});
+document.getElementById('guess-input').addEventListener('input',e=>{if(gameActive)tryGuess(e.target.value);});
+</script>
+<script src="sportstack-member.js?v=4"></script>
+<script src="xp-system.js"></script>
+</body>
+</html>

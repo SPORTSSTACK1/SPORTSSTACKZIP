@@ -62,6 +62,7 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'B
 .team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
 .dm-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 6px;text-align:center;transition:.3s}
 .dm-card.found{background:#0f3a1f;border-color:#22c55e}
+.dm-card.revealed{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.3)}
 .dm-year{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--gold)}
 .dm-name{font-size:11px;font-weight:600;color:var(--text);margin-top:4px;min-height:14px}
 .dm-unk{font-size:20px;color:var(--text-dim);margin-top:4px}
@@ -69,7 +70,11 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'B
 .team-grid{margin-top:12px}
 .input-wrap{margin-top:8px}
 .result-banner{margin-top:12px}
-nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,
+<style>
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
+</style>
 <nav>
   <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
     <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
@@ -79,8 +84,6 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <div id="ss-member-widget"></div>
   </div>
 </nav>
-32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
-</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
@@ -98,15 +101,8 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input id="guess-input" class="guess-input" type="text" placeholder="Type a name…" autocomplete="off" spellcheck="false"/>
   </div>
   <div id="msg" style="text-align:center;font-size:13px;color:var(--gold);min-height:20px;margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;font-weight:700"></div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()" style="display:block;margin:0 auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:1px solid var(--border-bright);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
   <div id="card-grid" class="team-grid" style="grid-template-columns:repeat(5,1fr)"></div>
-    <div class="rank-info">
-      <div class="rank-name"><span class="rank-flag" id="flag-25"></span><span id="rname-25">?</span></div>
-      <div class="rank-stat">Year won</div>
-    </div>
-    <div class="rank-bar-wrap"><div class="rank-bar" id="bar-25" style="width:100%"></div></div>
-    <div class="rank-val" id="rval-25">2025</div>
-  </div>
-  </div>
   <div id="result"></div>
 </div>
 <script>
@@ -161,12 +157,12 @@ function revealRow(rank){
   const e=ENTRIES.find(x=>x.rank===rank);
   if(!e||foundIds.has(rank))return;
   foundIds.add(rank);
-  const row=document.getElementById('row-'+rank);
-  if(row)row.classList.add('found');
+  const card=document.getElementById('row-'+rank);
+  if(card)card.classList.add('found');
+  const unk=document.getElementById('unk-'+rank);
+  if(unk)unk.style.display='none';
   const rn=document.getElementById('rname-'+rank);
   if(rn)rn.textContent=e.name;
-  const flagEl=document.getElementById('flag-'+rank);
-  if(flagEl)flagEl.classList.add('visible');
 }
 
 
@@ -183,231 +179,17 @@ function revealRow(rank){
 
 function hideSugg(){}
 
-function showSugg(matches){
-  const box=document.getElementById('sugg-box');
-  if(!matches.length){hideSugg();return;}
-  box.innerHTML=matches.map(m=>
-    `<div class="sugg-item" data-name="${m.name}" data-accepted='${JSON.stringify(m.accepted)}'>→ ${m.name}</div>`
-  ).join('');
-  box.style.display='block';
-  box.querySelectorAll('.sugg-item').forEach(el=>{
-    el.addEventListener('mousedown',ev=>{
-      ev.preventDefault();
-      const acc=JSON.parse(el.dataset.accepted);
-      document.getElementById('guess-input').value='';
-      hideSugg();
-      fillAllMatching(acc);
-      updateHUD();
-      if(foundIds.size===TOTAL)endGame(true);
-    });
-  });
-}
-
-function updateHUD(){
-  document.getElementById('remain-count').textContent=TOTAL-foundIds.size;
-  document.getElementById('score').textContent=foundIds.size;
-
-  var _tm=document.getElementById('timer');if(_tm){var _m=Math.floor(secsLeft/60),_s=secsLeft%60;_tm.textContent=_m+':'+(_s<10?'0':'')+_s;}
-}
-
-function tryGuess(val){
-  if(!gameActive||!val.trim())return;
-  const nv=norm(val);
-  // Exact match
-  for(const e of ENTRIES){
-    if(foundIds.has(e.rank))continue;
-    if(e.accepted.some(a=>norm(a)===nv)){
-      fillAllMatching(e.accepted);
-      updateHUD();
-      document.getElementById('guess-input').value='';
-      hideSugg();
-      if(foundIds.size===TOTAL)endGame(true);
-      return;
-    }
-  }
-  // Fuzzy suggestions (within 2 letters)
-  const seen=new Set();
-  const fuzzyMatches=[];
-  for(const e of ENTRIES){
-    if(foundIds.has(e.rank))continue;
-    if(seen.has(e.name))continue;
-    const close=e.accepted.some(a=>{
-      const na=norm(a);
-      return nv.length>=3&&(na.startsWith(nv)||levenshtein(nv,na)<=2);
-    });
-    if(close){
-      fuzzyMatches.push(e);
-      seen.add(e.name);
-    }
-    if(fuzzyMatches.length>=3)break;
-  }
-  if(fuzzyMatches.length){
-    showSugg(fuzzyMatches);
-  }else{
-    hideSugg();
-  }
-}
-
-function startTimer(){
-  gameActive=true;
-  timerInterval=setInterval(()=>{
-    secsLeft--;
-    const m=Math.floor(secsLeft/60),s=secsLeft%60;
-    document.getElementById('timer').textContent=m+':'+String(s).padStart(2,'0');
-    if(secsLeft<=30)document.getElementById('timer-pill').classList.add('urgent');
-    
-    if(secsLeft<=0){clearInterval(timerInterval);endGame(false);}
-  },1000);
-}
-
-function endGame(won){
-  gameActive=false;clearInterval(timerInterval);hideSugg();
-  if(!won){
-    ENTRIES.forEach(e=>{
-      if(!foundIds.has(e.rank)){
-        const row=document.getElementById('row-'+e.rank);
-        if(row)row.classList.add('revealed');
-        const rn=document.getElementById('rname-'+e.rank);
-        if(rn)rn.textContent=e.name;
-        const flagEl=document.getElementById('flag-'+e.rank);
-        if(flagEl)flagEl.classList.add('visible');
-      }
-    });
-  }
-  const won_emoji = '🏆';
-  const lose_emoji = '⏱';
-  document.getElementById('result').innerHTML=
-    `<div class="result-banner ${won?'win':'lose'}">
-      <div class="rb-icon">${won?won_emoji:lose_emoji}</div>
-      <div class="rb-title">${won?'Perfect!':"Time's Up!"}</div>
-      <div class="rb-sub">${foundIds.size} / ${TOTAL} named</div>
-      <button class="share-btn" onclick="copyResult()">Share result</button>
-    </div>`;
-}
-
-function copyResult(){
-  const txt='SportsStack — NRL Dally M Medal Winners Since 2000\n'+foundIds.size+'/'+TOTAL+'\nsportsstack.com.au';
-  navigator.share?(navigator.share({text:txt}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{
-    const b=document.querySelector('.share-btn');b.textContent='Copied!';
-    setTimeout(()=>b.textContent='Share result',2000);
-  });
-}
-
-const inp=document.getElementById('guess-input');
-inp.addEventListener('input',e=>{if(gameActive)tryGuess(e.target.value);});
-inp.addEventListener('keydown',e=>{if(e.key==='Enter'){tryGuess(e.target.value);} if(e.key==='Escape')hideSugg();});
-document.addEventListener('click',e=>{if(!e.target.closest('.input-wrap'))hideSugg();});
-gameActive=true;startTimer();
-</script>
-<script src="sportstack-member.js?v=4"></script>
-</body>
-</html>
-const ENTRIES = [
-  {rank:1,name:"Trent Barrett",accepted:["barrett","trent barrett"],stat:2000,statDisp:"2000",flag:""},
-  {rank:2,name:"Preston Campbell",accepted:["campbell","preston campbell"],stat:2001,statDisp:"2001",flag:""},
-  {rank:3,name:"Andrew Johns",accepted:["johns","andrew johns"],stat:2002,statDisp:"2002",flag:""},
-  {rank:4,name:"Danny Buderus",accepted:["buderus","danny buderus"],stat:2004,statDisp:"2004",flag:""},
-  {rank:5,name:"Johnathan Thurston",accepted:["thurston","johnathan thurston","jt"],stat:2005,statDisp:"2005",flag:""},
-  {rank:6,name:"Cameron Smith",accepted:["smith","cameron smith"],stat:2006,statDisp:"2006",flag:""},
-  {rank:7,name:"Johnathan Thurston",accepted:["thurston","johnathan thurston","jt"],stat:2007,statDisp:"2007",flag:""},
-  {rank:8,name:"Matt Orford",accepted:["orford","matt orford"],stat:2008,statDisp:"2008",flag:""},
-  {rank:9,name:"Jarryd Hayne",accepted:["hayne","jarryd hayne"],stat:2009,statDisp:"2009",flag:""},
-  {rank:10,name:"Todd Carney",accepted:["carney","todd carney"],stat:2010,statDisp:"2010",flag:""},
-  {rank:11,name:"Billy Slater",accepted:["slater","billy slater"],stat:2011,statDisp:"2011",flag:""},
-  {rank:12,name:"Ben Barba",accepted:["barba","ben barba"],stat:2012,statDisp:"2012",flag:""},
-  {rank:13,name:"Cooper Cronk",accepted:["cronk","cooper cronk"],stat:2013,statDisp:"2013",flag:""},
-  {rank:14,name:"Jarryd Hayne",accepted:["hayne","jarryd hayne"],stat:2014,statDisp:"2014",flag:""},
-  {rank:15,name:"Johnathan Thurston",accepted:["thurston","johnathan thurston","jt"],stat:2015,statDisp:"2015",flag:""},
-  {rank:16,name:"Cooper Cronk",accepted:["cronk","cooper cronk"],stat:2016,statDisp:"2016",flag:""},
-  {rank:17,name:"Cameron Smith",accepted:["smith","cameron smith"],stat:2017,statDisp:"2017",flag:""},
-  {rank:18,name:"Roger Tuivasa-Sheck",accepted:["tuivasa-sheck","roger tuivasa-sheck","rts"],stat:2018,statDisp:"2018",flag:""},
-  {rank:19,name:"James Tedesco",accepted:["tedesco","james tedesco"],stat:2019,statDisp:"2019",flag:""},
-  {rank:20,name:"Jack Wighton",accepted:["wighton","jack wighton"],stat:2020,statDisp:"2020",flag:""},
-  {rank:21,name:"Tom Trbojevic",accepted:["trbojevic","tom trbojevic","tommy trbojevic"],stat:2021,statDisp:"2021",flag:""},
-  {rank:22,name:"Nicho Hynes",accepted:["hynes","nicho hynes"],stat:2022,statDisp:"2022",flag:""},
-  {rank:23,name:"Kalyn Ponga",accepted:["ponga","kalyn ponga"],stat:2023,statDisp:"2023",flag:""},
-  {rank:24,name:"Jahrome Hughes",accepted:["hughes","jahrome hughes"],stat:2024,statDisp:"2024",flag:""},
-  {rank:25,name:"James Tedesco",accepted:["tedesco","james tedesco"],stat:2025,statDisp:"2025",flag:""}
-];
-const TOTAL = ENTRIES.length;
-const TOTAL_SECS = 300;
-let secsLeft = TOTAL_SECS, timerInterval = null, foundIds = new Set(), gameActive = false, hintShown = false;
-
-function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim(); }
-function levenshtein(a,b){
-  const m=a.length,n=b.length;
-  if(!m)return n;if(!n)return m;
-  const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:i===0?j:0));
-  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
-  return dp[m][n];
-}
-
-function showMsg(txt,dur=2000){
-  const el=document.getElementById('msg');
-  el.textContent=txt;
-  clearTimeout(el._t);
-  el._t=setTimeout(()=>el.textContent='',dur);
-}
-
-function revealRow(rank){
-  const e=ENTRIES.find(x=>x.rank===rank);
-  if(!e||foundIds.has(rank))return;
-  foundIds.add(rank);
-  const card=document.getElementById('dm-'+rank);
-  if(card){
-    card.className='dm-card found';
-    card.innerHTML='<div class="dm-year">'+e.statDisp+'</div><div class="dm-name">'+e.name+'</div>';
-  }
-  document.getElementById('remain-count').textContent=TOTAL-foundIds.size;
-  document.getElementById('score').textContent=foundIds.size;
-  updateHUD();
-}
+function showSugg(){}
 
 function buildGrid(){
   const grid=document.getElementById('card-grid');
   if(!grid)return;
-  grid.innerHTML='';
-  ENTRIES.forEach(function(e){
-    const card=document.createElement('div');
-    card.id='dm-'+e.rank;
-    card.className='dm-card';
-    card.innerHTML='<div class="dm-year">'+e.statDisp+'</div><div class="dm-unk">?</div>';
-    grid.appendChild(card);
-  });
-}
-
-
-  // Fill ALL rows that match the same player name
-  function fillAllMatching(acceptedArr) {
-    ENTRIES.forEach(e => {
-      if (foundIds.has(e.rank)) return;
-      if (e.accepted.some(a => acceptedArr.includes(a))) {
-        revealRow(e.rank);
-      }
-    });
-  }
-
-
-function hideSugg(){}
-
-function showSugg(matches){
-  const box=document.getElementById('sugg-box');
-  if(!matches.length){hideSugg();return;}
-  box.innerHTML=matches.map(m=>
-    `<div class="sugg-item" data-name="${m.name}" data-accepted='${JSON.stringify(m.accepted)}'>→ ${m.name}</div>`
-  ).join('');
-  box.style.display='block';
-  box.querySelectorAll('.sugg-item').forEach(el=>{
-    el.addEventListener('mousedown',ev=>{
-      ev.preventDefault();
-      const acc=JSON.parse(el.dataset.accepted);
-      document.getElementById('guess-input').value='';
-      hideSugg();
-      fillAllMatching(acc);
-      updateHUD();
-      if(foundIds.size===TOTAL)endGame(true);
-    });
-  });
+  grid.innerHTML=ENTRIES.map(e=>`
+    <div class="dm-card" id="row-${e.rank}">
+      <div class="dm-year">${e.statDisp}</div>
+      <div class="dm-unk" id="unk-${e.rank}">?</div>
+      <div class="dm-name" id="rname-${e.rank}"></div>
+    </div>`).join('');
 }
 
 function updateHUD(){
@@ -432,27 +214,7 @@ function tryGuess(val){
       return;
     }
   }
-  // Fuzzy suggestions (within 2 letters)
-  const seen=new Set();
-  const fuzzyMatches=[];
-  for(const e of ENTRIES){
-    if(foundIds.has(e.rank))continue;
-    if(seen.has(e.name))continue;
-    const close=e.accepted.some(a=>{
-      const na=norm(a);
-      return nv.length>=3&&(na.startsWith(nv)||levenshtein(nv,na)<=2);
-    });
-    if(close){
-      fuzzyMatches.push(e);
-      seen.add(e.name);
-    }
-    if(fuzzyMatches.length>=3)break;
-  }
-  if(fuzzyMatches.length){
-    showSugg(fuzzyMatches);
-  }else{
-    hideSugg();
-  }
+  hideSugg();
 }
 
 function startTimer(){
@@ -467,17 +229,26 @@ function startTimer(){
   },1000);
 }
 
+
+function giveUp(){
+  if(!gameActive)return;
+  clearInterval(timerInterval);
+  gameActive=false;
+  const btn=document.getElementById('give-up-btn');
+  if(btn)btn.style.display='none';
+  endGame(false);
+}
 function endGame(won){
   gameActive=false;clearInterval(timerInterval);hideSugg();
   if(!won){
     ENTRIES.forEach(e=>{
       if(!foundIds.has(e.rank)){
-        const row=document.getElementById('row-'+e.rank);
-        if(row)row.classList.add('revealed');
+        const card=document.getElementById('row-'+e.rank);
+        if(card)card.classList.add('revealed');
+        const unk=document.getElementById('unk-'+e.rank);
+        if(unk)unk.style.display='none';
         const rn=document.getElementById('rname-'+e.rank);
         if(rn)rn.textContent=e.name;
-        const flagEl=document.getElementById('flag-'+e.rank);
-        if(flagEl)flagEl.classList.add('visible');
       }
     });
   }
@@ -504,6 +275,10 @@ const inp=document.getElementById('guess-input');
 inp.addEventListener('input',e=>{if(gameActive)tryGuess(e.target.value);});
 inp.addEventListener('keydown',e=>{if(e.key==='Enter'){tryGuess(e.target.value);} if(e.key==='Escape')hideSugg();});
 document.addEventListener('click',e=>{if(!e.target.closest('.input-wrap'))hideSugg();});
+buildGrid();
 gameActive=true;startTimer();
 </script>
-<script src="sportstack-member.js?v=4">
+<script src="sportstack-member.js?v=4"></script>
+<script src="xp-system.js"></script>
+</body>
+</html>

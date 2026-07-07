@@ -58,7 +58,11 @@ html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'B
 .rb-sub{font-size:14px;color:var(--text-muted);margin-bottom:14px}
 .share-btn{padding:10px 24px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
 .share-btn:hover{background:rgba(255,255,255,.06)}
-nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,
+<style>
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);text-decoration:none;padding:6px 14px;border:1px solid var(--border-bright);border-radius:8px;transition:all .2s}
+.btn-lb:hover{border-color:var(--gold);color:var(--gold)}
+</style>
 <nav>
   <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
     <img src="logo.png" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
@@ -68,8 +72,6 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <div id="ss-member-widget"></div>
   </div>
 </nav>
-32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
-</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
@@ -89,6 +91,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
     <input id="guess-input" class="guess-input" type="text" placeholder="Type a name…" autocomplete="off" spellcheck="false"/>
   </div>
   <div id="msg" style="text-align:center;font-size:13px;color:var(--gold);min-height:20px;margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em;font-weight:700"></div>
+  <button class="btn-give-up" id="give-up-btn" onclick="giveUp()" style="display:block;margin:0 auto 16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:1px solid var(--border-bright);padding:8px 20px;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#ef4444';this.style.color='#ef4444'" onmouseout="this.style.borderColor='';this.style.color=''">Give Up &amp; Reveal</button>
   <div class="tower">
   <div class="rank-row" id="row-1">
     <div class="rank-num">#1</div>
@@ -294,6 +297,15 @@ function startTimer(){
   },1000);
 }
 
+
+function giveUp(){
+  if(!gameActive)return;
+  clearInterval(timerInterval);
+  gameActive=false;
+  const btn=document.getElementById('give-up-btn');
+  if(btn)btn.style.display='none';
+  endGame(false);
+}
 function endGame(won){
   gameActive=false;clearInterval(timerInterval);hideSugg();
   if(!won){
@@ -334,5 +346,6 @@ document.addEventListener('click',e=>{if(!e.target.closest('.input-wrap'))hideSu
 gameActive=true;startTimer();
 </script>
 <script src="sportstack-member.js?v=4"></script>
+<script src="xp-system.js"></script>
 </body>
 </html>
