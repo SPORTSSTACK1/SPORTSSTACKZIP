@@ -36,14 +36,14 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 .player-card.wrong-card{border-color:var(--red);background:rgba(239,68,68,.08)}
 .p-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,3vw,22px);font-weight:900;letter-spacing:.03em;margin-bottom:4px}
 .p-club{font-size:12px;color:var(--text-muted);margin-bottom:18px}
-.p-label{font-size:11px;color:var(--text-dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.p-label{font-size:11px;color:#6b8abf;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
 .p-value{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,6vw,42px);font-weight:900;color:var(--text)}
 .p-value.reveal-anim{animation:reveal .4s ease}
 .p-value.correct-glow{color:var(--green)}
 .p-value.wrong-glow{color:var(--red)}
 @keyframes reveal{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
 .vs-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;flex-shrink:0;width:0}
-.vs-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:var(--text-dim);letter-spacing:.1em;background:var(--bg);padding:4px;position:relative;z-index:2;margin-top:-100px}
+.vs-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;color:#6b8abf;letter-spacing:.1em;background:var(--bg);padding:4px;position:relative;z-index:2;margin-top:-100px}
 .guess-buttons{display:flex;gap:12px;justify-content:center}
 .guess-btn{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;padding:16px 36px;border-radius:50px;cursor:pointer;border:1.5px solid var(--border-bright);background:rgba(255,255,255,.04);color:var(--text);transition:all .2s;min-width:140px}
 .guess-btn:hover:not(:disabled){background:rgba(255,255,255,.09);transform:translateY(-1px)}
@@ -53,7 +53,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 .guess-btn.lower{border-color:rgba(239,68,68,.4)}
 .guess-btn.lower:hover:not(:disabled){border-color:var(--red)}
 .guess-btn .arrow{font-size:18px;margin-right:6px}
-.rules{margin-top:24px;text-align:center;font-size:12px;color:var(--text-dim);line-height:1.6}
+.rules{margin-top:24px;text-align:center;font-size:12px;color:#6b8abf;line-height:1.6}
 .game-over-overlay{position:fixed;inset:0;background:rgba(4,8,15,.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
 .game-over-overlay.show{opacity:1;pointer-events:all}
 .go-modal{background:var(--surface);border:1px solid var(--border-bright);border-radius:16px;padding:32px 28px;text-align:center;max-width:340px;width:90%}
