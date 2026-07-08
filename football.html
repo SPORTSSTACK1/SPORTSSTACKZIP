@@ -27,6 +27,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 .back-link{display:inline-block;margin:20px 16px 32px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--muted);text-decoration:none}
 .back-link:hover{color:var(--text)}
 @media(max-width:500px){.grid{grid-template-columns:repeat(2,1fr)}}
+
+<style id="rand-btn-style">
+.page-rand-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;border:1.5px solid rgba(245,200,66,.5);background:rgba(245,200,66,.08);color:#f5c842;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:12px}
+.page-rand-btn:hover{background:rgba(245,200,66,.18);border-color:#f5c842;transform:scale(1.03)}
+</style>
 </style>
 </head>
 <body>
@@ -49,6 +54,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 <div class="sport-hero">
   <div class="emoji">⚽</div>
   <h1>Football</h1>
+  <button class="page-rand-btn" onclick="goRandHub()" title="Random Football quiz">🎲 Random Football Quiz</button>
   <p>Premier League, Champions League, World Cup and more</p>
 </div>
 
@@ -227,5 +233,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 <a href="index.html" class="back-link">← Back to all sports</a>
 <script src="sportstack-member.js?v=4"></script>
 <script src="xp-system.js"></script>
+<script>
+function goRandHub(){
+  var q=["quiz-of-the-week.html", "pl-teams-quiz.html", "pl-100-club-quiz.html", "fa-cup-winners-quiz.html", "europa-league-winners-quiz.html", "pl-golden-boot-quiz.html", "pl-poty-quiz.html", "pl-ypoty-quiz.html", "pl-top-assisters-quiz.html", "pl-highest-paid-quiz.html", "pl-managers-quiz.html", "pl-toty-appearances-quiz.html", "fifa-cover-stars-quiz.html", "ballon-dor-quiz.html", "ucl-winners-quiz.html", "ucl-top-scorers-quiz.html", "ucl-winning-managers-quiz.html", "ucl-final-cities-quiz.html", "wc-top-scorers-quiz.html", "wc-winners-quiz.html", "wc-finalists-quiz.html", "wc-final-scorers-quiz.html", "expensive-transfers-quiz.html", "wsl-top-scorers-quiz.html", "wsl-golden-boot-quiz.html", "lionesses-euro-2025-quiz.html", "nwsl-champions-quiz.html", "womens-world-cup-quiz.html", "pl-tots-1990-1991.html", "pl-tots-1991-1992.html", "pl-tots-1992-1993.html", "pl-tots-1993-1994.html", "pl-tots-1994-1995.html", "pl-tots-1995-1996.html", "pl-tots-1996-1997.html", "pl-tots-1997-1998.html", "pl-tots-1998-1999.html", "pl-tots-1999-2000.html", "pl-tots-2000-2001.html", "pl-tots-2001-2002.html", "pl-tots-2002-2003.html", "pl-tots-2003-2004.html", "pl-tots-2004-2005.html", "pl-tots-2005-2006.html", "pl-tots-2006-2007.html", "pl-tots-2007-2008.html", "pl-tots-2008-2009.html", "pl-tots-2009-2010.html", "pl-tots-2010-2011.html", "pl-tots-2011-2012.html", "pl-tots-2012-2013.html", "pl-tots-2013-2014.html", "pl-tots-2014-2015.html", "pl-tots-2015-2016.html", "pl-tots-2016-2017.html", "pl-tots-2017-2018.html", "pl-tots-2018-2019.html", "pl-tots-2019-2020.html", "pl-tots-2020-2021.html", "pl-tots-2021-2022.html", "pl-tots-2022-2023.html", "pl-tots-2023-2024.html", "pl-tots-2024-2025.html", "ucl-tots-2001.html", "ucl-tots-2002.html", "ucl-tots-2003.html", "ucl-tots-2004.html", "ucl-tots-2005.html", "ucl-tots-2006.html", "ucl-tots-2007.html", "ucl-tots-2008.html", "ucl-tots-2009.html", "ucl-tots-2010.html", "ucl-tots-2011.html", "ucl-tots-2012.html", "ucl-tots-2013.html", "ucl-tots-2014.html", "ucl-tots-2015.html", "ucl-tots-2016.html", "ucl-tots-2017.html", "ucl-tots-2018.html", "ucl-tots-2019.html", "ucl-tots-2020.html", "ucl-tots-2020-21.html", "ucl-tots-2021-22.html", "ucl-tots-2022-23.html", "ucl-tots-2023-24.html", "ucl-tots-2024-25.html", "championship-poty-quiz.html", "efl-young-poty-quiz.html", "football-league-team-of-decade-2015.html", "efl-tots-2016.html", "efl-tots-2017.html", "efl-tots-2018.html", "efl-tots-2019.html", "championship-tots-2021.html", "championship-tots-2022.html", "championship-tots-2023.html", "championship-tots-2024.html", "championship-tots-2025.html", "championship-tots-2026.html", "fifa-96-ratings-quiz.html", "fifa-97-ratings-quiz.html", "fifa-98-ratings-quiz.html", "fifa-99-ratings-quiz.html", "fifa-00-ratings-quiz.html", "fifa-01-ratings-quiz.html", "fifa-02-ratings-quiz.html", "fifa-03-ratings-quiz.html", "fifa-04-ratings-quiz.html", "fifa-05-ratings-quiz.html", "fifa-06-ratings-quiz.html", "fifa-07-ratings-quiz.html", "fifa-08-ratings-quiz.html", "fifa-09-ratings-quiz.html", "fifa-10-ratings-quiz.html", "fifa-11-ratings-quiz.html", "fifa-12-ratings-quiz.html", "fifa-13-ratings-quiz.html", "fifa-14-ratings-quiz.html", "fifa-15-ratings-quiz.html", "fifa-16-ratings-quiz.html", "fifa-17-ratings-quiz.html", "fifa-18-ratings-quiz.html", "fifa-19-ratings-quiz.html", "fifa-20-ratings-quiz.html", "fifa-21-ratings-quiz.html", "fifa-22-ratings-quiz.html", "fifa-23-ratings-quiz.html", "fc-24-ratings-quiz.html", "fc-25-ratings-quiz.html", "fc-26-ratings-quiz.html"];
+  window.location.href=q[Math.floor(Math.random()*q.length)];
+}
+</script>
 </body>
 </html>
