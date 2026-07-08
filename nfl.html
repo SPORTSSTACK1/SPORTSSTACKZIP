@@ -27,6 +27,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 .back-link{display:inline-block;margin:20px 16px 32px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--muted);text-decoration:none}
 .back-link:hover{color:var(--text)}
 @media(max-width:500px){.grid{grid-template-columns:repeat(2,1fr)}}
+
+<style id="rand-btn-style">
+.page-rand-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;border:1.5px solid rgba(245,200,66,.5);background:rgba(245,200,66,.08);color:#f5c842;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:12px}
+.page-rand-btn:hover{background:rgba(245,200,66,.18);border-color:#f5c842;transform:scale(1.03)}
+</style>
 </style>
 </head>
 <body>
@@ -49,6 +54,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 <div class="sport-hero">
   <div class="emoji">🏈</div>
   <h1>NFL</h1>
+  <button class="page-rand-btn" onclick="goRandHub()" title="Random NFL quiz">🎲 Random NFL Quiz</button>
   <p>60+ quizzes & games covering every era of American Football</p>
 </div>
 
@@ -158,5 +164,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 <a href="index.html" class="back-link">← Back to all sports</a>
 <script src="sportstack-member.js?v=4"></script>
 <script src="xp-system.js"></script>
+<script>
+function goRandHub(){
+  var q=["quiz-of-the-week.html", "the-combine.html", "nfl-passing-yards-quiz.html", "nfl-100-receiving-td-quiz.html", "nfl-dpoty-quiz.html", "nfl-droy-quiz.html", "nfl-franchise-passing-quiz.html", "nfl-franchise-td-leaders-quiz.html", "nfl-highest-paid-position-quiz.html", "nfl-highest-paid-quiz.html", "nfl-interception-leaders-quiz.html", "nfl-mvp-quiz.html", "nfl-number-1-picks-quiz.html", "nfl-opoy-quiz.html", "nfl-oroy-quiz.html", "nfl-qb-super-bowls-quiz.html", "nfl-sack-leaders-quiz.html", "nfl-sb-coaches-quiz.html", "nfl-stadiums-quiz.html", "nfl-superbowl-mvp-quiz.html", "nfl-teams-quiz.html", "madden-cover-stars-quiz.html", "madden-99-club-quiz.html", "heisman-quiz.html", "big12-teams-quiz.html", "big10-teams-quiz.html", "sec-teams-quiz.html", "cfb-champions-quiz.html", "ap-all-pro-2025.html", "ap-all-pro-2024.html", "ap-all-pro-2023.html", "ap-all-pro-2022.html", "ap-all-pro-2021.html", "ap-all-pro-2020.html", "ap-all-pro-2019.html", "ap-all-pro-2018.html", "ap-all-pro-2017.html", "ap-all-pro-2016.html", "ap-all-pro-2015.html", "ap-all-pro-2014.html", "ap-all-pro-2013.html", "ap-all-pro-2012.html", "ap-all-pro-2011.html", "ap-all-pro-2010.html", "ap-all-pro-2009.html", "ap-all-pro-2008.html", "ap-all-pro-2007.html", "ap-all-pro-2006.html", "ap-all-pro-2005.html", "ap-all-pro-2004.html", "ap-all-pro-2003.html", "ap-all-pro-2002.html", "ap-all-pro-2001.html", "ap-all-pro-2000.html", "ap-all-pro-1999.html", "ap-all-pro-1998.html", "ap-all-pro-1997.html", "ap-all-pro-1996.html", "ap-all-pro-1995.html", "ap-all-pro-1994.html", "ap-all-pro-1993.html", "ap-all-pro-1992.html", "ap-all-pro-1991.html", "ap-all-pro-1990.html"];
+  window.location.href=q[Math.floor(Math.random()*q.length)];
+}
+</script>
 </body>
 </html>
