@@ -27,6 +27,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 .back-link{display:inline-block;margin:20px 16px 32px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--muted);text-decoration:none}
 .back-link:hover{color:var(--text)}
 @media(max-width:500px){.grid{grid-template-columns:repeat(2,1fr)}}
+
+<style id="rand-btn-style">
+.page-rand-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;border:1.5px solid rgba(245,200,66,.5);background:rgba(245,200,66,.08);color:#f5c842;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:12px}
+.page-rand-btn:hover{background:rgba(245,200,66,.18);border-color:#f5c842;transform:scale(1.03)}
+</style>
 </style>
 </head>
 <body>
@@ -49,6 +54,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 <div class="sport-hero">
   <div class="emoji">🏏</div>
   <h1>Cricket</h1>
+  <button class="page-rand-btn" onclick="goRandHub()" title="Random Cricket quiz">🎲 Random Cricket Quiz</button>
   <p>12 quizzes across Test, ODI, T20 and franchise cricket</p>
 </div>
 
@@ -74,5 +80,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
   </section>
 <a href="index.html" class="back-link">← Back to all sports</a>
 <script src="sportstack-member.js?v=4"></script>
+<script>
+function goRandHub(){
+  var q=["quiz-of-the-week.html", "ipl-teams-quiz.html", "county-cricket-teams-quiz.html", "big-bash-teams-quiz.html", "the-hundred-teams-quiz.html", "ipl-most-expensive-quiz.html", "t20i-fastest-hundreds-quiz.html", "test-wicket-takers-quiz.html", "odi-wicket-takers-quiz.html", "t20i-wicket-takers-quiz.html", "test-run-scorers-quiz.html", "odi-run-scorers-quiz.html", "t20i-run-scorers-quiz.html"];
+  window.location.href=q[Math.floor(Math.random()*q.length)];
+}
+</script>
 </body>
 </html>
