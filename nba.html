@@ -27,6 +27,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 .back-link{display:inline-block;margin:20px 16px 32px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--muted);text-decoration:none}
 .back-link:hover{color:var(--text)}
 @media(max-width:500px){.grid{grid-template-columns:repeat(2,1fr)}}
+
+<style id="rand-btn-style">
+.page-rand-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;border:1.5px solid rgba(245,200,66,.5);background:rgba(245,200,66,.08);color:#f5c842;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:12px}
+.page-rand-btn:hover{background:rgba(245,200,66,.18);border-color:#f5c842;transform:scale(1.03)}
+</style>
 </style>
 </head>
 <body>
@@ -49,6 +54,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 <div class="sport-hero">
   <div class="emoji">🏀</div>
   <h1>NBA</h1>
+  <button class="page-rand-btn" onclick="goRandHub()" title="Random NBA quiz">🎲 Random NBA Quiz</button>
   <p>15 quizzes on basketball legends, records and awards</p>
 </div>
 
@@ -152,5 +158,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:
 <a href="index.html" class="back-link">← Back to all sports</a>
 <script src="sportstack-member.js?v=4"></script>
 <script src="xp-system.js"></script>
+<script>
+function goRandHub(){
+  var q=["quiz-of-the-week.html", "nba2k-cover-stars-quiz.html", "the-lottery.html", "nba-appearances-quiz.html", "nba-3point-leaders-quiz.html", "nba-50point-games-quiz.html", "nba-block-leaders-quiz.html", "nba-finals-mvp-quiz.html", "nba-franchise-leading-scorers-quiz.html", "nba-highest-paid-quiz.html", "nba-home-arenas-quiz.html", "nba-mvp-since-2000-quiz.html", "nba-number-1-picks-quiz.html", "nba-rebound-leaders-quiz.html", "nba-roty-quiz.html", "nba-teams-quiz.html", "nba-top-20-assists-quiz.html", "nba-top-20-scorers-quiz.html", "all-nba-2025-26.html", "all-nba-2024-25.html", "all-nba-2023-24.html", "all-nba-2022-23.html", "all-nba-2021-22.html", "all-nba-2020-21.html", "all-nba-2019-20.html", "all-nba-2018-19.html", "all-nba-2017-18.html", "all-nba-2016-17.html", "all-nba-2015-16.html", "all-nba-2014-15.html", "all-nba-2013-14.html", "all-nba-2012-13.html", "all-nba-2011-12.html", "all-nba-2010-11.html", "all-nba-2009-10.html", "all-nba-2008-09.html", "all-nba-2007-08.html", "all-nba-2006-07.html", "all-nba-2005-06.html", "all-nba-2004-05.html", "all-nba-2003-04.html", "all-nba-2002-03.html", "all-nba-2001-02.html", "all-nba-2000-01.html", "all-nba-1999-00.html", "all-nba-1998-99.html", "all-nba-1997-98.html", "all-nba-1996-97.html", "all-nba-1995-96.html", "all-nba-1994-95.html", "all-nba-1993-94.html", "all-nba-1992-93.html", "all-nba-1991-92.html", "all-nba-1990-91.html", "all-nba-1989-90.html", "all-nba-1988-89.html", "all-nba-1987-88.html", "all-nba-1986-87.html", "all-nba-1985-86.html", "all-nba-1984-85.html", "all-nba-1983-84.html", "all-nba-1982-83.html", "all-nba-1981-82.html", "all-nba-1980-81.html", "all-nba-1979-80.html"];
+  window.location.href=q[Math.floor(Math.random()*q.length)];
+}
+</script>
 </body>
 </html>
