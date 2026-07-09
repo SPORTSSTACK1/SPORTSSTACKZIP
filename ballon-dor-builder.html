@@ -168,6 +168,12 @@ nav a.home{text-decoration:none;display:block;flex-shrink:0}
       <div class="final-label">Your Player's Overall Rating</div>
       <div class="final-rating" id="final-rating">0</div>
       <div class="picks-summary" id="picks-summary"></div>
+      <div id="closest-player" style="background:#0d1829;border:1.5px solid #f5c842;border-radius:12px;padding:14px 16px;margin:14px 0;text-align:center">
+        <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#6b8abf;font-weight:700;margin-bottom:5px">Player Comparison</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;color:#e8f0fe;margin-bottom:2px">Your build most closely resembles</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#f5c842;line-height:1.1" id="closest-name">—</div>
+        <div style="font-size:11px;color:#6b8abf;font-weight:600;margin-top:3px" id="closest-detail">—</div>
+      </div>
       <button class="sim-btn" id="sim-btn" onclick="simulateCareer()">⚡ Simulate Career</button>
       <div id="career-area" style="display:none">
         <div class="ballon-row" id="ballon-row"></div>
@@ -318,6 +324,36 @@ function pickPlayer(i){
 function overall(){ return Math.round(picks.reduce((s,p)=>s+p.rating,0)/10); }
 
 
+// Player comparison — find real footballer closest to the built player
+function findClosestPlayer(){
+  // Build target vector from picks (in ATTR order)
+  const target = ATTRS.map(a => {
+    const p = picks.find(x => x.attr === a);
+    return p ? p.rating : 50;
+  });
+  let best = null, bestDist = Infinity;
+  for(const teamName in DATA){
+    for(const era in DATA[teamName]){
+      for(const p of DATA[teamName][era]){
+        // Weight: pick style-relevant attributes higher
+        let dist = 0;
+        for(let i = 0; i < target.length; i++){
+          let w = 1;
+          if(playerPosition === 'ST' && (i === 5 || i === 3 || i === 8)) w = 2.2;      // shoot/head/dribble
+          if(playerPosition === 'MID' && (i === 6 || i === 9 || i === 8)) w = 2.2;     // pass/iq/dribble
+          if(playerPosition === 'DEF' && (i === 4 || i === 3 || i === 0)) w = 2.2;     // def/head/build
+          dist += w * Math.pow(target[i] - p.r[i], 2);
+        }
+        if(dist < bestDist){
+          bestDist = dist;
+          best = {n: p.n, team: teamName, era: era, arch: p.a};
+        }
+      }
+    }
+  }
+  return best;
+}
+
 // Identity: nationality + start club + position
 const NATIONS = ["England","Brazil","Argentina","France","Germany","Spain","Italy","Portugal","Netherlands","Belgium","Croatia","Uruguay","Norway","Denmark","Sweden","Poland","Nigeria","Ghana","Japan","Australia","Scotland","Wales","Ireland","Mexico","USA","Colombia"];
 let playerNation = '', playerStartClub = '', playerPosition = '';
@@ -349,6 +385,12 @@ function showResult(){
   const bestKey = 'bdb-best-'+mode+(isDaily?'-daily':'');
   const prev = parseInt(localStorage.getItem(bestKey)||'0');
   if(ov>prev) localStorage.setItem(bestKey, ov);
+  // Find and display closest real player
+  const closest = findClosestPlayer();
+  if(closest){
+    document.getElementById('closest-name').textContent = closest.n;
+    document.getElementById('closest-detail').textContent = closest.team + ' · ' + closest.era;
+  }
   document.getElementById('picks-summary').innerHTML = picks.map(p=>{
     const cls = p.rating>=85?'hi':(p.rating>=68?'mid':'lo');
     const col = p.rating>=85?'#22c55e':(p.rating>=68?'#f5c842':'#ef4444');
@@ -438,27 +480,27 @@ function simulateCareer(){
 
   let goals = 0, apps = rint(300,700);
   if(style==='attacker'){
-    if(ov>=96) goals = rint(700,850);
-    else if(ov>=93) goals = rint(500,700);
-    else if(ov>=90) goals = rint(350,500);
-    else if(ov>=85) goals = rint(220,350);
-    else if(ov>=80) goals = rint(140,220);
-    else if(ov>=75) goals = rint(90,150);
-    else if(ov>=70) goals = rint(50,100);
-    else goals = rint(20,60);
+    if(ov>=96) goals = rint(550,720);
+    else if(ov>=93) goals = rint(400,560);
+    else if(ov>=90) goals = rint(270,400);
+    else if(ov>=85) goals = rint(170,270);
+    else if(ov>=80) goals = rint(100,170);
+    else if(ov>=75) goals = rint(65,110);
+    else if(ov>=70) goals = rint(35,75);
+    else goals = rint(15,45);
   } else if(style==='midfielder'){
-    if(ov>=96) goals = rint(180,240);
-    else if(ov>=93) goals = rint(130,180);
-    else if(ov>=90) goals = rint(90,130);
-    else if(ov>=85) goals = rint(60,95);
-    else if(ov>=80) goals = rint(40,65);
-    else if(ov>=75) goals = rint(25,45);
-    else goals = rint(10,30);
+    if(ov>=96) goals = rint(140,190);
+    else if(ov>=93) goals = rint(95,140);
+    else if(ov>=90) goals = rint(65,100);
+    else if(ov>=85) goals = rint(45,72);
+    else if(ov>=80) goals = rint(28,48);
+    else if(ov>=75) goals = rint(18,32);
+    else goals = rint(7,22);
   } else {
-    if(ov>=93) goals = rint(50,75);
-    else if(ov>=88) goals = rint(30,55);
-    else if(ov>=82) goals = rint(18,35);
-    else goals = rint(5,25);
+    if(ov>=93) goals = rint(35,55);
+    else if(ov>=88) goals = rint(22,40);
+    else if(ov>=82) goals = rint(12,25);
+    else goals = rint(3,18);
   }
 
   // Transfers
