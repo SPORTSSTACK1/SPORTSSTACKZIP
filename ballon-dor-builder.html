@@ -37,173 +37,200 @@
   "inLanguage": "en"
 }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,500&family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
 <style>
 :root{
-  --bg:#04080f;--paper:#0d1829;--paper2:#0a1523;
-  --gold:#f5c842;--gold-deep:#c8971a;--gold-shade:#8a6a0a;
-  --cream:#f0e4c8;--steel:#5a7ba0;--steel-dim:#3a5878;
-  --grid:#1a3a6a;--red:#ef4444;--green:#22c55e;--amber:#f59e0b;
+  --bg:#0B0B0D;--bg-warm:#14110C;--paper:#EDE4CD;--paper-2:#DFD3B5;
+  --ink:#1A1410;--ink-mute:#6E645A;
+  --gold:#D4AF37;--gold-hi:#F7E7A4;--gold-deep:#8A6A0A;
+  --ff-red:#C8102E;--mute:#7A7570;--line:#2A2420;
+  --green:#3B7D4E;--red:#B03A2E;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100vh;font-family:'Barlow',sans-serif;color:#e8f0fe}
-body{background:#04080f;background-image:radial-gradient(circle at 15% 8%,rgba(245,200,66,.05) 0,transparent 45%),radial-gradient(circle at 85% 92%,rgba(90,123,160,.06) 0,transparent 50%)}
+html,body{min-height:100vh;font-family:'Barlow',sans-serif;color:#E8DFCE;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);background-image:radial-gradient(ellipse at 75% 20%,rgba(138,106,10,.10) 0,transparent 55%)}
 
-nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.94);backdrop-filter:blur(10px);border-bottom:1px solid #1a3a6a;padding:0 18px;display:flex;align-items:center;height:52px;gap:10px}
+nav{position:sticky;top:0;z-index:1000;background:rgba(11,11,13,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:0 20px;display:flex;align-items:center;height:52px;gap:10px}
 nav a.home{text-decoration:none;flex-shrink:0}
-.btn-lb{font:800 12px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f5c842;text-decoration:none;padding:7px 14px;border:1px solid #8a6a0a;border-radius:2px}
-.page{max-width:920px;margin:0 auto;padding:0 16px 60px}
+.btn-lb{font:800 11.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-decoration:none;padding:7px 14px;border:1px solid var(--gold-deep);border-radius:0}
+.page{max-width:1040px;margin:0 auto;padding:0 20px 80px}
 
-/* HERO — editorial almanac */
-.hero{padding:26px 0 22px;border-bottom:2px solid #f5c842;margin-bottom:26px;position:relative}
-.hero:before{content:"ISSUE 01 · BUILT IN MELBOURNE";position:absolute;top:8px;right:0;font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;color:#3a5878}
-.hero-kicker{font:800 11px/1 'Barlow Condensed',sans-serif;letter-spacing:.28em;color:#c8971a;text-transform:uppercase;margin-bottom:8px}
-.hero-title{font:900 clamp(30px,7.5vw,54px)/.92 'Barlow Condensed',sans-serif;letter-spacing:-.005em;text-transform:uppercase;color:#f5c842}
-.hero-title em{font-style:italic;color:#f0e4c8;font-weight:900}
-.hero-sub{font-size:13px;color:#5a7ba0;margin-top:10px;max-width:540px;line-height:1.5}
-.hero-sub b{color:#e8f0fe;font-weight:700}
+/* ── HERO: two-column feature spread ─────────────────────── */
+.hero{padding:40px 0 30px;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:center;border-bottom:1px solid var(--line);margin-bottom:36px}
+@media(max-width:720px){.hero{grid-template-columns:1fr;padding:24px 0 20px}}
+.hero-issue{font:800 10.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.26em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.hero-issue:before{content:"";display:inline-block;width:24px;height:1px;background:var(--gold-deep)}
+.hero-title{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:clamp(40px,6.8vw,74px);line-height:.94;letter-spacing:-.02em;color:var(--paper);font-variation-settings:'opsz' 144,'SOFT' 30}
+.hero-title b{font-weight:700;font-style:normal;color:var(--gold);letter-spacing:-.015em}
+.hero-sub{font-size:14.5px;color:var(--ink-mute);color:#9B917F;margin-top:20px;line-height:1.55;max-width:480px}
+.hero-sub em{color:var(--paper);font-style:normal;font-weight:600}
+.hero-trophy{display:flex;justify-content:center;align-items:center;position:relative}
+.hero-trophy svg{max-width:280px;width:100%;height:auto;filter:drop-shadow(0 20px 40px rgba(138,106,10,.35))}
+@media(max-width:720px){.hero-trophy{order:-1;margin-bottom:8px}.hero-trophy svg{max-width:200px}}
 
-/* MODE PANEL — 3 distinct treatments, staggered */
-.mode-wrap{margin-bottom:20px}
-.mode-title{font:900 15px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#f0e4c8;padding-bottom:10px;border-bottom:1px dashed #3a5878;margin-bottom:16px}
-.mode-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-@media(max-width:640px){.mode-grid{grid-template-columns:1fr}}
+/* ── MODE SELECT: 3 distinct cards, no numbering ──────────── */
+.mode-section{margin-bottom:20px}
+.mode-heading{font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:22px;color:var(--paper);margin-bottom:20px;letter-spacing:-.01em}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:720px){.mode-grid{grid-template-columns:1fr}}
 
-/* Mode 1: OUTLINE — simple */
-.mode-easy{background:transparent;border:1.5px solid #5a7ba0;padding:22px 18px 20px;cursor:pointer;text-align:left;color:#e8f0fe;transition:border-color .15s,transform .15s}
-.mode-easy:hover{border-color:#f5c842;transform:translateY(-2px)}
-.mode-easy h3{font:900 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#e8f0fe;margin-bottom:4px}
-.mode-easy p{font-size:12px;color:#5a7ba0;line-height:1.4}
-.mode-easy .m-num{font:900 42px/1 'Barlow Condensed',sans-serif;color:#5a7ba0;margin-bottom:12px;display:block}
+.mode-card{cursor:pointer;text-align:left;padding:22px 20px 20px;transition:transform .25s,background .25s,border-color .25s;border:none;font-family:inherit;position:relative;display:flex;flex-direction:column;min-height:190px}
+.mode-card h3{font-family:'Fraunces',serif;font-weight:700;font-size:26px;letter-spacing:-.01em;margin-bottom:6px;line-height:1}
+.mode-card p{font-size:13.5px;line-height:1.5;margin-top:6px}
+.mode-card .mc-cta{margin-top:auto;font:800 10.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;text-transform:uppercase;padding-top:18px}
 
-/* Mode 2: FILLED — offset shadow, primary CTA feel */
-.mode-hard{background:#f5c842;color:#04080f;padding:22px 18px 20px;cursor:pointer;text-align:left;border:none;box-shadow:6px 6px 0 #8a6a0a;transition:transform .15s,box-shadow .15s;position:relative}
-.mode-hard:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #8a6a0a}
-.mode-hard h3{font:900 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
-.mode-hard p{font-size:12px;color:#8a6a0a;line-height:1.4;font-weight:600}
-.mode-hard .m-num{font:900 42px/1 'Barlow Condensed',sans-serif;color:#8a6a0a;margin-bottom:12px;display:block}
-.mode-hard .m-tag{position:absolute;top:10px;right:10px;font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;background:#04080f;color:#f5c842;padding:4px 7px}
+/* Card A: Casual — cream paper, ink text */
+.mode-a{background:var(--paper);color:var(--ink);border-top:3px solid var(--gold)}
+.mode-a:hover{transform:translateY(-3px);background:#F2E9D3}
+.mode-a p{color:var(--ink-mute)}
+.mode-a .mc-cta{color:var(--gold-deep)}
 
-/* Mode 3: DAILY CARD — dashed border, warm cream accents */
-.mode-daily{background:linear-gradient(180deg,rgba(240,228,200,.04),transparent);border:1.5px dashed #f5c842;padding:22px 18px 20px;cursor:pointer;text-align:left;color:#e8f0fe;transition:background .2s}
-.mode-daily:hover{background:rgba(245,200,66,.06)}
-.mode-daily h3{font:900 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f5c842;margin-bottom:4px}
-.mode-daily p{font-size:12px;color:#c8971a;line-height:1.4}
-.mode-daily .m-num{font:900 42px/1 'Barlow Condensed',sans-serif;color:#f5c842;margin-bottom:12px;display:block}
-.mode-daily .m-date{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;color:#f0e4c8;margin-top:8px;text-transform:uppercase}
-.daily-done{font-size:12px;color:#5a7ba0;margin-top:14px;font-style:italic;text-align:center}
+/* Card B: The main event — French Football red masthead */
+.mode-b{background:var(--paper);color:var(--ink);border-top:3px solid var(--ff-red);position:relative}
+.mode-b:hover{transform:translateY(-3px);background:#F2E9D3}
+.mode-b:before{content:"MAIN EVENT";position:absolute;top:0;right:16px;transform:translateY(-50%);background:var(--ff-red);color:var(--paper);font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;padding:5px 10px}
+.mode-b p{color:var(--ink-mute)}
+.mode-b .mc-cta{color:var(--ff-red)}
 
-/* GAME HUD — asymmetric, magazine ticker */
-.hud-strip{display:flex;align-items:baseline;justify-content:space-between;background:transparent;border-top:1px solid #1a3a6a;border-bottom:1px solid #1a3a6a;padding:10px 0;margin-bottom:22px;gap:16px;flex-wrap:wrap}
-.hud-round{font:900 clamp(20px,4vw,28px)/1 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:.02em}
-.hud-round small{font-size:.5em;color:#5a7ba0;font-weight:800;letter-spacing:.14em;margin-left:6px}
-.hud-mini{display:flex;gap:22px}
-.hud-mini-item{display:flex;flex-direction:column;align-items:flex-start}
-.hud-mini-lbl{font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;color:#5a7ba0;text-transform:uppercase;margin-bottom:3px}
-.hud-mini-val{font:900 18px/1 'Barlow Condensed',sans-serif;color:#e8f0fe}
-.hud-mini-val.gold{color:#f5c842}
+/* Card C: Daily — gold-outlined on dark */
+.mode-c{background:transparent;color:var(--paper);border:1px solid var(--gold-deep)}
+.mode-c:hover{transform:translateY(-3px);background:rgba(212,175,55,.05);border-color:var(--gold)}
+.mode-c h3{color:var(--gold)}
+.mode-c p{color:#9B917F}
+.mode-c .mc-cta{color:var(--gold)}
+.mode-c .mc-when{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.2em;color:var(--gold-deep);margin-top:10px;text-transform:uppercase}
 
-/* PICKS ROW — small dashed chips */
-.picks-row{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap}
-.pick-dot{flex:1;min-width:60px;padding:6px 4px;border-top:2px solid #1a3a6a;text-align:left}
-.pick-dot.done{border-top-color:#f5c842}
-.pick-dot .pd-attr{font:800 8.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;color:#5a7ba0;text-transform:uppercase;margin-bottom:3px}
-.pick-dot .pd-val{font:900 17px/1 'Barlow Condensed',sans-serif;color:#3a5878}
-.pick-dot.done .pd-val{color:#f5c842}
+.daily-done{font-size:13px;color:var(--mute);margin-top:18px;font-family:'Fraunces',serif;font-style:italic;font-weight:300;text-align:center}
 
-/* ROUND — asymmetric feature layout */
-.round-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
-.round-attr{flex:1;min-width:200px}
-.round-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:#5a7ba0;text-transform:uppercase;margin-bottom:4px}
-.round-attr-name{font:900 clamp(30px,7vw,48px)/.9 'Barlow Condensed',sans-serif;letter-spacing:-.01em;text-transform:uppercase;color:#f0e4c8}
-.round-team-block{text-align:right}
-.round-team-lbl{font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;color:#c8971a;text-transform:uppercase;margin-bottom:4px}
-.round-team{font:900 clamp(15px,3vw,20px)/1 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:.02em;margin-bottom:2px}
-.round-era{font-size:13px;color:#5a7ba0;font-weight:600}
+/* ── GAME AREA ────────────────────────────────────────────── */
+.hud-line{display:flex;align-items:baseline;justify-content:space-between;padding:14px 0 12px;border-bottom:1px solid var(--line);margin-bottom:24px;gap:20px;flex-wrap:wrap}
+.hud-round{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:clamp(22px,4vw,32px);color:var(--paper);letter-spacing:-.01em}
+.hud-round b{font-style:normal;font-weight:700;color:var(--gold)}
+.hud-round small{font-size:13px;color:var(--mute);margin-left:8px;font-style:normal;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.hud-mini{display:flex;gap:26px}
+.hud-mini-item{text-align:left}
+.hud-mini-lbl{font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.2em;color:var(--mute);text-transform:uppercase;margin-bottom:4px}
+.hud-mini-val{font-family:'Fraunces',serif;font-weight:500;font-size:19px;color:var(--paper)}
+.hud-mini-val.gold{color:var(--gold)}
 
-.respin-row{display:flex;gap:8px;margin-bottom:20px;padding:10px 0;border-top:1px dashed #3a5878;border-bottom:1px dashed #3a5878}
-.respin-btn{font:800 10.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;border:1px solid #5a7ba0;background:transparent;color:#e8f0fe;cursor:pointer;transition:all .15s}
-.respin-btn:hover:not(:disabled){border-color:#f5c842;color:#f5c842}
-.respin-btn:disabled{opacity:.25;cursor:not-allowed}
-.respin-btn small{font-size:9px;color:#5a7ba0;margin-left:6px}
+/* Picks trail: 10 tiny orbs */
+.picks-row{display:flex;gap:6px;margin-bottom:32px;align-items:center;flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
+.pick-dot{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px}
+.pick-orb{width:14px;height:14px;border-radius:50%;background:var(--line);position:relative;transition:background .3s}
+.pick-dot.done .pick-orb{background:radial-gradient(circle at 30% 30%,var(--gold-hi) 0,var(--gold) 55%,var(--gold-deep) 100%);box-shadow:0 0 8px rgba(212,175,55,.4)}
+.pd-attr{font:800 8.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.12em;color:var(--mute);text-transform:uppercase}
+.pick-dot.done .pd-attr{color:var(--gold-deep)}
+.pd-val{font-family:'Fraunces',serif;font-weight:500;font-size:13px;color:var(--mute);font-style:italic}
+.pick-dot.done .pd-val{color:var(--paper);font-weight:700;font-style:normal}
 
-/* PLAYER CARDS — football-card inspired, mixed treatments */
-.players-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-@media(max-width:640px){.players-grid{grid-template-columns:repeat(2,1fr)}}
-.player-card{background:linear-gradient(180deg,#0d1829 0%,#0a1523 100%);border:1px solid #1a3a6a;padding:12px 8px 10px;text-align:center;cursor:pointer;transition:border-color .15s,transform .15s;position:relative;min-height:130px;display:flex;flex-direction:column}
-.player-card:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:#8a6a0a;transition:background .15s}
-.player-card:hover{border-color:#f5c842;transform:translateY(-2px)}
-.player-card:hover:before{background:#f5c842}
-.player-card.taken{opacity:.3;pointer-events:none}
-.pc-pos{font:800 9.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;color:#c8971a;text-transform:uppercase;margin-bottom:8px}
-.pc-name{font:800 clamp(12px,2vw,15px)/1.15 'Barlow Condensed',sans-serif;color:#f0e4c8;flex:1;display:flex;align-items:center;justify-content:center;padding:2px 0}
-.pc-rating{font:900 26px/1 'Barlow Condensed',sans-serif;margin-top:8px;padding-top:8px;border-top:1px solid #1a3a6a}
-.pc-rating.hi{color:#22c55e}
-.pc-rating.mid{color:#f5c842}
-.pc-rating.lo{color:#ef4444}
-.pc-hidden{font-size:22px;margin-top:8px;padding-top:8px;border-top:1px solid #1a3a6a;color:#5a7ba0}
-.pc-height{font-size:10px;color:#5a7ba0;margin-top:3px;font-weight:600;letter-spacing:.04em}
+/* Round header: attribute is the star */
+.round-head{margin-bottom:24px}
+.round-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.round-kicker:before{content:"";width:20px;height:1px;background:var(--gold-deep)}
+.round-attr-name{font-family:'Fraunces',serif;font-weight:700;font-style:italic;font-size:clamp(44px,10vw,84px);line-height:.9;letter-spacing:-.03em;color:var(--paper);text-transform:lowercase}
+.round-context{display:flex;align-items:baseline;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);gap:12px;flex-wrap:wrap}
+.round-team-lbl{font-size:13px;color:var(--mute);font-family:'Fraunces',serif;font-style:italic;font-weight:300}
+.round-team{font-family:'Fraunces',serif;font-weight:700;font-size:22px;color:var(--gold);letter-spacing:-.01em}
+.round-team small{font-weight:300;font-style:italic;color:var(--paper);margin-left:8px;font-size:16px}
 
-/* IDENTITY panel */
-.identity-panel{padding:36px 20px;text-align:left;border:1px solid #1a3a6a;background:#0d1829;position:relative}
-.identity-panel:before{content:"REVEAL";position:absolute;top:-8px;left:16px;background:#04080f;padding:0 10px;font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;color:#c8971a}
-.identity-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;color:#5a7ba0;text-transform:uppercase;margin-bottom:10px}
-.identity-nation{font:900 clamp(28px,7vw,44px)/1 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:-.005em;margin-bottom:6px}
-.identity-academy{font-size:13px;color:#5a7ba0;font-style:italic;margin-bottom:24px}
-.identity-academy b{color:#f0e4c8;font-style:normal;font-weight:700}
-.pos-row{display:flex;gap:10px;flex-wrap:wrap}
-.pos-btn{flex:1;min-width:110px;padding:14px 16px 12px;background:transparent;border:1.5px solid #5a7ba0;color:#e8f0fe;cursor:pointer;text-align:left;transition:all .15s;font-family:'Barlow',sans-serif}
-.pos-btn:hover{border-color:#f5c842;background:rgba(245,200,66,.05)}
-.pos-btn strong{display:block;font:900 16px/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f5c842;margin-bottom:3px}
-.pos-btn span{font-size:11px;color:#5a7ba0}
+.respin-row{display:flex;gap:12px;margin:20px 0 24px;flex-wrap:wrap}
+.respin-btn{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:9px 14px;border:1px solid var(--mute);background:transparent;color:var(--paper);cursor:pointer;transition:border-color .15s,color .15s;font-family:'Barlow Condensed',sans-serif}
+.respin-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.respin-btn:disabled{opacity:.3;cursor:not-allowed}
+.respin-btn small{color:var(--mute);margin-left:6px;font-weight:700;letter-spacing:.1em}
 
-/* RESULT — magazine spread */
-.result-head{border-bottom:2px solid #f5c842;padding-bottom:18px;margin-bottom:24px}
-.result-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:#c8971a;text-transform:uppercase;margin-bottom:6px}
-.result-rating-row{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
-.final-rating{font:900 clamp(72px,18vw,120px)/.9 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:-.02em}
-.result-meta{color:#5a7ba0;font-size:13px;line-height:1.5}
-.result-meta strong{color:#f0e4c8;font-weight:700;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:14px}
+/* Player cards: aged cream on dark, exhibition catalogue feel */
+.players-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:640px){.players-grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+.player-card{background:var(--paper);color:var(--ink);padding:16px 10px 14px;text-align:left;cursor:pointer;transition:transform .18s,box-shadow .18s;position:relative;min-height:150px;display:flex;flex-direction:column;border:none;font-family:inherit}
+.player-card:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-deep);transition:background .18s,height .18s}
+.player-card:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.5)}
+.player-card:hover:before{background:var(--gold);height:3px}
+.player-card.taken{opacity:.25;pointer-events:none}
+.pc-pos{font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:12px}
+.pc-name{font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:clamp(15px,2.4vw,18px);line-height:1.1;letter-spacing:-.01em;color:var(--ink);flex:1}
+.pc-rating{font-family:'Fraunces',serif;font-weight:700;font-size:32px;line-height:1;letter-spacing:-.02em;margin-top:14px;padding-top:12px;border-top:1px solid rgba(26,20,16,.15)}
+.pc-rating.hi{color:var(--green)}
+.pc-rating.mid{color:var(--gold-deep)}
+.pc-rating.lo{color:var(--red)}
+.pc-hidden{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:28px;color:var(--ink-mute);margin-top:14px;padding-top:12px;border-top:1px solid rgba(26,20,16,.15);letter-spacing:-.02em}
+.pc-height{font-size:11px;color:var(--ink-mute);margin-top:4px;font-style:italic;font-family:'Fraunces',serif}
 
-.closest-box{background:#0d1829;border-left:3px solid #f5c842;padding:14px 18px;margin:22px 0}
-.closest-kicker{font:800 9.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:#5a7ba0;text-transform:uppercase;margin-bottom:6px}
-.closest-name{font:900 22px/1 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:.02em;margin-bottom:2px}
-.closest-detail{font-size:12px;color:#5a7ba0;font-style:italic}
+/* ── IDENTITY ─────────────────────────────────────────────── */
+.identity-panel{padding:32px 4px;position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0}
+.identity-kicker{font:800 10.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:12px}
+.identity-nation{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:clamp(40px,9vw,72px);line-height:.95;letter-spacing:-.02em;color:var(--paper);margin-bottom:10px}
+.identity-nation b{font-weight:700;font-style:normal;color:var(--gold)}
+.identity-academy{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:16px;color:var(--mute);margin-bottom:32px;line-height:1.5}
+.identity-academy b{color:var(--paper);font-style:normal;font-weight:600}
+.pos-row{display:flex;gap:12px;flex-wrap:wrap}
+.pos-btn{flex:1;min-width:150px;padding:18px 20px 16px;background:transparent;border:1px solid var(--mute);color:var(--paper);cursor:pointer;text-align:left;transition:border-color .15s,background .15s;font-family:inherit}
+.pos-btn:hover{border-color:var(--gold);background:rgba(212,175,55,.06)}
+.pos-btn strong{display:block;font-family:'Fraunces',serif;font-weight:700;font-size:22px;color:var(--gold);letter-spacing:-.01em;margin-bottom:4px;font-style:normal}
+.pos-btn span{font-size:12.5px;color:var(--mute);font-style:italic;font-family:'Fraunces',serif;font-weight:300}
 
-.picks-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:20px 0}
+/* ── RESULT ───────────────────────────────────────────────── */
+.result-hero{display:grid;grid-template-columns:1fr 1.2fr;gap:32px;align-items:center;padding:20px 0 32px;border-bottom:1px solid var(--line);margin-bottom:28px}
+@media(max-width:720px){.result-hero{grid-template-columns:1fr;text-align:left}}
+.result-trophy{display:flex;justify-content:center;position:relative}
+.result-trophy svg{max-width:260px;width:100%;height:auto;filter:drop-shadow(0 20px 45px rgba(138,106,10,.5))}
+.result-copy{align-self:center}
+.result-kicker{font:800 10.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.26em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:12px}
+.final-rating{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:clamp(88px,20vw,148px);line-height:.85;letter-spacing:-.04em;color:var(--gold);display:block}
+.result-caption{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:17px;color:var(--paper);margin-top:12px;line-height:1.4;max-width:340px}
+.result-caption b{font-weight:700;font-style:normal;color:var(--gold)}
+
+.closest-box{background:transparent;border-left:2px solid var(--gold);padding:14px 20px;margin:0 0 28px}
+.closest-kicker{font:800 9.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:6px}
+.closest-name{font-family:'Fraunces',serif;font-weight:700;font-size:24px;color:var(--paper);letter-spacing:-.01em;margin-bottom:3px}
+.closest-detail{font-size:13px;color:var(--mute);font-family:'Fraunces',serif;font-style:italic;font-weight:300}
+
+.picks-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:0 0 28px}
 @media(max-width:560px){.picks-summary{grid-template-columns:repeat(2,1fr)}}
-.ps-item{background:#0a1523;border:1px solid #1a3a6a;padding:8px 6px;text-align:left}
-.ps-attr{font:800 8px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#5a7ba0;margin-bottom:4px}
-.ps-player{font:800 11.5px/1.15 'Barlow Condensed',sans-serif;color:#e8f0fe;margin-bottom:3px;min-height:26px}
-.ps-val{font:900 17px/1 'Barlow Condensed',sans-serif}
+.ps-item{background:var(--paper);color:var(--ink);padding:10px 8px 8px;text-align:left;border-top:2px solid var(--gold-deep)}
+.ps-attr{font:800 8px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:5px}
+.ps-player{font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:12.5px;color:var(--ink);margin-bottom:4px;line-height:1.15;min-height:28px;letter-spacing:-.005em}
+.ps-val{font-family:'Fraunces',serif;font-weight:700;font-size:20px;letter-spacing:-.02em}
 
-.sim-btn{font:900 13px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:16px 32px;border:none;background:#f5c842;color:#04080f;cursor:pointer;box-shadow:5px 5px 0 #8a6a0a;transition:transform .12s,box-shadow .12s;margin-top:8px}
-.sim-btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 #8a6a0a}
+.sim-btn{font:800 12px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;text-transform:uppercase;padding:16px 32px;border:none;background:var(--gold);color:var(--bg);cursor:pointer;transition:background .15s;font-family:'Barlow Condensed',sans-serif;margin-bottom:4px}
+.sim-btn:hover{background:var(--gold-hi)}
 
-/* CAREER LOG — timeline style, mixed event weights */
-.career-wrap{margin-top:24px}
-.career-header{border-top:1px dashed #3a5878;padding-top:18px;margin-bottom:16px}
-.career-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:#c8971a;text-transform:uppercase;margin-bottom:8px}
-.ballon-row{font-size:clamp(24px,6vw,32px);letter-spacing:6px;margin:6px 0 4px}
-.ballon-count{font:900 clamp(16px,3.5vw,22px)/1.2 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.04em;color:#f0e4c8}
-.career-log{position:relative;padding:6px 0 0 0}
-.career-event{padding:10px 0 12px 20px;border-bottom:1px dashed #1a3a6a;position:relative;color:#c8dae8;font-size:13.5px;line-height:1.55}
-.career-event:before{content:"";position:absolute;left:0;top:16px;width:8px;height:8px;background:#f5c842;border-radius:50%}
-.career-event.big{padding:14px 0 14px 20px;font-size:15px;color:#f0e4c8}
-.career-event.big:before{background:#f0e4c8;width:10px;height:10px;top:18px}
-.career-event strong{color:#f5c842;font-weight:700}
+/* ── CAREER LOG: chapter-based narrative ────────────────── */
+.career-wrap{margin-top:36px}
+.career-header{border-top:1px solid var(--line);padding-top:24px;margin-bottom:24px}
+.career-kicker{font:800 10.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.26em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:10px}
+.ballon-row{font-size:clamp(28px,7vw,40px);letter-spacing:8px;margin:6px 0 8px;line-height:1}
+.ballon-count{font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:clamp(18px,4vw,26px);color:var(--paper);letter-spacing:-.01em;line-height:1.2}
+
+.career-log{position:relative}
+.career-event{padding:14px 0 14px 0;border-bottom:1px solid var(--line);color:#B8AE9C;font-size:14.5px;line-height:1.55;font-weight:400}
+.career-event strong{color:var(--gold);font-weight:600}
 .career-event:last-child{border-bottom:none}
+.career-event.chapter{padding-top:26px;padding-bottom:6px;border-bottom:none}
+.career-event.chapter .ch-num{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:14px;color:var(--gold-deep);letter-spacing:.06em;display:block;margin-bottom:6px}
+.career-event.chapter .ch-title{font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:22px;color:var(--paper);letter-spacing:-.01em;line-height:1.2}
+.career-event.big{font-family:'Fraunces',serif;font-weight:300;font-style:italic;font-size:19px;line-height:1.4;color:var(--paper);padding:18px 0;letter-spacing:-.005em}
+.career-event.big strong{font-weight:700;font-style:normal;color:var(--gold);letter-spacing:-.01em}
 
-.share-row{display:flex;gap:8px;justify-content:flex-start;flex-wrap:wrap;margin-top:20px}
-.share-btn2{font:800 11px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:11px 20px;border:1px solid #5a7ba0;background:transparent;color:#e8f0fe;cursor:pointer;transition:border-color .15s}
-.share-btn2:hover{border-color:#f5c842;color:#f5c842}
+.share-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.share-btn2{font:800 10.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.2em;text-transform:uppercase;padding:12px 22px;border:1px solid var(--mute);background:transparent;color:var(--paper);cursor:pointer;transition:border-color .15s,color .15s;font-family:'Barlow Condensed',sans-serif}
+.share-btn2:hover{border-color:var(--gold);color:var(--gold)}
 
-.fade-in{animation:fadeUp .3s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeUp .5s cubic-bezier(.22,1,.36,1) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-.daily-tag{display:inline-block;font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;text-transform:uppercase;background:transparent;border:1px solid #f5c842;color:#f5c842;padding:5px 10px;margin-bottom:10px}
+.daily-tag{display:inline-block;font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;text-transform:uppercase;background:var(--ff-red);color:var(--paper);padding:6px 12px;margin-bottom:12px}
+
+/* Focus states for keyboard nav */
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -219,31 +246,109 @@ nav a.home{text-decoration:none;flex-shrink:0}
 </nav>
 <div class="page">
   <header class="hero">
-    <div class="hero-kicker">The SportsStack Almanac</div>
-    <h1 class="hero-title">Ballon d'Or <em>Builder</em></h1>
-    <p class="hero-sub">A ten-round build-a-player game. Pick from real squads across six decades, then find out what kind of career you just invented. <b>New Daily Challenge every day.</b></p>
+    <div>
+      <div class="hero-issue">A SportsStack Original · Vol. I</div>
+      <h1 class="hero-title">Build the <b>greatest player</b> <br/>who ever kicked a ball.</h1>
+      <p class="hero-sub">Ten rounds. Each round we drop you into a legendary European squad from a random decade, and you pick a player. <em>Whatever they were rated for that attribute becomes yours.</em> Then we play out their career.</p>
+    </div>
+    <div class="hero-trophy"><svg viewBox="0 0 220 310" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation">
+  <defs>
+    <radialGradient id="bdb-glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#5A4610" stop-opacity=".65"/>
+      <stop offset="100%" stop-color="#0B0B0D" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bdb-ball" cx="30%" cy="26%" r="82%">
+      <stop offset="0%" stop-color="#FCEEB0"/>
+      <stop offset="18%" stop-color="#F7E7A4"/>
+      <stop offset="42%" stop-color="#E8CB65"/>
+      <stop offset="72%" stop-color="#B8912E"/>
+      <stop offset="100%" stop-color="#5A4610"/>
+    </radialGradient>
+    <linearGradient id="bdb-ring" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#8A6A0A"/>
+      <stop offset="45%" stop-color="#F7E7A4"/>
+      <stop offset="55%" stop-color="#F7E7A4"/>
+      <stop offset="100%" stop-color="#8A6A0A"/>
+    </linearGradient>
+    <linearGradient id="bdb-plinth" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#2A2420"/>
+      <stop offset="100%" stop-color="#0B0B0D"/>
+    </linearGradient>
+    <linearGradient id="bdb-plinth-side" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#191512"/>
+      <stop offset="50%" stop-color="#2A2420"/>
+      <stop offset="100%" stop-color="#191512"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Atmospheric glow -->
+  <ellipse cx="110" cy="130" rx="105" ry="105" fill="url(#bdb-glow)"/>
+
+  <!-- Ground shadow -->
+  <ellipse cx="112" cy="278" rx="72" ry="6" fill="#000" opacity=".55"/>
+
+  <!-- Plinth stack -->
+  <rect x="55" y="212" width="110" height="4" fill="#D4AF37"/>
+  <rect x="60" y="216" width="100" height="60" fill="url(#bdb-plinth-side)"/>
+  <rect x="55" y="272" width="110" height="4" fill="#D4AF37"/>
+  <rect x="52" y="276" width="116" height="6" fill="url(#bdb-plinth)"/>
+
+  <!-- Engraving -->
+  <text x="110" y="240" fill="#D4AF37" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="9" letter-spacing="3">Ballon d'Or</text>
+  <line x1="72" y1="248" x2="148" y2="248" stroke="#8A6A0A" stroke-width=".5"/>
+  <text x="110" y="262" fill="#8A6A0A" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="6.5" letter-spacing="4">FRANCE FOOTBALL</text>
+
+  <!-- Ring at base of ball -->
+  <ellipse cx="110" cy="208" rx="46" ry="5.5" fill="url(#bdb-ring)"/>
+  <ellipse cx="110" cy="207" rx="46" ry="2" fill="#F7E7A4" opacity=".7"/>
+
+  <!-- The golden ball -->
+  <circle cx="110" cy="128" r="82" fill="url(#bdb-ball)"/>
+
+  <!-- Football pentagon pattern -->
+  <g opacity=".28" fill="#5A4610">
+    <polygon points="110,68 133,88 122,120 98,120 87,88"/>
+    <polygon points="133,88 168,100 158,138 122,120"/>
+    <polygon points="87,88 52,100 62,138 98,120"/>
+    <polygon points="122,120 158,138 148,175 110,168"/>
+    <polygon points="98,120 62,138 72,175 110,168"/>
+    <polygon points="110,168 72,175 90,200 130,200 148,175"/>
+  </g>
+  <g opacity=".18" stroke="#5A4610" stroke-width=".5" fill="none">
+    <line x1="110" y1="68" x2="87" y2="88"/>
+    <line x1="110" y1="68" x2="133" y2="88"/>
+    <line x1="87" y1="88" x2="52" y2="100"/>
+    <line x1="133" y1="88" x2="168" y2="100"/>
+  </g>
+
+  <!-- Highlight shine -->
+  <ellipse cx="80" cy="95" rx="22" ry="15" fill="#FCEEB0" opacity=".55" transform="rotate(-22 80 95)"/>
+  <ellipse cx="75" cy="88" rx="10" ry="6" fill="#FFFFFF" opacity=".55" transform="rotate(-22 75 88)"/>
+
+  <!-- Rim light -->
+  <circle cx="110" cy="128" r="82" fill="none" stroke="#F7E7A4" stroke-width=".8" opacity=".35"/>
+</svg></div>
   </header>
 
   <!-- MODE SELECT -->
-  <div class="mode-wrap fade-in" id="mode-panel">
-    <div class="mode-title">Pick How You Want To Play</div>
+  <div class="mode-section fade-in" id="mode-panel">
+    <div class="mode-heading">Three ways to play.</div>
     <div class="mode-grid">
-      <button class="mode-easy" onclick="startGame('easy',false)">
-        <span class="m-num">01</span>
+      <button class="mode-card mode-a" onclick="startGame('easy',false)">
         <h3>Easy</h3>
-        <p>All ratings shown. Good for a first go.</p>
+        <p>Every rating on show. The friendly first go.</p>
+        <div class="mc-cta">Start easy →</div>
       </button>
-      <button class="mode-hard" onclick="startGame('hard',false)">
-        <span class="m-tag">Main event</span>
-        <span class="m-num">02</span>
+      <button class="mode-card mode-b" onclick="startGame('hard',false)">
         <h3>Hard</h3>
-        <p>Ratings hidden. Pick on football knowledge alone.</p>
+        <p>Ratings hidden. Nothing but your football knowledge to lean on.</p>
+        <div class="mc-cta">Take the challenge →</div>
       </button>
-      <button class="mode-daily" id="daily-btn" onclick="startGame('hard',true)">
-        <span class="m-num">03</span>
+      <button class="mode-card mode-c" id="daily-btn" onclick="startGame('hard',true)">
         <h3>Daily</h3>
-        <p>One board for the whole world. One attempt.</p>
-        <div class="m-date" id="daily-sub">Fresh at 00:00 UTC</div>
+        <p>Everyone in the world gets the same board. You get one shot.</p>
+        <div class="mc-when" id="daily-sub">Fresh board at 00:00 UTC</div>
+        <div class="mc-cta">Play today's board →</div>
       </button>
     </div>
     <div class="daily-done" id="daily-done"></div>
@@ -251,26 +356,23 @@ nav a.home{text-decoration:none;flex-shrink:0}
 
   <!-- GAME -->
   <div id="game-area" style="display:none">
-    <div class="hud-strip">
-      <div class="hud-round" id="hud-round">01 <small>/ 10</small></div>
+    <div class="hud-line">
+      <div class="hud-round" id="hud-round"><b>01</b> <small>of ten</small></div>
       <div class="hud-mini">
-        <div class="hud-mini-item"><div class="hud-mini-lbl">Avg so far</div><div class="hud-mini-val gold" id="hud-avg">—</div></div>
-        <div class="hud-mini-item"><div class="hud-mini-lbl">Team re-spin</div><div class="hud-mini-val" id="hud-team-spins">1</div></div>
-        <div class="hud-mini-item"><div class="hud-mini-lbl">Era re-spin</div><div class="hud-mini-val" id="hud-era-spins">1</div></div>
+        <div class="hud-mini-item"><div class="hud-mini-lbl">Average</div><div class="hud-mini-val gold" id="hud-avg">—</div></div>
+        <div class="hud-mini-item"><div class="hud-mini-lbl">Team spin</div><div class="hud-mini-val" id="hud-team-spins">1</div></div>
+        <div class="hud-mini-item"><div class="hud-mini-lbl">Era spin</div><div class="hud-mini-val" id="hud-era-spins">1</div></div>
       </div>
     </div>
     <div class="picks-row" id="picks-row"></div>
     <div class="fade-in" id="round-panel">
       <div id="daily-tag-wrap"></div>
       <div class="round-head">
-        <div class="round-attr">
-          <div class="round-kicker">Round <span id="round-num">1</span> · This round you're picking</div>
-          <div class="round-attr-name" id="attr-name">SHOOTING</div>
-        </div>
-        <div class="round-team-block">
-          <div class="round-team-lbl">From the squad of</div>
-          <div class="round-team" id="team-chip">Manchester United</div>
-          <div class="round-era" id="team-era-sub">2000s</div>
+        <div class="round-kicker">Round <span id="round-num">1</span></div>
+        <div class="round-attr-name" id="attr-name">shooting</div>
+        <div class="round-context">
+          <div class="round-team-lbl">Picking from</div>
+          <div class="round-team" id="team-chip">Manchester United <small id="team-era-sub">2000s</small></div>
         </div>
       </div>
       <div class="respin-row">
@@ -284,14 +386,14 @@ nav a.home{text-decoration:none;flex-shrink:0}
   <!-- IDENTITY -->
   <div id="identity-area" style="display:none">
     <div class="identity-panel fade-in">
-      <div class="identity-kicker">Your player is from...</div>
+      <div class="identity-kicker">Your player is from</div>
       <div class="identity-nation" id="identity-nation"></div>
       <div class="identity-academy" id="identity-academy"></div>
-      <div class="identity-kicker" style="margin-top:6px">Where do they play?</div>
-      <div class="pos-row" style="margin-top:12px">
-        <button class="pos-btn" onclick="choosePosition('ST')"><strong>Striker</strong><span>Big goals. Big pressure.</span></button>
-        <button class="pos-btn" onclick="choosePosition('MID')"><strong>Midfielder</strong><span>Runs the game.</span></button>
-        <button class="pos-btn" onclick="choosePosition('DEF')"><strong>Defender</strong><span>Wins ugly.</span></button>
+      <div class="identity-kicker">Now pick where they play</div>
+      <div class="pos-row">
+        <button class="pos-btn" onclick="choosePosition('ST')"><strong>Striker</strong><span>Score the goals</span></button>
+        <button class="pos-btn" onclick="choosePosition('MID')"><strong>Midfielder</strong><span>Run the game</span></button>
+        <button class="pos-btn" onclick="choosePosition('DEF')"><strong>Defender</strong><span>Win it ugly</span></button>
       </div>
     </div>
   </div>
@@ -300,14 +402,88 @@ nav a.home{text-decoration:none;flex-shrink:0}
   <div id="result-area" style="display:none">
     <div class="fade-in">
       <div id="result-daily-tag"></div>
-      <div class="result-head">
-        <div class="result-kicker">The Build · Final Rating</div>
-        <div class="result-rating-row">
-          <div class="final-rating" id="final-rating">0</div>
-          <div class="result-meta">
-            <strong>Overall</strong> across ten attributes.<br/>
-            See who they most resemble below,<br/>then simulate the career.
-          </div>
+      <div class="result-hero">
+        <div class="result-trophy"><svg viewBox="0 0 220 310" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation">
+  <defs>
+    <radialGradient id="bdb-glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#5A4610" stop-opacity=".65"/>
+      <stop offset="100%" stop-color="#0B0B0D" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bdb-ball" cx="30%" cy="26%" r="82%">
+      <stop offset="0%" stop-color="#FCEEB0"/>
+      <stop offset="18%" stop-color="#F7E7A4"/>
+      <stop offset="42%" stop-color="#E8CB65"/>
+      <stop offset="72%" stop-color="#B8912E"/>
+      <stop offset="100%" stop-color="#5A4610"/>
+    </radialGradient>
+    <linearGradient id="bdb-ring" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#8A6A0A"/>
+      <stop offset="45%" stop-color="#F7E7A4"/>
+      <stop offset="55%" stop-color="#F7E7A4"/>
+      <stop offset="100%" stop-color="#8A6A0A"/>
+    </linearGradient>
+    <linearGradient id="bdb-plinth" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#2A2420"/>
+      <stop offset="100%" stop-color="#0B0B0D"/>
+    </linearGradient>
+    <linearGradient id="bdb-plinth-side" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#191512"/>
+      <stop offset="50%" stop-color="#2A2420"/>
+      <stop offset="100%" stop-color="#191512"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Atmospheric glow -->
+  <ellipse cx="110" cy="130" rx="105" ry="105" fill="url(#bdb-glow)"/>
+
+  <!-- Ground shadow -->
+  <ellipse cx="112" cy="278" rx="72" ry="6" fill="#000" opacity=".55"/>
+
+  <!-- Plinth stack -->
+  <rect x="55" y="212" width="110" height="4" fill="#D4AF37"/>
+  <rect x="60" y="216" width="100" height="60" fill="url(#bdb-plinth-side)"/>
+  <rect x="55" y="272" width="110" height="4" fill="#D4AF37"/>
+  <rect x="52" y="276" width="116" height="6" fill="url(#bdb-plinth)"/>
+
+  <!-- Engraving -->
+  <text x="110" y="240" fill="#D4AF37" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="9" letter-spacing="3">Ballon d'Or</text>
+  <line x1="72" y1="248" x2="148" y2="248" stroke="#8A6A0A" stroke-width=".5"/>
+  <text x="110" y="262" fill="#8A6A0A" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="6.5" letter-spacing="4">FRANCE FOOTBALL</text>
+
+  <!-- Ring at base of ball -->
+  <ellipse cx="110" cy="208" rx="46" ry="5.5" fill="url(#bdb-ring)"/>
+  <ellipse cx="110" cy="207" rx="46" ry="2" fill="#F7E7A4" opacity=".7"/>
+
+  <!-- The golden ball -->
+  <circle cx="110" cy="128" r="82" fill="url(#bdb-ball)"/>
+
+  <!-- Football pentagon pattern -->
+  <g opacity=".28" fill="#5A4610">
+    <polygon points="110,68 133,88 122,120 98,120 87,88"/>
+    <polygon points="133,88 168,100 158,138 122,120"/>
+    <polygon points="87,88 52,100 62,138 98,120"/>
+    <polygon points="122,120 158,138 148,175 110,168"/>
+    <polygon points="98,120 62,138 72,175 110,168"/>
+    <polygon points="110,168 72,175 90,200 130,200 148,175"/>
+  </g>
+  <g opacity=".18" stroke="#5A4610" stroke-width=".5" fill="none">
+    <line x1="110" y1="68" x2="87" y2="88"/>
+    <line x1="110" y1="68" x2="133" y2="88"/>
+    <line x1="87" y1="88" x2="52" y2="100"/>
+    <line x1="133" y1="88" x2="168" y2="100"/>
+  </g>
+
+  <!-- Highlight shine -->
+  <ellipse cx="80" cy="95" rx="22" ry="15" fill="#FCEEB0" opacity=".55" transform="rotate(-22 80 95)"/>
+  <ellipse cx="75" cy="88" rx="10" ry="6" fill="#FFFFFF" opacity=".55" transform="rotate(-22 75 88)"/>
+
+  <!-- Rim light -->
+  <circle cx="110" cy="128" r="82" fill="none" stroke="#F7E7A4" stroke-width=".8" opacity=".35"/>
+</svg></div>
+        <div class="result-copy">
+          <div class="result-kicker">Your final build</div>
+          <span class="final-rating" id="final-rating">0</span>
+          <p class="result-caption">Overall across ten attributes. <b>See who you built below</b>, then play out their career.</p>
         </div>
       </div>
       <div class="closest-box" id="closest-player">
@@ -316,16 +492,16 @@ nav a.home{text-decoration:none;flex-shrink:0}
         <div class="closest-detail" id="closest-detail">—</div>
       </div>
       <div class="picks-summary" id="picks-summary"></div>
-      <button class="sim-btn" id="sim-btn" onclick="simulateCareer()">Simulate the career</button>
+      <button class="sim-btn" id="sim-btn" onclick="simulateCareer()">Play out the career</button>
       <div class="career-wrap" id="career-area" style="display:none">
         <div class="career-header">
-          <div class="career-kicker">Ballon d'Ors Won</div>
+          <div class="career-kicker">Ballons d'Or won</div>
           <div class="ballon-row" id="ballon-row"></div>
           <div class="ballon-count" id="ballon-count"></div>
         </div>
         <div class="career-log" id="career-log"></div>
         <div class="share-row">
-          <button class="share-btn2" onclick="shareResult()">Share result</button>
+          <button class="share-btn2" onclick="shareResult()">Share</button>
           <button class="share-btn2" onclick="location.reload()">Play again</button>
         </div>
       </div>
@@ -405,7 +581,7 @@ function startGame(m, daily){
 function renderPicksRow(){
   document.getElementById('picks-row').innerHTML = ATTRS.map(a=>{
     const p = picks.find(x=>x.attr===a);
-    return '<div class="pick-dot'+(p?' done':'')+'"><div class="pd-attr">'+a.slice(0,4)+'</div><div class="pd-val">'+(p?p.rating:'–')+'</div></div>';
+    return '<div class="pick-dot'+(p?' done':'')+'"><span class="pick-orb"></span><span class="pd-attr">'+a.slice(0,4)+'</span><span class="pd-val">'+(p?p.rating:'—')+'</span></div>';
   }).join('');
 }
 
@@ -413,11 +589,9 @@ function renderRound(){
   const r = rounds[currentRound];
   const rn = String(currentRound+1).padStart(2,'0');
   document.getElementById('round-num').textContent = currentRound+1;
-  document.getElementById('hud-round').innerHTML = rn+' <small>/ 10</small>';
-  document.getElementById('attr-name').textContent = r.attr.toUpperCase();
-  document.getElementById('team-chip').textContent = r.team;
-  const eraEl = document.getElementById('team-era-sub');
-  if(eraEl) eraEl.textContent = r.era;
+  document.getElementById('hud-round').innerHTML = '<b>'+rn+'</b> <small>of ten</small>';
+  document.getElementById('attr-name').textContent = r.attr.toLowerCase();
+  document.getElementById('team-chip').innerHTML = r.team+' <small id="team-era-sub">'+r.era+'</small>';
   document.getElementById('hud-team-spins').textContent = teamSpins;
   document.getElementById('hud-era-spins').textContent = eraSpins;
   document.getElementById('respin-team').disabled = teamSpins<=0;
@@ -447,10 +621,10 @@ function renderRound(){
         ratingHtml = '<div class="pc-hidden">·</div>';
       }
     }
-    return '<div class="player-card'+(taken?' taken':'')+'" onclick="pickPlayer('+i+')">'
+    return '<button class="player-card'+(taken?' taken':'')+'" onclick="pickPlayer('+i+')" '+(taken?'disabled ':'')+'type="button">'
       +'<div class="pc-pos">'+POS_LABEL[p.a]+'</div>'
       +'<div class="pc-name">'+p.n+'</div>'
-      +ratingHtml+'</div>';
+      +ratingHtml+'</button>';
   }).join('');
 }
 
@@ -724,10 +898,23 @@ function simulateCareer(){
   else ret = pick(RETIRE_ENDINGS.journeyman);
   events.push(['👋','Retires at '+rint(34,40)+' as '+ret]);
 
-  document.getElementById('career-log').innerHTML = events.map((e,i)=>{
-    const isBig = i===0 || (e[1]||'').indexOf('World Cup')>-1 || (e[1]||'').indexOf('Ballon')>-1;
-    return '<div class="career-event'+(isBig?' big':'')+'">'+e[1]+'</div>';
-  }).join('');
+    // Split into 3 chapters: Rise, Peak, Legacy
+  const total = events.length;
+  const cut1 = Math.min(3, Math.ceil(total*0.3));
+  const cut2 = Math.min(total-2, Math.ceil(total*0.7));
+  const chapters = [
+    {at:0, num:'Chapter I', title:'The rise'},
+    {at:cut1, num:'Chapter II', title:'At the peak'},
+    {at:cut2, num:'Chapter III', title:'The legacy'}
+  ];
+  let out = '';
+  events.forEach((e,i)=>{
+    const ch = chapters.find(c=>c.at===i);
+    if(ch) out += '<div class="career-event chapter"><span class="ch-num">'+ch.num+'</span><span class="ch-title">'+ch.title+'</span></div>';
+    const isBig = i===0 || i===total-1 || (e[1]||'').indexOf('Ballon')>-1 || (e[1]||'').indexOf('World Cup')>-1;
+    out += '<div class="career-event'+(isBig?' big':'')+'">'+e[1]+'</div>';
+  });
+  document.getElementById('career-log').innerHTML = out;
 }
 
 function shareResult(){
