@@ -41,85 +41,169 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
 <style>
-:root{--gold:#f5c842;--gold-deep:#d4a017;--gold-dark:#8a6a0a;--ink:#f5c842;--ink2:#d4a017;--card:#080f1c;--card-border:#1a3a6a;--green:#22c55e;--red:#ef4444;--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--radius:12px;}
+:root{
+  --bg:#04080f;--paper:#0d1829;--paper2:#0a1523;
+  --gold:#f5c842;--gold-deep:#c8971a;--gold-shade:#8a6a0a;
+  --cream:#f0e4c8;--steel:#5a7ba0;--steel-dim:#3a5878;
+  --grid:#1a3a6a;--red:#ef4444;--green:#22c55e;--amber:#f59e0b;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100vh;font-family:'Barlow',sans-serif;color:#f5c842}
-body{background:linear-gradient(180deg,#04080f 0%,#080f1c 100%);background-attachment:fixed;color:#f5c842}
-nav{position:sticky;top:0;z-index:1000;background:rgba(26,20,5,.92);backdrop-filter:blur(12px);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
-nav a.home{text-decoration:none;display:block;flex-shrink:0}
-.btn-lb{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#f5c842;text-decoration:none;padding:6px 14px;border:1px solid rgba(245,200,66,.5);border-radius:8px}
-.page{max-width:900px;margin:0 auto;padding:20px 14px 60px}
-.hero{text-align:center;margin-bottom:16px}
-.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(30px,7vw,52px);font-weight:900;letter-spacing:.03em;text-transform:uppercase;line-height:1;color:#f5c842;text-shadow:0 0 30px rgba(245,200,66,.3)}
-.hero-title .ball{font-size:.8em}
-.hero-sub{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#d4a017;margin-top:4px}
-/* Mode select */
-.mode-panel{background:#080f1c;border:2px solid #1a3a6a;border-radius:18px;padding:28px 22px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.5)}
-.mode-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
-.mode-desc{font-size:13px;color:#e8f0fe;margin-bottom:20px;line-height:1.5}
-.mode-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.mode-btn{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:14px 30px;border-radius:50px;cursor:pointer;border:2.5px solid #f5c842;background:transparent;color:#f5c842;transition:all .2s;min-width:150px}
-.mode-btn:hover{transform:translateY(-2px);background:rgba(245,200,66,.12);box-shadow:0 6px 20px rgba(245,200,66,.2)}
-.mode-btn.alt{background:transparent;color:#e8f0fe;border-color:#e8f0fe}
-.mode-btn.daily{background:linear-gradient(135deg,#7a5cff,#4a2fd9);border-color:#4a2fd9;color:#fff}
-.daily-done{font-size:12px;color:#e8f0fe;margin-top:10px}
-/* HUD */
-.hud{display:flex;align-items:center;justify-content:space-between;background:#080f1c;border:1px solid #1a3a6a;border-radius:14px;padding:10px 18px;margin-bottom:14px;gap:8px;flex-wrap:wrap}
-.hud-item{text-align:center;flex:1;min-width:64px}
-.hud-val{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--gold);line-height:1}
-.hud-lbl{font-size:9px;color:#b09a50;letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
-/* Round card */
-.round-panel{background:#080f1c;border:2px solid #1a3a6a;border-radius:18px;padding:20px 18px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
-.attr-banner{text-align:center;margin-bottom:6px}
-.attr-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(26px,6vw,40px);font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#f5c842}
-.attr-sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6b8abf;font-weight:700}
-.team-banner{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0 16px;flex-wrap:wrap}
-.team-chip{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;letter-spacing:.04em;background:#f5c842;color:#04080f;padding:9px 22px;border-radius:50px}
-.respin-btn{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:8px 14px;border-radius:50px;border:2px solid #f5c842;background:transparent;color:#f5c842;cursor:pointer;transition:all .2s}
-.respin-btn:hover:not(:disabled){background:#f5c842;color:#04080f}
-.respin-btn:disabled{opacity:.35;cursor:not-allowed}
-.players-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+html,body{min-height:100vh;font-family:'Barlow',sans-serif;color:#e8f0fe}
+body{background:#04080f;background-image:radial-gradient(circle at 15% 8%,rgba(245,200,66,.05) 0,transparent 45%),radial-gradient(circle at 85% 92%,rgba(90,123,160,.06) 0,transparent 50%)}
+
+nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.94);backdrop-filter:blur(10px);border-bottom:1px solid #1a3a6a;padding:0 18px;display:flex;align-items:center;height:52px;gap:10px}
+nav a.home{text-decoration:none;flex-shrink:0}
+.btn-lb{font:800 12px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#f5c842;text-decoration:none;padding:7px 14px;border:1px solid #8a6a0a;border-radius:2px}
+.page{max-width:920px;margin:0 auto;padding:0 16px 60px}
+
+/* HERO — editorial almanac */
+.hero{padding:26px 0 22px;border-bottom:2px solid #f5c842;margin-bottom:26px;position:relative}
+.hero:before{content:"ISSUE 01 · BUILT IN MELBOURNE";position:absolute;top:8px;right:0;font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;color:#3a5878}
+.hero-kicker{font:800 11px/1 'Barlow Condensed',sans-serif;letter-spacing:.28em;color:#c8971a;text-transform:uppercase;margin-bottom:8px}
+.hero-title{font:900 clamp(30px,7.5vw,54px)/.92 'Barlow Condensed',sans-serif;letter-spacing:-.005em;text-transform:uppercase;color:#f5c842}
+.hero-title em{font-style:italic;color:#f0e4c8;font-weight:900}
+.hero-sub{font-size:13px;color:#5a7ba0;margin-top:10px;max-width:540px;line-height:1.5}
+.hero-sub b{color:#e8f0fe;font-weight:700}
+
+/* MODE PANEL — 3 distinct treatments, staggered */
+.mode-wrap{margin-bottom:20px}
+.mode-title{font:900 15px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#f0e4c8;padding-bottom:10px;border-bottom:1px dashed #3a5878;margin-bottom:16px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:640px){.mode-grid{grid-template-columns:1fr}}
+
+/* Mode 1: OUTLINE — simple */
+.mode-easy{background:transparent;border:1.5px solid #5a7ba0;padding:22px 18px 20px;cursor:pointer;text-align:left;color:#e8f0fe;transition:border-color .15s,transform .15s}
+.mode-easy:hover{border-color:#f5c842;transform:translateY(-2px)}
+.mode-easy h3{font:900 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#e8f0fe;margin-bottom:4px}
+.mode-easy p{font-size:12px;color:#5a7ba0;line-height:1.4}
+.mode-easy .m-num{font:900 42px/1 'Barlow Condensed',sans-serif;color:#5a7ba0;margin-bottom:12px;display:block}
+
+/* Mode 2: FILLED — offset shadow, primary CTA feel */
+.mode-hard{background:#f5c842;color:#04080f;padding:22px 18px 20px;cursor:pointer;text-align:left;border:none;box-shadow:6px 6px 0 #8a6a0a;transition:transform .15s,box-shadow .15s;position:relative}
+.mode-hard:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #8a6a0a}
+.mode-hard h3{font:900 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.mode-hard p{font-size:12px;color:#8a6a0a;line-height:1.4;font-weight:600}
+.mode-hard .m-num{font:900 42px/1 'Barlow Condensed',sans-serif;color:#8a6a0a;margin-bottom:12px;display:block}
+.mode-hard .m-tag{position:absolute;top:10px;right:10px;font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;background:#04080f;color:#f5c842;padding:4px 7px}
+
+/* Mode 3: DAILY CARD — dashed border, warm cream accents */
+.mode-daily{background:linear-gradient(180deg,rgba(240,228,200,.04),transparent);border:1.5px dashed #f5c842;padding:22px 18px 20px;cursor:pointer;text-align:left;color:#e8f0fe;transition:background .2s}
+.mode-daily:hover{background:rgba(245,200,66,.06)}
+.mode-daily h3{font:900 18px/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f5c842;margin-bottom:4px}
+.mode-daily p{font-size:12px;color:#c8971a;line-height:1.4}
+.mode-daily .m-num{font:900 42px/1 'Barlow Condensed',sans-serif;color:#f5c842;margin-bottom:12px;display:block}
+.mode-daily .m-date{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;color:#f0e4c8;margin-top:8px;text-transform:uppercase}
+.daily-done{font-size:12px;color:#5a7ba0;margin-top:14px;font-style:italic;text-align:center}
+
+/* GAME HUD — asymmetric, magazine ticker */
+.hud-strip{display:flex;align-items:baseline;justify-content:space-between;background:transparent;border-top:1px solid #1a3a6a;border-bottom:1px solid #1a3a6a;padding:10px 0;margin-bottom:22px;gap:16px;flex-wrap:wrap}
+.hud-round{font:900 clamp(20px,4vw,28px)/1 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:.02em}
+.hud-round small{font-size:.5em;color:#5a7ba0;font-weight:800;letter-spacing:.14em;margin-left:6px}
+.hud-mini{display:flex;gap:22px}
+.hud-mini-item{display:flex;flex-direction:column;align-items:flex-start}
+.hud-mini-lbl{font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;color:#5a7ba0;text-transform:uppercase;margin-bottom:3px}
+.hud-mini-val{font:900 18px/1 'Barlow Condensed',sans-serif;color:#e8f0fe}
+.hud-mini-val.gold{color:#f5c842}
+
+/* PICKS ROW — small dashed chips */
+.picks-row{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap}
+.pick-dot{flex:1;min-width:60px;padding:6px 4px;border-top:2px solid #1a3a6a;text-align:left}
+.pick-dot.done{border-top-color:#f5c842}
+.pick-dot .pd-attr{font:800 8.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;color:#5a7ba0;text-transform:uppercase;margin-bottom:3px}
+.pick-dot .pd-val{font:900 17px/1 'Barlow Condensed',sans-serif;color:#3a5878}
+.pick-dot.done .pd-val{color:#f5c842}
+
+/* ROUND — asymmetric feature layout */
+.round-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.round-attr{flex:1;min-width:200px}
+.round-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:#5a7ba0;text-transform:uppercase;margin-bottom:4px}
+.round-attr-name{font:900 clamp(30px,7vw,48px)/.9 'Barlow Condensed',sans-serif;letter-spacing:-.01em;text-transform:uppercase;color:#f0e4c8}
+.round-team-block{text-align:right}
+.round-team-lbl{font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;color:#c8971a;text-transform:uppercase;margin-bottom:4px}
+.round-team{font:900 clamp(15px,3vw,20px)/1 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:.02em;margin-bottom:2px}
+.round-era{font-size:13px;color:#5a7ba0;font-weight:600}
+
+.respin-row{display:flex;gap:8px;margin-bottom:20px;padding:10px 0;border-top:1px dashed #3a5878;border-bottom:1px dashed #3a5878}
+.respin-btn{font:800 10.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;border:1px solid #5a7ba0;background:transparent;color:#e8f0fe;cursor:pointer;transition:all .15s}
+.respin-btn:hover:not(:disabled){border-color:#f5c842;color:#f5c842}
+.respin-btn:disabled{opacity:.25;cursor:not-allowed}
+.respin-btn small{font-size:9px;color:#5a7ba0;margin-left:6px}
+
+/* PLAYER CARDS — football-card inspired, mixed treatments */
+.players-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 @media(max-width:640px){.players-grid{grid-template-columns:repeat(2,1fr)}}
-.player-card{background:#0d1829;border:2px solid #1a3a6a;border-radius:var(--radius);padding:12px 8px;text-align:center;cursor:pointer;transition:all .18s;position:relative}
-.player-card:hover{border-color:#f5c842;transform:translateY(-3px);box-shadow:0 8px 20px rgba(245,200,66,.25)}
-.player-card.taken{opacity:.35;pointer-events:none}
-.pc-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,2.2vw,16px);font-weight:800;line-height:1.15;color:#e8f0fe;margin-bottom:4px}
-.pc-pos{font-size:10px;font-weight:700;letter-spacing:.1em;color:#f5c842;text-transform:uppercase}
-.pc-rating{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;margin-top:6px;line-height:1}
+.player-card{background:linear-gradient(180deg,#0d1829 0%,#0a1523 100%);border:1px solid #1a3a6a;padding:12px 8px 10px;text-align:center;cursor:pointer;transition:border-color .15s,transform .15s;position:relative;min-height:130px;display:flex;flex-direction:column}
+.player-card:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:#8a6a0a;transition:background .15s}
+.player-card:hover{border-color:#f5c842;transform:translateY(-2px)}
+.player-card:hover:before{background:#f5c842}
+.player-card.taken{opacity:.3;pointer-events:none}
+.pc-pos{font:800 9.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;color:#c8971a;text-transform:uppercase;margin-bottom:8px}
+.pc-name{font:800 clamp(12px,2vw,15px)/1.15 'Barlow Condensed',sans-serif;color:#f0e4c8;flex:1;display:flex;align-items:center;justify-content:center;padding:2px 0}
+.pc-rating{font:900 26px/1 'Barlow Condensed',sans-serif;margin-top:8px;padding-top:8px;border-top:1px solid #1a3a6a}
 .pc-rating.hi{color:#22c55e}
 .pc-rating.mid{color:#f5c842}
 .pc-rating.lo{color:#ef4444}
-.pc-hidden{font-size:22px;margin-top:6px;color:#f5c842}
-/* Picks tracker */
-.picks-row{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap;justify-content:center}
-.pick-dot{width:52px;background:#080f1c;border:1px solid #1a3a6a;border-radius:9px;padding:5px 3px;text-align:center}
-.pick-dot .pd-attr{font-size:7.5px;letter-spacing:.05em;color:#6b8abf;text-transform:uppercase;line-height:1.1}
-.pick-dot .pd-val{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--gold)}
-.pick-dot.empty .pd-val{color:#1a3a6a}
-/* Results */
-.result-panel{background:#080f1c;border:2px solid #1a3a6a;border-radius:18px;padding:26px 20px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.5)}
-.final-rating{font-family:'Barlow Condensed',sans-serif;font-size:clamp(60px,16vw,110px);font-weight:900;line-height:1;color:#f5c842;text-shadow:0 0 40px rgba(245,200,66,.4)}
-.final-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#6b8abf;font-weight:700;margin-bottom:14px}
-.ballon-row{font-size:clamp(26px,7vw,40px);letter-spacing:4px;margin:12px 0}
-.ballon-count{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
-.career-log{background:#0d1829;border:1.5px solid #1a3a6a;border-radius:12px;padding:16px;text-align:left;max-height:340px;overflow-y:auto;margin:14px 0;color:#e8f0fe}
-.career-event{font-size:13.5px;line-height:1.55;padding:7px 4px;border-bottom:1px dashed #1a3a6a;display:flex;gap:9px;align-items:flex-start;color:#e8f0fe}
-.career-event:last-child{border-bottom:none}
-.ce-icon{flex-shrink:0;font-size:15px}
-.sim-btn{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:15px 36px;border-radius:50px;cursor:pointer;border:none;background:#f5c842;color:#04080f;transition:all .2s;box-shadow:0 6px 24px rgba(245,200,66,.3)}
-.sim-btn:hover{transform:translateY(-2px)}
-.share-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
-.share-btn2{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:11px 24px;border-radius:50px;border:2px solid #f5c842;background:transparent;color:#f5c842;cursor:pointer;transition:all .2s}
-.share-btn2:hover{background:#f5c842;color:#04080f}
-.picks-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:14px 0}
+.pc-hidden{font-size:22px;margin-top:8px;padding-top:8px;border-top:1px solid #1a3a6a;color:#5a7ba0}
+.pc-height{font-size:10px;color:#5a7ba0;margin-top:3px;font-weight:600;letter-spacing:.04em}
+
+/* IDENTITY panel */
+.identity-panel{padding:36px 20px;text-align:left;border:1px solid #1a3a6a;background:#0d1829;position:relative}
+.identity-panel:before{content:"REVEAL";position:absolute;top:-8px;left:16px;background:#04080f;padding:0 10px;font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;color:#c8971a}
+.identity-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;color:#5a7ba0;text-transform:uppercase;margin-bottom:10px}
+.identity-nation{font:900 clamp(28px,7vw,44px)/1 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:-.005em;margin-bottom:6px}
+.identity-academy{font-size:13px;color:#5a7ba0;font-style:italic;margin-bottom:24px}
+.identity-academy b{color:#f0e4c8;font-style:normal;font-weight:700}
+.pos-row{display:flex;gap:10px;flex-wrap:wrap}
+.pos-btn{flex:1;min-width:110px;padding:14px 16px 12px;background:transparent;border:1.5px solid #5a7ba0;color:#e8f0fe;cursor:pointer;text-align:left;transition:all .15s;font-family:'Barlow',sans-serif}
+.pos-btn:hover{border-color:#f5c842;background:rgba(245,200,66,.05)}
+.pos-btn strong{display:block;font:900 16px/1 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#f5c842;margin-bottom:3px}
+.pos-btn span{font-size:11px;color:#5a7ba0}
+
+/* RESULT — magazine spread */
+.result-head{border-bottom:2px solid #f5c842;padding-bottom:18px;margin-bottom:24px}
+.result-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:#c8971a;text-transform:uppercase;margin-bottom:6px}
+.result-rating-row{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap}
+.final-rating{font:900 clamp(72px,18vw,120px)/.9 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:-.02em}
+.result-meta{color:#5a7ba0;font-size:13px;line-height:1.5}
+.result-meta strong{color:#f0e4c8;font-weight:700;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:14px}
+
+.closest-box{background:#0d1829;border-left:3px solid #f5c842;padding:14px 18px;margin:22px 0}
+.closest-kicker{font:800 9.5px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:#5a7ba0;text-transform:uppercase;margin-bottom:6px}
+.closest-name{font:900 22px/1 'Barlow Condensed',sans-serif;color:#f5c842;letter-spacing:.02em;margin-bottom:2px}
+.closest-detail{font-size:12px;color:#5a7ba0;font-style:italic}
+
+.picks-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:20px 0}
 @media(max-width:560px){.picks-summary{grid-template-columns:repeat(2,1fr)}}
-.ps-item{background:#0d1829;border:1.5px solid #1a3a6a;border-radius:10px;padding:8px 5px}
-.ps-attr{font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:#6b8abf;font-weight:700}
-.ps-player{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:#e8f0fe;line-height:1.15;margin:2px 0}
-.ps-val{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900}
-.fade-in{animation:fadeUp .4s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.daily-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:#4a2fd9;color:#fff;border-radius:50px;padding:3px 12px;margin-bottom:6px}
+.ps-item{background:#0a1523;border:1px solid #1a3a6a;padding:8px 6px;text-align:left}
+.ps-attr{font:800 8px/1 'Barlow Condensed',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#5a7ba0;margin-bottom:4px}
+.ps-player{font:800 11.5px/1.15 'Barlow Condensed',sans-serif;color:#e8f0fe;margin-bottom:3px;min-height:26px}
+.ps-val{font:900 17px/1 'Barlow Condensed',sans-serif}
+
+.sim-btn{font:900 13px/1 'Barlow Condensed',sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:16px 32px;border:none;background:#f5c842;color:#04080f;cursor:pointer;box-shadow:5px 5px 0 #8a6a0a;transition:transform .12s,box-shadow .12s;margin-top:8px}
+.sim-btn:hover{transform:translate(2px,2px);box-shadow:1px 1px 0 #8a6a0a}
+
+/* CAREER LOG — timeline style, mixed event weights */
+.career-wrap{margin-top:24px}
+.career-header{border-top:1px dashed #3a5878;padding-top:18px;margin-bottom:16px}
+.career-kicker{font:800 10px/1 'Barlow Condensed',sans-serif;letter-spacing:.24em;color:#c8971a;text-transform:uppercase;margin-bottom:8px}
+.ballon-row{font-size:clamp(24px,6vw,32px);letter-spacing:6px;margin:6px 0 4px}
+.ballon-count{font:900 clamp(16px,3.5vw,22px)/1.2 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.04em;color:#f0e4c8}
+.career-log{position:relative;padding:6px 0 0 0}
+.career-event{padding:10px 0 12px 20px;border-bottom:1px dashed #1a3a6a;position:relative;color:#c8dae8;font-size:13.5px;line-height:1.55}
+.career-event:before{content:"";position:absolute;left:0;top:16px;width:8px;height:8px;background:#f5c842;border-radius:50%}
+.career-event.big{padding:14px 0 14px 20px;font-size:15px;color:#f0e4c8}
+.career-event.big:before{background:#f0e4c8;width:10px;height:10px;top:18px}
+.career-event strong{color:#f5c842;font-weight:700}
+.career-event:last-child{border-bottom:none}
+
+.share-row{display:flex;gap:8px;justify-content:flex-start;flex-wrap:wrap;margin-top:20px}
+.share-btn2{font:800 11px/1 'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;padding:11px 20px;border:1px solid #5a7ba0;background:transparent;color:#e8f0fe;cursor:pointer;transition:border-color .15s}
+.share-btn2:hover{border-color:#f5c842;color:#f5c842}
+
+.fade-in{animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.daily-tag{display:inline-block;font:800 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;text-transform:uppercase;background:transparent;border:1px solid #f5c842;color:#f5c842;padding:5px 10px;margin-bottom:10px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -134,42 +218,64 @@ nav a.home{text-decoration:none;display:block;flex-shrink:0}
   </div>
 </nav>
 <div class="page">
-  <div class="hero">
-    <h1 class="hero-title" style="margin:0"><span class="ball">🏆</span> Ballon d'Or Builder</h1>
-    <p class="hero-sub" style="margin:0">Build the greatest football player of all time · Free daily game</p>
-  </div>
+  <header class="hero">
+    <div class="hero-kicker">The SportsStack Almanac</div>
+    <h1 class="hero-title">Ballon d'Or <em>Builder</em></h1>
+    <p class="hero-sub">A ten-round build-a-player game. Pick from real squads across six decades, then find out what kind of career you just invented. <b>New Daily Challenge every day.</b></p>
+  </header>
 
   <!-- MODE SELECT -->
-  <div class="mode-panel fade-in" id="mode-panel">
-    <div class="mode-title">Choose Your Mode</div>
-    <div class="mode-desc">10 attributes. 10 random club/era combos. Pick one player per round — their rating for that attribute locks in.<br/>Build the highest rated player you can, then simulate their career.</div>
-    <div class="mode-btns">
-      <button class="mode-btn" onclick="startGame('easy',false)">😎 Easy Mode<br/><span style="font-size:11px;font-weight:700;opacity:.75">Ratings visible</span></button>
-      <button class="mode-btn alt" onclick="startGame('hard',false)">🔥 Hard Mode<br/><span style="font-size:11px;font-weight:700;opacity:.75">Ratings hidden</span></button>
-      <button class="mode-btn daily" id="daily-btn" onclick="startGame('hard',true)">📅 Daily Challenge<br/><span style="font-size:11px;font-weight:700;opacity:.85" id="daily-sub">Same board for everyone</span></button>
+  <div class="mode-wrap fade-in" id="mode-panel">
+    <div class="mode-title">Pick How You Want To Play</div>
+    <div class="mode-grid">
+      <button class="mode-easy" onclick="startGame('easy',false)">
+        <span class="m-num">01</span>
+        <h3>Easy</h3>
+        <p>All ratings shown. Good for a first go.</p>
+      </button>
+      <button class="mode-hard" onclick="startGame('hard',false)">
+        <span class="m-tag">Main event</span>
+        <span class="m-num">02</span>
+        <h3>Hard</h3>
+        <p>Ratings hidden. Pick on football knowledge alone.</p>
+      </button>
+      <button class="mode-daily" id="daily-btn" onclick="startGame('hard',true)">
+        <span class="m-num">03</span>
+        <h3>Daily</h3>
+        <p>One board for the whole world. One attempt.</p>
+        <div class="m-date" id="daily-sub">Fresh at 00:00 UTC</div>
+      </button>
     </div>
     <div class="daily-done" id="daily-done"></div>
   </div>
 
   <!-- GAME -->
   <div id="game-area" style="display:none">
-    <div class="hud">
-      <div class="hud-item"><div class="hud-val" id="hud-round">1/10</div><div class="hud-lbl">Round</div></div>
-      <div class="hud-item"><div class="hud-val" id="hud-avg">—</div><div class="hud-lbl">Current Avg</div></div>
-      <div class="hud-item"><div class="hud-val" id="hud-team-spins">1</div><div class="hud-lbl">Team Re-spins</div></div>
-      <div class="hud-item"><div class="hud-val" id="hud-era-spins">1</div><div class="hud-lbl">Era Re-spins</div></div>
+    <div class="hud-strip">
+      <div class="hud-round" id="hud-round">01 <small>/ 10</small></div>
+      <div class="hud-mini">
+        <div class="hud-mini-item"><div class="hud-mini-lbl">Avg so far</div><div class="hud-mini-val gold" id="hud-avg">—</div></div>
+        <div class="hud-mini-item"><div class="hud-mini-lbl">Team re-spin</div><div class="hud-mini-val" id="hud-team-spins">1</div></div>
+        <div class="hud-mini-item"><div class="hud-mini-lbl">Era re-spin</div><div class="hud-mini-val" id="hud-era-spins">1</div></div>
+      </div>
     </div>
     <div class="picks-row" id="picks-row"></div>
-    <div class="round-panel fade-in" id="round-panel">
+    <div class="fade-in" id="round-panel">
       <div id="daily-tag-wrap"></div>
-      <div class="attr-banner">
-        <div class="attr-sub">Round <span id="round-num">1</span> of 10 — Pick your</div>
-        <div class="attr-name" id="attr-name">SHOOTING</div>
+      <div class="round-head">
+        <div class="round-attr">
+          <div class="round-kicker">Round <span id="round-num">1</span> · This round you're picking</div>
+          <div class="round-attr-name" id="attr-name">SHOOTING</div>
+        </div>
+        <div class="round-team-block">
+          <div class="round-team-lbl">From the squad of</div>
+          <div class="round-team" id="team-chip">Manchester United</div>
+          <div class="round-era" id="team-era-sub">2000s</div>
+        </div>
       </div>
-      <div class="team-banner">
-        <div class="team-chip" id="team-chip">Manchester United · 2000s</div>
-        <button class="respin-btn" id="respin-team" onclick="respinTeam()">🎲 Re-spin Team</button>
-        <button class="respin-btn" id="respin-era" onclick="respinEra()">🕰 Re-spin Era</button>
+      <div class="respin-row">
+        <button class="respin-btn" id="respin-team" onclick="respinTeam()">Re-spin team<small id="respin-team-count">(1 left)</small></button>
+        <button class="respin-btn" id="respin-era" onclick="respinEra()">Re-spin era<small id="respin-era-count">(1 left)</small></button>
       </div>
       <div class="players-grid" id="players-grid"></div>
     </div>
@@ -177,39 +283,50 @@ nav a.home{text-decoration:none;display:block;flex-shrink:0}
 
   <!-- IDENTITY -->
   <div id="identity-area" style="display:none">
-    <div class="result-panel fade-in">
-      <div class="final-label">Your player is born...</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,6vw,36px);font-weight:900;margin:10px 0" id="identity-reveal"></div>
-      <div class="final-label" style="margin-top:18px">Choose their position</div>
-      <div class="mode-btns" style="margin-top:12px">
-        <button class="mode-btn" onclick="choosePosition('ST')">&#9917; Striker</button>
-        <button class="mode-btn" onclick="choosePosition('MID')">&#127919; Midfielder</button>
-        <button class="mode-btn" onclick="choosePosition('DEF')">&#128737; Defender</button>
+    <div class="identity-panel fade-in">
+      <div class="identity-kicker">Your player is from...</div>
+      <div class="identity-nation" id="identity-nation"></div>
+      <div class="identity-academy" id="identity-academy"></div>
+      <div class="identity-kicker" style="margin-top:6px">Where do they play?</div>
+      <div class="pos-row" style="margin-top:12px">
+        <button class="pos-btn" onclick="choosePosition('ST')"><strong>Striker</strong><span>Big goals. Big pressure.</span></button>
+        <button class="pos-btn" onclick="choosePosition('MID')"><strong>Midfielder</strong><span>Runs the game.</span></button>
+        <button class="pos-btn" onclick="choosePosition('DEF')"><strong>Defender</strong><span>Wins ugly.</span></button>
       </div>
     </div>
   </div>
 
   <!-- RESULT -->
   <div id="result-area" style="display:none">
-    <div class="result-panel fade-in">
+    <div class="fade-in">
       <div id="result-daily-tag"></div>
-      <div class="final-label">Your Player's Overall Rating</div>
-      <div class="final-rating" id="final-rating">0</div>
-      <div class="picks-summary" id="picks-summary"></div>
-      <div id="closest-player" style="background:#0d1829;border:1.5px solid #f5c842;border-radius:12px;padding:14px 16px;margin:14px 0;text-align:center">
-        <div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#6b8abf;font-weight:700;margin-bottom:5px">Player Comparison</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;color:#e8f0fe;margin-bottom:2px">Your build most closely resembles</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#f5c842;line-height:1.1" id="closest-name">—</div>
-        <div style="font-size:11px;color:#6b8abf;font-weight:600;margin-top:3px" id="closest-detail">—</div>
+      <div class="result-head">
+        <div class="result-kicker">The Build · Final Rating</div>
+        <div class="result-rating-row">
+          <div class="final-rating" id="final-rating">0</div>
+          <div class="result-meta">
+            <strong>Overall</strong> across ten attributes.<br/>
+            See who they most resemble below,<br/>then simulate the career.
+          </div>
+        </div>
       </div>
-      <button class="sim-btn" id="sim-btn" onclick="simulateCareer()">⚡ Simulate Career</button>
-      <div id="career-area" style="display:none">
-        <div class="ballon-row" id="ballon-row"></div>
-        <div class="ballon-count" id="ballon-count"></div>
+      <div class="closest-box" id="closest-player">
+        <div class="closest-kicker">Closest real player</div>
+        <div class="closest-name" id="closest-name">—</div>
+        <div class="closest-detail" id="closest-detail">—</div>
+      </div>
+      <div class="picks-summary" id="picks-summary"></div>
+      <button class="sim-btn" id="sim-btn" onclick="simulateCareer()">Simulate the career</button>
+      <div class="career-wrap" id="career-area" style="display:none">
+        <div class="career-header">
+          <div class="career-kicker">Ballon d'Ors Won</div>
+          <div class="ballon-row" id="ballon-row"></div>
+          <div class="ballon-count" id="ballon-count"></div>
+        </div>
         <div class="career-log" id="career-log"></div>
         <div class="share-row">
-          <button class="share-btn2" onclick="shareResult()">Share Result 📋</button>
-          <button class="share-btn2" onclick="location.reload()">Play Again 🔁</button>
+          <button class="share-btn2" onclick="shareResult()">Share result</button>
+          <button class="share-btn2" onclick="location.reload()">Play again</button>
         </div>
       </div>
     </div>
@@ -280,7 +397,7 @@ function startGame(m, daily){
   currentRound = 0; picks = []; teamSpins = 1; eraSpins = 1; usedPlayers = new Set();
   document.getElementById('mode-panel').style.display='none';
   document.getElementById('game-area').style.display='block';
-  if(isDaily) document.getElementById('daily-tag-wrap').innerHTML='<div style="text-align:center"><span class="daily-tag">📅 Daily Challenge — '+todayStr()+'</span></div>';
+  if(isDaily) document.getElementById('daily-tag-wrap').innerHTML='<span class="daily-tag">Daily · '+todayStr()+'</span>';
   renderPicksRow();
   renderRound();
 }
@@ -288,20 +405,25 @@ function startGame(m, daily){
 function renderPicksRow(){
   document.getElementById('picks-row').innerHTML = ATTRS.map(a=>{
     const p = picks.find(x=>x.attr===a);
-    return '<div class="pick-dot'+(p?'':' empty')+'"><div class="pd-attr">'+a+'</div><div class="pd-val">'+(p?p.rating:'–')+'</div></div>';
+    return '<div class="pick-dot'+(p?' done':'')+'"><div class="pd-attr">'+a.slice(0,4)+'</div><div class="pd-val">'+(p?p.rating:'–')+'</div></div>';
   }).join('');
 }
 
 function renderRound(){
   const r = rounds[currentRound];
+  const rn = String(currentRound+1).padStart(2,'0');
   document.getElementById('round-num').textContent = currentRound+1;
-  document.getElementById('hud-round').textContent = (currentRound+1)+'/10';
+  document.getElementById('hud-round').innerHTML = rn+' <small>/ 10</small>';
   document.getElementById('attr-name').textContent = r.attr.toUpperCase();
-  document.getElementById('team-chip').textContent = r.team+' · '+r.era;
+  document.getElementById('team-chip').textContent = r.team;
+  const eraEl = document.getElementById('team-era-sub');
+  if(eraEl) eraEl.textContent = r.era;
   document.getElementById('hud-team-spins').textContent = teamSpins;
   document.getElementById('hud-era-spins').textContent = eraSpins;
   document.getElementById('respin-team').disabled = teamSpins<=0;
   document.getElementById('respin-era').disabled = eraSpins<=0;
+  const tc = document.getElementById('respin-team-count'); if(tc) tc.textContent = '('+teamSpins+' left)';
+  const ec = document.getElementById('respin-era-count'); if(ec) ec.textContent = '('+eraSpins+' left)';
   const avg = picks.length ? Math.round(picks.reduce((s,p)=>s+p.rating,0)/picks.length) : null;
   document.getElementById('hud-avg').textContent = avg===null?'—':avg;
   
@@ -316,18 +438,18 @@ function renderRound(){
     if(mode==='easy'){
       ratingHtml = '<div class="pc-rating '+cls+'">'+rating+'</div>';
       if(isBuild && p.h){
-        ratingHtml += '<div style="font-size:10px;color:#6b8abf;font-weight:700;margin-top:2px;letter-spacing:.04em">'+p.h+'cm</div>';
+        ratingHtml += '<div class="pc-height">'+p.h+' cm</div>';
       }
     } else {
       if(isBuild && p.h){
-        ratingHtml = '<div class="pc-hidden" style="font-size:16px">❓</div><div style="font-size:11px;color:#f5c842;font-weight:800;margin-top:2px;letter-spacing:.04em">'+p.h+'cm</div>';
+        ratingHtml = '<div class="pc-hidden">·</div><div class="pc-height" style="color:#f5c842">'+p.h+' cm</div>';
       } else {
-        ratingHtml = '<div class="pc-hidden">❓</div>';
+        ratingHtml = '<div class="pc-hidden">·</div>';
       }
     }
     return '<div class="player-card'+(taken?' taken':'')+'" onclick="pickPlayer('+i+')">'
-      +'<div class="pc-name">'+p.n+'</div>'
       +'<div class="pc-pos">'+POS_LABEL[p.a]+'</div>'
+      +'<div class="pc-name">'+p.n+'</div>'
       +ratingHtml+'</div>';
   }).join('');
 }
@@ -421,7 +543,7 @@ function showResult(){
   document.getElementById('final-rating').textContent = ov;
   if(isDaily){
     localStorage.setItem('bdb-daily-'+todayStr(), ov);
-    document.getElementById('result-daily-tag').innerHTML='<span class="daily-tag">📅 Daily Challenge — '+todayStr()+'</span>';
+    document.getElementById('result-daily-tag').innerHTML='<span class="daily-tag">Daily · '+todayStr()+'</span>';
   }
   // Best score
   const bestKey = 'bdb-best-'+mode+(isDaily?'-daily':'');
@@ -434,7 +556,6 @@ function showResult(){
     document.getElementById('closest-detail').textContent = closest.team + ' · ' + closest.era;
   }
   document.getElementById('picks-summary').innerHTML = picks.map(p=>{
-    const cls = p.rating>=85?'hi':(p.rating>=68?'mid':'lo');
     const col = p.rating>=85?'#22c55e':(p.rating>=68?'#f5c842':'#ef4444');
     return '<div class="ps-item"><div class="ps-attr">'+p.attr+'</div><div class="ps-player">'+p.player+'</div><div class="ps-val" style="color:'+col+'">'+p.rating+'</div></div>';
   }).join('');
@@ -603,9 +724,10 @@ function simulateCareer(){
   else ret = pick(RETIRE_ENDINGS.journeyman);
   events.push(['👋','Retires at '+rint(34,40)+' as '+ret]);
 
-  document.getElementById('career-log').innerHTML = events.map(e=>
-    '<div class="career-event"><span class="ce-icon">'+e[0]+'</span><span>'+e[1]+'</span></div>'
-  ).join('');
+  document.getElementById('career-log').innerHTML = events.map((e,i)=>{
+    const isBig = i===0 || (e[1]||'').indexOf('World Cup')>-1 || (e[1]||'').indexOf('Ballon')>-1;
+    return '<div class="career-event'+(isBig?' big':'')+'">'+e[1]+'</div>';
+  }).join('');
 }
 
 function shareResult(){
