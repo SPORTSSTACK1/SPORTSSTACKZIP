@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Block admin/preview pages
+Disallow: /prem-admin.html
+Disallow: /preview-wc-admin.html
+Disallow: /preview-womens-wimbledon.html
+Disallow: /homepage-preview.html
+Disallow: /sportstack-downloader.html
+Disallow: /auth.html
+
+Sitemap: https://sportsstack.com.au/sitemap.xml
