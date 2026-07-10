@@ -396,7 +396,7 @@ function showResult(){
     const col = p.rating>=85?'#22c55e':(p.rating>=68?'#f5c842':'#ef4444');
     return '<div class="ps-item"><div class="ps-attr">'+p.attr+'</div><div class="ps-player">'+p.player+'</div><div class="ps-val" style="color:'+col+'">'+p.rating+'</div></div>';
   }).join('');
-  if(typeof saveResult==='function') saveResult('ballon-dor-builder','Ballon D\'Or Builder',ov,99,ov>=95);
+  if(typeof saveResult==='function') saveResult('ballon-dor-builder','Ballon D\'Or Builder',Math.round(ov/2),99,ov>=95);
 }
 
 // ── Career simulation ─────────────────────────────────────────────
@@ -505,13 +505,14 @@ function simulateCareer(){
 
   // Transfers
   if(ov>=88){
-    const fee1 = rint(40,90)+(ov-88)*12;
+    const fee1 = Math.min(200, rint(35,75) + Math.round((ov-88)*9));
     const club1 = pick(BIG_CLUBS);
     events.push(['💰','Signs for <strong>'+club1+'</strong> in a blockbuster £'+fee1+'M deal after '+rint(2,4)+' standout seasons.']);
     if(ov>=93 && Math.random()>0.4){
       let club2; do{club2=pick(BIG_CLUBS);}while(club2===club1);
-      const fee2 = rint(90,160)+(ov-93)*15;
-      events.push(['🚁','World-record £'+fee2+'M move to <strong>'+club2+'</strong> stuns football.']);
+      const fee2 = Math.min(222, rint(140,180) + Math.round((ov-93)*7));
+      const label = fee2>=215 ? 'World-record ' : (fee2>=185 ? 'Blockbuster ' : 'Sensational ');
+      events.push(['🚁',label+'€'+fee2+'M move to <strong>'+club2+'</strong> stuns football.']);
     }
   } else if(ov>=80){
     const club1 = pick(MID_CLUBS);
