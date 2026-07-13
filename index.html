@@ -225,6 +225,33 @@ html,body{font-family:'Sora',sans-serif}
     </div>
   </div>
 </section>
+<!-- This Week's Picks -->
+<section style="max-width:1060px;margin:0 auto;padding:8px 24px 36px">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid #2A3555;padding-bottom:12px;margin-bottom:18px">
+    <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#f5c842">This Week's Picks</div>
+    <div style="font-size:11px;color:#7C8398;font-style:italic">Updated most Fridays</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px" class="tw-grid">
+    <a href="ballon-dor-runner-up-quiz.html" style="background:#111828;border:1px solid #1F293F;border-left:2px solid #f5c842;padding:16px 18px;text-decoration:none;display:block;transition:border-color .15s">
+      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#F1EBD9;margin-bottom:5px">Ballon d'Or Runners-Up since 2000</div>
+      <div style="font-size:12.5px;color:#7C8398;line-height:1.5">Made this after Yamal finished second this year. The early 2000s names get hard fast, Deco catches almost everyone.</div>
+    </a>
+    <a href="madden-99-club-quiz.html" style="background:#111828;border:1px solid #1F293F;border-left:2px solid #D9503F;padding:16px 18px;text-decoration:none;display:block;transition:border-color .15s">
+      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#F1EBD9;margin-bottom:5px">The Madden 99 Club</div>
+      <div style="font-size:12.5px;color:#7C8398;line-height:1.5">All 71 players ever rated 99 since 1997. There are three kickers in here. Three.</div>
+    </a>
+    <a href="fifa-07-ratings-quiz.html" style="background:#111828;border:1px solid #1F293F;border-left:2px solid #3EAD5F;padding:16px 18px;text-decoration:none;display:block;transition:border-color .15s">
+      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#F1EBD9;margin-bottom:5px">FIFA 07 Top 10 Ratings</div>
+      <div style="font-size:12.5px;color:#7C8398;line-height:1.5">Peak mid-2000s. If you can name the two goalkeepers you played too much of this game.</div>
+    </a>
+    <a href="ballon-dor-builder.html" style="background:#111828;border:1px solid #1F293F;border-left:2px solid #f5c842;padding:16px 18px;text-decoration:none;display:block;transition:border-color .15s">
+      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#F1EBD9;margin-bottom:5px">Ballon d'Or Builder — Daily Challenge</div>
+      <div style="font-size:12.5px;color:#7C8398;line-height:1.5">Same board for everyone, one attempt a day. My best is 92 overall. Beat it.</div>
+    </a>
+  </div>
+</section>
+<style>@media(max-width:640px){.tw-grid{grid-template-columns:1fr!important}}</style>
+
 <div class="hub" id="quizzes">
   <div style="margin:36px 0 10px">
     <div class="wc-section-header">
@@ -533,4 +560,9 @@ function goRandomSport(arr){if(arr&&arr.length){window.location.href=arr[Math.fl
 function goRandom(){window.location.href=ALL_QUIZZES[Math.floor(Math.random()*ALL_QUIZZES.length)];}
 function toggleSport(btn){var b=btn.closest('.sport-accordion').querySelector('.acc-body');var o=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',o?'false':'true');b.hidden=o;}
 </script>
-<script src="xp-system.js"></script></body></html>
+<script src="xp-system.js"></script>
+<!-- Site numbers -->
+<div style="max-width:1060px;margin:30px auto 0;padding:20px 24px;border-top:1px solid #1F293F;text-align:center">
+  <span style="font-size:12.5px;color:#7C8398;font-family:'Sora',sans-serif">330+ quizzes · 9 sports · new content every week · built by one bloke in Melbourne</span>
+</div>
+</body></html>
