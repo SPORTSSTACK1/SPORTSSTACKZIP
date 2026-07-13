@@ -115,11 +115,43 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
   gtag('config', 'G-TL0NM71G5M');
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet"/>
+<style id="ss-pro">
+/* ── SportsStack Pro upgrade: scoreboard header, editorial hints, match-report modal ── */
+
+/* Scoreboard header */
+.site-header{border-bottom:2px solid #E67E22!important;padding-bottom:20px!important;text-align:left!important;position:relative}
+.site-header:before{content:attr(data-sport);font:700 10px/1 'Sora','Barlow Condensed',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#E67E22;display:block;margin-bottom:8px}
+.game-title{text-align:left!important;font-size:clamp(24px,5vw,40px)!important}
+.game-subtitle{text-align:left!important;max-width:640px}
+
+/* Stats bar → match scoreboard */
+.stats-bar{border:none!important;border-top:1px solid var(--border-bright,#1a3a6a)!important;border-bottom:1px solid var(--border-bright,#1a3a6a)!important;border-radius:0!important;background:transparent!important;padding:12px 4px!important}
+.stat-val{font-size:30px!important}
+.stat-label{letter-spacing:.16em!important}
+
+/* Hint card typography: Fraunces italic for the reveal-worthy content */
+.card-year,.card-rating{font-family:'Fraunces',Georgia,serif!important;font-weight:600!important;font-style:italic!important;letter-spacing:-.02em!important}
+.card-club,.card-nat{font-family:'Fraunces',Georgia,serif!important;font-style:italic!important;font-weight:400!important}
+.card-name-found,.card-name-revealed{font-family:'Fraunces',Georgia,serif!important;font-style:italic!important;font-weight:600!important;letter-spacing:-.01em!important}
+.team-card{border-radius:4px!important}
+.team-card:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:#E67E22;opacity:.5}
+
+/* Result modal → match report */
+.modal{border-radius:4px!important;border-top:3px solid #E67E22!important;text-align:left!important;padding:28px 26px!important}
+.modal:before{content:"Full Time · SportsStack";font:700 9.5px/1 'Sora','Barlow Condensed',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#E67E22;display:block;margin-bottom:14px}
+.modal-icon{display:none!important}
+.modal-title{text-align:left!important;font-size:32px!important}
+.modal-score{text-align:left!important;font-family:'Fraunces',Georgia,serif!important;font-style:italic!important;font-size:22px!important;font-weight:600!important}
+.modal-msg{text-align:left!important}
+.share-btn{width:100%;border-radius:4px!important;background:#E67E22!important;color:#04080f!important;border:none!important;font-weight:900!important}
+.btn-replay{border-radius:4px!important}
+</style>
 </head>
 <body>
 <div class="page">
 
-  <header class="site-header">
+  <header class="site-header" data-sport="NBA" style="--sport-accent:#E67E22">
     <div class="game-title">NBA Finals <span class="hl">MVP</span> Winners</div>
     <div class="game-subtitle">Name every Finals MVP since 2000 · 26 awards · some players won multiple times · 5 minutes</div>
   </header>
