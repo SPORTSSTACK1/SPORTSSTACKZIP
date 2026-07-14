@@ -62,6 +62,38 @@ nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-c
 .complete-banner p{font-size:14px;color:var(--text-muted)}
 .timer-wrap{text-align:center;margin-bottom:14px}.timer{display:inline-flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:.08em;color:var(--text-muted);background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:6px 18px;transition:color .3s,border-color .3s}.timer.warn{color:#f59e0b;border-color:#f59e0b}.timer.danger{color:var(--red);border-color:var(--red);animation:tick .5s infinite alternate}@keyframes tick{from{opacity:1}to{opacity:.6}}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet"/>
+<style id="ss-pro">
+/* ── SportsStack Pro upgrade: scoreboard header, editorial hints, match-report modal ── */
+
+/* Scoreboard header */
+.site-header{border-bottom:2px solid #3EAD5F!important;padding-bottom:20px!important;text-align:left!important;position:relative}
+.site-header:before{content:attr(data-sport);font:700 10px/1 'Sora','Barlow Condensed',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#3EAD5F;display:block;margin-bottom:8px}
+.game-title{text-align:left!important;font-size:clamp(24px,5vw,40px)!important}
+.game-subtitle{text-align:left!important;max-width:640px}
+
+/* Stats bar → match scoreboard */
+.stats-bar{border:none!important;border-top:1px solid var(--border-bright,#1a3a6a)!important;border-bottom:1px solid var(--border-bright,#1a3a6a)!important;border-radius:0!important;background:transparent!important;padding:12px 4px!important}
+.stat-val{font-size:30px!important}
+.stat-label{letter-spacing:.16em!important}
+
+/* Hint card typography: Fraunces italic for the reveal-worthy content */
+.card-year,.card-rating{font-family:'Fraunces',Georgia,serif!important;font-weight:600!important;font-style:italic!important;letter-spacing:-.02em!important}
+.card-club,.card-nat{font-family:'Fraunces',Georgia,serif!important;font-style:italic!important;font-weight:400!important}
+.card-name-found,.card-name-revealed{font-family:'Fraunces',Georgia,serif!important;font-style:italic!important;font-weight:600!important;letter-spacing:-.01em!important}
+.team-card{border-radius:4px!important}
+.team-card:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:#3EAD5F;opacity:.5}
+
+/* Result modal → match report */
+.modal{border-radius:4px!important;border-top:3px solid #3EAD5F!important;text-align:left!important;padding:28px 26px!important}
+.modal:before{content:"Full Time · SportsStack";font:700 9.5px/1 'Sora','Barlow Condensed',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#3EAD5F;display:block;margin-bottom:14px}
+.modal-icon{display:none!important}
+.modal-title{text-align:left!important;font-size:32px!important}
+.modal-score{text-align:left!important;font-family:'Fraunces',Georgia,serif!important;font-style:italic!important;font-size:22px!important;font-weight:600!important}
+.modal-msg{text-align:left!important}
+.share-btn{width:100%;border-radius:4px!important;background:#3EAD5F!important;color:#04080f!important;border:none!important;font-weight:900!important}
+.btn-replay{border-radius:4px!important}
+</style>
 </head>
 <body>
 <nav>
@@ -73,7 +105,7 @@ nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-c
   </div>
 </nav>
 
-<div class="site-header">
+<div class="site-header" data-sport="Football" style="--sport-accent:#3EAD5F">
   <h1>NRLW Premiership Winners</h1>
   <p class="sub">Name every NRLW Premiership winner since 2018 — 3 winners</p>
   <div class="prog-wrap"><div class="prog-bar" id="prog-bar"></div></div>
