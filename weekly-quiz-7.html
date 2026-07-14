@@ -6,13 +6,17 @@
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
-<meta property="og:title" content="Weekly Quiz 2026 07 01 — SportsStack"/>
+<meta property="og:title" content="Quiz of the Week No. 7 — SportsStack"/>
+<meta property="og:description" content="20 questions on the week just gone in sport. New quiz every Tuesday."/>
+<meta name="description" content="Quiz of the Week No. 7. Twenty questions on the week just gone in sport, from SportsStack. New quiz every Tuesday."/>
 <meta property="og:image" content="https://sportsstack.com.au/LOGO.jpeg"/>
 <meta property="og:url" content="https://sportsstack.com.au/weekly-quiz-7.html"/>
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:image" content="https://sportsstack.com.au/LOGO.jpeg"/>
-<title>SportsStack – Quiz of the Week</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<title>Quiz of the Week No. 7 | SportsStack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
 <script>
@@ -23,135 +27,122 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
-:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--blue:#2563eb;--blue-light:#3b82f6;--green:#22c55e;--green-glow:rgba(34,197,94,.35);--red:#ef4444;--red-glow:rgba(239,68,68,.35);--text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#4a6890;--border:#0d2040;--border-bright:#1a3a6a;--radius:10px}
+:root{
+  --bg:#1B2334;--surface:#242E44;--surface2:#2A3550;--line:#2E3A54;--line-2:#3B4869;
+  --gold:#F5C842;--gold-dim:#C29B28;--gold-deep:#8A6E18;
+  --ink:#EDF1F8;--ink-2:#B9C4D8;--mute:#8FA0BD;--mute-2:#6B7B98;
+  --green:#4ADE80;--green-bg:rgba(74,222,128,.16);
+  --red:#F87171;--red-bg:rgba(248,113,113,.16);
+  --radius:10px;
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:var(--bg);overflow:hidden;font-family:'Barlow',sans-serif;color:var(--text)}
-.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease}
+html,body{height:100%;background:var(--bg);overflow:hidden;font-family:'Sora',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease}
 .screen.active{opacity:1;pointer-events:all}
-
-/* LOADING */
-#title-screen{background:var(--bg)}
-.title-logo-wrap{margin-bottom:20px}
-.title-logo-wrap img{display:block;border-radius:8px}
-.title-brand{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,32px);font-weight:900;font-style:italic;letter-spacing:.06em;color:var(--gold);margin-bottom:6px}
-.title-tagline{font-family:'Barlow Condensed',sans-serif;font-size:clamp(12px,2.5vw,16px);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:40px}
-.title-tagline span{color:var(--gold)}
-.start-btn{font-family:'Barlow Condensed',sans-serif;font-size:clamp(15px,3vw,20px);font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;padding:16px 52px;border-radius:50px;cursor:pointer;transition:all .2s}
-.start-btn:hover{transform:translateY(-2px)}
-
-/* QUIZ */
+.home-link{position:fixed;top:14px;left:16px;z-index:50;display:flex;align-items:center;gap:8px;text-decoration:none;opacity:.7;transition:opacity .15s}
+.home-link:hover{opacity:1}
+.home-link img{display:block;border-radius:6px}
+.home-link span{font:700 10px/1 'Sora',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#8FA0BD}
+@media(max-width:520px){.home-link span{display:none}}
+#title-screen{padding:24px}
+.dateline{font:700 10px/1 'Sora',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.dateline:before,.dateline:after{content:"";width:26px;height:1px;background:var(--gold-deep)}
+.title-issue{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(44px,11vw,76px);line-height:.9;letter-spacing:-.03em;color:var(--ink);text-align:center;margin-bottom:6px}
+.title-issue em{font-style:italic;font-weight:400;color:var(--gold)}
+.title-date{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:15px;color:var(--mute);margin-bottom:30px;text-align:center}
+.title-blurb{font-size:14px;color:var(--ink-2);text-align:center;max-width:340px;line-height:1.6;margin-bottom:32px}
+.start-btn{font:800 12px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--gold);color:#151C2B;border:none;padding:17px 46px;border-radius:6px;cursor:pointer;transition:background .15s,transform .12s}
+.start-btn:hover{background:#FCE28A;transform:translateY(-1px)}
 #quiz-screen{padding:0;align-items:stretch;justify-content:stretch}
-.quiz-inner{display:flex;flex-direction:column;width:100%;height:100%;max-width:760px;margin:0 auto}
-.quiz-topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px;flex-shrink:0;border-bottom:1px solid var(--border)}
-.topbar-brand{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
-.progress-wrap{flex:1;margin:0 16px;display:flex;flex-direction:column;gap:4px}
-.progress-label{font-size:11px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;text-align:center}
-.progress-bar-outer{height:4px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
-.progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--blue-light),var(--gold));border-radius:99px;transition:width .4s ease}
-.score-badge{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--gold);letter-spacing:.06em}
-
-/* Full-width single-column layout */
-.quiz-body{flex:1;display:flex;flex-direction:column;padding:16px 20px 10px;gap:12px;overflow:hidden;min-height:0}
-.q-num{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim)}
-.q-text-box{background:var(--surface);border:1px solid var(--border-bright);border-radius:var(--radius);padding:18px 20px}
-.q-text{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2.8vw,24px);font-weight:700;line-height:1.3;color:var(--text)}
-.q-answers{display:flex;flex-direction:column;gap:10px;flex:1}
-.ans-btn{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:var(--radius);cursor:pointer;transition:all .2s;text-align:left;width:100%}
-.ans-btn:hover:not(.answered-wrong):not(.answered-correct):not(.locked){background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2)}
-.ans-btn.answered-correct{background:var(--green-glow);border-color:var(--green)}
-.ans-btn.answered-wrong{background:var(--red-glow);border-color:var(--red)}
-.ans-btn.reveal-correct{background:var(--green-glow);border-color:var(--green)}
+.quiz-inner{display:flex;flex-direction:column;width:100%;height:100%;max-width:740px;margin:0 auto;padding-top:56px}
+.scorecard{display:flex;gap:3px;padding:0 20px 12px;flex-shrink:0}
+.sc-cell{flex:1;height:6px;background:var(--line);border-radius:2px;transition:background .25s,transform .25s}
+.sc-cell.correct{background:var(--green)}
+.sc-cell.wrong{background:var(--red)}
+.sc-cell.current{background:var(--gold);transform:scaleY(2.2)}
+.sc-cell.pop{animation:cellPop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cellPop{0%{transform:scaleY(1)}45%{transform:scaleY(2.6)}100%{transform:scaleY(1)}}
+.quiz-meta{display:flex;align-items:baseline;justify-content:space-between;padding:0 20px 14px;flex-shrink:0;border-bottom:1px solid var(--line)}
+.qm-count{font:700 10px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.qm-count b{color:var(--ink);font-weight:800}
+.qm-score{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:17px;color:var(--gold);letter-spacing:-.01em}
+.qm-score small{color:var(--mute-2);font-weight:400}
+.quiz-body{flex:1;display:flex;flex-direction:column;padding:22px 20px 10px;gap:16px;overflow-y:auto;min-height:0}
+.q-text{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:clamp(19px,3.4vw,28px);line-height:1.28;letter-spacing:-.015em;color:var(--ink)}
+.q-answers{display:flex;flex-direction:column;gap:9px;padding-bottom:8px}
+.ans-btn{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);cursor:pointer;transition:background .15s,border-color .15s;text-align:left;width:100%;font-family:'Sora',sans-serif}
+.ans-btn:hover:not(.locked){background:var(--surface2);border-color:var(--mute-2)}
+.ans-btn.answered-correct,.ans-btn.reveal-correct{background:var(--green-bg);border-color:var(--green)}
+.ans-btn.answered-wrong{background:var(--red-bg);border-color:var(--red)}
 .ans-btn.locked{cursor:default;pointer-events:none}
-.ans-label{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,2.2vw,18px);font-weight:900;color:var(--text-dim);flex-shrink:0;min-width:28px}
+.ans-label{font:800 12px/1 'Sora',sans-serif;color:var(--mute-2);flex-shrink:0;width:16px;letter-spacing:.04em}
 .ans-btn.answered-correct .ans-label,.ans-btn.reveal-correct .ans-label{color:var(--green)}
 .ans-btn.answered-wrong .ans-label{color:var(--red)}
-.ans-text{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,2vw,18px);font-weight:700;line-height:1.3;color:var(--text)}
-
-.quiz-nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:8px 16px 12px;flex-shrink:0;border-top:1px solid var(--border)}
-.nav-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--border-bright);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-.nav-btn:hover{background:rgba(255,255,255,.15)}
+.ans-text{font:500 15px/1.35 'Sora',sans-serif;color:var(--ink)}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 16px;flex-shrink:0;border-top:1px solid var(--line);gap:12px}
+.nav-btn{width:38px;height:38px;border-radius:6px;background:transparent;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .15s,background .15s;flex-shrink:0}
+.nav-btn:hover:not(:disabled){border-color:var(--gold);background:var(--surface)}
 .nav-btn:disabled{opacity:.25;cursor:default}
-.nav-btn svg{width:18px;height:18px;fill:var(--text)}
-.nav-dots{display:flex;gap:5px;flex-wrap:wrap;max-width:280px;justify-content:center}
-.nav-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .2s;cursor:pointer}
-.nav-dot.current{background:var(--text);transform:scale(1.2)}
-.nav-dot.done-correct{background:var(--green)}
-.nav-dot.done-wrong{background:var(--red)}
-
-/* SCORE */
-#score-screen{background:var(--bg)}
-.score-logo{display:block;border-radius:6px;margin-bottom:14px}
-.score-brand{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;font-style:italic;color:var(--gold);letter-spacing:.06em;margin-bottom:4px}
-.score-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,2.5vw,18px);font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
-.score-number{font-family:'Barlow Condensed',sans-serif;font-size:clamp(60px,15vw,100px);font-weight:900;line-height:1;margin-bottom:4px}
-.score-denom{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,36px);font-weight:700;color:var(--text-dim);margin-bottom:16px}
-.score-msg{font-size:clamp(14px,2.5vw,18px);color:var(--text-muted);margin-bottom:32px;max-width:360px;text-align:center;line-height:1.5}
-.score-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.score-share-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;padding:14px 36px;border-radius:50px;cursor:pointer;transition:all .2s}
-.score-replay-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:var(--text);border:1.5px solid var(--border-bright);padding:14px 36px;border-radius:50px;cursor:pointer;transition:all .2s}
-.copied-msg{font-size:13px;color:var(--green);margin-top:10px;min-height:18px;text-align:center}
-nav{position:sticky;top
-<nav>
-  <a href="index.html" style="text-decoration:none;display:block;flex-shrink:0" aria-label="SportsStack home">
-    <img src="LOGO.jpeg" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/>
-  </a>
-  <div style="display:flex;align-items:center;gap:8px">
-    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
-    <div id="ss-member-widget"></div>
-  </div>
-</nav>
-:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.nav-btn svg{width:16px;height:16px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.nav-hint{font:500 11px/1 'Sora',sans-serif;color:var(--mute-2);letter-spacing:.06em;text-align:center}
+#score-screen{padding:24px}
+.score-kicker{font:700 10px/1 'Sora',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:14px}
+.score-number{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(72px,17vw,112px);line-height:.85;letter-spacing:-.04em;color:var(--gold)}
+.score-denom{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(18px,4vw,26px);color:var(--mute);margin-bottom:22px}
+.score-card{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:290px;width:100%;margin-bottom:22px}
+.scc{aspect-ratio:1;border-radius:3px;background:var(--line)}
+.scc.correct{background:var(--green)}
+.scc.wrong{background:var(--red)}
+.score-msg{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(15px,2.6vw,19px);color:var(--ink-2);margin-bottom:30px;max-width:380px;text-align:center;line-height:1.45}
+.score-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.score-share-btn{font:800 11px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--gold);color:#151C2B;border:none;padding:15px 34px;border-radius:6px;cursor:pointer;transition:background .15s}
+.score-share-btn:hover{background:#FCE28A}
+.score-replay-btn{font:800 11px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;background:transparent;color:var(--ink);border:1px solid var(--line-2);padding:15px 34px;border-radius:6px;cursor:pointer;transition:border-color .15s,color .15s}
+.score-replay-btn:hover{border-color:var(--gold);color:var(--gold)}
+.copied-msg{font:500 12px/1 'Sora',sans-serif;color:var(--green);margin-top:14px;min-height:16px;text-align:center;letter-spacing:.04em}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
 <!-- LOADING SCREEN -->
 <div class="screen active" id="title-screen">
-  <div class="title-logo-wrap">
-    <img src="LOGO.jpeg" alt="SportsStack" width="80" height="80" style="border-radius:10px;display:block"/>
-  </div>
-  <div class="title-brand">SportsStack</div>
-  <div class="title-tagline"><span>Quiz</span> of the Week</div>
-  <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+  <div class="dateline">Quiz of the Week</div>
+  <div class="title-issue">No. <em>7</em></div>
+  <div class="title-date">Week ending 14 July 2026</div>
+  <p class="title-blurb">Twenty questions on the week just gone. Wimbledon, the Open, the transfer window and a World Cup that will not stop giving.</p>
+  <button class="start-btn" onclick="startQuiz()">Start the quiz</button>
 </div>
 
 <!-- QUIZ SCREEN -->
 <div class="screen" id="quiz-screen">
   <div class="quiz-inner">
-    <div class="quiz-topbar">
-      <div class="topbar-brand">SportsStack</div>
-      <div class="progress-wrap">
-        <div class="progress-label" id="prog-label">Question 1 of 20</div>
-        <div class="progress-bar-outer"><div class="progress-bar-inner" id="prog-bar" style="width:5%"></div></div>
-      </div>
-      <div class="score-badge" id="live-score">0 / 0</div>
+    <div class="scorecard" id="scorecard"></div>
+    <div class="quiz-meta">
+      <div class="qm-count">Question <b id="qm-num">1</b> of 20</div>
+      <div class="qm-score" id="live-score">0 <small>/ 0</small></div>
     </div>
     <div class="quiz-body">
-      <div class="q-num" id="q-num">Question 1</div>
-      <div class="q-text-box">
-        <div class="q-text" id="q-text">Loading…</div>
-      </div>
+      <div class="q-text" id="q-text">Loading…</div>
       <div class="q-answers" id="q-answers">
         <button class="ans-btn" id="ans-a" onclick="selectAnswer(0)">
-          <span class="ans-label">A)</span>
-          <span class="ans-text" id="ans-a-text">Answer A</span>
+          <span class="ans-label">A</span><span class="ans-text" id="ans-a-text">Answer A</span>
         </button>
         <button class="ans-btn" id="ans-b" onclick="selectAnswer(1)">
-          <span class="ans-label">B)</span>
-          <span class="ans-text" id="ans-b-text">Answer B</span>
+          <span class="ans-label">B</span><span class="ans-text" id="ans-b-text">Answer B</span>
         </button>
         <button class="ans-btn" id="ans-c" onclick="selectAnswer(2)">
-          <span class="ans-label">C)</span>
-          <span class="ans-text" id="ans-c-text">Answer C</span>
+          <span class="ans-label">C</span><span class="ans-text" id="ans-c-text">Answer C</span>
         </button>
       </div>
     </div>
     <div class="quiz-nav">
-      <button class="nav-btn" id="nav-prev" onclick="goTo(currentQ-1)" disabled>
+      <button class="nav-btn" id="nav-prev" onclick="goTo(currentQ-1)" disabled aria-label="Previous question">
         <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <div class="nav-dots" id="nav-dots"></div>
-      <button class="nav-btn" id="nav-next" onclick="goTo(currentQ+1)" disabled>
+      <div class="nav-hint" id="nav-hint">Pick an answer to continue</div>
+      <button class="nav-btn" id="nav-next" onclick="goTo(currentQ+1)" disabled aria-label="Next question">
         <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
       </button>
     </div>
@@ -160,18 +151,22 @@ nav{position:sticky;top
 
 <!-- SCORE SCREEN -->
 <div class="screen" id="score-screen">
-  <img src="LOGO.jpeg" alt="SportsStack" width="60" height="60" class="score-logo"/>
-  <div class="score-brand">SportsStack</div>
-  <div class="score-title">Quiz of the Week</div>
+  <div class="score-kicker">Quiz of the Week · No. 7</div>
   <div class="score-number" id="score-number">0</div>
-  <div class="score-denom" id="score-denom">/ 20</div>
+  <div class="score-denom" id="score-denom">out of 20</div>
+  <div class="score-card" id="score-card"></div>
   <div class="score-msg" id="score-msg"></div>
   <div class="score-btns">
-    <button class="score-share-btn" onclick="shareScore()">📤 Share Score</button>
-    <button class="score-replay-btn" onclick="restartQuiz()">Play Again</button>
+    <button class="score-share-btn" onclick="shareScore()">Copy your scorecard</button>
+    <button class="score-replay-btn" onclick="restartQuiz()">Play again</button>
   </div>
   <div class="copied-msg" id="copied-msg"></div>
 </div>
+
+<a href="index.html" class="home-link" aria-label="SportsStack home">
+  <img src="LOGO.jpeg" alt="" width="30" height="30"/>
+  <span>SportsStack</span>
+</a>
 
 <script>
 
@@ -199,11 +194,12 @@ const QUESTIONS = [
 ];
 
 const MSGS = [
-  [0,4,  "Tough week! \uD83D\uDCAA Keep practising!"],
-  [5,9,  "Not bad! A few slipped away there..."],
-  [10,14,"Solid effort! You know your sport! \uD83C\uDFC6"],
-  [15,18,"Excellent! You're nearly perfect! \uD83D\uDD25"],
-  [19,20,"PERFECT SCORE! You're a sports genius! \uD83C\uDF89"],
+  [0,4,   "Rough week. In fairness, a few of these were mean."],
+  [5,9,   "A few got away. The Roman numerals one gets everybody."],
+  [10,14, "Respectable. You watched the weekend, at least."],
+  [15,17, "Strong. You are reading past the back page."],
+  [18,19, "Outstanding. One slip from the lot."],
+  [20,20, "Twenty out of twenty. Nothing left to teach you."],
 ];
 
 let currentQ = 0;
@@ -211,12 +207,12 @@ let answers = new Array(QUESTIONS.length).fill(null);
 let score = 0;
 let answered = 0;
 
-function buildDots(){
-  const c = document.getElementById('nav-dots');
+function buildScorecard(){
+  const c = document.getElementById('scorecard');
   c.innerHTML = '';
   QUESTIONS.forEach((_,i)=>{
     const d = document.createElement('div');
-    d.className = 'nav-dot' + (i===0?' current':'');
+    d.className = 'sc-cell' + (i===0?' current':'');
     d.onclick = ()=>{ if(answers[i]!==null || i<=answered) goTo(i); };
     c.appendChild(d);
   });
@@ -225,7 +221,7 @@ function buildDots(){
 function startQuiz(){
   answers = new Array(QUESTIONS.length).fill(null);
   score = 0; answered = 0; currentQ = 0;
-  buildDots();
+  buildScorecard();
   showScreen('quiz-screen');
   renderQ(0);
 }
@@ -233,23 +229,21 @@ function startQuiz(){
 function restartQuiz(){
   answers = new Array(QUESTIONS.length).fill(null);
   score = 0; answered = 0; currentQ = 0;
-  buildDots();
+  buildScorecard();
   showScreen('title-screen');
 }
 
 function renderQ(i){
   const q = QUESTIONS[i];
   const done = answers[i] !== null;
-  document.getElementById('prog-label').textContent = `Question ${i+1} of ${QUESTIONS.length}`;
-  document.getElementById('prog-bar').style.width = ((i+1)/QUESTIONS.length*100)+'%';
-  document.getElementById('live-score').textContent = score + ' / ' + answered;
-
-  document.getElementById('q-num').textContent = 'Question ' + (i+1);
+  document.getElementById('qm-num').textContent = i+1;
+  document.getElementById('live-score').innerHTML = score + ' <small>/ ' + answered + '</small>';
   document.getElementById('q-text').textContent = q.q;
-  const labels = ['ans-a','ans-b','ans-c'];
-  const texts  = ['ans-a-text','ans-b-text','ans-c-text'];
-  const opts   = [q.a, q.b, q.c];
-  labels.forEach((id,j)=>{
+
+  const ids   = ['ans-a','ans-b','ans-c'];
+  const texts = ['ans-a-text','ans-b-text','ans-c-text'];
+  const opts  = [q.a, q.b, q.c];
+  ids.forEach((id,j)=>{
     const btn = document.getElementById(id);
     document.getElementById(texts[j]).textContent = opts[j];
     btn.className = 'ans-btn';
@@ -259,15 +253,18 @@ function renderQ(i){
       if(j === answers[i] && answers[i] !== q.correct) btn.classList.add('answered-wrong');
     }
   });
+
   document.getElementById('nav-prev').disabled = (i===0);
-  document.getElementById('nav-next').disabled = !done && (i >= QUESTIONS.length-1);
-  if(done && i < QUESTIONS.length-1) document.getElementById('nav-next').disabled = false;
-  document.querySelectorAll('.nav-dot').forEach((d,j)=>{
-    d.className = 'nav-dot';
-    if(j===i) d.classList.add('current');
-    else if(answers[j]!==null){
-      d.classList.add(answers[j]===QUESTIONS[j].correct ? 'done-correct' : 'done-wrong');
+  document.getElementById('nav-next').disabled = !(done && i < QUESTIONS.length-1);
+  const hint = document.getElementById('nav-hint');
+  if(hint) hint.textContent = done ? (i < QUESTIONS.length-1 ? 'Next question' : 'Last one') : 'Pick an answer to continue';
+
+  document.querySelectorAll('.sc-cell').forEach((d,j)=>{
+    d.className = 'sc-cell';
+    if(answers[j]!==null){
+      d.classList.add(answers[j]===QUESTIONS[j].correct ? 'correct' : 'wrong');
     }
+    if(j===i && answers[j]===null) d.classList.add('current');
   });
 }
 
@@ -277,7 +274,9 @@ function selectAnswer(choice){
   answers[currentQ] = choice;
   answered++;
   if(choice === q.correct) score++;
+  const cell = document.querySelectorAll('.sc-cell')[currentQ];
   renderQ(currentQ);
+  if(cell){ cell.classList.add('pop'); setTimeout(()=>cell.classList.remove('pop'), 400); }
   setTimeout(()=>{
     if(currentQ < QUESTIONS.length-1){
       goTo(currentQ+1);
@@ -296,17 +295,29 @@ function goTo(i){
 }
 
 function showScore(){
-  var numEl=document.getElementById('score-number');
-  var msgEl=document.getElementById('score-msg');
-  var copEl=document.getElementById('copied-msg');
-  if(numEl){numEl.textContent=score;numEl.style.color=score>=18?'var(--gold)':score>=12?'#86efac':score>=8?'var(--text)':'#fca5a5';}
-  var denomEl=document.getElementById('score-denom');
-  if(denomEl)denomEl.textContent='/ '+QUESTIONS.length;
-  var msg=MSGS.find(function(m){return score>=m[0]&&score<=m[1];});
-  if(msgEl)msgEl.textContent=msg?msg[2]:'Well done!';
-  if(copEl)copEl.textContent='';
-  if (typeof saveResult === 'function') {
-    saveResult('weekly-quiz-7','Quiz of the Week #5',score,QUESTIONS.length,score===QUESTIONS.length);
+  var numEl = document.getElementById('score-number');
+  var msgEl = document.getElementById('score-msg');
+  var copEl = document.getElementById('copied-msg');
+  if(numEl) numEl.textContent = score;
+  var denomEl = document.getElementById('score-denom');
+  if(denomEl) denomEl.textContent = 'out of ' + QUESTIONS.length;
+
+  var card = document.getElementById('score-card');
+  if(card){
+    card.innerHTML = '';
+    answers.forEach(function(a,i){
+      var d = document.createElement('div');
+      d.className = 'scc' + (a===null ? '' : (a===QUESTIONS[i].correct ? ' correct' : ' wrong'));
+      card.appendChild(d);
+    });
+  }
+
+  var msg = MSGS.find(function(m){ return score>=m[0] && score<=m[1]; });
+  if(msgEl) msgEl.textContent = msg ? msg[2] : '';
+  if(copEl) copEl.textContent = '';
+
+  if(typeof saveResult === 'function'){
+    saveResult('weekly-quiz-7','Quiz of the Week #7',score,QUESTIONS.length,score===QUESTIONS.length);
   } else {
     console.warn('saveResult unavailable — sportstack-member.js did not load, score not saved');
   }
@@ -314,12 +325,15 @@ function showScore(){
 }
 
 function shareScore(){
-  const emojiStr = answers.map((a,i)=>a===null?'\u2B1C':a===QUESTIONS[i].correct?'\uD83D\uDFE9':'\uD83D\uDFE5').join('');
-  const line1 = emojiStr.slice(0,20);
-  const line2 = emojiStr.slice(20,40);
-  const txt = `SportsStack \u2013 Quiz of the Week \uD83C\uDFC6\nScore: ${score}/20\n\n${line1}\n${line2}\n\nsportsstack.com.au`;
+  const cells = answers.map((a,i)=> a===null ? '\u2B1C' : (a===QUESTIONS[i].correct ? '\uD83D\uDFE9' : '\uD83D\uDFE5'));
+  const line1 = cells.slice(0,10).join('');
+  const line2 = cells.slice(10,20).join('');
+  const txt = 'SportsStack \u2014 Quiz of the Week No. 7\n'
+    + score + '/' + QUESTIONS.length + '\n\n'
+    + line1 + '\n' + line2 + '\n\n'
+    + 'sportsstack.com.au/weekly-quiz-7.html';
   copyText(txt, ()=>{
-    document.getElementById('copied-msg').textContent = '\u2713 Copied to clipboard \u2014 paste into any app!';
+    document.getElementById('copied-msg').textContent = 'Copied. Paste it wherever you like.';
     setTimeout(()=>document.getElementById('copied-msg').textContent='', 3500);
   });
 }
@@ -342,7 +356,7 @@ function showScreen(id){
   document.getElementById(id).classList.add('active');
 }
 
-buildDots();
+buildScorecard();
 
 </script>
 <script src="sportstack-member.js?v=4"></script>
