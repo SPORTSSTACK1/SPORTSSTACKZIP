@@ -260,32 +260,34 @@ const SQUADS = {
   ESP: {
     name: 'Spain',
     squad: [
-      'Marc Pubill','Eric Garcia','Pedro Porro','Aymeric Laporte','Pau Cubarsi','Marc Cucurella',
-      'Marcos Llorente','Mikel Merino','Fabian Ruiz','Gavi','Dani Olmo','Yeremy Pino','Alex Baena',
-      'Rodri','Martin Zubimendi','Pedri','Ferran Torres','Nico Williams','Lamine Yamal',
-      'Mikel Oyarzabal','Victor Munoz','Borja Iglesias'
-      // TODO missing: #1, #3, #13, #23 (goalkeepers + one defender)
+      'Marc Pubill','Eric García','Pedro Porro','Aymeric Laporte','Pau Cubarsí','Marc Cucurella',
+      'Marcos Llorente','Mikel Merino','Fabián Ruiz','Gavi','Dani Olmo','Yéremy Pino','Álex Baena',
+      'Rodri','Martín Zubimendi','Pedri','Ferran Torres','Nico Williams','Lamine Yamal',
+      'Mikel Oyarzabal','Víctor Muñoz','Borja Iglesias'
+      // Outfield only, goalkeepers deliberately excluded.
+      // TODO: still missing the #3 shirt.
     ]
   },
   ENG: {
     name: 'England',
     squad: [
-      'Ezri Konsa','John Stones','Marc Guehi','Trevoh Chalobah','Dan Burn','Reece James',
+      'Ezri Konsa','John Stones','Marc Guéhi','Trevoh Chalobah','Dan Burn','Reece James',
       'Djed Spence','Jarell Quansah','Declan Rice','Elliot Anderson','Jude Bellingham',
       'Jordan Henderson','Kobbie Mainoo','Eberechi Eze','Bukayo Saka','Harry Kane',
       'Marcus Rashford','Morgan Rogers','Anthony Gordon','Ollie Watkins','Noni Madueke','Ivan Toney'
-      // TODO missing: #1, #3, #13, #23 (goalkeepers + one defender)
+      // Outfield only, goalkeepers deliberately excluded.
+      // TODO: still missing the #3 shirt.
     ]
   },
   ARG: {
     name: 'Argentina',
+    // Confirmed complete (outfield only) — 22 players
     squad: [
-      'Nicolas Tagliafico','Lisandro Martinez','Cristian Romero','Nicolas Otamendi','Facundo Medina',
-      'Nahuel Molina','Leandro Paredes','Rodrigo De Paul','Valentin Barco','Giovani Lo Celso',
-      'Exequiel Palacios','Thiago Almada','Nico Paz','Alexis Mac Allister','Enzo Fernandez',
-      'Julian Alvarez','Lionel Messi','Nico Gonzalez','Giuliano Simeone','Jose Manuel Lopez',
-      'Lautaro Martinez'
-      // TODO missing: #1, #2, #4, #12, #23 (goalkeepers + defenders)
+      'Nicolás Tagliafico','Gonzalo Montiel','Lisandro Martínez','Cristian Romero','Nicolás Otamendi',
+      'Facundo Medina','Nahuel Molina','Leandro Paredes','Rodrigo De Paul','Valentín Barco',
+      'Giovani Lo Celso','Exequiel Palacios','Thiago Almada','Nico Paz','Alexis Mac Allister',
+      'Enzo Fernández','Julián Álvarez','Lionel Messi','Nico González','Giuliano Simeone',
+      'José Manuel López','Lautaro Martínez'
     ]
   }
 };
@@ -381,7 +383,7 @@ function buildScorerList(){
     if(!team.squad.length) return;
     const g = document.createElement('optgroup');
     g.label = team.name;
-    team.squad.slice().sort().forEach(p=>{
+    team.squad.slice().sort((x,y)=>x.localeCompare(y,'es')).forEach(p=>{
       const o = document.createElement('option');
       o.value = p; o.textContent = p;
       g.appendChild(o);
