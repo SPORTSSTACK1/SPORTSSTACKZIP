@@ -115,7 +115,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
   <header class="hero">
     <div class="prize-kicker">Giveaway · £50 Nike voucher</div>
     <h1>Predict the <em>final</em>.</h1>
-    <p class="hero-sub">Closest prediction wins a £50 Nike voucher. One entry per member. You can change your mind as many times as you like, right up until kickoff.</p>
+    <p class="hero-sub">Closest prediction wins a £50 Nike voucher. One entry per member. You can change your mind as many times as you like, right up until kickoff: 5:00am AEST Monday 20 July, which is 7:00pm GMT on Sunday 19 July.</p>
 
     <div class="fixture">
       <div>
@@ -123,7 +123,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
         <span class="fx-v"> v </span>
         <span class="fx-team" id="fx-b">TBC</span>
       </div>
-      <div class="fx-when" id="fx-when">Mon 20 July, 5:00am<br/>Melbourne time</div>
+      <div class="fx-when" id="fx-when"><div style="color:#EDF1F8;font-weight:600">Mon 20 July, 5:00am AEST</div><div style="color:#6B7B98;margin-top:2px">Sun 19 July, 7:00pm GMT</div></div>
     </div>
 
     <div class="countdown">
@@ -263,9 +263,8 @@ const SQUADS = {
       'Marc Pubill','Eric García','Pedro Porro','Aymeric Laporte','Pau Cubarsí','Marc Cucurella',
       'Marcos Llorente','Mikel Merino','Fabián Ruiz','Gavi','Dani Olmo','Yéremy Pino','Álex Baena',
       'Rodri','Martín Zubimendi','Pedri','Ferran Torres','Nico Williams','Lamine Yamal',
-      'Mikel Oyarzabal','Víctor Muñoz','Borja Iglesias'
-      // Outfield only, goalkeepers deliberately excluded.
-      // TODO: still missing the #3 shirt.
+      'Mikel Oyarzabal','Víctor Muñoz','Borja Iglesias','Alejandro Grimaldo'
+      // Outfield only (22), goalkeepers deliberately excluded.
     ]
   },
   ENG: {
@@ -274,14 +273,14 @@ const SQUADS = {
       'Ezri Konsa','John Stones','Marc Guéhi','Trevoh Chalobah','Dan Burn','Reece James',
       'Djed Spence','Jarell Quansah','Declan Rice','Elliot Anderson','Jude Bellingham',
       'Jordan Henderson','Kobbie Mainoo','Eberechi Eze','Bukayo Saka','Harry Kane',
-      'Marcus Rashford','Morgan Rogers','Anthony Gordon','Ollie Watkins','Noni Madueke','Ivan Toney'
-      // Outfield only, goalkeepers deliberately excluded.
-      // TODO: still missing the #3 shirt.
+      'Marcus Rashford','Morgan Rogers','Anthony Gordon','Ollie Watkins','Noni Madueke','Ivan Toney',
+      "Nico O'Reilly"
+      // Outfield only (23), goalkeepers deliberately excluded.
     ]
   },
   ARG: {
     name: 'Argentina',
-    // Confirmed complete (outfield only) — 22 players
+    // Outfield only (22), goalkeepers deliberately excluded.
     squad: [
       'Nicolás Tagliafico','Gonzalo Montiel','Lisandro Martínez','Cristian Romero','Nicolás Otamendi',
       'Facundo Medina','Nahuel Molina','Leandro Paredes','Rodrigo De Paul','Valentín Barco',
