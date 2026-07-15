@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Giveaway entries (admin) | SportsStack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{--bg:#1B2334;--surface:#242E44;--line:#2E3A54;--line-2:#3B4869;--gold:#F5C842;--gold-deep:#8A6E18;--ink:#EDF1F8;--mute:#8FA0BD;--green:#4ADE80;--red:#F87171}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);font-family:'Sora',sans-serif;color:var(--ink);padding:0 0 60px}
+nav{border-bottom:1px solid var(--line);padding:0 18px;display:flex;align-items:center;height:56px;gap:12px}
+nav img{display:block;border-radius:6px}
+.page{max-width:1100px;margin:0 auto;padding:32px 20px}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:32px;letter-spacing:-.02em;margin-bottom:6px}
+.sub{font-size:13px;color:var(--mute);margin-bottom:24px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.count{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;color:var(--gold);margin-right:auto}
+.btn{font:700 11px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:12px 20px;border-radius:6px;cursor:pointer;border:1px solid var(--line-2);background:transparent;color:var(--ink);font-family:'Sora',sans-serif}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn.primary{background:var(--gold);color:#151C2B;border-color:var(--gold)}
+.btn.primary:hover{background:#FCE28A;color:#151C2B}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font:700 9px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:10px 8px;border-bottom:1px solid var(--line-2);white-space:nowrap}
+td{padding:10px 8px;border-bottom:1px solid var(--line);color:var(--ink);white-space:nowrap}
+tr:hover td{background:var(--surface)}
+.msg{padding:24px;background:var(--surface);border:1px solid var(--line-2);border-radius:10px;text-align:center;color:var(--mute);font-size:14px;line-height:1.6}
+.msg code{background:#141A28;padding:2px 6px;border-radius:4px;color:var(--gold);font-size:12px}
+.wrap{overflow-x:auto}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" aria-label="SportsStack home"><img src="LOGO.jpeg" alt="SportsStack" width="40" height="40"/></a>
+  <div id="ss-member-widget" style="margin-left:auto"></div>
+</nav>
+<div class="page">
+  <h1>Giveaway entries</h1>
+  <div class="sub">World Cup final prediction · £50 Nike voucher</div>
+
+  <div class="bar">
+    <div class="count" id="count">—</div>
+    <button class="btn" onclick="load()">Refresh</button>
+    <button class="btn primary" onclick="downloadCSV()">Download CSV</button>
+  </div>
+
+  <div id="out"><div class="msg">Loading…</div></div>
+</div>
+
+<script>
+let rows = [], currentUser = null, accessToken = null;
+
+async function loadSession(){
+  try{
+    if(typeof ssClient !== 'undefined'){
+      const {data:{session}} = await ssClient.auth.getSession();
+      if(session){ currentUser = session.user; accessToken = session.access_token; }
+    }
+    if(!currentUser && typeof ssUser !== 'undefined' && ssUser) currentUser = ssUser;
+    if(!currentUser){
+      const keys = Object.keys(localStorage).filter(k=>k.startsWith('sb-') || (k.includes('supabase') && k.includes('auth')));
+      for(const k of keys){
+        try{
+          const s = JSON.parse(localStorage.getItem(k));
+          const u = s && (s.user || (s.session && s.session.user));
+          if(u){ currentUser = u; accessToken = (s.access_token) || (s.session && s.session.access_token); break; }
+        }catch(e){}
+      }
+    }
+  }catch(e){}
+}
+
+async function load(){
+  await loadSession();
+  const out = document.getElementById('out');
+  if(!currentUser){
+    out.innerHTML = '<div class="msg">Sign in with your admin account to view entries.</div>';
+    return;
+  }
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/wc_final_entries?select=*&order=created_at.asc', {
+      headers:{ 'apikey':SS_KEY, 'Authorization':'Bearer ' + (accessToken || SS_KEY) }
+    });
+    rows = await r.json();
+    if(!Array.isArray(rows)) rows = [];
+  }catch(e){ rows = []; }
+
+  document.getElementById('count').textContent = rows.length + (rows.length === 1 ? ' entry' : ' entries');
+
+  if(!rows.length){
+    out.innerHTML = '<div class="msg">No entries visible.<br/><br/>If you expect some, the admin read policy may not be enabled. In Supabase SQL editor run:<br/><br/><code>create policy "admin reads all" on wc_final_entries for select using (auth.uid() = \'' + currentUser.id + '\'::uuid);</code></div>';
+    return;
+  }
+
+  const cols = [
+    ['display_name','Name'],['email','Email'],
+    ['score','Score (90)'],['draw_winner','Winner'],['draw_method','How'],
+    ['first_scorer','First scorer'],['first_goal_minute','Goal min'],
+    ['first_card_minute','Card min'],['total_cards','Cards'],
+    ['created_at','Entered'],['updated_at','Last edit']
+  ];
+  let h = '<div class="wrap"><table><thead><tr>' + cols.map(c=>'<th>'+c[1]+'</th>').join('') + '</tr></thead><tbody>';
+  rows.forEach(e=>{
+    h += '<tr>' + cols.map(c=>{
+      let v;
+      if(c[0] === 'score') v = e.score_a + ' - ' + e.score_b;
+      else if(c[0] === 'created_at' || c[0] === 'updated_at') v = e[c[0]] ? new Date(e[c[0]]).toLocaleString('en-AU') : '';
+      else v = (e[c[0]] === null || e[c[0]] === undefined) ? '' : e[c[0]];
+      return '<td>' + v + '</td>';
+    }).join('') + '</tr>';
+  });
+  h += '</tbody></table></div>';
+  out.innerHTML = h;
+}
+
+function csvCell(v){
+  if(v === null || v === undefined) return '';
+  const s = String(v);
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+
+function downloadCSV(){
+  if(!rows.length){ alert('Nothing to export yet.'); return; }
+  const head = ['Name','Email','Score after 90','Winner','How','First scorer','Goal minute','Card minute','Total cards','Entered','Last edit'];
+  const lines = [head.join(',')];
+  rows.forEach(e=>{
+    lines.push([
+      e.display_name, e.email,
+      e.score_a + '-' + e.score_b,
+      e.draw_winner || '', e.draw_method || '',
+      e.first_scorer || '', e.first_goal_minute || '', e.first_card_minute || '',
+      e.total_cards,
+      e.created_at ? new Date(e.created_at).toLocaleString('en-AU') : '',
+      e.updated_at ? new Date(e.updated_at).toLocaleString('en-AU') : ''
+    ].map(csvCell).join(','));
+  });
+  // BOM so Excel/Numbers read the accents properly
+  const blob = new Blob(['\ufeff' + lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sportsstack-wc-final-entries.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+window.addEventListener('load', load);
+document.addEventListener('ss:signedIn', load);
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>
