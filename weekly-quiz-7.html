@@ -389,20 +389,35 @@ function showScreen(id){
 buildScorecard();
 
 /* ── Leaderboard ─────────────────────────────────────────── */
+
+function ssLocalUserId(){
+  try{
+    if(typeof ssUser !== 'undefined' && ssUser && ssUser.id) return ssUser.id;
+    var keys = Object.keys(localStorage).filter(function(k){
+      return k.indexOf('sb-') === 0 || (k.indexOf('supabase') > -1 && k.indexOf('auth') > -1);
+    });
+    for(var i=0;i<keys.length;i++){
+      var s = JSON.parse(localStorage.getItem(keys[i]));
+      var u = s && (s.user || (s.session && s.session.user));
+      if(u && u.id) return u.id;
+    }
+  }catch(e){}
+  return null;
+}
+var LB_URL = 'https://syntfyfsyjiuowclarpf.supabase.co';
+var LB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
 const QUIZ_SLUG = 'weekly-quiz-7';
 
 async function loadLeaderboard(){
   const rowsEl = document.getElementById('lb-rows');
   const cntEl  = document.getElementById('lb-count');
   if(!rowsEl) return;
-  if(typeof SS_URL === 'undefined' || typeof SS_KEY === 'undefined'){
-    rowsEl.innerHTML = '<div class="lb-empty">Scores unavailable.</div>'; return;
-  }
+  
   try{
-    const hdrs = { 'apikey': SS_KEY, 'Authorization': 'Bearer ' + SS_KEY };
+    const hdrs = { 'apikey': LB_KEY, 'Authorization': 'Bearer ' + LB_KEY };
     const [rRes, pRes] = await Promise.all([
-      fetch(SS_URL + '/rest/v1/quiz_results?quiz_slug=eq.' + QUIZ_SLUG + '&completed=eq.true&select=user_id,score,total,time_seconds&order=score.desc&limit=200', {headers:hdrs}),
-      fetch(SS_URL + '/rest/v1/profiles?select=id,username', {headers:hdrs})
+      fetch(LB_URL + '/rest/v1/quiz_results?quiz_slug=eq.' + QUIZ_SLUG + '&completed=eq.true&select=user_id,score,total,time_seconds&order=score.desc&limit=200', {headers:hdrs}),
+      fetch(LB_URL + '/rest/v1/profiles?select=id,username', {headers:hdrs})
     ]);
     let results  = await rRes.json();
     let profiles = await pRes.json();
@@ -431,14 +446,7 @@ async function loadLeaderboard(){
       return tx - ty;
     });
 
-    let me = null;
-    try{
-      if(typeof ssUser !== 'undefined' && ssUser) me = ssUser.id;
-      else if(typeof ssClient !== 'undefined'){
-        const {data:{session}} = await ssClient.auth.getSession();
-        if(session) me = session.user.id;
-      }
-    }catch(e){}
+    var me = ssLocalUserId();
 
     if(cntEl) cntEl.textContent = board.length + (board.length === 1 ? ' player' : ' players');
 
