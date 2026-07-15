@@ -302,6 +302,27 @@ const FINAL = {
 };
 /* ========================================================== */
 
+
+/* Supabase — self-contained. sportstack-member.js is not deployed, so SS_URL/ssClient never exist. */
+const SS_URL = 'https://syntfyfsyjiuowclarpf.supabase.co';
+const SS_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+const sb = (window.supabase && window.supabase.createClient)
+  ? window.supabase.createClient(SS_URL, SS_KEY)
+  : null;
+
+function ssLocalSession(){
+  try{
+    const keys = Object.keys(localStorage).filter(k => k.indexOf('sb-')===0 || (k.indexOf('supabase')>-1 && k.indexOf('auth')>-1));
+    for(const k of keys){
+      const s = JSON.parse(localStorage.getItem(k));
+      const u = s && (s.user || (s.session && s.session.user));
+      const t = s && (s.access_token || (s.session && s.session.access_token));
+      if(u) return { user:u, token:t };
+    }
+  }catch(e){}
+  return null;
+}
+
 const SQUAD_PENDING = FINAL.teamB.name === 'TBC' || FINAL.teamB.squad.length === 0;
 const KICKOFF = new Date(FINAL.kickoffISO);
 
@@ -320,8 +341,7 @@ function toast(msg, isErr){
 }
 
 function openSignIn(){
-  document.dispatchEvent(new CustomEvent('ss:showSignIn'));
-  setTimeout(()=>{ if(!currentUser) window.location.href = 'auth.html'; }, 400);
+  window.location.href = 'auth.html?next=wc-final-giveaway.html';
 }
 
 /* ---------- countdown ---------- */
@@ -463,24 +483,16 @@ function refreshConditionals(){
 /* ---------- session ---------- */
 async function loadSession(){
   try{
-    if(typeof ssClient !== 'undefined'){
-      const {data:{session}} = await ssClient.auth.getSession();
+    if(sb){
+      const {data:{session}} = await sb.auth.getSession();
       if(session){ currentUser = session.user; accessToken = session.access_token; }
     }
-    if(!currentUser && typeof ssUser !== 'undefined' && ssUser){
-      currentUser = ssUser;
-      if(typeof ssClient !== 'undefined'){
-        try{ const {data:{session}} = await ssClient.auth.getSession(); if(session) accessToken = session.access_token; }catch(e){}
-      }
-    }
     if(!currentUser){
-      const keys = Object.keys(localStorage).filter(k=>k.startsWith('sb-') || (k.includes('supabase') && k.includes('auth')));
-      for(const k of keys){
-        try{
-          const s = JSON.parse(localStorage.getItem(k));
-          const u = s && (s.user || (s.session && s.session.user));
-          if(u){ currentUser = u; accessToken = (s.access_token) || (s.session && s.session.access_token); break; }
-        }catch(e){}
+      const ls = ssLocalSession();
+      if(ls){ currentUser = ls.user; accessToken = ls.token; }
+    }
+  }catch(e){}
+}catch(e){}
       }
     }
   }catch(e){}
@@ -641,7 +653,7 @@ async function init(){
   if(!isLocked() && currentUser && !SQUAD_PENDING) refreshConditionals();
 }
 
-document.addEventListener('ss:signedIn', async ()=>{ await loadSession(); await loadExisting(); render(); applyExisting(); });
+if(sb) sb.auth.onAuthStateChange(async ()=>{ await loadSession(); await loadExisting(); render(); applyExisting(); });
 window.addEventListener('load', init);
 </script>
 <script src="sportstack-member.js?v=4"></script>
