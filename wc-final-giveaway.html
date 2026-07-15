@@ -135,7 +135,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
   <!-- Not signed in -->
   <div id="state-auth" class="state-box" style="display:none">
     <h2>You need an account to enter</h2>
-    <p>It is free, it takes about twenty seconds, and it is how we contact you if you win.</p>
+    <p>Entry is limited to SportsStack members. An account is free to create, and it is how we notify the winner.</p>
     <button class="btn-primary" onclick="openSignIn()">Create an account</button>
     <div style="margin-top:14px"><a href="auth.html" class="btn-ghost">Already a member? Sign in</a></div>
   </div>
@@ -256,28 +256,48 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 /* ============================================================
    CONFIG — edit this block only
    ============================================================ */
+const SQUADS = {
+  ESP: {
+    name: 'Spain',
+    squad: [
+      'Marc Pubill','Eric Garcia','Pedro Porro','Aymeric Laporte','Pau Cubarsi','Marc Cucurella',
+      'Marcos Llorente','Mikel Merino','Fabian Ruiz','Gavi','Dani Olmo','Yeremy Pino','Alex Baena',
+      'Rodri','Martin Zubimendi','Pedri','Ferran Torres','Nico Williams','Lamine Yamal',
+      'Mikel Oyarzabal','Victor Munoz','Borja Iglesias'
+      // TODO missing: #1, #3, #13, #23 (goalkeepers + one defender)
+    ]
+  },
+  ENG: {
+    name: 'England',
+    squad: [
+      'Ezri Konsa','John Stones','Marc Guehi','Trevoh Chalobah','Dan Burn','Reece James',
+      'Djed Spence','Jarell Quansah','Declan Rice','Elliot Anderson','Jude Bellingham',
+      'Jordan Henderson','Kobbie Mainoo','Eberechi Eze','Bukayo Saka','Harry Kane',
+      'Marcus Rashford','Morgan Rogers','Anthony Gordon','Ollie Watkins','Noni Madueke','Ivan Toney'
+      // TODO missing: #1, #3, #13, #23 (goalkeepers + one defender)
+    ]
+  },
+  ARG: {
+    name: 'Argentina',
+    squad: [
+      'Nicolas Tagliafico','Lisandro Martinez','Cristian Romero','Nicolas Otamendi','Facundo Medina',
+      'Nahuel Molina','Leandro Paredes','Rodrigo De Paul','Valentin Barco','Giovani Lo Celso',
+      'Exequiel Palacios','Thiago Almada','Nico Paz','Alexis Mac Allister','Enzo Fernandez',
+      'Julian Alvarez','Lionel Messi','Nico Gonzalez','Giuliano Simeone','Jose Manuel Lopez',
+      'Lautaro Martinez'
+      // TODO missing: #1, #2, #4, #12, #23 (goalkeepers + defenders)
+    ]
+  }
+};
+
+// ---- Tomorrow: set this to 'ENG' or 'ARG' once the semi-final is done. That is the only change needed.
+const TEAM_B_CODE = null;
+
 const FINAL = {
   // 5:00am Mon 20 July 2026 Melbourne (AEST, UTC+10) = 19:00 UTC Sun 19 July
   kickoffISO: '2026-07-19T19:00:00Z',
-
-  teamA: {
-    name: 'Spain',
-    // TODO: VERIFY against the official 26-man squad before going live
-    squad: [
-      'Unai Simon','David Raya','Robert Sanchez',
-      'Dani Carvajal','Pau Cubarsi','Robin Le Normand','Aymeric Laporte','Dean Huijsen',
-      'Marc Cucurella','Alejandro Grimaldo','Daniel Vivian',
-      'Rodri','Martin Zubimendi','Pedri','Fabian Ruiz','Mikel Merino','Alex Baena',
-      'Lamine Yamal','Nico Williams','Dani Olmo','Ferran Torres','Mikel Oyarzabal',
-      'Alvaro Morata','Ayoze Perez','Samu Omorodion','Yeremy Pino'
-    ]
-  },
-
-  // TODO: set once the England v Argentina semi-final is done
-  teamB: {
-    name: 'TBC',
-    squad: []
-  }
+  teamA: SQUADS.ESP,
+  teamB: TEAM_B_CODE ? SQUADS[TEAM_B_CODE] : { name: 'TBC', squad: [] }
 };
 /* ========================================================== */
 
