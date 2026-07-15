@@ -22,7 +22,7 @@
 <meta name="description" content="Free sports quizzes — Football, AFL, NBA, NFL, MLB, Cricket, Rugby and more. 330+ quizzes."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600&family=Sora:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
@@ -198,6 +198,38 @@ html,body{font-family:'Sora',sans-serif}
     <div id="ss-member-widget"></div>
   </div>
 </nav>
+<!-- WC Final giveaway banner -->
+<a href="wc-final-giveaway.html" id="gv-banner" style="display:block;text-decoration:none;background:linear-gradient(100deg,#151C2B 0%,#243050 55%,#3A2E08 100%);border-bottom:1px solid #8A6E18;position:relative;overflow:hidden">
+  <div style="max-width:1060px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div style="flex:1;min-width:220px">
+      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:#F5C842;margin-bottom:6px">Giveaway · Closes at kickoff</div>
+      <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(19px,3.4vw,27px);letter-spacing:-.02em;color:#F1EBD9;line-height:1.1">Predict the World Cup final, win a <span style="color:#F5C842">£50 Nike voucher</span></div>
+      <div style="font-size:12.5px;color:#9FB0CC;margin-top:5px">One entry per member. Free to enter.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="text-align:right">
+        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#7C8398;margin-bottom:3px">Closes in</div>
+        <div id="gv-cd" style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:17px;color:#F5C842;letter-spacing:-.01em">—</div>
+      </div>
+      <span style="background:#F5C842;color:#151C2B;font-family:'Sora',sans-serif;font-weight:800;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:13px 24px;border-radius:6px;white-space:nowrap">Enter now</span>
+    </div>
+  </div>
+</a>
+<script>
+(function(){
+  var KO = new Date('2026-07-19T19:00:00Z');
+  var el = document.getElementById('gv-cd');
+  var banner = document.getElementById('gv-banner');
+  function tick(){
+    var ms = KO - new Date();
+    if(ms <= 0){ if(banner) banner.style.display='none'; return; }
+    var d = Math.floor(ms/86400000), h = Math.floor(ms/3600000)%24, m = Math.floor(ms/60000)%60;
+    if(el) el.textContent = (d>0? d+'d ':'') + h+'h ' + m+'m';
+  }
+  tick(); setInterval(tick, 30000);
+})();
+</script>
+
 <div class="mobile-pill-row"><a href="football.html" class="nav-pill" style="--pc:#22c55e">Football</a><a href="nfl.html" class="nav-pill" style="--pc:#ef4444">NFL</a><a href="nba.html" class="nav-pill" style="--pc:#f97316">NBA</a><a href="mlb.html" class="nav-pill" style="--pc:#3b82f6">MLB</a><a href="cricket.html" class="nav-pill" style="--pc:#84cc16">Cricket</a><a href="rugby.html" class="nav-pill" style="--pc:#a855f7">Rugby</a><a href="afl.html" class="nav-pill" style="--pc:#06b6d4">AFL</a><a href="golf.html" class="nav-pill" style="--pc:#14b8a6">Golf</a><a href="f1.html" class="nav-pill" style="--pc:#f43f5e">F1</a><a href="tennis.html" class="nav-pill" style="--pc:#8b5cf6">Tennis</a><a href="sports-awards.html" class="nav-pill" style="--pc:#f5c842">Awards</a><a href="quiz-of-the-week.html" class="nav-pill" style="--pc:#f5c842">Quiz of the Week</a></div>
 <section class="hero">
   <div class="hero-eyebrow">The home of sports quizzes</div>
