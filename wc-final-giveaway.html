@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<title>World Cup Final Giveaway | SportsStack</title>
+<meta name="description" content="Predict the World Cup final and win a £50 Nike voucher. One entry per member, closes at kickoff."/>
+<meta property="og:title" content="Win a £50 Nike voucher — World Cup Final prediction | SportsStack"/>
+<meta property="og:description" content="Predict the score, the first scorer and the minute. Closest wins. Entries close at kickoff."/>
+<meta property="og:image" content="https://sportsstack.com.au/LOGO.jpeg"/>
+<meta property="og:url" content="https://sportsstack.com.au/wc-final-giveaway.html"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{
+  --bg:#1B2334;--surface:#242E44;--surface2:#2A3550;--line:#2E3A54;--line-2:#3B4869;
+  --gold:#F5C842;--gold-dim:#C29B28;--gold-deep:#8A6E18;
+  --ink:#EDF1F8;--ink-2:#B9C4D8;--mute:#8FA0BD;--mute-2:#6B7B98;
+  --green:#4ADE80;--red:#F87171;
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);font-family:'Sora',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:1000;background:rgba(27,35,52,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 18px;display:flex;align-items:center;height:56px;gap:12px;justify-content:space-between}
+nav img{display:block;border-radius:6px}
+.btn-lb{font:700 11px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;padding:8px 14px;border:1px solid var(--gold-deep);border-radius:6px}
+.page{max-width:680px;margin:0 auto;padding:0 20px 80px}
+
+/* Hero */
+.hero{padding:44px 0 30px;border-bottom:1px solid var(--line);margin-bottom:28px}
+.prize-kicker{font:700 10px/1 'Sora',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.prize-kicker:before{content:"";width:26px;height:1px;background:var(--gold-deep)}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(34px,7vw,54px);line-height:.98;letter-spacing:-.03em;color:var(--ink);margin-bottom:14px}
+h1 em{font-style:italic;font-weight:400;color:var(--gold)}
+.hero-sub{font-size:14.5px;color:var(--ink-2);line-height:1.6;max-width:520px}
+.fixture{display:flex;align-items:center;gap:14px;margin-top:22px;padding:14px 18px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius)}
+.fx-team{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:19px;color:var(--ink);letter-spacing:-.01em}
+.fx-v{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:14px;color:var(--mute)}
+.fx-when{margin-left:auto;text-align:right;font:500 11.5px/1.45 'Sora',sans-serif;color:var(--mute)}
+
+/* Countdown */
+.countdown{display:flex;align-items:baseline;gap:8px;margin-top:16px;padding:12px 16px;border:1px dashed var(--gold-deep);border-radius:var(--radius)}
+.cd-label{font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim)}
+.cd-val{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:17px;color:var(--gold);margin-left:auto;letter-spacing:-.01em}
+
+/* States */
+.state-box{padding:28px 24px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);text-align:center}
+.state-box h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:24px;margin-bottom:8px;letter-spacing:-.01em}
+.state-box p{font-size:14px;color:var(--ink-2);line-height:1.6;max-width:400px;margin:0 auto 20px}
+.btn-primary{font:800 11.5px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--gold);color:#151C2B;border:none;padding:16px 34px;border-radius:6px;cursor:pointer;transition:background .15s;font-family:'Sora',sans-serif}
+.btn-primary:hover:not(:disabled){background:#FCE28A}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{font:700 11px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;background:transparent;color:var(--ink);border:1px solid var(--line-2);padding:14px 26px;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Form */
+.field{margin-bottom:26px}
+.field-label{font:700 10px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:8px}
+.field-help{font-size:12.5px;color:var(--mute);margin-bottom:12px;line-height:1.5;font-style:italic;font-family:'Fraunces',Georgia,serif}
+.score-row{display:flex;align-items:center;gap:12px}
+.score-side{flex:1;text-align:center;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);padding:14px 10px}
+.score-side .ss-name{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;margin-bottom:10px;letter-spacing:-.01em}
+select,input[type=number]{width:100%;background:var(--surface2);border:1px solid var(--line-2);color:var(--ink);font-family:'Sora',sans-serif;font-size:15px;font-weight:500;padding:12px 12px;border-radius:6px;cursor:pointer}
+select:focus,input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.score-side select{font-family:'Fraunces',Georgia,serif;font-size:26px;font-weight:600;text-align:center;text-align-last:center;padding:8px}
+.score-dash{font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--mute);font-size:20px}
+.conditional{display:none;border-left:2px solid var(--gold);padding-left:16px;margin-left:2px}
+.conditional.show{display:block;animation:slideIn .25s ease both}
+@keyframes slideIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.radio-row{display:flex;gap:10px;flex-wrap:wrap}
+.radio-opt{flex:1;min-width:130px}
+.radio-opt input{position:absolute;opacity:0;pointer-events:none}
+.radio-opt label{display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);cursor:pointer;transition:border-color .15s,background .15s;font-size:14px;font-weight:600;text-align:center}
+.radio-opt input:checked + label{border-color:var(--gold);background:rgba(245,200,66,.1);color:var(--gold)}
+.radio-opt input:focus-visible + label{outline:2px solid var(--gold);outline-offset:2px}
+
+.rules{margin-top:36px;padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.rules h3{font:700 10px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:12px}
+.rules ol{margin:0 0 14px 18px;padding:0}
+.rules li{font-size:13px;color:var(--ink-2);line-height:1.7;margin-bottom:3px}
+.rules p{font-size:12px;color:var(--mute);line-height:1.6;margin-top:10px}
+
+.submit-row{margin-top:30px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.save-note{font-size:12.5px;color:var(--mute);font-style:italic;font-family:'Fraunces',Georgia,serif}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--gold);color:#151C2B;font:700 13px/1 'Sora',sans-serif;padding:14px 24px;border-radius:6px;transition:transform .3s cubic-bezier(.22,1,.36,1);z-index:2000}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.err{background:var(--red);color:#fff}
+
+.entry-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0;text-align:left}
+.es-item{background:var(--surface2);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.es-k{font:700 8.5px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2);margin-bottom:4px}
+.es-v{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink)}
+@media(max-width:520px){.entry-summary{grid-template-columns:1fr}}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" aria-label="SportsStack home"><img src="LOGO.jpeg" alt="SportsStack" width="40" height="40"/></a>
+  <div style="display:flex;align-items:center;gap:8px">
+    <a href="leaderboard.html" class="btn-lb">Leaderboard</a>
+    <div id="ss-member-widget"></div>
+  </div>
+</nav>
+
+<div class="page">
+  <header class="hero">
+    <div class="prize-kicker">Giveaway · £50 Nike voucher</div>
+    <h1>Predict the <em>final</em>.</h1>
+    <p class="hero-sub">Closest prediction wins a £50 Nike voucher. One entry per member. You can change your mind as many times as you like, right up until kickoff.</p>
+
+    <div class="fixture">
+      <div>
+        <span class="fx-team" id="fx-a">Spain</span>
+        <span class="fx-v"> v </span>
+        <span class="fx-team" id="fx-b">TBC</span>
+      </div>
+      <div class="fx-when" id="fx-when">Mon 20 July, 5:00am<br/>Melbourne time</div>
+    </div>
+
+    <div class="countdown">
+      <span class="cd-label">Entries close at kickoff</span>
+      <span class="cd-val" id="countdown">—</span>
+    </div>
+  </header>
+
+  <!-- Not signed in -->
+  <div id="state-auth" class="state-box" style="display:none">
+    <h2>You need an account to enter</h2>
+    <p>It is free, it takes about twenty seconds, and it is how we contact you if you win.</p>
+    <button class="btn-primary" onclick="openSignIn()">Create an account</button>
+    <div style="margin-top:14px"><a href="auth.html" class="btn-ghost">Already a member? Sign in</a></div>
+  </div>
+
+  <!-- Locked -->
+  <div id="state-locked" class="state-box" style="display:none">
+    <h2>Entries are closed</h2>
+    <p id="locked-msg">The match has kicked off, so the book is shut. Good luck.</p>
+    <div id="locked-entry"></div>
+    <a href="index.html" class="btn-ghost">Back to SportsStack</a>
+  </div>
+
+  <!-- Teams not confirmed -->
+  <div id="state-tbc" class="state-box" style="display:none">
+    <h2>Nearly there</h2>
+    <p>We are waiting on the second semi-final. The form opens as soon as we know who Spain are playing.</p>
+    <a href="index.html" class="btn-ghost">Back to SportsStack</a>
+  </div>
+
+  <!-- The form -->
+  <form id="entry-form" style="display:none" onsubmit="return false">
+
+    <div class="field">
+      <div class="field-label">1 · Score after 90 minutes</div>
+      <div class="field-help">Ninety minutes only, not the final score. Goals in stoppage time still count towards this.</div>
+      <div class="score-row">
+        <div class="score-side">
+          <div class="ss-name" id="sn-a">Spain</div>
+          <select id="score-a" onchange="onScoreChange()"></select>
+        </div>
+        <span class="score-dash">v</span>
+        <div class="score-side">
+          <div class="ss-name" id="sn-b">TBC</div>
+          <select id="score-b" onchange="onScoreChange()"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field conditional" id="cond-winner">
+      <div class="field-label">2 · You have gone for a draw. Who wins?</div>
+      <div class="field-help">Extra time and penalties decide it from here.</div>
+      <div class="radio-row">
+        <div class="radio-opt">
+          <input type="radio" name="winner" id="win-a" value="A" onchange="onWinnerChange()"/>
+          <label for="win-a" id="lbl-win-a">Spain</label>
+        </div>
+        <div class="radio-opt">
+          <input type="radio" name="winner" id="win-b" value="B" onchange="onWinnerChange()"/>
+          <label for="win-b" id="lbl-win-b">TBC</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="field conditional" id="cond-method">
+      <div class="field-label">3 · How do they win it?</div>
+      <div class="radio-row">
+        <div class="radio-opt">
+          <input type="radio" name="method" id="m-et" value="ET" onchange="onMethodChange()"/>
+          <label for="m-et">In extra time</label>
+        </div>
+        <div class="radio-opt">
+          <input type="radio" name="method" id="m-pens" value="PENS" onchange="onMethodChange()"/>
+          <label for="m-pens">On penalties</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="field conditional" id="cond-scorer">
+      <div class="field-label">4 · First goalscorer</div>
+      <div class="field-help" id="scorer-help">The first goal of the match, whoever scores it.</div>
+      <select id="first-scorer"></select>
+    </div>
+
+    <div class="field conditional" id="cond-goal-min">
+      <div class="field-label">5 · Minute of the first goal</div>
+      <div class="field-help" id="goalmin-help">Added time counts back to the whistle: a goal at 45+2 is 45, and 90+4 is 90.</div>
+      <select id="goal-min"></select>
+    </div>
+
+    <div class="field conditional" id="cond-card-min">
+      <div class="field-label">5 · Minute of the first card</div>
+      <div class="field-help">No goals in 120 minutes, so we go to cards instead. Added time counts back to the whistle: 45+2 is 45, 90+4 is 90.</div>
+      <select id="card-min"></select>
+    </div>
+
+    <div class="field">
+      <div class="field-label" id="cards-label">6 · Total cards in the match</div>
+      <div class="field-help">Both teams combined, across the whole match including extra time. A yellow is one. A straight red is two. A red for a second yellow is one.</div>
+      <select id="total-cards"></select>
+    </div>
+
+    <div class="submit-row">
+      <button class="btn-primary" id="submit-btn" onclick="submitEntry()">Submit entry</button>
+      <span class="save-note" id="save-note"></span>
+    </div>
+  </form>
+
+  <div class="rules">
+    <h3>How the winner is decided</h3>
+    <ol>
+      <li>Exact score after 90 minutes</li>
+      <li>Correct result (win, lose or draw)</li>
+      <li>Who wins, if the 90-minute score is a draw</li>
+      <li>How they win it, extra time or penalties</li>
+      <li>First goalscorer</li>
+      <li>Minute of the first goal</li>
+      <li>Total cards</li>
+      <li>Earliest entry</li>
+    </ol>
+    <p><strong>The detail:</strong> Own goals count as "Own goal", not as the next scorer. Goals and cards in added time count back to the whistle, so 45+2 is 45 and 90+4 is 90. A yellow counts as one card, a straight red as two, and a red shown for a second yellow as one. If the 90-minute score is 0-0 and you have gone for penalties, there are no goals to predict, so we use the first card instead.</p>
+    <p>One entry per member. Edit it as often as you like before kickoff, after which it is locked. The winner is contacted by email within 7 days and has 14 days to claim. Open to members aged 16 and over.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIG — edit this block only
+   ============================================================ */
+const FINAL = {
+  // 5:00am Mon 20 July 2026 Melbourne (AEST, UTC+10) = 19:00 UTC Sun 19 July
+  kickoffISO: '2026-07-19T19:00:00Z',
+
+  teamA: {
+    name: 'Spain',
+    // TODO: VERIFY against the official 26-man squad before going live
+    squad: [
+      'Unai Simon','David Raya','Robert Sanchez',
+      'Dani Carvajal','Pau Cubarsi','Robin Le Normand','Aymeric Laporte','Dean Huijsen',
+      'Marc Cucurella','Alejandro Grimaldo','Daniel Vivian',
+      'Rodri','Martin Zubimendi','Pedri','Fabian Ruiz','Mikel Merino','Alex Baena',
+      'Lamine Yamal','Nico Williams','Dani Olmo','Ferran Torres','Mikel Oyarzabal',
+      'Alvaro Morata','Ayoze Perez','Samu Omorodion','Yeremy Pino'
+    ]
+  },
+
+  // TODO: set once the England v Argentina semi-final is done
+  teamB: {
+    name: 'TBC',
+    squad: []
+  }
+};
+/* ========================================================== */
+
+const SQUAD_PENDING = FINAL.teamB.name === 'TBC' || FINAL.teamB.squad.length === 0;
+const KICKOFF = new Date(FINAL.kickoffISO);
+
+let currentUser = null, accessToken = null, existing = null;
+
+/* ---------- helpers ---------- */
+function $(id){ return document.getElementById(id); }
+function show(id, on){ const el = $(id); if(el) el.style.display = on ? '' : 'none'; }
+function isLocked(){ return new Date() >= KICKOFF; }
+
+function toast(msg, isErr){
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' err' : '');
+  setTimeout(()=>{ t.className = 'toast' + (isErr ? ' err' : ''); }, 3000);
+}
+
+function openSignIn(){
+  document.dispatchEvent(new CustomEvent('ss:showSignIn'));
+  setTimeout(()=>{ if(!currentUser) window.location.href = 'auth.html'; }, 400);
+}
+
+/* ---------- countdown ---------- */
+function tickCountdown(){
+  const el = $('countdown');
+  if(!el) return;
+  const ms = KICKOFF - new Date();
+  if(ms <= 0){ el.textContent = 'Closed'; return; }
+  const d = Math.floor(ms/86400000);
+  const h = Math.floor(ms/3600000) % 24;
+  const m = Math.floor(ms/60000) % 60;
+  const s = Math.floor(ms/1000) % 60;
+  el.textContent = (d>0 ? d+'d ' : '') + h+'h ' + m+'m ' + s+'s';
+}
+
+/* ---------- build the selects ---------- */
+function fillSelect(el, values, labels){
+  el.innerHTML = '';
+  values.forEach((v,i)=>{
+    const o = document.createElement('option');
+    o.value = v;
+    o.textContent = labels ? labels[i] : v;
+    el.appendChild(o);
+  });
+}
+
+function buildInputs(){
+  const scores = [];
+  for(let i=0;i<=9;i++) scores.push(i);
+  fillSelect($('score-a'), scores);
+  fillSelect($('score-b'), scores);
+
+  const cards = [];
+  for(let i=0;i<=20;i++) cards.push(i);
+  fillSelect($('total-cards'), cards);
+
+  buildScorerList();
+  buildMinuteList();
+
+  const cardMins = [];
+  for(let i=1;i<=120;i++) cardMins.push(i);
+  fillSelect($('card-min'), cardMins, cardMins.map(m=>m+"'"));
+}
+
+function buildScorerList(){
+  const el = $('first-scorer');
+  el.innerHTML = '';
+  const mk = (label, value, disabled)=>{
+    const o = document.createElement('option');
+    o.value = value; o.textContent = label;
+    if(disabled) o.disabled = true;
+    return o;
+  };
+  el.appendChild(mk('Own goal (' + FINAL.teamA.name + ')', 'OG_A'));
+  el.appendChild(mk('Own goal (' + FINAL.teamB.name + ')', 'OG_B'));
+
+  [FINAL.teamA, FINAL.teamB].forEach(team=>{
+    if(!team.squad.length) return;
+    const g = document.createElement('optgroup');
+    g.label = team.name;
+    team.squad.slice().sort().forEach(p=>{
+      const o = document.createElement('option');
+      o.value = p; o.textContent = p;
+      g.appendChild(o);
+    });
+    el.appendChild(g);
+  });
+}
+
+function buildMinuteList(){
+  // 1-90 normally; 91-120 only when 0-0 after 90 and they picked extra time
+  const zeroZeroET = isZeroZero() && $('m-et') && $('m-et').checked;
+  const from = zeroZeroET ? 91 : 1;
+  const to   = zeroZeroET ? 120 : 90;
+  const mins = [];
+  for(let i=from;i<=to;i++) mins.push(i);
+  const prev = $('goal-min').value;
+  fillSelect($('goal-min'), mins, mins.map(m=>m+"'"));
+  if(mins.indexOf(parseInt(prev)) !== -1) $('goal-min').value = prev;
+
+  $('goalmin-help').textContent = zeroZeroET
+    ? 'Goalless after 90, so the first goal lands in extra time. Added time counts back to the whistle: 105+2 is 105, 120+3 is 120.'
+    : 'Added time counts back to the whistle: a goal at 45+2 is 45, and 90+4 is 90.';
+}
+
+/* ---------- conditional logic ---------- */
+function isDraw(){ return $('score-a').value === $('score-b').value; }
+function isZeroZero(){ return $('score-a').value === '0' && $('score-b').value === '0'; }
+function isPens(){ return $('m-pens') && $('m-pens').checked; }
+function noGoalsAtAll(){ return isZeroZero() && isPens(); }
+
+function onScoreChange(){ refreshConditionals(); }
+function onWinnerChange(){ refreshConditionals(); }
+function onMethodChange(){ buildMinuteList(); refreshConditionals(); }
+
+function refreshConditionals(){
+  const draw = isDraw();
+
+  $('cond-winner').classList.toggle('show', draw);
+  if(!draw){
+    $('win-a').checked = false; $('win-b').checked = false;
+    $('m-et').checked  = false; $('m-pens').checked = false;
+  }
+
+  const winnerPicked = draw && ($('win-a').checked || $('win-b').checked);
+  $('cond-method').classList.toggle('show', winnerPicked);
+  if(!winnerPicked){ $('m-et').checked = false; $('m-pens').checked = false; }
+
+  const methodPicked = winnerPicked && ($('m-et').checked || $('m-pens').checked);
+
+  // Goal questions appear unless the match has no goals at all (0-0 then pens)
+  const askGoal = !draw || (draw && methodPicked && !noGoalsAtAll());
+  const askCard = draw && methodPicked && noGoalsAtAll();
+
+  $('cond-scorer').classList.toggle('show', askGoal);
+  $('cond-goal-min').classList.toggle('show', askGoal);
+  $('cond-card-min').classList.toggle('show', askCard);
+
+  if(askGoal && draw && !isZeroZero()){
+    $('scorer-help').textContent = 'The first goal of the match, whoever scores it.';
+  } else if(askGoal && isZeroZero()){
+    $('scorer-help').textContent = 'Goalless after 90, so this is whoever scores first in extra time.';
+  }
+
+  // Renumber the always-visible cards question
+  let n = 4;
+  if(draw) n = askCard || askGoal ? 6 : 4;
+  else n = 4;
+  $('cards-label').textContent = (draw ? '6' : '4') + ' · Total cards in the match';
+  if(!draw){
+    $('cond-scorer').querySelector('.field-label').textContent = '2 · First goalscorer';
+    $('cond-goal-min').querySelector('.field-label').textContent = '3 · Minute of the first goal';
+  } else {
+    $('cond-scorer').querySelector('.field-label').textContent = '4 · First goalscorer';
+    $('cond-goal-min').querySelector('.field-label').textContent = '5 · Minute of the first goal';
+  }
+}
+
+/* ---------- session ---------- */
+async function loadSession(){
+  try{
+    if(typeof ssClient !== 'undefined'){
+      const {data:{session}} = await ssClient.auth.getSession();
+      if(session){ currentUser = session.user; accessToken = session.access_token; }
+    }
+    if(!currentUser && typeof ssUser !== 'undefined' && ssUser){
+      currentUser = ssUser;
+      if(typeof ssClient !== 'undefined'){
+        try{ const {data:{session}} = await ssClient.auth.getSession(); if(session) accessToken = session.access_token; }catch(e){}
+      }
+    }
+    if(!currentUser){
+      const keys = Object.keys(localStorage).filter(k=>k.startsWith('sb-') || (k.includes('supabase') && k.includes('auth')));
+      for(const k of keys){
+        try{
+          const s = JSON.parse(localStorage.getItem(k));
+          const u = s && (s.user || (s.session && s.session.user));
+          if(u){ currentUser = u; accessToken = (s.access_token) || (s.session && s.session.access_token); break; }
+        }catch(e){}
+      }
+    }
+  }catch(e){}
+}
+
+async function loadExisting(){
+  if(!currentUser) return;
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/wc_final_entries?user_id=eq.' + currentUser.id + '&select=*', {
+      headers:{ 'apikey':SS_KEY, 'Authorization':'Bearer ' + (accessToken || SS_KEY) }
+    });
+    const d = await r.json();
+    if(Array.isArray(d) && d.length) existing = d[0];
+  }catch(e){}
+}
+
+function applyExisting(){
+  if(!existing) return;
+  $('score-a').value = existing.score_a;
+  $('score-b').value = existing.score_b;
+  refreshConditionals();
+  if(existing.draw_winner){
+    ($('win-' + existing.draw_winner.toLowerCase())).checked = true;
+    refreshConditionals();
+  }
+  if(existing.draw_method){
+    (existing.draw_method === 'ET' ? $('m-et') : $('m-pens')).checked = true;
+    buildMinuteList();
+    refreshConditionals();
+  }
+  if(existing.first_scorer) $('first-scorer').value = existing.first_scorer;
+  if(existing.first_goal_minute) $('goal-min').value = existing.first_goal_minute;
+  if(existing.first_card_minute) $('card-min').value = existing.first_card_minute;
+  $('total-cards').value = existing.total_cards;
+  $('submit-btn').textContent = 'Update entry';
+  $('save-note').textContent = 'Entry saved. Change it as often as you like before kickoff.';
+}
+
+/* ---------- summary (for the locked view) ---------- */
+function renderEntrySummary(e){
+  if(!e) return '<p>You did not get an entry in this time.</p>';
+  const rows = [
+    ['Score after 90', e.score_a + ' - ' + e.score_b],
+    e.draw_winner ? ['Winner', e.draw_winner === 'A' ? FINAL.teamA.name : FINAL.teamB.name] : null,
+    e.draw_method ? ['How', e.draw_method === 'ET' ? 'Extra time' : 'Penalties'] : null,
+    e.first_scorer ? ['First scorer', scorerLabel(e.first_scorer)] : null,
+    e.first_goal_minute ? ['First goal', e.first_goal_minute + "'"] : null,
+    e.first_card_minute ? ['First card', e.first_card_minute + "'"] : null,
+    ['Total cards', e.total_cards]
+  ].filter(Boolean);
+  return '<div class="entry-summary">' + rows.map(r =>
+    '<div class="es-item"><div class="es-k">' + r[0] + '</div><div class="es-v">' + r[1] + '</div></div>'
+  ).join('') + '</div>';
+}
+function scorerLabel(v){
+  if(v === 'OG_A') return 'Own goal (' + FINAL.teamA.name + ')';
+  if(v === 'OG_B') return 'Own goal (' + FINAL.teamB.name + ')';
+  return v;
+}
+
+/* ---------- submit ---------- */
+async function submitEntry(){
+  if(!currentUser){ openSignIn(); return; }
+  if(isLocked()){ toast('Entries are closed', true); render(); return; }
+
+  const draw = isDraw();
+  const payload = {
+    user_id: currentUser.id,
+    email: currentUser.email || null,
+    display_name: (currentUser.user_metadata && (currentUser.user_metadata.display_name || currentUser.user_metadata.name)) || null,
+    score_a: parseInt($('score-a').value),
+    score_b: parseInt($('score-b').value),
+    draw_winner: null, draw_method: null,
+    first_scorer: null, first_goal_minute: null, first_card_minute: null,
+    total_cards: parseInt($('total-cards').value)
+  };
+
+  if(draw){
+    const w = document.querySelector('input[name=winner]:checked');
+    const m = document.querySelector('input[name=method]:checked');
+    if(!w){ toast('Pick who wins it', true); return; }
+    if(!m){ toast('Pick extra time or penalties', true); return; }
+    payload.draw_winner = w.value;
+    payload.draw_method = m.value;
+  }
+
+  if(noGoalsAtAll()){
+    payload.first_card_minute = parseInt($('card-min').value);
+  } else {
+    payload.first_scorer = $('first-scorer').value;
+    payload.first_goal_minute = parseInt($('goal-min').value);
+    if(!payload.first_scorer){ toast('Pick a first goalscorer', true); return; }
+  }
+
+  $('submit-btn').disabled = true;
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/wc_final_entries', {
+      method: 'POST',
+      headers: {
+        'apikey': SS_KEY,
+        'Authorization': 'Bearer ' + accessToken,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify(payload)
+    });
+    if(r.ok){
+      existing = payload;
+      $('submit-btn').textContent = 'Update entry';
+      $('save-note').textContent = 'Entry saved. Change it as often as you like before kickoff.';
+      toast('Entry saved. Good luck.');
+    } else {
+      const t = await r.text();
+      console.warn('save failed', r.status, t);
+      toast(r.status === 401 || r.status === 403 ? 'Entries are closed' : 'Could not save, try again', true);
+    }
+  }catch(e){
+    toast('Could not save, try again', true);
+  }
+  $('submit-btn').disabled = false;
+}
+
+/* ---------- render ---------- */
+function render(){
+  show('state-auth', false); show('state-locked', false); show('state-tbc', false);
+  $('entry-form').style.display = 'none';
+
+  if(isLocked()){
+    show('state-locked', true);
+    $('locked-entry').innerHTML = currentUser
+      ? (existing ? '<p style="margin-bottom:6px">Your entry:</p>' + renderEntrySummary(existing) : '<p>You did not get an entry in this time.</p>')
+      : '';
+    return;
+  }
+  if(!currentUser){ show('state-auth', true); return; }
+  if(SQUAD_PENDING){ show('state-tbc', true); return; }
+
+  $('entry-form').style.display = '';
+  refreshConditionals();
+}
+
+async function init(){
+  $('fx-a').textContent = FINAL.teamA.name;
+  $('fx-b').textContent = FINAL.teamB.name;
+  $('sn-a').textContent = FINAL.teamA.name;
+  $('sn-b').textContent = FINAL.teamB.name;
+  $('lbl-win-a').textContent = FINAL.teamA.name;
+  $('lbl-win-b').textContent = FINAL.teamB.name;
+
+  buildInputs();
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  await loadSession();
+  await loadExisting();
+  render();
+  applyExisting();
+  if(!isLocked() && currentUser && !SQUAD_PENDING) refreshConditionals();
+}
+
+document.addEventListener('ss:signedIn', async ()=>{ await loadSession(); await loadExisting(); render(); applyExisting(); });
+window.addEventListener('load', init);
+</script>
+<script src="sportstack-member.js?v=4"></script>
+<script src="xp-system.js"></script>
+</body>
+</html>
