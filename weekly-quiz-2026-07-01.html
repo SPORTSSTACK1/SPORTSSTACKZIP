@@ -326,7 +326,7 @@ function showScore(){
   if(msgEl)msgEl.textContent=msg?msg[2]:'Well done!';
   if(copEl)copEl.textContent='';
   if (typeof saveResult === 'function') {
-    saveResult('weekly-quiz-2026-07-01','Quiz of the Week #5',score,QUESTIONS.length,score===QUESTIONS.length);
+    saveResult('weekly-quiz-2026-07-01','Quiz of the Week #5',score,QUESTIONS.length,true);
   } else {
     console.warn('saveResult unavailable — sportstack-member.js did not load, score not saved');
   }
