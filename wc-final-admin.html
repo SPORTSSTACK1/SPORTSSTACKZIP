@@ -92,7 +92,15 @@ async function load(){
   document.getElementById('count').textContent = rows.length + (rows.length === 1 ? ' entry' : ' entries');
 
   if(!rows.length){
-    out.innerHTML = '<div class="msg">No entries visible.<br/><br/>If you expect some, the admin read policy may not be enabled. In Supabase SQL editor run:<br/><br/><code>create policy "admin reads all" on wc_final_entries for select using (auth.uid() = \'' + currentUser.id + '\'::uuid);</code></div>';
+    out.innerHTML = '<div class="msg">'
+      + '<strong style="color:#EDF1F8">No entries yet.</strong><br/><br/>'
+      + 'Signed in as <code>' + (currentUser.email || currentUser.id) + '</code>.<br/><br/>'
+      + 'If you are expecting entries and seeing none, the admin read policy may not match this account. '
+      + 'In the Supabase SQL editor, run:<br/><br/>'
+      + '<code>drop policy if exists "admin reads all" on wc_final_entries;<br/>'
+      + 'create policy "admin reads all" on wc_final_entries for select using ((auth.jwt() -&gt;&gt; \'email\') = \''
+      + (currentUser.email || '') + '\');</code>'
+      + '</div>';
     return;
   }
 
