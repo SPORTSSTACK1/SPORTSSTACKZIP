@@ -328,7 +328,7 @@ function showScore(){
   var msg = MSGS.find(function(m){return score>=m[0]&&score<=m[1];});
   if(msgEl) msgEl.textContent = msg ? msg[2] : 'Well done!';
   if(copEl) copEl.textContent = '';
-  if(typeof saveResult==="function"){saveResult('weekly-quiz-2026-06-23','Quiz of the Week #4',score,QUESTIONS.length,score===QUESTIONS.length);}
+  if(typeof saveResult==="function"){saveResult('weekly-quiz-2026-06-23','Quiz of the Week #4',score,QUESTIONS.length,true);}
   showScreen('score-screen');
   setTimeout(loadLeaderboard, 1200);
 }
