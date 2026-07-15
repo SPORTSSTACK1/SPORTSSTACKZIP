@@ -346,7 +346,7 @@ function showScore(){
   if(copEl) copEl.textContent = '';
 
   if(typeof saveResult === 'function'){
-    saveResult('weekly-quiz-7','Quiz of the Week #7',score,QUESTIONS.length,score===QUESTIONS.length);
+    saveResult('weekly-quiz-7','Quiz of the Week #7',score,QUESTIONS.length,true);
   } else {
     console.warn('saveResult unavailable — sportstack-member.js did not load, score not saved');
   }
