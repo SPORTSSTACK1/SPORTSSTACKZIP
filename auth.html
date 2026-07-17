@@ -89,9 +89,20 @@ body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-
 <script>
 const client = supabase.createClient('https://syntfyfsyjiuowclarpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig');
 
+/* Honour ?next= so people land back where they started (e.g. the giveaway).
+   Whitelisted to plain same-site filenames — no open redirect. */
+function ssNext(){
+  try{
+    var n = new URLSearchParams(location.search).get('next');
+    if(n && /^[a-z0-9][a-z0-9\-_]*\.html$/i.test(n)) return n;
+  }catch(e){}
+  return 'profile.html';
+}
+
+
 // Redirect if already signed in
 client.auth.getUser().then(({data:{user}}) => {
-  if (user) location.href = 'profile.html';
+  if (user) location.href = ssNext();
 });
 
 function switchTab(t) {
@@ -110,7 +121,7 @@ async function signIn() {
   const {error} = await client.auth.signInWithPassword({email,password:pass});
   if(error){showMsg(error.message,'error');}
   else {
-    location.href='profile.html';
+    location.href = ssNext();
   }
 }
 
@@ -122,7 +133,7 @@ async function signUp() {
   if(pass.length<6){showMsg('Password must be at least 6 characters','error');return;}
   const {data,error} = await client.auth.signUp({
     email, password:pass,
-    options:{data:{full_name:user},emailRedirectTo:location.origin+'/profile.html'}
+    options:{data:{full_name:user},emailRedirectTo:location.origin+'/'+ssNext()}
   });
   const marketing = document.getElementById('su-marketing').checked;
   if(error){showMsg(error.message,'error');}
@@ -135,14 +146,14 @@ async function signUp() {
         consent_date: marketing ? new Date().toISOString() : null
       }, {onConflict:'id',ignoreDuplicates:false});
     }
-    location.href='profile.html';
+    location.href = ssNext();
   }
 }
 
 async function signInGoogle() {
   await client.auth.signInWithOAuth({
     provider:'google',
-    options:{redirectTo:location.origin+'/profile.html'}
+    options:{redirectTo:location.origin+'/'+ssNext()}
   });
 }
 
