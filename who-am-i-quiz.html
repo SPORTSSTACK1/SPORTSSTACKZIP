@@ -12,78 +12,82 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:image" content="https://sportsstack.com.au/LOGO.jpeg"/>
 <title>Who Am I? – SportsStack</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Sora:wght@400;500;600;700;800&family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet"/>
 <!-- Google tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
-:root{--bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--gold:#f5c842;--text:#e8f0fe;--muted:#6b8abf;--dim:#1e3355;--border:#0d2040;--bright:#1a3a6a;--green:#166534;--amber:#92400e;--red:#7f1d1d}
+:root{
+  --bg:#1B2334;--surface:#242E44;--surface2:#2A3550;--line:#2E3A54;--line-2:#3B4869;
+  --gold:#F5C842;--gold-dim:#C29B28;--gold-deep:#8A6E18;
+  --ink:#EDF1F8;--ink-2:#B9C4D8;--mute:#8FA0BD;--mute-2:#6B7B98;
+  --green:#4ADE80;--green-bg:rgba(74,222,128,.14);
+  --red:#F87171;--red-bg:rgba(248,113,113,.14);
+}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh}
-nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:56px}
+body{background:var(--bg);color:var(--ink);font-family:'Sora',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+nav{position:sticky;top:0;z-index:1000;background:rgba(27,35,52,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:56px}
+nav img{border-radius:8px}
+.btn-lb{font:700 11px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;padding:8px 14px;border:1px solid var(--gold-deep);border-radius:6px}
 
-/* Game layout */
-.game-wrap{max-width:640px;margin:0 auto;padding:28px 16px 60px}
-.all-sports-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--bright);border-radius:20px;padding:5px 14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.game-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(44px,10vw,72px);font-weight:900;font-style:italic;text-transform:uppercase;color:var(--gold);line-height:.9;margin-bottom:6px}
-.game-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+.game-wrap{max-width:620px;margin:0 auto;padding:34px 18px 70px}
+.all-sports-badge{font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.all-sports-badge:before{content:"";width:24px;height:1px;background:var(--gold-deep)}
+.game-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(42px,10vw,68px);line-height:.92;letter-spacing:-.03em;color:var(--ink);margin-bottom:8px}
+.game-title em,.game-title i{font-style:italic;font-weight:400;color:var(--gold)}
+.game-sub{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:14.5px;color:var(--mute);margin-bottom:24px}
 
-/* Score pill */
-.score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.score-pill{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 16px;border-radius:20px;background:var(--surface2);border:1px solid var(--bright);color:var(--muted)}
-.score-pill span{color:var(--gold)}
-.hint-count{font-size:13px;color:var(--muted)}
+.score-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.score-pill{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:19px;color:var(--gold);letter-spacing:-.01em}
+.score-pill small{color:var(--mute-2);font-weight:400;font-size:12px;font-family:'Sora',sans-serif}
+.hint-count{font:700 10px/1 'Sora',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
 
-/* Hint cards */
-.hints-area{margin-bottom:24px}
-.hint-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:8px;transition:.3s}
-.hint-card.active{border-color:var(--bright);background:var(--surface2)}
-.hint-card.locked{opacity:.4}
-.hint-num{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.hint-text{font-size:15px;line-height:1.65;color:var(--text)}
-.hint-locked-text{font-size:13px;color:var(--dim);font-style:italic}
+/* Signature: the dossier — six numbered files, opened one at a time */
+.hints-area{margin-bottom:18px}
+.hint-card{background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:14px 16px 14px 52px;margin-bottom:8px;position:relative;transition:border-color .25s,background .25s}
+.hint-card .hint-num{position:absolute;left:16px;top:13px;font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;font-size:17px;color:var(--gold-dim);width:24px}
+.hint-card.active{border-left:2px solid var(--gold)}
+.hint-card.active .hint-text{font-family:'Fraunces',Georgia,serif;font-size:15.5px;line-height:1.55;color:var(--ink);font-weight:400}
+.hint-card.active .hint-text:before{content:"\201C";color:var(--gold-dim);margin-right:1px}
+.hint-card.active .hint-text:after{content:"\201D";color:var(--gold-dim);margin-left:1px}
+.hint-card.locked{opacity:.5}
+.hint-card.locked .hint-num{color:var(--mute-2)}
+.hint-locked-text{font:500 12px/1.4 'Sora',sans-serif;color:var(--mute-2);letter-spacing:.04em}
+.hint-card.just-opened{animation:fileOpen .35s ease both}
+@keyframes fileOpen{from{opacity:.3;transform:translateY(-3px)}to{opacity:1;transform:none}}
 
-/* Buttons */
-.btn-reveal{width:100%;padding:13px;background:transparent;border:1px solid var(--bright);border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:.2s;margin-bottom:12px}
-.btn-reveal:hover{background:var(--surface2);color:var(--text)}
-.btn-reveal:disabled{opacity:.3;cursor:default}
-.btn-guess{width:100%;padding:13px;background:var(--gold);border:none;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--bg);cursor:pointer;transition:.2s}
-.btn-guess:hover{background:#ffd84d}
-
-/* Input */
+.btn-reveal{width:100%;padding:13px;background:transparent;border:1px solid var(--line-2);border-radius:8px;font:700 11.5px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);cursor:pointer;transition:border-color .15s,color .15s;margin-bottom:14px}
+.btn-reveal:hover{border-color:var(--gold);color:var(--gold)}
+.wrong-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.wrong-pill{font:500 12px/1 'Sora',sans-serif;background:var(--red-bg);border:1px solid rgba(248,113,113,.3);color:var(--red);border-radius:14px;padding:5px 12px}
+.msg{min-height:18px;font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13.5px;color:var(--mute);margin-bottom:8px}
 .input-wrap{position:relative;margin-bottom:10px}
-.guess-input{width:100%;padding:12px 16px;background:var(--surface);border:1px solid var(--bright);border-radius:10px;color:var(--text);font-size:15px;font-family:inherit;outline:none}
+.guess-input{width:100%;padding:14px 16px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;color:var(--ink);font-size:15px;font-family:'Sora',sans-serif;outline:none;transition:border-color .15s}
 .guess-input:focus{border-color:var(--gold)}
-.dd-box{position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--bright);border-radius:10px;z-index:20;margin-top:2px;overflow:hidden;max-height:240px;overflow-y:auto}
-.dd-item{padding:10px 16px;cursor:pointer;font-size:14px;color:var(--text);display:flex;justify-content:space-between;align-items:center}
-.dd-item:hover,.dd-item.active{background:var(--surface2)}
-.dd-sport{font-size:11px;color:var(--muted)}
+.dd-box{position:absolute;left:0;right:0;top:calc(100% + 4px);background:var(--surface2);border:1px solid var(--line-2);border-radius:8px;overflow:hidden;z-index:40;max-height:220px;overflow-y:auto}
+.dd-item{padding:11px 16px;font-size:14px;cursor:pointer;font-family:'Sora',sans-serif}
+.dd-item:hover,.dd-item.hl{background:var(--surface);color:var(--gold)}
+.btn-guess{width:100%;padding:15px;background:var(--gold);border:none;border-radius:8px;font:800 12px/1 'Sora',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#151C2B;cursor:pointer;transition:background .15s}
+.btn-guess:hover{background:#FCE28A}
 
-/* Result banners */
-.result-banner{border-radius:12px;padding:20px 20px;margin-top:16px;text-align:center}
-.result-banner.won{background:#0f3a1f;border:1px solid #15803d}
-.result-banner.lost{background:#3a0f0f;border:1px solid #7f1d1d}
-.result-icon{font-size:36px;margin-bottom:8px}
-.result-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;color:var(--text);margin-bottom:6px}
-.result-detail{font-size:14px;color:var(--muted);margin-bottom:12px;line-height:1.6}
-.result-score{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);margin-bottom:14px}
-.btn-share{display:inline-block;padding:10px 24px;background:var(--surface2);border:1px solid var(--bright);border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:.2s}
-.btn-share:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
-
-/* Wrong guess list */
-.wrong-list{margin:10px 0 16px;display:flex;flex-wrap:wrap;gap:6px}
-.wrong-pill{font-size:12px;padding:4px 10px;background:#3a0f0f;border:1px solid #7f1d1d;border-radius:20px;color:#fca5a5}
-
-/* Sport category pill on guess */
-.sport-cat{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);display:inline-block;margin-bottom:10px}
-
-/* msg */
-.msg{height:20px;font-size:13px;color:#fca5a5;margin-bottom:8px;text-align:center}
-
-footer{border-top:1px solid var(--border);padding:20px;text-align:center;font-size:13px;color:var(--dim)}
-footer a{color:var(--dim);text-decoration:none;margin:0 8px}
+.result-banner{border-radius:10px;padding:26px 22px;margin-top:18px;text-align:left;background:var(--surface);border:1px solid var(--line-2);border-top:3px solid var(--gold)}
+.result-banner.lost{border-top-color:var(--red)}
+.result-kicker{font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:12px}
+.result-banner.lost .result-kicker{color:var(--red)}
+.result-name{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(26px,6vw,36px);letter-spacing:-.02em;color:var(--ink);line-height:1.05;margin-bottom:4px}
+.result-nat{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:14px;color:var(--mute);margin-bottom:14px}
+.result-blocks{font-size:19px;letter-spacing:2px;margin-bottom:8px}
+.result-score{font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;font-size:19px;color:var(--gold);margin-bottom:6px}
+.streak-line{font:600 12.5px/1.5 'Sora',sans-serif;color:var(--gold);margin-bottom:16px;min-height:16px}
+.btn-share{display:inline-block;padding:14px 28px;background:var(--gold);border:none;border-radius:6px;font:800 11px/1 'Sora',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#151C2B;cursor:pointer;transition:background .15s}
+.btn-share:hover{background:#FCE28A}
+.sport-cat{font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);border:1px solid var(--line-2);border-radius:12px;padding:5px 12px;display:inline-block}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
@@ -98,26 +102,26 @@ footer a{color:var(--dim);text-decoration:none;margin:0 8px}
 </nav>
 
 <div class="game-wrap">
-  <div class="all-sports-badge">🌍 All Sports &nbsp;·&nbsp; Daily Game</div>
-  <div class="game-title">Who<br>Am I?</div>
-  <div class="game-sub">Six clues. One legend. Starts hard — gets easier.</div>
+  <div class="all-sports-badge">Daily · All sports · One a day</div>
+  <div class="game-title">Who am <em>I?</em></div>
+  <div class="game-sub">Six clues, one legend. It starts hard and gets easier, but every clue costs you.</div>
 
   <div class="score-row">
-    <div class="score-pill">Score: <span id="score-val">600</span></div>
+    <div class="score-pill"><span id="score-val">12</span> <small>points on offer</small></div>
     <div class="hint-count" id="hint-count">Hint 1 of 6 revealed</div>
   </div>
 
   <div class="hints-area" id="hints-area"></div>
 
   <div id="controls">
-    <button class="btn-reveal" id="btn-reveal" onclick="revealNext()">Reveal Next Hint (–100 points)</button>
+    <button class="btn-reveal" id="btn-reveal" onclick="revealNext()">Open the next clue (costs 2 points)</button>
     <div id="wrong-list" class="wrong-list"></div>
     <div class="msg" id="msg"></div>
     <div class="input-wrap">
-      <input class="guess-input" id="guess-input" type="text" placeholder="Type an athlete's name…" autocomplete="off" spellcheck="false"/>
+      <input class="guess-input" id="guess-input" type="text" placeholder="Name the athlete…" autocomplete="off" spellcheck="false"/>
       <div class="dd-box" id="dd-box" style="display:none"></div>
     </div>
-    <button class="btn-guess" onclick="submitGuess()">Guess</button>
+    <button class="btn-guess" onclick="submitGuess()">Lock it in</button>
   </div>
 
   <div id="result-area"></div>
@@ -157,15 +161,15 @@ function renderHints(){
   for(let i=0;i<6;i++){
     const div=document.createElement('div');
     if(i<hintsRevealed){
-      div.className='hint-card active';
-      div.innerHTML=`<div class="hint-num">Hint ${i+1}</div><div class="hint-text">${TARGET.hints[i]}</div>`;
+      div.className='hint-card active'+(i===hintsRevealed-1&&i>0?' just-opened':'');
+      div.innerHTML=`<div class="hint-num">${i+1}</div><div class="hint-text">${TARGET.hints[i]}</div>`;
     } else {
       div.className='hint-card locked';
-      div.innerHTML=`<div class="hint-num">Hint ${i+1}</div><div class="hint-locked-text">Reveal for –100 points</div>`;
+      div.innerHTML=`<div class="hint-num">${i+1}</div><div class="hint-locked-text">Unopened</div>`;
     }
     area.appendChild(div);
   }
-  document.getElementById('hint-count').textContent=`Hint ${hintsRevealed} of 6 revealed`;
+  document.getElementById('hint-count').textContent=`Clue ${hintsRevealed} of 6`;
   document.getElementById('score-val').textContent=score;
   const btn=document.getElementById('btn-reveal');
   btn.disabled=hintsRevealed>=6||done;
@@ -232,54 +236,127 @@ function submitGuess(){
     showResult(true);
   } else {
     wrongGuesses.push(val);
-    msg.textContent=`❌ Not ${val} — try again!`;
+    msg.textContent='Not '+val+'. Try again.';
     setTimeout(()=>msg.textContent='',2500);
     const wl=document.getElementById('wrong-list');
     wl.innerHTML=wrongGuesses.map(w=>`<span class="wrong-pill">✗ ${w}</span>`).join('');
     // Auto-reveal if 3 wrong guesses per hint level
     if(wrongGuesses.length>=hintsRevealed*2&&hintsRevealed<6){
       revealNext();
-      msg.textContent='Hint revealed after multiple wrong guesses';
+      msg.textContent='A clue opened itself after those misses.';
     }
   }
 }
 
+
+function ymdW(d){ return d.toISOString().slice(0,10); }
+function updateStreakW(){
+  try{
+    var today = ymdW(new Date());
+    var last = localStorage.getItem('whoami-streak-last');
+    var cur = parseInt(localStorage.getItem('whoami-streak-count')||'0',10) || 0;
+    if(last === today) return getStreakW();
+    var y = new Date(); y.setDate(y.getDate()-1);
+    cur = (last === ymdW(y)) ? cur + 1 : 1;
+    localStorage.setItem('whoami-streak-count', String(cur));
+    localStorage.setItem('whoami-streak-last', today);
+    return cur;
+  }catch(e){ return 0; }
+}
+function getStreakW(){
+  try{
+    var last = localStorage.getItem('whoami-streak-last');
+    if(!last) return 0;
+    var today = ymdW(new Date());
+    var y = new Date(); y.setDate(y.getDate()-1);
+    if(last === today || last === ymdW(y)) return parseInt(localStorage.getItem('whoami-streak-count')||'0',10)||0;
+    return 0;
+  }catch(e){ return 0; }
+}
+
 function showResult(won){
-  const sportLabel=TARGET.sport;
   const hintsUsed=hintsRevealed;
   const finalScore=won?score:0;
   const area=document.getElementById('result-area');
-  const emoji=won?['🏆','🥇','🥈🎉','🤔','💡','😅'][hintsUsed-1]:'😔';
-  const msg=won?[
-    'Incredible! First hint!','Outstanding! Two hints!','Impressive — three hints!',
-    'Well done — four hints!','Getting there — five hints!','Made it with all hints!'
-  ][hintsUsed-1]:'Better luck tomorrow!';
-  
+  document.getElementById('controls').style.display='none';
+
+  // Lock today + streak
+  try{ localStorage.setItem('whoami-daily-'+ymdW(new Date()), JSON.stringify({won:won,hints:hintsUsed,score:finalScore})); }catch(e){}
+  var st = updateStreakW();
+
+  const blocks=Array(6).fill(0).map((_,k)=>k<hintsUsed?'\uD83D\uDFE9':'\u2B1C').join('');
+  const line = won
+    ? ['Got it from a single clue. Ridiculous.','Two clues. Seriously sharp.','Three clues in. Solid.',
+       'Four clues. Got there.','Five clues. Cutting it fine.','All six clues. A win is a win.'][hintsUsed-1]
+    : 'Nobody gets them all.';
+  const streakLine = st>1 ? ('\uD83D\uDD25 '+st+'-day streak. Come back tomorrow to keep it alive.')
+                          : 'Come back tomorrow for a new one.';
+
   area.innerHTML=`
   <div class="result-banner ${won?'won':'lost'}">
-    <div class="result-icon">${emoji}</div>
-    <div class="result-title">${won?'Correct!':'Game Over'}</div>
-    <div style="margin-bottom:8px"><span class="sport-cat">${sportLabel}</span></div>
-    <div class="result-detail">
-      ${won?msg:'The answer was <strong style="color:var(--text)">'}${won?'':''+TARGET.name+'</strong>'}
-      <br>${TARGET.name} &nbsp;·&nbsp; ${TARGET.nat}
-      ${won?`<br>Guessed with ${hintsUsed} hint${hintsUsed>1?'s':''}`:''}</div>
-    <div class="result-score">${won?finalScore+' points':'0 points'}</div>
-    <button class="btn-share" onclick="shareResult(${won},${hintsUsed},${finalScore})">Share Result</button>
+    <div class="result-kicker">${won?'Solved':'Not today'} \u00B7 ${TARGET.sport}</div>
+    <div class="result-name">${TARGET.name}</div>
+    <div class="result-nat">${TARGET.nat}</div>
+    <div class="result-blocks">${blocks}</div>
+    <div class="result-score">${won?finalScore+' points \u2014 '+line:line}</div>
+    <div class="streak-line">${streakLine}</div>
+    <button class="btn-share" onclick="shareResult(${won},${hintsUsed},${finalScore})">Copy my score</button>
   </div>`;
-  
+
   if(typeof saveResult==='function'){
     saveResult('who-am-i','Who Am I?',won?finalScore:0,12,won);
   }
 }
 
 function shareResult(won,hints,pts){
-  const blocks=Array(6).fill(0).map((_,i)=>i<hints?'🟩':'⬜').join('');
-  const text=`Who Am I? — SportsStack\n${TARGET.name} (${TARGET.sport})\n${blocks}\n${won?pts+' points':'Did not get it'}\nsportsstack.com.au`;
-  navigator.share?(navigator.share({text:text}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(text).then(()=>alert('Copied to clipboard!'));
+  const blocks=Array(6).fill(0).map((_,k)=>k<hints?'\uD83D\uDFE9':'\u2B1C').join('');
+  const st=getStreakW();
+  const streakLine = st>1 ? ('\uD83D\uDD25 '+st+' day streak\n') : '';
+  const text='Who Am I? \u2014 Daily '+ymdW(new Date())+'\n\n'
+    + blocks+'\n'
+    + (won ? pts+'/12 in '+hints+' clue'+(hints>1?'s':'') : 'Beat me: 0/12')+'\n'
+    + streakLine
+    + '\nPlay: sportsstack.com.au/who-am-i-quiz.html';
+  const btn=document.querySelector('.btn-share');
+  const done=()=>{ if(btn){const o=btn.textContent;btn.textContent='Copied \u2713';setTimeout(()=>btn.textContent=o,2000);} };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(()=>{ if(navigator.share) navigator.share({text:text}).catch(()=>{}); });
+  } else if(navigator.share){ navigator.share({text:text}).catch(()=>{}); }
 }
 
 renderHints();
+
+// Already played today? Show the result state instead of a replayable game.
+(function(){
+  try{
+    var saved = localStorage.getItem('whoami-daily-'+ymdW(new Date()));
+    if(!saved) return;
+    var r = JSON.parse(saved);
+    hintsRevealed = r.hints || 6;
+    score = r.score || 0;
+    done = true;
+    renderHints();
+    showResultFromSave(r);
+  }catch(e){}
+})();
+
+function showResultFromSave(r){
+  const area=document.getElementById('result-area');
+  document.getElementById('controls').style.display='none';
+  var st = getStreakW();
+  const blocks=Array(6).fill(0).map((_,k)=>k<(r.hints||6)?'\uD83D\uDFE9':'\u2B1C').join('');
+  const streakLine = st>1 ? ('\uD83D\uDD25 '+st+'-day streak. Come back tomorrow to keep it alive.') : 'Come back tomorrow for a new one.';
+  area.innerHTML=`
+  <div class="result-banner ${r.won?'won':'lost'}">
+    <div class="result-kicker">Already played today \u00B7 ${TARGET.sport}</div>
+    <div class="result-name">${TARGET.name}</div>
+    <div class="result-nat">${TARGET.nat}</div>
+    <div class="result-blocks">${blocks}</div>
+    <div class="result-score">${r.won ? r.score+'/12 today' : '0/12 today'}</div>
+    <div class="streak-line">${streakLine}</div>
+    <button class="btn-share" onclick="shareResult(${r.won?'true':'false'},${r.hints||6},${r.score||0})">Copy my score</button>
+  </div>`;
+}
 </script>
 <script src="sportstack-member.js?v=4"></script>
 </body>
