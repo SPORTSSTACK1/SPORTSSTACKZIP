@@ -497,6 +497,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
         <div class="career-header">
           <div class="career-kicker">Ballons d'Or won</div>
           <div class="ballon-row" id="ballon-row"></div>
+<div id="streak-line" style="font-size:13px;color:#D4AF37;font-weight:600;margin:4px 0 8px;min-height:16px"></div>
           <div class="ballon-count" id="ballon-count"></div>
         </div>
         <div class="career-log" id="career-log"></div>
@@ -711,12 +712,41 @@ function choosePosition(pos){
   showResult();
 }
 
+
+function ymd(d){ return d.toISOString().slice(0,10); }
+function updateStreak(){
+  try{
+    var today = ymd(new Date());
+    var last = localStorage.getItem('bdb-streak-last');
+    var cur = parseInt(localStorage.getItem('bdb-streak-count')||'0',10) || 0;
+    if(last === today) return getStreak();       // already counted today
+    var y = new Date(); y.setDate(y.getDate()-1);
+    cur = (last === ymd(y)) ? cur + 1 : 1;        // consecutive day extends, gap resets
+    localStorage.setItem('bdb-streak-count', String(cur));
+    localStorage.setItem('bdb-streak-last', today);
+    var best = parseInt(localStorage.getItem('bdb-streak-best')||'0',10) || 0;
+    if(cur > best) localStorage.setItem('bdb-streak-best', String(cur));
+    return cur;
+  }catch(e){ return 0; }
+}
+function getStreak(){
+  try{
+    var last = localStorage.getItem('bdb-streak-last');
+    if(!last) return 0;
+    var today = ymd(new Date());
+    var y = new Date(); y.setDate(y.getDate()-1);
+    if(last === today || last === ymd(y)) return parseInt(localStorage.getItem('bdb-streak-count')||'0',10)||0;
+    return 0;  // streak broken
+  }catch(e){ return 0; }
+}
+
 function showResult(){
   document.getElementById('result-area').style.display='block';
   const ov = overall();
   document.getElementById('final-rating').textContent = ov;
   if(isDaily){
     localStorage.setItem('bdb-daily-'+todayStr(), ov);
+    updateStreak();
     document.getElementById('result-daily-tag').innerHTML='<span class="daily-tag">Daily · '+todayStr()+'</span>';
   }
   // Best score
@@ -883,6 +913,11 @@ function simulateCareer(){
   const bd = ballonCount(ov);
   const row = document.getElementById('ballon-row');
   row.textContent = bd>0 ? '🏆'.repeat(bd) : '🚫';
+  if(isDaily){
+    var st = getStreak();
+    var se = document.getElementById('streak-line');
+    if(se) se.innerHTML = st>1 ? ('🔥 '+st+'-day streak — come back tomorrow to keep it alive') : (st===1 ? '🔥 Day one. Come back tomorrow to start a streak.' : '');
+  }
   document.getElementById('ballon-count').textContent = bd>0
     ? bd+' Ballon d\'Or'+(bd>1?'s':'')+(bd>=8?' — THE GREATEST OF ALL TIME':bd>=5?' — an all-time legend':'')
     : pick(NO_BALLON_LINES);
@@ -919,11 +954,25 @@ function simulateCareer(){
 
 function shareResult(){
   const ov = overall();
-  const bd = document.getElementById('ballon-row').textContent;
-  const txt = 'SportsStack — Ballon D\'Or Builder'+(isDaily?' (Daily '+todayStr()+')':'')+'\nMy player: '+ov+' OVR\n'+bd+'\nsportsstack.com.au/ballon-dor-builder.html';
+  const bd = ballonCount(ov);
+  // Spoiler-free: a shirt with the rating, Ballons d'Or underneath. Reveals nothing about how you got there.
+  const shirt = '\uD83D\uDC55' + ov;
+  const bdLine = bd>0 ? ('\uD83C\uDFC6 \u00D7 ' + bd) : 'No Ballon d\'Or';
+  const streak = getStreak();
+  const streakLine = (isDaily && streak>1) ? ('\uD83D\uDD25 ' + streak + ' day streak\n') : '';
+  const header = isDaily ? ('Ballon d\'Or Builder \u2014 Daily ' + todayStr()) : 'Ballon d\'Or Builder';
+  const txt = header + '\n\n' + shirt + '\n' + bdLine + '\n' + streakLine + '\nPlay: sportsstack.com.au/ballon-dor-builder.html';
+
   const btn = document.querySelector('.share-btn2');
-  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}
-  else if(navigator.clipboard){navigator.clipboard.writeText(txt).then(()=>{btn.textContent='Copied ✓';setTimeout(()=>btn.textContent='Share Result 📋',2000);});}
+  const done = ()=>{ if(btn){ const o=btn.textContent; btn.textContent='Copied \u2713'; setTimeout(()=>btn.textContent=o,2000);} };
+  // Clipboard first (works on desktop); fall back to native share sheet on mobile.
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done).catch(()=>{
+      if(navigator.share) navigator.share({text:txt}).catch(()=>{});
+    });
+  } else if(navigator.share){
+    navigator.share({text:txt}).catch(()=>{});
+  }
 }
 
 // Daily status on load
