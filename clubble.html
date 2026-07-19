@@ -12,63 +12,73 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:image" content="https://sportsstack.com.au/LOGO.jpeg"/>
 <title>Clubble</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Sora:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#04080f;--surface:#080f1c;--surface2:#0d1829;--surface3:#122035;
-  --blue:#2563eb;--blue-light:#3b82f6;
-  --gold:#f5c842;
-  --green:#22c55e;--green-bg:rgba(34,197,94,.09);--green-border:rgba(34,197,94,.45);
-  --amber:#f59e0b;--amber-bg:rgba(245,158,11,.09);--amber-border:rgba(245,158,11,.42);
-  --grey:#4b5563;--grey-bg:rgba(75,85,99,.1);--grey-border:rgba(75,85,99,.4);
-  --red:#ef4444;
-  --text:#e8f0fe;--text-muted:#6b8abf;--text-dim:#4a6890;
-  --border:#0d2040;--border-bright:#1a3a6a;--radius:10px;--radius-lg:16px;
+  --bg:#1B2334;--surface:#242E44;--surface2:#2A3550;--surface3:#314060;
+  --line:#2E3A54;--line-2:#3B4869;
+  --gold:#F5C842;--gold-dim:#C29B28;--gold-deep:#8A6E18;
+  --green:#4ADE80;--green-bg:rgba(74,222,128,.13);--green-border:rgba(74,222,128,.5);
+  --amber:#FBBF24;--amber-bg:rgba(251,191,36,.11);--amber-border:rgba(251,191,36,.45);
+  --grey:#5B6B8C;--grey-bg:rgba(91,107,140,.12);--grey-border:rgba(91,107,140,.4);
+  --red:#F87171;
+  --ink:#EDF1F8;--ink-2:#B9C4D8;--mute:#8FA0BD;--mute-2:#6B7B98;
+  --radius:8px;--radius-lg:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif}
-.page{max-width:700px;margin:0 auto;padding:20px 16px 48px}
-.site-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:20px}
-.logo-img{height:40px;width:40px;object-fit:contain;flex-shrink:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--ink);font-family:'Sora',sans-serif;-webkit-font-smoothing:antialiased}
+nav{position:sticky;top:0;z-index:1000;background:rgba(27,35,52,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+nav img{border-radius:6px}
+.page{max-width:700px;margin:0 auto;padding:24px 16px 56px}
+.site-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.logo-img{height:40px;width:40px;object-fit:contain;flex-shrink:0;border-radius:8px}
 .hdr-center{text-align:center}
-.game-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,6vw,44px);font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);line-height:1}
-.game-sub{font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
-.att-badge{display:block;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 16px;border-radius:20px;background:var(--surface);color:var(--text-muted);border:1px solid var(--border-bright);margin-bottom:14px;width:fit-content;margin-left:auto;margin-right:auto}
+.game-name{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(30px,6vw,44px);letter-spacing:-.02em;color:var(--ink);line-height:1}
+.game-name em{font-style:italic;font-weight:400;color:var(--gold)}
+.game-sub{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:12.5px;color:var(--mute);margin-top:4px}
+.att-badge{display:block;text-align:center;font:700 10px/1 'Sora',sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:6px 16px;border-radius:14px;background:var(--surface);color:var(--mute);border:1px solid var(--line-2);margin:0 auto 14px;width:fit-content}
 .legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
-.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
+.leg{display:flex;align-items:center;gap:6px;font:500 11px/1 'Sora',sans-serif;color:var(--mute)}
 .dot{width:9px;height:9px;border-radius:50%}
-.col-hdr{font-size:10px;font-weight:700;color:var(--text-muted);text-align:center;padding:2px 0;text-transform:uppercase;letter-spacing:.06em}
-.tile{border-radius:var(--radius);padding:7px 4px;text-align:center;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--border-bright);background:var(--surface2);transition:background .25s,border-color .25s}
-.tile .tv{font-size:11px;font-weight:600;line-height:1.3;color:var(--text)}
-.tile .ti{font-size:10px;color:var(--text-muted);margin-top:2px;line-height:1.2}
-.tile.g{background:var(--green-bg);border-color:var(--green-border)}.tile.g .tv{color:#86efac}.tile.g .ti{color:#4ade80}
-.tile.a{background:var(--amber-bg);border-color:var(--amber-border)}.tile.a .tv{color:#fcd34d}.tile.a .ti{color:#fbbf24}
-.tile.gr{background:var(--grey-bg);border-color:var(--grey-border)}.tile.gr .tv{color:#9ca3af}.tile.gr .ti{color:#6b7280}
-.tile.empty{background:var(--surface);border:1px dashed var(--border-bright)}
+.col-hdr{font:700 9px/1.2 'Sora',sans-serif;color:var(--mute-2);text-align:center;padding:2px 0;text-transform:uppercase;letter-spacing:.1em}
+
+/* Signature: the evidence board — every guess is a row of verdicts */
+.tile{border-radius:var(--radius);padding:7px 4px;text-align:center;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--line-2);background:var(--surface2);transition:background .3s,border-color .3s,transform .2s}
+.tile .tv{font:600 11px/1.3 'Sora',sans-serif;color:var(--ink)}
+.tile .ti{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:10.5px;color:var(--mute);margin-top:2px;line-height:1.2}
+.tile.g{background:var(--green-bg);border-color:var(--green-border)}.tile.g .tv{color:#86EFAC}.tile.g .ti{color:#4ADE80}
+.tile.a{background:var(--amber-bg);border-color:var(--amber-border)}.tile.a .tv{color:#FCD34D}.tile.a .ti{color:#FBBF24}
+.tile.gr{background:var(--grey-bg);border-color:var(--grey-border)}.tile.gr .tv{color:#9CA9C4}.tile.gr .ti{color:#7B8AA8}
+.tile.empty{background:transparent;border:1px dashed var(--line-2)}
+.tile.flip{animation:tileIn .4s cubic-bezier(.34,1.4,.64,1) both}
+@keyframes tileIn{from{transform:scale(.92);opacity:.4}to{transform:scale(1);opacity:1}}
 .clr-dots{display:flex;gap:3px;justify-content:center;margin-top:2px}
-.clr-dot{width:8px;height:8px;border-radius:50%;border:.5px solid rgba(255,255,255,.1)}
+.clr-dot{width:8px;height:8px;border-radius:50%;border:.5px solid rgba(255,255,255,.12)}
+
 .input-area{margin-top:14px;display:flex;gap:8px;position:relative}
-.input-area input{flex:1;font-size:15px;padding:11px 16px;border:1.5px solid var(--border-bright);border-radius:var(--radius);background:var(--surface2);color:var(--text);outline:none;font-family:'Barlow',sans-serif;transition:border-color .15s}
-.input-area input:focus{border-color:var(--blue-light);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
-.input-area input::placeholder{color:#6b8abf}
-.dropdown{position:absolute;top:100%;left:0;right:80px;background:var(--surface2);border:1.5px solid var(--border-bright);border-radius:var(--radius);z-index:99;max-height:260px;overflow-y:auto;margin-top:3px;box-shadow:0 8px 24px rgba(0,0,0,.45)}
-.dd-item{padding:9px 13px;font-size:14px;color:var(--text);cursor:pointer;border-bottom:1px solid var(--border)}
+.input-area input{flex:1;font-size:15px;padding:12px 16px;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--surface);color:var(--ink);outline:none;font-family:'Sora',sans-serif;transition:border-color .15s}
+.input-area input:focus{border-color:var(--gold)}
+.input-area input::placeholder{color:var(--mute-2)}
+.dropdown{position:absolute;top:100%;left:0;right:80px;background:var(--surface2);border:1px solid var(--line-2);border-radius:var(--radius);z-index:99;max-height:260px;overflow-y:auto;margin-top:4px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.dd-item{padding:10px 14px;font:500 14px/1.3 'Sora',sans-serif;color:var(--ink);cursor:pointer;border-bottom:1px solid var(--line)}
 .dd-item:last-child{border-bottom:none}
-.dd-item:hover,.dd-item.hl{background:var(--surface3)}
-.dd-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
-.btn{padding:11px 18px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;background:var(--gold);color:var(--bg);white-space:nowrap;transition:all .2s;flex-shrink:0}
-.btn:hover{background:#ffd700;transform:translateY(-1px)}
-.btn:active{transform:translateY(0)}
-.result-banner{border-radius:var(--radius-lg);padding:1.1rem 1.25rem;text-align:center;margin-top:14px;border:1px solid}
-.result-banner.win{border-color:var(--green-border);background:var(--green-bg)}
-.result-banner.fail{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.06)}
-.rb-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}
-.result-banner.win .rb-title{color:#86efac}.result-banner.fail .rb-title{color:#fca5a5}
-.rb-sub{font-size:13px;color:var(--text-muted)}
-.share-btn{margin-top:10px;display:inline-block;padding:9px 22px;border-radius:50px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-bright);background:transparent;color:var(--text);transition:all .2s}
-.share-btn:hover{background:rgba(255,255,255,.06)}
-.msg{font-size:13px;color:#fca5a5;margin-top:6px;min-height:18px}
-nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,32,64,.8);padding:0 16px;display:flex;align-items:center;height:52px;gap:10px}
+.dd-item:hover,.dd-item.hl{background:var(--surface3);color:var(--gold)}
+.dd-meta{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:11px;color:var(--mute);margin-top:2px}
+.btn{padding:12px 20px;border-radius:var(--radius);font:800 11.5px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border:none;background:var(--gold);color:#151C2B;white-space:nowrap;transition:background .15s;flex-shrink:0}
+.btn:hover{background:#FCE28A}
+.result-banner{border-radius:var(--radius-lg);padding:24px 22px;text-align:left;margin-top:16px;background:var(--surface);border:1px solid var(--line-2);border-top:3px solid var(--green)}
+.result-banner.fail{border-top-color:var(--red)}
+.rb-kicker{font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:10px}
+.rb-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(22px,5vw,30px);letter-spacing:-.02em;color:var(--ink);margin-bottom:4px;line-height:1.05}
+.rb-sub{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:14px;color:var(--mute);margin-bottom:10px}
+.rb-streak{font:600 12.5px/1.5 'Sora',sans-serif;color:var(--gold);margin-bottom:14px;min-height:16px}
+.share-btn{display:inline-block;padding:14px 26px;border-radius:6px;font:800 11px/1 'Sora',sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border:none;background:var(--gold);color:#151C2B;transition:background .15s}
+.share-btn:hover{background:#FCE28A}
+.msg{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13px;color:var(--red);margin-top:6px;min-height:18px}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
@@ -117,8 +127,8 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
 <header class="site-header" data-sport="Football" style="--sport-accent:#3EAD5F">
   <div style="width:40px"></div>
   <div class="hdr-center">
-    <div class="game-name">Clubble</div>
-    <div class="game-sub">Guess today's mystery club · 8 attempts</div>
+    <div class="game-name">Club<em>ble</em></div>
+    <div class="game-sub">One mystery club a day. Eight guesses.</div>
   </div>
   <div style="width:40px"></div>
 </header>
@@ -350,6 +360,7 @@ function getDayIndex(){
 }
 const TARGET=ALL_TEAMS[getDayIndex()];
 const MAX=8;
+var doneRestoring=false;
 let attempts=0,done=false,guesses=[],ddHighlight=-1,ddItems=[];
 
 function normalise(s){
@@ -402,9 +413,9 @@ function renderRows(){
     wrap.style.cssText='display:grid;grid-template-columns:28px repeat(5,1fr);gap:4px;margin-bottom:2px';
     const lbl=document.createElement('div');
     lbl.style.cssText='font-size:11px;color:var(--text-muted);text-align:right;padding-right:4px;display:flex;align-items:center;justify-content:flex-end;font-family:"Barlow Condensed",sans-serif;font-weight:700';
-    lbl.textContent=i+1;wrap.appendChild(lbl);
+    lbl.textContent=i+1;wrap.appendChild(lbl);if(typeof isNew!=='undefined'&&isNew){}
     if(i<guesses.length){
-      const g=guesses[i],s=scoreGuess(g);
+      const g=guesses[i],s=scoreGuess(g);const isNew=(i===guesses.length-1&&!doneRestoring);
       [{cat:'sport',val:g.sport,sub:''},{cat:'location',val:g.country,sub:g.continent},
        {cat:'league',val:(g.division||g.league),sub:(g.division?'NFL':'')},{cat:'titles',val:g.titles,sub:'titles'},
        {cat:'colors',val:'',sub:g.colors.join(', ')}].forEach(def=>{
@@ -477,28 +488,106 @@ function submitGuess(){
   else if(attempts>=MAX){done=true;showResult(false);}
 }
 
+
+function ymdC(d){ return d.toISOString().slice(0,10); }
+function updateStreakC(){
+  try{
+    var today = ymdC(new Date());
+    var last = localStorage.getItem('clubble-streak-last');
+    var cur = parseInt(localStorage.getItem('clubble-streak-count')||'0',10) || 0;
+    if(last === today) return getStreakC();
+    var y = new Date(); y.setDate(y.getDate()-1);
+    cur = (last === ymdC(y)) ? cur + 1 : 1;
+    localStorage.setItem('clubble-streak-count', String(cur));
+    localStorage.setItem('clubble-streak-last', today);
+    return cur;
+  }catch(e){ return 0; }
+}
+function getStreakC(){
+  try{
+    var last = localStorage.getItem('clubble-streak-last');
+    if(!last) return 0;
+    var today = ymdC(new Date());
+    var y = new Date(); y.setDate(y.getDate()-1);
+    if(last === today || last === ymdC(y)) return parseInt(localStorage.getItem('clubble-streak-count')||'0',10)||0;
+    return 0;
+  }catch(e){ return 0; }
+}
+
 function showResult(won){
   document.getElementById('input-area').style.display='none';
   document.getElementById('att-badge').style.display='none';
+
+  try{
+    localStorage.setItem('clubble-daily-'+ymdC(new Date()),
+      JSON.stringify({won:won, names:guesses.map(g=>g.name)}));
+  }catch(e){}
+  var st = updateStreakC();
+  var streakLine = st>1 ? '\uD83D\uDD25 '+st+'-day streak. Come back tomorrow to keep it alive.'
+                        : 'A new club tomorrow.';
+
   const r=document.getElementById('result');
+  const attLine = won
+    ? (attempts===1 ? 'First guess. Absurd.' : 'Solved in '+attempts+' guesses.')
+    : 'Eight guesses, no dice.';
   r.innerHTML='<div class="result-banner '+(won?'win':'fail')+'">'
-    +'<div class="rb-title">'+(won?'Got it! — ':'Better luck tomorrow — ')+TARGET.name+'</div>'
-    +'<div class="rb-sub">'+(won?'Solved in '+attempts+' attempt'+(attempts>1?'s':''):TARGET.name+' · '+TARGET.sport+' · '+TARGET.country)+'</div>'
-    +'<button class="share-btn" onclick="copyShare()">Copy result</button></div>';
+    +'<div class="rb-kicker">'+(won?'Solved':'Not today')+' \u00B7 Clubble</div>'
+    +'<div class="rb-title">'+TARGET.name+'</div>'
+    +'<div class="rb-sub">'+TARGET.sport+' \u00B7 '+TARGET.country+' \u00B7 '+attLine+'</div>'
+    +'<div class="rb-streak">'+streakLine+'</div>'
+    +'<button class="share-btn" onclick="copyShare()">Copy my grid</button></div>';
+
   var clubbleScore = won ? (MAX - attempts + 1) : 0;
-  saveResult('clubble', 'Clubble', clubbleScore, MAX, won);
+  if(typeof saveResult==='function') saveResult('clubble', 'Clubble', clubbleScore, MAX, won);
 }
 
 function copyShare(){
-  const e={g:'🟩',a:'🟨',gr:'⬜'};
+  const e={g:'\uD83D\uDFE9',a:'\uD83D\uDFE8',gr:'\u2B1C'};
   const cats=['sport','location','league','titles','colors'];
-  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-  let txt='Clubble — '+today+'\n'+(done&&guesses.length&&guesses[guesses.length-1].name===TARGET.name?attempts:'X')+'/'+MAX+'\n\n';
-  guesses.forEach(g=>{const s=scoreGuess(g);txt+=cats.map(c=>e[s[c]]).join('')+'\n';});
+  const won = done&&guesses.length&&guesses[guesses.length-1].name===TARGET.name;
+  let txt='Clubble \u2014 Daily '+ymdC(new Date())+'\n'+(won?attempts:'X')+'/'+MAX+'\n\n';
+  guesses.forEach(g=>{const sc=scoreGuess(g);txt+=cats.map(c=>e[sc[c]]).join('')+'\n';});
+  const st=getStreakC();
+  if(st>1) txt+='\n\uD83D\uDD25 '+st+' day streak';
+  txt+='\n\nPlay: sportsstack.com.au/clubble.html';
   const b=document.querySelector('.share-btn');
-  if(navigator.share){navigator.share({text:txt}).catch(()=>{});}else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>{b.textContent='Copied!';setTimeout(()=>b.textContent='Copy result',2000);});
+  const okFn=()=>{ if(b){const o=b.textContent;b.textContent='Copied \u2713';setTimeout(()=>b.textContent=o,2000);} };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(okFn).catch(()=>{ if(navigator.share) navigator.share({text:txt}).catch(()=>{}); });
+  } else if(navigator.share){ navigator.share({text:txt}).catch(()=>{}); }
 }
+
 renderRows();
+
+// Already played today? Restore the finished board.
+(function(){
+  try{
+    var saved = localStorage.getItem('clubble-daily-'+ymdC(new Date()));
+    if(!saved) return;
+    var r = JSON.parse(saved);
+    (r.names||[]).forEach(function(n){
+      var t = ALL_TEAMS.find(function(x){ return x.name === n; });
+      if(t){ guesses.push(t); attempts++; }
+    });
+    done = true;
+    renderRows();
+    showResultRestored(r.won);
+  }catch(e){}
+})();
+
+function showResultRestored(won){
+  document.getElementById('input-area').style.display='none';
+  document.getElementById('att-badge').style.display='none';
+  var st = getStreakC();
+  var streakLine = st>1 ? '\uD83D\uDD25 '+st+'-day streak. Come back tomorrow to keep it alive.' : 'A new club tomorrow.';
+  const r=document.getElementById('result');
+  r.innerHTML='<div class="result-banner '+(won?'win':'fail')+'">'
+    +'<div class="rb-kicker">Already played today \u00B7 Clubble</div>'
+    +'<div class="rb-title">'+TARGET.name+'</div>'
+    +'<div class="rb-sub">'+TARGET.sport+' \u00B7 '+TARGET.country+' \u00B7 '+(won?('Solved in '+attempts):'Not solved')+'</div>'
+    +'<div class="rb-streak">'+streakLine+'</div>'
+    +'<button class="share-btn" onclick="copyShare()">Copy my grid</button></div>';
+}
 </script>
 <script src="sportstack-member.js?v=4"></script>
 </body>
