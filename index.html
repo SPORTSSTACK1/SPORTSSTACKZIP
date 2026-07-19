@@ -229,6 +229,94 @@ html,body{font-family:'Sora',sans-serif}
   tick(); setInterval(tick, 30000);
 })();
 </script>
+<!-- Today's games — daily strip -->
+<section id="daily-strip" style="max-width:1060px;margin:0 auto;padding:22px 24px 6px">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+    <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#C29B28">Today's games</div>
+    <div id="ds-date" style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:12px;color:#6B7B98"></div>
+  </div>
+  <div class="ds-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+
+    <a href="ballon-dor-builder.html" class="ds-card" id="ds-bdb" style="display:block;text-decoration:none;background:#111828;border:1px solid #1F293F;border-radius:8px;padding:15px 16px;transition:border-color .15s">
+      <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16.5px;letter-spacing:-.01em;color:#F1EBD9;margin-bottom:3px">Ballon d'Or Builder</div>
+      <div style="font-size:11.5px;color:#7C8398;line-height:1.45;margin-bottom:10px">Build a career from real players. Same board for everyone.</div>
+      <div class="ds-state" style="display:flex;align-items:center;justify-content:space-between">
+        <span class="ds-chip" style="font-family:'Sora',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8FA0BD">Not played yet</span>
+        <span class="ds-streak" style="font-family:'Sora',sans-serif;font-weight:600;font-size:11px;color:#F5C842"></span>
+      </div>
+    </a>
+
+    <a href="clubble.html" class="ds-card" id="ds-clubble" style="display:block;text-decoration:none;background:#111828;border:1px solid #1F293F;border-radius:8px;padding:15px 16px;transition:border-color .15s">
+      <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16.5px;letter-spacing:-.01em;color:#F1EBD9;margin-bottom:3px">Clubble</div>
+      <div style="font-size:11.5px;color:#7C8398;line-height:1.45;margin-bottom:10px">One mystery club, eight guesses. Any sport, anywhere.</div>
+      <div class="ds-state" style="display:flex;align-items:center;justify-content:space-between">
+        <span class="ds-chip" style="font-family:'Sora',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8FA0BD">Not played yet</span>
+        <span class="ds-streak" style="font-family:'Sora',sans-serif;font-weight:600;font-size:11px;color:#F5C842"></span>
+      </div>
+    </a>
+
+    <a href="who-am-i-quiz.html" class="ds-card" id="ds-whoami" style="display:block;text-decoration:none;background:#111828;border:1px solid #1F293F;border-radius:8px;padding:15px 16px;transition:border-color .15s">
+      <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16.5px;letter-spacing:-.01em;color:#F1EBD9;margin-bottom:3px">Who Am I?</div>
+      <div style="font-size:11.5px;color:#7C8398;line-height:1.45;margin-bottom:10px">Six clues to name the athlete. Every clue costs you.</div>
+      <div class="ds-state" style="display:flex;align-items:center;justify-content:space-between">
+        <span class="ds-chip" style="font-family:'Sora',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8FA0BD">Not played yet</span>
+        <span class="ds-streak" style="font-family:'Sora',sans-serif;font-weight:600;font-size:11px;color:#F5C842"></span>
+      </div>
+    </a>
+
+  </div>
+</section>
+<style>
+.ds-card:hover{border-color:#8A6E18!important}
+@media(max-width:680px){.ds-grid{grid-template-columns:1fr!important}}
+</style>
+<script>
+(function(){
+  function ymd(){ return new Date().toISOString().slice(0,10); }
+  function streak(prefix){
+    try{
+      var last = localStorage.getItem(prefix+'-streak-last');
+      if(!last) return 0;
+      var t = ymd();
+      var y = new Date(); y.setDate(y.getDate()-1);
+      var yy = y.toISOString().slice(0,10);
+      if(last === t || last === yy) return parseInt(localStorage.getItem(prefix+'-streak-count')||'0',10)||0;
+      return 0;
+    }catch(e){ return 0; }
+  }
+  function setCard(id, played, doneText, st){
+    var card = document.getElementById(id);
+    if(!card) return;
+    var chip = card.querySelector('.ds-chip');
+    var sEl  = card.querySelector('.ds-streak');
+    if(played && chip){
+      chip.textContent = doneText;
+      chip.style.color = '#4ADE80';
+    }
+    if(st>1 && sEl) sEl.textContent = '\uD83D\uDD25 ' + st;
+  }
+  try{
+    var t = ymd();
+    var d = document.getElementById('ds-date');
+    if(d) d.textContent = new Date().toLocaleDateString('en-GB',{weekday:'long', day:'numeric', month:'long'});
+
+    // Builder: value is the OVR
+    var b = localStorage.getItem('bdb-daily-'+t);
+    setCard('ds-bdb', !!b, b ? ('Played \u2713 \u00B7 ' + b + ' OVR') : '', streak('bdb'));
+
+    // Clubble: JSON {won, names}
+    var c = localStorage.getItem('clubble-daily-'+t);
+    if(c){ try{ c = JSON.parse(c); }catch(e){ c = null; } }
+    setCard('ds-clubble', !!c, c ? (c.won ? ('Solved \u2713 \u00B7 ' + (c.names||[]).length + '/8') : 'Played \u00B7 X/8') : '', streak('clubble'));
+
+    // Who Am I: JSON {won, hints, score}
+    var w = localStorage.getItem('whoami-daily-'+t);
+    if(w){ try{ w = JSON.parse(w); }catch(e){ w = null; } }
+    setCard('ds-whoami', !!w, w ? (w.won ? ('Solved \u2713 \u00B7 ' + w.score + '/12') : 'Played \u00B7 0/12') : '', streak('whoami'));
+  }catch(e){}
+})();
+</script>
+
 
 <div class="mobile-pill-row"><a href="football.html" class="nav-pill" style="--pc:#22c55e">Football</a><a href="nfl.html" class="nav-pill" style="--pc:#ef4444">NFL</a><a href="nba.html" class="nav-pill" style="--pc:#f97316">NBA</a><a href="mlb.html" class="nav-pill" style="--pc:#3b82f6">MLB</a><a href="cricket.html" class="nav-pill" style="--pc:#84cc16">Cricket</a><a href="rugby.html" class="nav-pill" style="--pc:#a855f7">Rugby</a><a href="afl.html" class="nav-pill" style="--pc:#06b6d4">AFL</a><a href="golf.html" class="nav-pill" style="--pc:#14b8a6">Golf</a><a href="f1.html" class="nav-pill" style="--pc:#f43f5e">F1</a><a href="tennis.html" class="nav-pill" style="--pc:#8b5cf6">Tennis</a><a href="sports-awards.html" class="nav-pill" style="--pc:#f5c842">Awards</a><a href="quiz-of-the-week.html" class="nav-pill" style="--pc:#f5c842">Quiz of the Week</a></div>
 <section class="hero">
