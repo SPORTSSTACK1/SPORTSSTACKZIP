@@ -131,7 +131,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
   <div class="dateline">Quiz of the Week</div>
   <div class="title-issue">No. <em>8</em></div>
   <div class="title-date">Week ending 22 July 2026</div>
-  <p class="title-blurb">Nineteen questions on the week just gone. A World Cup settled in extra time, a first major at Birkdale, a world record in London and goodbye to an icon.</p>
+  <p class="title-blurb">Twenty questions on the week just gone. A World Cup settled in extra time, a first major at Birkdale, a world record in London and goodbye to an icon.</p>
   <button class="start-btn" onclick="startQuiz()">Start the quiz</button>
 
   <div class="lb" id="lb">
@@ -182,7 +182,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 <div class="screen" id="score-screen">
   <div class="score-kicker">Quiz of the Week · No. 8</div>
   <div class="score-number" id="score-number">0</div>
-  <div class="score-denom" id="score-denom">out of 19</div>
+  <div class="score-denom" id="score-denom">out of 20</div>
   <div class="score-card" id="score-card"></div>
   <div class="score-msg" id="score-msg"></div>
   <div class="score-btns">
@@ -206,6 +206,7 @@ const QUESTIONS = [
   { image:"", q:"Joe Root went through the entire ODI series against India without being dismissed. How many runs has he now scored since his last ODI dismissal?", a:"210", b:"360", c:"505", correct:1 },
   { image:"", q:"He scored the winning goal in this year's World Cup final, but which Premier League club did Ferran Torres play for?", a:"Manchester City", b:"Arsenal", c:"Liverpool", correct:0 },
   { image:"", q:"Spain conceded only one goal in the entire World Cup. Who scored it?", a:"Kylian Mbappe", b:"Charles De Ketelaere", c:"Cristiano Ronaldo", correct:1 },
+  { image:"", q:"Emiliano Martinez set a World Cup final record in defeat. What for?", a:"Most saves in a final, with 11", b:"Most clean sheets in one tournament", c:"Fastest save from kick-off", correct:0 },
   { image:"", q:"Morgan Rogers became the most expensive English footballer ever this week. Who held the record before him?", a:"Declan Rice", b:"Jude Bellingham", c:"Elliot Anderson", correct:2 },
   { image:"", q:"The Hundred started again this week. Who won last year's men's competition?", a:"Trent Rockets", b:"MI London, then known as Oval Invincibles", c:"Southern Brave", correct:1 },
   { image:"", q:"Which Premier League player was sent off in the World Cup final?", a:"Enzo Fernandez", b:"Cristian Romero", c:"Marc Cucurella", correct:0 },
@@ -224,10 +225,10 @@ const QUESTIONS = [
 const MSGS = [
   [0,4,   "Rough week. A few of these were mean, in fairness."],
   [5,9,   "A few got away. The transfer record one catches everybody."],
-  [10,13, "Respectable. You watched the weekend, at least."],
-  [14,16, "Strong. You are reading past the back page."],
-  [17,18, "Outstanding. One slip from the lot."],
-  [19,19, "Nineteen out of nineteen. Nothing left to teach you."],
+  [10,14, "Respectable. You watched the weekend, at least."],
+  [15,17, "Strong. You are reading past the back page."],
+  [18,19, "Outstanding. One slip from the lot."],
+  [20,20, "Twenty out of twenty. Nothing left to teach you."],
 ];
 
 let currentQ = 0;
