@@ -611,7 +611,8 @@ html,body{font-family:'Sora',sans-serif}
 <div class="sport-accordion" style="--sport-clr:#14b8a6"><div class="acc-hdr"><a href="golf.html" class="acc-name">Golf</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="acc-rand-btn" onclick="event.stopPropagation();goRandomSport(SPORT_GOLF)" title="Random Golf quiz" aria-label="Random Golf quiz">🎲</button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="masters-golf-quiz.html">The Masters</a>
           <a class="quiz-card" href="us-open-golf-quiz.html">US Open</a>
           <a class="quiz-card" href="open-golf-quiz.html">The Open</a>
-          <a class="quiz-card" href="pga-golf-quiz.html">PGA Championship</a></div></div></div>
+          <a class="quiz-card" href="pga-golf-quiz.html">PGA Championship</a>
+          <a class="quiz-card" href="golf-most-majors-quiz.html">Most Majors (Men)</a></div></div></div>
 <div class="sport-accordion" style="--sport-clr:#f43f5e"><div class="acc-hdr"><a href="f1.html" class="acc-name">F1</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="acc-rand-btn" onclick="event.stopPropagation();goRandomSport(SPORT_F)" title="Random F1 quiz" aria-label="Random F1 quiz">🎲</button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="f1-champions-quiz.html">World Champions Since 1990</a>
           <a class="quiz-card" href="f1-constructors-quiz.html">Constructors' Championships</a>
           <a class="quiz-card" href="f1-race-wins-quiz.html">Most Race Wins All Time</a>
@@ -620,7 +621,9 @@ html,body{font-family:'Sora',sans-serif}
           <a class="quiz-card" href="monaco-winners-quiz.html">Monaco GP Winners</a>
           <a class="quiz-card" href="f1-circuits-quiz.html">F1 Calendar Circuits</a></div></div></div>
 <div class="sport-accordion" style="--sport-clr:#8b5cf6"><div class="acc-hdr"><a href="tennis.html" class="acc-name">Tennis</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="acc-rand-btn" onclick="event.stopPropagation();goRandomSport(SPORT_TENNIS)" title="Random Tennis quiz" aria-label="Random Tennis quiz">🎲</button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="tennis-majors-quiz.html">Men's Grand Slam Winners</a>
-          <a class="quiz-card" href="wimbledon-womens-quiz.html">Women's Wimbledon Since 2000</a></div></div></div>
+          <a class="quiz-card" href="wimbledon-womens-quiz.html">Women's Wimbledon Since 2000</a>
+          <a class="quiz-card" href="tennis-most-slams-men-quiz.html">Most Grand Slams (Men)</a>
+          <a class="quiz-card" href="tennis-most-slams-women-quiz.html">Most Grand Slams (Women)</a></div></div></div>
 <div class="sport-accordion" style="--sport-clr:#f5c842"><div class="acc-hdr"><a href="sports-awards.html" class="acc-name">Sports Awards</a><button class="acc-btn" aria-expanded="false" onclick="toggleSport(this)"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="acc-rand-btn" onclick="event.stopPropagation();goRandomSport(SPORT_SPORTSAWARDS)" title="Random Sports Awards quiz" aria-label="Random Sports Awards quiz">🎲</button></div><div class="acc-body" hidden><div class="grid" style="padding:12px 16px 16px"><a class="quiz-card" href="bbc-spoty-quiz.html">BBC SPOTY Winners Since 2000</a>
           <a class="quiz-card" href="laureus-sportsman-quiz.html">Laureus Sportsman of the Year</a>
           <a class="quiz-card" href="si-sportsperson-quiz.html">SI Sportsperson of the Year</a></div></div></div>
@@ -674,9 +677,9 @@ var SPORT_MLB = ["al-cy-young-quiz.html", "al-mvp-quiz.html", "mlb-300-wins-quiz
 var SPORT_CRICKET = ["ipl-teams-quiz.html", "county-cricket-teams-quiz.html", "big-bash-teams-quiz.html", "the-hundred-teams-quiz.html", "ipl-most-expensive-quiz.html", "t20i-fastest-hundreds-quiz.html", "test-wicket-takers-quiz.html", "odi-wicket-takers-quiz.html", "t20i-wicket-takers-quiz.html", "test-run-scorers-quiz.html", "odi-run-scorers-quiz.html", "t20i-run-scorers-quiz.html"];
 var SPORT_RUGBY = ["prem-rugby-teams-quiz.html", "urc-teams-quiz.html", "super-rugby-teams-quiz.html", "super-league-teams-quiz.html", "nrl-teams-quiz.html", "nrl-dally-m-quiz.html", "state-of-origin-tryscorers-quiz.html", "nrl-tryscorers-quiz.html", "nrlw-premiers-quiz.html"];
 var SPORT_AFL = ["afl-800-goals-quiz.html", "afl-appearances-quiz.html", "afl-club-goalkickers-quiz.html", "afl-coleman-medal-quiz.html", "afl-highest-paid-2026-quiz.html", "afl-norm-smith-quiz.html", "afl-premiership-coaches-quiz.html", "afl-teams-quiz.html"];
-var SPORT_GOLF = ["masters-golf-quiz.html", "us-open-golf-quiz.html", "open-golf-quiz.html", "pga-golf-quiz.html"];
+var SPORT_GOLF = ["masters-golf-quiz.html", "us-open-golf-quiz.html", "open-golf-quiz.html", "pga-golf-quiz.html", "golf-most-majors-quiz.html"];
 var SPORT_F = ["f1-champions-quiz.html", "f1-constructors-quiz.html", "f1-race-wins-quiz.html", "f1-pole-positions-quiz.html", "f1-fastest-laps-quiz.html", "monaco-winners-quiz.html", "f1-circuits-quiz.html"];
-var SPORT_TENNIS = ["tennis-majors-quiz.html", "wimbledon-womens-quiz.html"];
+var SPORT_TENNIS = ["tennis-majors-quiz.html", "wimbledon-womens-quiz.html", "tennis-most-slams-men-quiz.html", "tennis-most-slams-women-quiz.html"];
 var SPORT_SPORTSAWARDS = ["bbc-spoty-quiz.html", "laureus-sportsman-quiz.html", "si-sportsperson-quiz.html"];
 function goRandomSport(arr){if(arr&&arr.length){window.location.href=arr[Math.floor(Math.random()*arr.length)];}}
 function goRandom(){window.location.href=ALL_QUIZZES[Math.floor(Math.random()*ALL_QUIZZES.length)];}
