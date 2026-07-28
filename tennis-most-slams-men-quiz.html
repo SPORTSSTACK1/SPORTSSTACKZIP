@@ -101,7 +101,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
       <div class="rank-stat">Grand Slam titles</div>
     </div>
     <div class="rank-bar-wrap"><div class="rank-bar" id="bar-1" style="width:100%"></div></div>
-    <div class="rank-val" id="rval-1">23,924</div>
+    <div class="rank-val" id="rval-1">–</div>
   </div>
   <div class="rank-row" id="row-2">
     <div class="rank-num">#2</div>
@@ -110,7 +110,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
       <div class="rank-stat">Grand Slam titles</div>
     </div>
     <div class="rank-bar-wrap"><div class="rank-bar" id="bar-2" style="width:90%"></div></div>
-    <div class="rank-val" id="rval-2">21,620</div>
+    <div class="rank-val" id="rval-2">–</div>
   </div>
   <div class="rank-row" id="row-3">
     <div class="rank-num">#3</div>
@@ -119,7 +119,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
       <div class="rank-stat">Grand Slam titles</div>
     </div>
     <div class="rank-bar-wrap"><div class="rank-bar" id="bar-3" style="width:73%"></div></div>
-    <div class="rank-val" id="rval-3">17,440</div>
+    <div class="rank-val" id="rval-3">–</div>
   </div>
   <div class="rank-row" id="row-4">
     <div class="rank-num">#4</div>
@@ -128,7 +128,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
       <div class="rank-stat">Grand Slam titles</div>
     </div>
     <div class="rank-bar-wrap"><div class="rank-bar" id="bar-4" style="width:68%"></div></div>
-    <div class="rank-val" id="rval-4">16,279</div>
+    <div class="rank-val" id="rval-4">–</div>
   </div>
   <div class="rank-row" id="row-5">
     <div class="rank-num">#5</div>
@@ -155,7 +155,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
       <div class="rank-stat">Grand Slam titles</div>
     </div>
     <div class="rank-bar-wrap"><div class="rank-bar" id="bar-7" style="width:60%"></div></div>
-    <div class="rank-val" id="rval-7">14,464</div>
+    <div class="rank-val" id="rval-7">–</div>
   </div>
   <div class="rank-row" id="row-8">
     <div class="rank-num">#8</div>
@@ -164,7 +164,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
       <div class="rank-stat">Grand Slam titles</div>
     </div>
     <div class="rank-bar-wrap"><div class="rank-bar" id="bar-8" style="width:60%"></div></div>
-    <div class="rank-val" id="rval-8">14,241</div>
+    <div class="rank-val" id="rval-8">–</div>
   </div>
   <div class="rank-row" id="row-9">
     <div class="rank-num">#9</div>
@@ -173,7 +173,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
       <div class="rank-stat">Grand Slam titles</div>
     </div>
     <div class="rank-bar-wrap"><div class="rank-bar" id="bar-9" style="width:58%"></div></div>
-    <div class="rank-val" id="rval-9">13,769</div>
+    <div class="rank-val" id="rval-9">–</div>
   </div>
   <div class="rank-row" id="row-10">
     <div class="rank-num">#10</div>
@@ -182,7 +182,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(4,8,15,.95);backdrop-filt
       <div class="rank-stat">Grand Slam titles</div>
     </div>
     <div class="rank-bar-wrap"><div class="rank-bar" id="bar-10" style="width:54%"></div></div>
-    <div class="rank-val" id="rval-10">12,942</div>
+    <div class="rank-val" id="rval-10">–</div>
   </div>
   </div>
   <div id="result"></div>
@@ -206,7 +206,7 @@ const TOTAL=ENTRIES.length,TOTAL_SECS=240;
 let secsLeft=TOTAL_SECS,timerInterval=null,foundIds=new Set(),gameActive=false;
 function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').trim();}
 function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:i===0?j:0));for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);return dp[m][n];}
-function revealRow(rank){const e=ENTRIES.find(x=>x.rank===rank);if(!e||foundIds.has(rank))return;foundIds.add(rank);const row=document.getElementById('row-'+rank);if(row)row.classList.add('found');document.getElementById('rname-'+rank).textContent=e.name;document.getElementById('rval-'+rank).textContent=e.statDisp;const b=document.getElementById('bar-'+rank);if(b)b.style.width=Math.round(e.stat/23924*100)+'%';document.getElementById('remain-count').textContent=TOTAL-foundIds.size;document.getElementById('score').textContent=foundIds.size;}
+function revealRow(rank){const e=ENTRIES.find(x=>x.rank===rank);if(!e||foundIds.has(rank))return;foundIds.add(rank);const row=document.getElementById('row-'+rank);if(row)row.classList.add('found');document.getElementById('rname-'+rank).textContent=e.name;document.getElementById('rval-'+rank).textContent=e.statDisp;const b=document.getElementById('bar-'+rank);if(b)b.style.width=Math.round(e.stat/24*100)+'%';document.getElementById('remain-count').textContent=TOTAL-foundIds.size;document.getElementById('score').textContent=foundIds.size;}
 function hideSugg(){}
 function tryGuess(val){
   if(!gameActive||!val.trim())return;
@@ -226,7 +226,7 @@ function giveUp(){
   if(btn)btn.style.display='none';
   endGame(false);
 }
-function endGame(won){gameActive=false;clearInterval(timerInterval);hideSugg();if(!won)ENTRIES.forEach(e=>{if(!foundIds.has(e.rank)){const row=document.getElementById('row-'+e.rank);if(row)row.classList.add('revealed');document.getElementById('rname-'+e.rank).textContent=e.name;document.getElementById('rval-'+e.rank).textContent=e.statDisp;const b=document.getElementById('bar-'+e.rank);if(b)b.style.width=Math.round(e.stat/23924*100)+'%';}});
+function endGame(won){gameActive=false;clearInterval(timerInterval);hideSugg();if(!won)ENTRIES.forEach(e=>{if(!foundIds.has(e.rank)){const row=document.getElementById('row-'+e.rank);if(row)row.classList.add('revealed');document.getElementById('rname-'+e.rank).textContent=e.name;document.getElementById('rval-'+e.rank).textContent=e.statDisp;const b=document.getElementById('bar-'+e.rank);if(b)b.style.width=Math.round(e.stat/24*100)+'%';}});
 const w_em='🏆',l_em='⏱';
 document.getElementById('result').innerHTML=`<div class="result-banner ${won?'win':'lose'}"><div class="rb-icon">${won?w_em:l_em}</div><div class="rb-title">${won?'Perfect!':"Time's Up!"}</div><div class="rb-sub">${foundIds.size}/${TOTAL} named</div><button class="share-btn" onclick="copyResult()">Share result</button></div>`;}
 function copyResult(){const txt='SportsStack — Tennis — Most Grand Slams (Men)\n'+foundIds.size+'/'+TOTAL+'\nsportsstack.com.au/tennis-most-slams-men-quiz';navigator.share?(navigator.share({text:txt}).catch(()=>{}),undefined):navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{const b=document.querySelector('.share-btn');b.textContent='Copied!';setTimeout(()=>b.textContent='Share result',2000);});}
