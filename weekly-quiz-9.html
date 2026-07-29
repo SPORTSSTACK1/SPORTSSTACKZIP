@@ -122,6 +122,9 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 .lb-row.me .lb-name{color:var(--gold)}
 .lb-row.me .lb-rank{color:var(--gold)}
 .lb-empty{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13px;color:var(--mute-2);padding:8px 0}
+.q-explain{margin-top:14px;padding:13px 16px;border-radius:8px;background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.22);border-left:2px solid var(--gold);font-family:'Fraunces',Georgia,serif;font-size:14px;line-height:1.55;color:#D8DEEC;animation:explainIn .3s ease both}
+.q-explain b{font-family:'Sora',sans-serif;font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim,#C29B28);display:block;margin-bottom:5px}
+@keyframes explainIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -166,6 +169,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
           <span class="ans-label">C</span><span class="ans-text" id="ans-c-text">Answer C</span>
         </button>
       </div>
+      <div class="q-explain" id="q-explain" hidden></div>
     </div>
     <div class="quiz-nav">
       <button class="nav-btn" id="nav-prev" onclick="goTo(currentQ-1)" disabled aria-label="Previous question">
@@ -201,26 +205,26 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 <script>
 
 const QUESTIONS = [
-  { image:"", q:"Mayo won the All-Ireland Gaelic football final this week, ending a drought of how many years?", a:"40 years", b:"102 years", c:"75 years", correct:2 },
-  { image:"", q:"LeBron James announced this week that he has signed for which new team?", a:"Philadelphia 76ers", b:"New York Knicks", c:"Golden State Warriors", correct:0 },
-  { image:"", q:"Which club agreed a deal this week to sign RB Leipzig winger Yan Diomande?", a:"Manchester City", b:"Real Madrid", c:"Paris Saint-Germain", correct:1 },
-  { image:"", q:"In which round did Anthony Joshua win his comeback fight against Kristian Prenga this weekend?", a:"Round 6", b:"Round 9", c:"Round 2", correct:2 },
-  { image:"", q:"Japanese legend Kazuyoshi Miura is the oldest professional footballer in the world. How old is he?", a:"59", b:"55", c:"63", correct:0 },
-  { image:"", q:"The Commonwealth Games are under way in Glasgow. Which nation holds the record for the most all-time Commonwealth medals?", a:"England", b:"Canada", c:"Australia", correct:2 },
-  { image:"", q:"Lando Norris won the Hungarian Grand Prix at the weekend. How old is he?", a:"24", b:"26", c:"30", correct:1 },
-  { image:"", q:"Joseph Pilates created Pilates during the First World War while interned in a camp on which island?", a:"Isle of Man", b:"Isle of Wight", c:"Jersey", correct:0 },
-  { image:"", q:"World number one Aryna Sabalenka is set to partner which player in the US Open mixed doubles?", a:"Jannik Sinner", b:"Carlos Alcaraz", c:"Novak Djokovic", correct:2 },
-  { image:"", q:"Jurgen Klopp is back in football management. Which job has he taken?", a:"Real Madrid head coach", b:"Brazil head coach", c:"Germany head coach", correct:2 },
-  { image:"", q:"Tadej Pogacar stormed to another Tour de France title. How many yellow jerseys does he now have in total?", a:"3", b:"5", c:"7", correct:1 },
-  { image:"", q:"Stephen Curry and which other player are famously known as the 'Splash Brothers' for their three-point shooting?", a:"Klay Thompson", b:"Kevin Durant", c:"Draymond Green", correct:0 },
-  { image:"", q:"Pat McAfee is now one of the biggest US sports personalities, but which position did he play in the NFL?", a:"Quarterback", b:"Punter", c:"Wide receiver", correct:1 },
-  { image:"", q:"The Rugby Union World Cup kicks off next year. Which country is hosting it?", a:"France", b:"Australia", c:"South Africa", correct:1 },
-  { image:"", q:"Which current Premier League manager has been in their job the longest?", a:"Mikel Arteta", b:"Pep Guardiola", c:"Andoni Iraola", correct:0 },
-  { image:"", q:"Seattle Mariners catcher Cal Raleigh has which nickname, owing to his large posterior?", a:"The Big Dumper", b:"The Tank", c:"Big Papi", correct:0 },
-  { image:"", q:"Danny Welbeck agreed to sign for which Premier League club this week?", a:"West Ham", b:"Chelsea", c:"Everton", correct:1 },
-  { image:"", q:"How did left-back Marc Cucurella celebrate Spain's World Cup win?", a:"Got a tattoo of his manager's face", b:"Shaved his head", c:"Retired from internationals", correct:0 },
-  { image:"", q:"Jayden Seales bowled an incredible spell against Pakistan this week. How many wicket-maidens did he bowl in a row?", a:"3", b:"5", c:"7", correct:1 },
-  { image:"", q:"The award-winning film Moneyball tells a story set in which sport?", a:"American football", b:"Basketball", c:"Baseball", correct:2 }
+  { image:"", q:"Mayo won the All-Ireland Gaelic football final this week, ending a drought of how many years?", a:"40 years", b:"102 years", c:"75 years", correct:2, explain:"Mayo hadn't won since 1951, and had lost 11 finals in between — one of the longest famines in Gaelic games. Manager Andy Moran did it in his first season in charge." },
+  { image:"", q:"LeBron James announced this week that he has signed for which new team?", a:"Philadelphia 76ers", b:"New York Knicks", c:"Golden State Warriors", correct:0, explain:"At 41, James joins Joel Embiid in Philadelphia on a two-year deal, calling it his 'last decision' after nearly retiring. It ends a seven-year spell with the Lakers." },
+  { image:"", q:"Which club agreed a deal this week to sign RB Leipzig winger Yan Diomande?", a:"Manchester City", b:"Real Madrid", c:"Paris Saint-Germain", correct:1, explain:"Real Madrid moved for the highly-rated teenage winger, one of RB Leipzig's brightest recent sales, as Xabi Alonso reshapes his attack." },
+  { image:"", q:"In which round did Anthony Joshua win his comeback fight against Kristian Prenga this weekend?", a:"Round 6", b:"Round 9", c:"Round 2", correct:2, explain:"Joshua was floored twice in the first round by Kristian Prenga before landing a brutal knockout in the second — setting up a long-awaited fight with Tyson Fury." },
+  { image:"", q:"Japanese legend Kazuyoshi Miura is the oldest professional footballer in the world. How old is he?", a:"59", b:"55", c:"63", correct:0, explain:"Known as 'King Kazu', Miura debuted in 1986 for Pelé's old club Santos. Days ago he scored his first goal in nearly four years, aged 59, and plans to play into his 60s." },
+  { image:"", q:"The Commonwealth Games are under way in Glasgow. Which nation holds the record for the most all-time Commonwealth medals?", a:"England", b:"Canada", c:"Australia", correct:2, explain:"Australia have topped the all-time Commonwealth medal table for decades, a reflection of their strength in swimming, athletics and cycling across the Games' history." },
+  { image:"", q:"Lando Norris won the Hungarian Grand Prix at the weekend. How old is he?", a:"24", b:"26", c:"30", correct:1, explain:"Norris, the reigning world champion, was born in November 1999 — so he was 26 when he took the win at the Hungaroring." },
+  { image:"", q:"Joseph Pilates created Pilates during the First World War while interned in a camp on which island?", a:"Isle of Man", b:"Isle of Wight", c:"Jersey", correct:0, explain:"Pilates developed his method while interned as a German national on the Isle of Man during the First World War, using bed springs to help fellow internees rehabilitate." },
+  { image:"", q:"World number one Aryna Sabalenka is set to partner which player in the US Open mixed doubles?", a:"Jannik Sinner", b:"Carlos Alcaraz", c:"Novak Djokovic", correct:2, explain:"In a star-studded revamped mixed doubles, the world number one paired with 24-time Grand Slam champion Novak Djokovic — one of the event's headline pairings." },
+  { image:"", q:"Jurgen Klopp is back in football management. Which job has he taken?", a:"Real Madrid head coach", b:"Brazil head coach", c:"Germany head coach", correct:2, explain:"Klopp left his Red Bull role to succeed Julian Nagelsmann after Germany's shock last-32 exit at the 2026 World Cup, signing through to the 2030 tournament." },
+  { image:"", q:"Tadej Pogacar stormed to another Tour de France title. How many Tour de France titles does he now have in total?", a:"3", b:"5", c:"7", correct:1, explain:"His fifth title equals the all-time record held by Merckx, Hinault, Anquetil and Indurain. Lance Armstrong won seven but was stripped of them all." },
+  { image:"", q:"Stephen Curry and which other player are famously known as the 'Splash Brothers' for their three-point shooting?", a:"Klay Thompson", b:"Kevin Durant", c:"Draymond Green", correct:0, explain:"Curry and Klay Thompson earned the nickname at Golden State, where their combined three-point shooting powered four NBA titles." },
+  { image:"", q:"Pat McAfee is now one of the biggest US sports personalities, but which position did he play in the NFL?", a:"Quarterback", b:"Punter", c:"Wide receiver", correct:1, explain:"Before becoming a broadcasting giant, McAfee was a two-time Pro Bowl punter for the Indianapolis Colts across eight seasons." },
+  { image:"", q:"The Rugby Union World Cup kicks off next year. Which country is hosting it?", a:"France", b:"Australia", c:"South Africa", correct:1, explain:"Australia hosts the 2027 Rugby World Cup, the first time the expanded 24-team tournament will be held there since 2003." },
+  { image:"", q:"Which current Premier League manager has been in their job the longest?", a:"Mikel Arteta", b:"Pep Guardiola", c:"Andoni Iraola", correct:0, explain:"Arteta has been at Arsenal since December 2019, making him the Premier League's longest-serving current manager after Guardiola and Klopp's eras ended." },
+  { image:"", q:"Seattle Mariners catcher Cal Raleigh has which nickname, owing to his large posterior?", a:"The Big Dumper", b:"The Tank", c:"Big Papi", correct:0, explain:"The switch-hitting Mariners catcher earned 'Big Dumper' from a team-mate admiring his lower-body strength — and has become one of baseball's biggest power hitters." },
+  { image:"", q:"Danny Welbeck agreed to sign for which Premier League club this week?", a:"West Ham", b:"Chelsea", c:"Everton", correct:1, explain:"The 35-year-old former Manchester United and Arsenal striker joined Chelsea from Brighton, brought in by Xabi Alonso for experience in a young squad." },
+  { image:"", q:"How did left-back Marc Cucurella celebrate Spain's World Cup win?", a:"Got a tattoo of his manager's face", b:"Shaved his head", c:"Retired from internationals", correct:0, explain:"The Spain left-back marked the World Cup triumph by getting a tattoo of manager Luis de la Fuente's face — an unusual tribute that went viral." },
+  { image:"", q:"Jayden Seales bowled an incredible spell against Pakistan this week. How many wicket-maidens did he bowl in a row?", a:"3", b:"5", c:"7", correct:1, explain:"The West Indies seamer bowled five maidens in a row in which he took a wicket — a rare and remarkable spell of sustained pressure against Pakistan." },
+  { image:"", q:"The award-winning film Moneyball tells a story set in which sport?", a:"American football", b:"Basketball", c:"Baseball", correct:2, explain:"The 2011 film, starring Brad Pitt as Billy Beane, tells the true story of the Oakland Athletics using data analytics to compete in Major League Baseball." }
 ];
 
 const MSGS = [
@@ -285,6 +289,16 @@ function renderQ(i){
     }
   });
 
+  const ex = document.getElementById('q-explain');
+  if(ex){
+    if(done && q.explain){
+      ex.innerHTML = '<b>Did you know</b>' + q.explain;
+      ex.hidden = false;
+    } else {
+      ex.hidden = true;
+    }
+  }
+
   document.getElementById('nav-prev').disabled = (i===0);
   document.getElementById('nav-next').disabled = !(done && i < QUESTIONS.length-1);
   const hint = document.getElementById('nav-hint');
@@ -308,14 +322,14 @@ function selectAnswer(choice){
   const cell = document.querySelectorAll('.sc-cell')[currentQ];
   renderQ(currentQ);
   if(cell){ cell.classList.add('pop'); setTimeout(()=>cell.classList.remove('pop'), 400); }
-  setTimeout(()=>{
-    if(currentQ < QUESTIONS.length-1){
-      goTo(currentQ+1);
-    } else {
-      const allDone = answers.every(a=>a!==null);
-      if(allDone) setTimeout(showScore, 600);
-    }
-  }, 1500);
+  // Let the reader take in the answer + anecdote, then advance on their click.
+  const allDone = answers.every(a=>a!==null);
+  if(allDone){
+    const nx = document.getElementById('nav-next');
+    const hint = document.getElementById('nav-hint');
+    if(hint) hint.textContent = 'Tap to see your result';
+    if(nx){ nx.disabled = false; nx.textContent = 'Results'; nx.onclick = showScore; }
+  }
 }
 
 function goTo(i){
