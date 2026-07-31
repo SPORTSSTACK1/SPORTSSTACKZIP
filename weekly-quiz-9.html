@@ -300,9 +300,27 @@ function renderQ(i){
   }
 
   document.getElementById('nav-prev').disabled = (i===0);
-  document.getElementById('nav-next').disabled = !(done && i < QUESTIONS.length-1);
+  const nx = document.getElementById('nav-next');
+  const allDone = answers.every(a=>a!==null);
+  const isLast = (i === QUESTIONS.length-1);
+  if(nx){
+    if(isLast && done){
+      // On the last (answered) question: offer results.
+      nx.disabled = false;
+      nx.textContent = 'See results';
+      nx.onclick = showScore;
+    } else {
+      nx.textContent = 'Next';
+      nx.onclick = function(){ goTo(currentQ+1); };
+      nx.disabled = !(done && i < QUESTIONS.length-1);
+    }
+  }
   const hint = document.getElementById('nav-hint');
-  if(hint) hint.textContent = done ? (i < QUESTIONS.length-1 ? 'Next question' : 'Last one') : 'Pick an answer to continue';
+  if(hint){
+    if(!done) hint.textContent = 'Pick an answer to continue';
+    else if(isLast) hint.textContent = allDone ? 'Tap to see your result' : 'Finish the rest to see your result';
+    else hint.textContent = 'Read the note, then tap Next';
+  }
 
   document.querySelectorAll('.sc-cell').forEach((d,j)=>{
     d.className = 'sc-cell';
@@ -322,14 +340,7 @@ function selectAnswer(choice){
   const cell = document.querySelectorAll('.sc-cell')[currentQ];
   renderQ(currentQ);
   if(cell){ cell.classList.add('pop'); setTimeout(()=>cell.classList.remove('pop'), 400); }
-  // Let the reader take in the answer + anecdote, then advance on their click.
-  const allDone = answers.every(a=>a!==null);
-  if(allDone){
-    const nx = document.getElementById('nav-next');
-    const hint = document.getElementById('nav-hint');
-    if(hint) hint.textContent = 'Tap to see your result';
-    if(nx){ nx.disabled = false; nx.textContent = 'Results'; nx.onclick = showScore; }
-  }
+  // Answer stays on screen with its anecdote; renderQ decides the Next/Results button.
 }
 
 function goTo(i){
