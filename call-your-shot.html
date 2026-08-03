@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<meta name="description" content="Predict the entire Premier League 2026/27 table, the cup winners and every individual award. Lock it in before the season starts and come back in May to see how you did. Free."/>
+<meta property="og:title" content="Call Your Shot — Premier League 2026/27 | SportsStack"/>
+<meta property="og:description" content="Predict the entire Premier League table, the cups and the awards. Lock it in before kick-off, come back in May."/>
+<meta property="og:url" content="https://sportsstack.com.au/call-your-shot"/>
+<meta property="og:type" content="website"/>
+<link rel="canonical" href="https://sportsstack.com.au/call-your-shot"/>
+<title>Call Your Shot — Premier League 2026/27 Predictions | SportsStack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{
+  --bg:#1B2334;--surface:#242E44;--surface2:#2A3550;--surface3:#31405F;
+  --line:#2E3A54;--line-2:#3B4869;
+  --gold:#F5C842;--gold-dim:#C29B28;--gold-deep:#8A6E18;
+  --ink:#EDF1F8;--ink-2:#B9C4D8;--mute:#8FA0BD;--mute-2:#6B7B98;
+  --green:#4ADE80;--red:#F87171;
+  /* league position bands */
+  --pos-champ:#F5C842;      /* 1st */
+  --pos-ucl:#4A9EFF;        /* 2-5 Champions League */
+  --pos-uel:#FF8C42;        /* 6 Europa */
+  --pos-uecl:#4EAE96;       /* 7 Conference */
+  --pos-rel:#F87171;        /* 18-20 relegation */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Sora',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+nav{position:sticky;top:0;z-index:900;background:rgba(27,35,52,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:56px}
+nav a.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:14px}
+nav img{height:32px;width:32px;border-radius:7px;object-fit:contain}
+.btn-lb{font:700 11px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;padding:8px 14px;border:1px solid var(--gold-deep);border-radius:6px}
+
+.wrap{max-width:720px;margin:0 auto;padding:30px 16px 80px}
+.kicker{font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.kicker:before{content:"";width:26px;height:1px;background:var(--gold-deep)}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(38px,9vw,62px);line-height:.94;letter-spacing:-.03em;margin-bottom:10px}
+h1 em{font-style:italic;font-weight:400;color:var(--gold)}
+.lede{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:15.5px;line-height:1.6;color:var(--mute);max-width:52ch;margin-bottom:6px}
+.deadline{font:600 12.5px/1.5 'Sora',sans-serif;color:var(--gold);margin:14px 0 26px}
+.deadline.closed{color:var(--red)}
+
+.card{background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:20px;margin-bottom:16px}
+.card h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:21px;letter-spacing:-.01em;margin-bottom:4px}
+.card .sub{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13px;color:var(--mute);margin-bottom:16px}
+
+/* signed-out gate */
+.gate{text-align:center;padding:38px 22px}
+.gate p{font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--mute);margin-bottom:18px;font-size:14.5px}
+
+/* the table predictor */
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.leg{display:flex;align-items:center;gap:6px;font:500 10.5px/1 'Sora',sans-serif;color:var(--mute)}
+.leg i{width:9px;height:9px;border-radius:2px;display:block}
+.row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.pos{width:34px;flex-shrink:0;text-align:center;font:800 13px/1 'Sora',sans-serif;padding:7px 0;border-radius:5px;background:var(--surface2);color:var(--mute)}
+.pos.champ{background:rgba(245,200,66,.16);color:var(--pos-champ);box-shadow:inset 2px 0 0 var(--pos-champ)}
+.pos.ucl  {background:rgba(74,158,255,.14);color:var(--pos-ucl);box-shadow:inset 2px 0 0 var(--pos-ucl)}
+.pos.uel  {background:rgba(255,140,66,.14);color:var(--pos-uel);box-shadow:inset 2px 0 0 var(--pos-uel)}
+.pos.uecl {background:rgba(78,174,150,.14);color:var(--pos-uecl);box-shadow:inset 2px 0 0 var(--pos-uecl)}
+.pos.rel  {background:rgba(248,113,113,.14);color:var(--pos-rel);box-shadow:inset 2px 0 0 var(--pos-rel)}
+.row select{flex:1;min-width:0;padding:10px 12px;background:var(--surface2);border:1px solid var(--line-2);border-radius:6px;color:var(--ink);font-family:'Sora',sans-serif;font-size:14px;outline:none;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238FA0BD' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 10px center;background-size:15px;padding-right:32px}
+.row select:focus{border-color:var(--gold)}
+.row select.dupe{border-color:var(--red);background-color:rgba(248,113,113,.08)}
+.row select:disabled{opacity:.75;cursor:default}
+
+.dupe-warn{display:none;margin-top:10px;padding:9px 13px;border-radius:6px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:var(--red);font-size:12.5px;font-weight:500}
+.dupe-warn.on{display:block}
+
+/* pick fields */
+.field{margin-bottom:14px}
+.field label{display:block;font:700 10px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.field input,.field select{width:100%;padding:12px 14px;background:var(--surface2);border:1px solid var(--line-2);border-radius:6px;color:var(--ink);font-family:'Sora',sans-serif;font-size:14.5px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--gold)}
+.field input:disabled,.field select:disabled{opacity:.75}
+.field .hint{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:12px;color:var(--mute-2);margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.two{grid-template-columns:1fr}}
+
+.btn{display:inline-block;padding:15px 26px;border:none;border-radius:7px;font:800 12px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;background:var(--gold);color:#151C2B;transition:background .15s}
+.btn:hover{background:#FCE28A}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--gold);border:1px solid var(--gold-deep)}
+.btn-ghost:hover{background:rgba(245,200,66,.08)}
+.btn-wide{width:100%}
+
+.lock-note{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13px;color:var(--mute);margin-top:12px;line-height:1.55}
+
+/* leagues */
+.league-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.league-row:last-child{border-bottom:none}
+.league-name{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16px}
+.league-meta{font-size:11.5px;color:var(--mute);margin-top:2px}
+.code-chip{font:700 12px/1 'Sora',sans-serif;letter-spacing:.16em;background:var(--surface2);border:1px solid var(--line-2);color:var(--gold);padding:8px 12px;border-radius:5px;cursor:pointer}
+.mini-table{width:100%;border-collapse:collapse;margin-top:10px}
+.mini-table th{text-align:left;font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2);padding:8px 6px;border-bottom:1px solid var(--line)}
+.mini-table td{padding:10px 6px;border-bottom:1px solid var(--line);font-size:13.5px}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .you{color:var(--gold);font-weight:700}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:var(--surface3);border:1px solid var(--line-2);color:var(--ink);padding:13px 20px;border-radius:8px;font-size:13.5px;opacity:0;transition:all .28s;z-index:1000;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.err{border-color:rgba(248,113,113,.5);color:#FCA5A5}
+
+.result-hero{text-align:center;padding:26px 20px}
+.result-score{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:64px;line-height:1;color:var(--gold)}
+.result-of{font-size:13px;color:var(--mute);margin-top:4px}
+.breakdown{margin-top:18px;text-align:left}
+.bd-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.bd-row:last-child{border-bottom:none}
+.bd-row .pts{font-weight:700;color:var(--gold)}
+.bd-row.miss .pts{color:var(--mute-2)}
+
+.foot{text-align:center;margin-top:26px}
+.foot a{color:var(--mute);font-size:12.5px;text-decoration:none}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html"><img src="LOGO.jpeg" alt="SportsStack"/> SportsStack</a>
+  <a class="btn-lb" href="leaderboard.html">Leaderboard</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="kicker">Premier League 2026/27 · One shot</div>
+  <h1>Call your <em>shot</em></h1>
+  <p class="lede">Predict the whole thing before a ball is kicked. The full table, the three cups, and every individual award. Once you lock it in, that's it — no edits, no hedging. Come back in May and find out how well you really know it.</p>
+  <div class="deadline" id="deadline">Locks at kick-off, Saturday 22 August</div>
+
+  <!-- signed out -->
+  <div class="card gate" id="gate" style="display:none">
+    <h2>Sign in to call it</h2>
+    <p>Your predictions are saved to your SportsStack account, so they're still here in May.</p>
+    <button class="btn" onclick="goSignIn()">Sign in or create an account</button>
+  </div>
+
+  <!-- the form -->
+  <div id="form-area" style="display:none">
+
+    <div class="card">
+      <h2>The table</h2>
+      <div class="sub">All twenty. Three points for each one you nail, one point if you're a single place out.</div>
+      <div class="legend">
+        <span class="leg"><i style="background:var(--pos-champ)"></i>Champions</span>
+        <span class="leg"><i style="background:var(--pos-ucl)"></i>Champions League</span>
+        <span class="leg"><i style="background:var(--pos-uel)"></i>Europa</span>
+        <span class="leg"><i style="background:var(--pos-uecl)"></i>Conference</span>
+        <span class="leg"><i style="background:var(--pos-rel)"></i>Relegation</span>
+      </div>
+      <div id="table-rows"></div>
+      <div class="dupe-warn" id="dupe-warn">Some teams are picked more than once. Every club needs its own position.</div>
+    </div>
+
+    <div class="card">
+      <h2>The cups</h2>
+      <div class="sub">Three points each.</div>
+      <div class="field">
+        <label for="fa-cup">FA Cup winner</label>
+        <select id="fa-cup"></select>
+        <div class="hint">Any Premier League club. If you fancy a lower-league shock, pick the club you think goes closest.</div>
+      </div>
+      <div class="field">
+        <label for="carabao">Carabao Cup winner</label>
+        <select id="carabao"></select>
+      </div>
+      <div class="field">
+        <label for="ucl">Champions League winner</label>
+        <input id="ucl" type="text" placeholder="Any club in Europe" maxlength="40" autocomplete="off"/>
+        <div class="hint">Not just English clubs — anyone in the competition.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>The awards</h2>
+      <div class="sub">Three points each. Player names, spelled how you like — we'll be generous.</div>
+      <div class="two">
+        <div class="field">
+          <label for="boot">Golden Boot</label>
+          <input id="boot" type="text" placeholder="Most league goals" maxlength="40" autocomplete="off"/>
+        </div>
+        <div class="field">
+          <label for="playmaker">Playmaker</label>
+          <input id="playmaker" type="text" placeholder="Most league assists" maxlength="40" autocomplete="off"/>
+        </div>
+      </div>
+      <div class="two">
+        <div class="field">
+          <label for="glove">Golden Glove</label>
+          <input id="glove" type="text" placeholder="Most clean sheets" maxlength="40" autocomplete="off"/>
+        </div>
+        <div class="field">
+          <label for="poty">Player of the Season</label>
+          <input id="poty" type="text" placeholder="PL Player of the Season" maxlength="40" autocomplete="off"/>
+        </div>
+      </div>
+      <div class="field">
+        <label for="young">Young Player of the Season</label>
+        <input id="young" type="text" placeholder="PL Young Player of the Season" maxlength="40" autocomplete="off"/>
+      </div>
+    </div>
+
+    <div class="card">
+      <button class="btn btn-wide" id="save-btn" onclick="savePredictions()">Save my predictions</button>
+      <div class="lock-note" id="save-note">You can keep editing right up to kick-off. After that it's sealed until May.</div>
+    </div>
+
+  </div>
+
+  <!-- locked / results view -->
+  <div id="locked-area" style="display:none"></div>
+
+  <!-- private leagues -->
+  <div class="card" id="leagues-card" style="display:none">
+    <h2>Your leagues</h2>
+    <div class="sub">Start one for your mates, or join theirs with a code. Everyone's picks stay hidden until kick-off.</div>
+    <div id="league-list"></div>
+    <div class="two" style="margin-top:16px">
+      <div class="field">
+        <label for="new-league">Start a league</label>
+        <input id="new-league" type="text" placeholder="Name it" maxlength="34" autocomplete="off"/>
+        <button class="btn btn-ghost btn-wide" style="margin-top:8px" onclick="createLeague()">Create</button>
+      </div>
+      <div class="field">
+        <label for="join-code">Join with a code</label>
+        <input id="join-code" type="text" placeholder="e.g. PUB4KX" maxlength="10" autocomplete="off" style="text-transform:uppercase"/>
+        <button class="btn btn-ghost btn-wide" style="margin-top:8px" onclick="joinLeague()">Join</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><a href="index.html">← Back to SportsStack</a></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   Call Your Shot — Premier League 2026/27
+   Self-contained Supabase client (sportstack-member.js isn't reliable here).
+   ============================================================ */
+const SS_URL = 'https://syntfyfsyjiuowclarpf.supabase.co';
+const SS_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+const sb = (window.supabase && window.supabase.createClient)
+  ? window.supabase.createClient(SS_URL, SS_KEY) : null;
+
+const SEASON = '2026-27';
+/* First kick-off of the 2026/27 season: Sat 22 Aug 2026. Matches cys_deadline() in SQL. */
+const DEADLINE = new Date('2026-08-22T11:30:00Z');
+
+const TEAMS = ["Arsenal","Aston Villa","Bournemouth","Brentford","Brighton","Chelsea",
+  "Coventry City","Crystal Palace","Everton","Fulham","Hull City","Ipswich Town","Leeds",
+  "Liverpool","Manchester City","Manchester United","Newcastle","Nottingham Forest",
+  "Sunderland","Tottenham"];
+
+/* Position colour bands — 1 champions, 2-5 UCL, 6 Europa, 7 Conference, 18-20 down */
+function bandFor(pos){
+  if(pos === 1) return 'champ';
+  if(pos <= 5)  return 'ucl';
+  if(pos === 6) return 'uel';
+  if(pos === 7) return 'uecl';
+  if(pos >= 18) return 'rel';
+  return '';
+}
+
+let currentUser = null, accessToken = null, existing = null, myLeagues = [];
+
+function $(id){ return document.getElementById(id); }
+function isLocked(){ return new Date() >= DEADLINE; }
+function goSignIn(){ location.href = 'auth.html?next=call-your-shot.html'; }
+
+function toast(msg, err){
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (err ? ' err' : '');
+  setTimeout(()=>{ t.className = 'toast' + (err ? ' err' : ''); }, 3200);
+}
+
+function localSession(){
+  try{
+    const keys = Object.keys(localStorage).filter(k =>
+      k.indexOf('sb-')===0 || (k.indexOf('supabase')>-1 && k.indexOf('auth')>-1));
+    for(const k of keys){
+      const s = JSON.parse(localStorage.getItem(k));
+      const u = s && (s.user || (s.session && s.session.user));
+      const t = s && (s.access_token || (s.session && s.session.access_token));
+      if(u) return { user:u, token:t };
+    }
+  }catch(e){}
+  return null;
+}
+
+function headers(json){
+  const h = { apikey: SS_KEY, Authorization: 'Bearer ' + (accessToken || SS_KEY) };
+  if(json) h['Content-Type'] = 'application/json';
+  return h;
+}
+
+/* ---------- build the form ---------- */
+function teamOptions(selected){
+  let out = '<option value="">—</option>';
+  TEAMS.forEach(t=>{
+    out += '<option value="'+t+'"'+(t===selected?' selected':'')+'>'+t+'</option>';
+  });
+  return out;
+}
+
+function buildTable(pred){
+  const host = $('table-rows');
+  let html = '';
+  for(let i=1;i<=20;i++){
+    const band = bandFor(i);
+    html += '<div class="row">'
+         +  '<div class="pos '+band+'">'+i+'</div>'
+         +  '<select id="tp-'+i+'" onchange="checkDupes()">'+teamOptions(pred?pred[i-1]:'')+'</select>'
+         +  '</div>';
+  }
+  host.innerHTML = html;
+  $('fa-cup').innerHTML   = teamOptions(existing ? existing.fa_cup : '');
+  $('carabao').innerHTML  = teamOptions(existing ? existing.carabao_cup : '');
+}
+
+function readTable(){
+  const out = [];
+  for(let i=1;i<=20;i++) out.push($('tp-'+i).value);
+  return out;
+}
+
+function checkDupes(){
+  const vals = readTable();
+  const counts = {};
+  vals.forEach(v=>{ if(v) counts[v] = (counts[v]||0)+1; });
+  let anyDupe = false;
+  for(let i=1;i<=20;i++){
+    const el = $('tp-'+i);
+    const bad = el.value && counts[el.value] > 1;
+    el.classList.toggle('dupe', !!bad);
+    if(bad) anyDupe = true;
+  }
+  $('dupe-warn').classList.toggle('on', anyDupe);
+  return !anyDupe;
+}
+
+/* ---------- save ---------- */
+async function savePredictions(){
+  if(!currentUser){ goSignIn(); return; }
+  if(isLocked()){ toast('Predictions closed at kick-off.', true); return; }
+
+  const table = readTable();
+  if(table.some(t=>!t)){ toast('Every position needs a team.', true); return; }
+  if(!checkDupes()){ toast('Each club can only appear once.', true); return; }
+
+  const fields = {
+    fa_cup:       $('fa-cup').value,
+    carabao_cup:  $('carabao').value,
+    champions_lg: $('ucl').value.trim(),
+    golden_boot:  $('boot').value.trim(),
+    playmaker:    $('playmaker').value.trim(),
+    golden_glove: $('glove').value.trim(),
+    player_year:  $('poty').value.trim(),
+    young_year:   $('young').value.trim()
+  };
+  for(const k in fields){
+    if(!fields[k]){ toast('Fill in every pick before saving.', true); return; }
+  }
+
+  const btn = $('save-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const row = Object.assign({
+    user_id: currentUser.id,
+    season: SEASON,
+    email: currentUser.email || null,
+    display_name: (currentUser.user_metadata &&
+      (currentUser.user_metadata.full_name || currentUser.user_metadata.display_name)) || null,
+    table_pred: table
+  }, fields);
+
+  try{
+    const res = await fetch(SS_URL + '/rest/v1/cys_predictions?on_conflict=user_id', {
+      method: 'POST',
+      headers: Object.assign(headers(true), { Prefer: 'resolution=merge-duplicates,return=representation' }),
+      body: JSON.stringify(row)
+    });
+    if(!res.ok){
+      const t = await res.text();
+      toast('Could not save. ' + (t.slice(0,80) || res.status), true);
+    } else {
+      existing = row;
+      toast('Locked in. You can still edit until kick-off.');
+    }
+  }catch(e){
+    toast('Network error while saving.', true);
+  }
+  btn.disabled = false; btn.textContent = 'Save my predictions';
+}
+
+/* ---------- leagues ---------- */
+function makeCode(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = '';
+  for(let i=0;i<6;i++) s += chars[Math.floor(Math.random()*chars.length)];
+  return s;
+}
+
+async function createLeague(){
+  if(!currentUser){ goSignIn(); return; }
+  const name = $('new-league').value.trim();
+  if(!name){ toast('Give the league a name.', true); return; }
+  const code = makeCode();
+  try{
+    const res = await fetch(SS_URL + '/rest/v1/cys_leagues', {
+      method:'POST',
+      headers: Object.assign(headers(true), { Prefer:'return=representation' }),
+      body: JSON.stringify({ code:code, name:name, owner_id:currentUser.id, season:SEASON })
+    });
+    if(!res.ok){ toast('Could not create the league.', true); return; }
+    const created = (await res.json())[0];
+    await fetch(SS_URL + '/rest/v1/cys_league_members', {
+      method:'POST', headers: headers(true),
+      body: JSON.stringify({ league_id: created.id, user_id: currentUser.id })
+    });
+    $('new-league').value = '';
+    toast('League created. Share the code ' + code);
+    loadLeagues();
+  }catch(e){ toast('Network error.', true); }
+}
+
+async function joinLeague(){
+  if(!currentUser){ goSignIn(); return; }
+  const code = $('join-code').value.trim().toUpperCase();
+  if(!code){ toast('Enter a league code.', true); return; }
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/cys_leagues?code=eq.' + encodeURIComponent(code) + '&select=id,name', { headers: headers(false) });
+    const rows = r.ok ? await r.json() : [];
+    if(!rows.length){ toast('No league with that code.', true); return; }
+    const res = await fetch(SS_URL + '/rest/v1/cys_league_members', {
+      method:'POST',
+      headers: Object.assign(headers(true), { Prefer:'resolution=merge-duplicates' }),
+      body: JSON.stringify({ league_id: rows[0].id, user_id: currentUser.id })
+    });
+    if(!res.ok){ toast('Could not join.', true); return; }
+    $('join-code').value = '';
+    toast('Joined ' + rows[0].name);
+    loadLeagues();
+  }catch(e){ toast('Network error.', true); }
+}
+
+async function loadLeagues(){
+  if(!currentUser) return;
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/cys_league_members?user_id=eq.' + currentUser.id +
+      '&select=league_id,cys_leagues(id,name,code)', { headers: headers(false) });
+    myLeagues = r.ok ? await r.json() : [];
+  }catch(e){ myLeagues = []; }
+
+  const host = $('league-list');
+  if(!myLeagues.length){
+    host.innerHTML = '<div class="lock-note">You are not in a league yet. Start one below and send the code to your mates.</div>';
+    return;
+  }
+  let html = '';
+  myLeagues.forEach(m=>{
+    const lg = m.cys_leagues;
+    if(!lg) return;
+    html += '<div class="league-row">'
+         +  '<div><div class="league-name">'+lg.name+'</div>'
+         +  '<div class="league-meta">Share this code to invite people</div></div>'
+         +  '<button class="code-chip" onclick="copyCode(\''+lg.code+'\')">'+lg.code+'</button>'
+         +  '</div>';
+  });
+  host.innerHTML = html;
+}
+
+function copyCode(code){
+  if(navigator.clipboard) navigator.clipboard.writeText(code).then(()=>toast('Code copied: '+code));
+  else toast('Code: '+code);
+}
+
+/* ---------- scoring (runs once results are published) ---------- */
+function scorePredictions(pred, actual){
+  let pts = 0;
+  const rows = [];
+  // table
+  let tablePts = 0, exact = 0, near = 0;
+  for(let i=0;i<20;i++){
+    const team = pred.table_pred[i];
+    const realIdx = actual.table_actual.indexOf(team);
+    if(realIdx === i){ tablePts += 3; exact++; }
+    else if(Math.abs(realIdx - i) === 1){ tablePts += 1; near++; }
+  }
+  pts += tablePts;
+  rows.push({ label:'League table — '+exact+' exact, '+near+' one place out', pts:tablePts });
+
+  const singles = [
+    ['FA Cup','fa_cup'], ['Carabao Cup','carabao_cup'], ['Champions League','champions_lg'],
+    ['Golden Boot','golden_boot'], ['Playmaker','playmaker'], ['Golden Glove','golden_glove'],
+    ['Player of the Season','player_year'], ['Young Player','young_year']
+  ];
+  singles.forEach(([label,key])=>{
+    const a = (actual[key]||'').trim().toLowerCase();
+    const p = (pred[key]||'').trim().toLowerCase();
+    const hit = a && p && a === p;
+    if(hit) pts += 3;
+    rows.push({ label: label + (hit ? ' — ' + pred[key] : ' — ' + (pred[key]||'—')), pts: hit?3:0, miss: !hit });
+  });
+  return { total: pts, rows: rows };
+}
+
+async function showResults(){
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/cys_results?season=eq.' + SEASON + '&select=*', { headers: headers(false) });
+    const rows = r.ok ? await r.json() : [];
+    const actual = rows[0];
+    if(!actual || !actual.published || !actual.table_actual) return false;
+    const s = scorePredictions(existing, actual);
+    let html = '<div class="card result-hero">'
+      + '<div class="kicker" style="justify-content:center">Season 2026/27 · Final</div>'
+      + '<div class="result-score">'+s.total+'</div>'
+      + '<div class="result-of">out of 84</div>'
+      + '<div class="breakdown">';
+    s.rows.forEach(row=>{
+      html += '<div class="bd-row'+(row.miss?' miss':'')+'"><span>'+row.label+'</span><span class="pts">'+row.pts+'</span></div>';
+    });
+    html += '</div></div>';
+    $('locked-area').innerHTML = html;
+    $('locked-area').style.display = '';
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ---------- locked (season under way, no results yet) ---------- */
+function showLockedView(){
+  if(!existing) {
+    $('locked-area').innerHTML = '<div class="card gate"><h2>Too late for this one</h2>'
+      + '<p>Predictions closed at kick-off on 22 August. The next Call Your Shot opens before the 2027/28 season.</p></div>';
+    $('locked-area').style.display = '';
+    return;
+  }
+  let html = '<div class="card"><h2>Your picks are sealed</h2>'
+    + '<div class="sub">Locked at kick-off. Come back at the end of the season to see how you did.</div>';
+  html += '<div style="margin-bottom:16px">';
+  for(let i=0;i<20;i++){
+    const band = bandFor(i+1);
+    html += '<div class="row"><div class="pos '+band+'">'+(i+1)+'</div>'
+         +  '<div style="flex:1;padding:10px 12px;font-size:14px">'+existing.table_pred[i]+'</div></div>';
+  }
+  html += '</div>';
+  const rows = [['FA Cup',existing.fa_cup],['Carabao Cup',existing.carabao_cup],
+    ['Champions League',existing.champions_lg],['Golden Boot',existing.golden_boot],
+    ['Playmaker',existing.playmaker],['Golden Glove',existing.golden_glove],
+    ['Player of the Season',existing.player_year],['Young Player',existing.young_year]];
+  rows.forEach(([l,v])=>{
+    html += '<div class="bd-row"><span style="color:var(--mute)">'+l+'</span><span>'+v+'</span></div>';
+  });
+  html += '</div>';
+  $('locked-area').innerHTML = html;
+  $('locked-area').style.display = '';
+}
+
+/* ---------- boot ---------- */
+async function boot(){
+  const s = localSession();
+  currentUser = s ? s.user : null;
+  accessToken = s ? s.token : null;
+
+  const dl = $('deadline');
+  if(isLocked()){
+    dl.textContent = 'Predictions closed — the season is under way';
+    dl.classList.add('closed');
+  }
+
+  if(!currentUser){
+    $('gate').style.display = '';
+    return;
+  }
+
+  // load any existing prediction
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/cys_predictions?user_id=eq.' + currentUser.id +
+      '&season=eq.' + SEASON + '&select=*', { headers: headers(false) });
+    const rows = r.ok ? await r.json() : [];
+    existing = rows.length ? rows[0] : null;
+  }catch(e){ existing = null; }
+
+  $('leagues-card').style.display = '';
+  loadLeagues();
+
+  if(isLocked()){
+    const hadResults = await showResults();
+    if(!hadResults) showLockedView();
+    return;
+  }
+
+  // open for editing
+  $('form-area').style.display = '';
+  buildTable(existing ? existing.table_pred : null);
+  if(existing){
+    $('ucl').value        = existing.champions_lg || '';
+    $('boot').value       = existing.golden_boot || '';
+    $('playmaker').value  = existing.playmaker || '';
+    $('glove').value      = existing.golden_glove || '';
+    $('poty').value       = existing.player_year || '';
+    $('young').value      = existing.young_year || '';
+    $('save-note').textContent = 'Saved. You can keep changing it right up to kick-off.';
+  }
+}
+
+boot();
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>
