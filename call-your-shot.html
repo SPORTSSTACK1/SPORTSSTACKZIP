@@ -72,8 +72,7 @@ h1 em{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:90
 .row select.dupe{border-color:var(--red);background-color:rgba(248,113,113,.08)}
 .row select:disabled{opacity:.75;cursor:default}
 
-.dupe-warn{display:none;margin-top:10px;padding:9px 13px;border-radius:6px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:var(--red);font-size:12.5px;font-weight:500}
-.dupe-warn.on{display:block}
+.remaining{margin-top:12px;font:600 11px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute-2)}
 
 /* pick fields */
 .field{margin-bottom:14px}
@@ -95,6 +94,10 @@ h1 em{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:90
 .lock-note{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13px;color:var(--mute);margin-top:12px;line-height:1.55}
 
 /* leagues */
+.newcode-inner{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.28);border-left:2px solid var(--gold);border-radius:8px;padding:16px;margin-bottom:16px;text-align:center}
+.newcode-label{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13.5px;color:var(--ink-2);margin-bottom:10px}
+.newcode-chip{font:800 22px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;background:transparent;border:none;color:var(--gold);cursor:pointer;padding:4px 0}
+.newcode-hint{font:600 9.5px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2);margin-top:6px}
 .league-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
 .league-row:last-child{border-bottom:none}
 .league-name{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16px}
@@ -129,7 +132,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
 
 <nav>
   <a class="brand" href="index.html"><img src="LOGO.jpeg" alt="SportsStack"/> SportsStack</a>
-  <a class="btn-lb" href="leaderboard.html">Leaderboard</a>
+  <a class="btn-lb" href="#leagues-card">My leagues</a>
 </nav>
 
 <div class="wrap">
@@ -160,7 +163,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
         <span class="leg"><i style="background:var(--pos-rel)"></i>Relegation</span>
       </div>
       <div id="table-rows"></div>
-      <div class="dupe-warn" id="dupe-warn">Some teams are picked more than once. Every club needs its own position.</div>
+      <div class="remaining" id="remaining">20 still to place</div>
     </div>
 
     <div class="card">
@@ -222,9 +225,10 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
   <div id="locked-area" style="display:none"></div>
 
   <!-- private leagues -->
-  <div class="card" id="leagues-card" style="display:none">
+  <div class="card" id="leagues-card" style="display:none;scroll-margin-top:70px">
     <h2>Your leagues</h2>
     <div class="sub">Start one for your mates, or join theirs with a code. Everyone's picks stay hidden until kick-off.</div>
+    <div id="new-code" style="display:none"></div>
     <div id="league-list"></div>
     <div class="two" style="margin-top:16px">
       <div class="field">
@@ -259,10 +263,13 @@ const SEASON = '2026-27';
 /* First kick-off of the 2026/27 season: Sat 22 Aug 2026. Matches cys_deadline() in SQL. */
 const DEADLINE = new Date('2026-08-22T11:30:00Z');
 
-const TEAMS = ["Arsenal","Aston Villa","Bournemouth","Brentford","Brighton","Chelsea",
-  "Coventry City","Crystal Palace","Everton","Fulham","Hull City","Ipswich Town","Leeds",
-  "Liverpool","Manchester City","Manchester United","Newcastle","Nottingham Forest",
-  "Sunderland","Tottenham"];
+const TEAMS = ["Arsenal","Aston Villa","AFC Bournemouth","Brentford","Brighton & Hove Albion",
+  "Chelsea","Coventry City","Crystal Palace","Everton","Fulham","Hull City","Ipswich Town",
+  "Leeds United","Liverpool","Manchester City","Manchester United","Newcastle United",
+  "Nottingham Forest","Sunderland","Tottenham Hotspur"];
+
+/* Cup winners can come from outside the top flight */
+const NON_PL = 'Non-Premier League winner';
 
 /* Position colour bands — 1 champions, 2-5 UCL, 6 Europa, 7 Conference, 18-20 down */
 function bandFor(pos){
@@ -308,12 +315,38 @@ function headers(json){
 }
 
 /* ---------- build the form ---------- */
-function teamOptions(selected){
+function teamOptions(selected, extra){
   let out = '<option value="">—</option>';
   TEAMS.forEach(t=>{
     out += '<option value="'+t+'"'+(t===selected?' selected':'')+'>'+t+'</option>';
   });
+  if(extra) out += '<option value="'+extra+'"'+(extra===selected?' selected':'')+'>'+extra+'</option>';
   return out;
+}
+
+/* Rebuild every table dropdown so a club already placed elsewhere
+   disappears from the list. Clearing a row puts it back in the pool. */
+function refreshTableOptions(){
+  const chosen = new Set();
+  for(let i=1;i<=20;i++){
+    const v = document.getElementById('tp-'+i).value;
+    if(v) chosen.add(v);
+  }
+  for(let i=1;i<=20;i++){
+    const el = document.getElementById('tp-'+i);
+    const mine = el.value;
+    let html = '<option value="">—</option>';
+    TEAMS.forEach(t=>{
+      if(!chosen.has(t) || t === mine){
+        html += '<option value="'+t+'"'+(t===mine?' selected':'')+'>'+t+'</option>';
+      }
+    });
+    el.innerHTML = html;
+    el.value = mine;
+  }
+  const left = 20 - chosen.size;
+  const rem = document.getElementById('remaining');
+  if(rem) rem.textContent = left === 0 ? 'All twenty placed' : left + ' still to place';
 }
 
 function buildTable(pred){
@@ -323,12 +356,13 @@ function buildTable(pred){
     const band = bandFor(i);
     html += '<div class="row">'
          +  '<div class="pos '+band+'">'+i+'</div>'
-         +  '<select id="tp-'+i+'" onchange="checkDupes()">'+teamOptions(pred?pred[i-1]:'')+'</select>'
+         +  '<select id="tp-'+i+'" onchange="refreshTableOptions()">'+teamOptions(pred?pred[i-1]:'')+'</select>'
          +  '</div>';
   }
   host.innerHTML = html;
-  $('fa-cup').innerHTML   = teamOptions(existing ? existing.fa_cup : '');
-  $('carabao').innerHTML  = teamOptions(existing ? existing.carabao_cup : '');
+  refreshTableOptions();
+  $('fa-cup').innerHTML   = teamOptions(existing ? existing.fa_cup : '', NON_PL);
+  $('carabao').innerHTML  = teamOptions(existing ? existing.carabao_cup : '', NON_PL);
 }
 
 function readTable(){
@@ -338,18 +372,10 @@ function readTable(){
 }
 
 function checkDupes(){
-  const vals = readTable();
-  const counts = {};
-  vals.forEach(v=>{ if(v) counts[v] = (counts[v]||0)+1; });
-  let anyDupe = false;
-  for(let i=1;i<=20;i++){
-    const el = $('tp-'+i);
-    const bad = el.value && counts[el.value] > 1;
-    el.classList.toggle('dupe', !!bad);
-    if(bad) anyDupe = true;
-  }
-  $('dupe-warn').classList.toggle('on', anyDupe);
-  return !anyDupe;
+  // Duplicates are now impossible (picked clubs vanish from the other menus),
+  // but keep the guard so a stale form can never save a broken table.
+  const vals = readTable().filter(Boolean);
+  return new Set(vals).size === vals.length;
 }
 
 /* ---------- save ---------- */
@@ -425,16 +451,38 @@ async function createLeague(){
       headers: Object.assign(headers(true), { Prefer:'return=representation' }),
       body: JSON.stringify({ code:code, name:name, owner_id:currentUser.id, season:SEASON })
     });
-    if(!res.ok){ toast('Could not create the league.', true); return; }
-    const created = (await res.json())[0];
-    await fetch(SS_URL + '/rest/v1/cys_league_members', {
-      method:'POST', headers: headers(true),
+    if(!res.ok){
+      const t = await res.text();
+      toast('Could not create the league. ' + t.slice(0,70), true);
+      return;
+    }
+    const body = await res.json();
+    const created = Array.isArray(body) ? body[0] : body;
+    if(!created || !created.id){ toast('League saved but no ID came back.', true); return; }
+
+    const mres = await fetch(SS_URL + '/rest/v1/cys_league_members', {
+      method:'POST',
+      headers: Object.assign(headers(true), { Prefer:'resolution=merge-duplicates' }),
       body: JSON.stringify({ league_id: created.id, user_id: currentUser.id })
     });
+    if(!mres.ok){ toast('League made, but adding you to it failed.', true); }
+
     $('new-league').value = '';
-    toast('League created. Share the code ' + code);
+    // Show the code straight away rather than relying on a re-fetch.
+    showNewCode(created.name || name, created.code || code);
     loadLeagues();
-  }catch(e){ toast('Network error.', true); }
+  }catch(e){ toast('Network error creating the league.', true); }
+}
+
+/* Put the fresh code on screen immediately — a toast is too easy to miss. */
+function showNewCode(name, code){
+  const host = $('new-code');
+  if(!host) return;
+  host.innerHTML = '<div class="newcode-inner">'
+    + '<div class="newcode-label">' + name + ' is live. Send this code to your mates.</div>'
+    + '<button class="newcode-chip" onclick="copyCode(\'' + code + '\')">' + code + '</button>'
+    + '<div class="newcode-hint">Tap to copy</div></div>';
+  host.style.display = '';
 }
 
 async function joinLeague(){
@@ -511,7 +559,11 @@ function scorePredictions(pred, actual){
   singles.forEach(([label,key])=>{
     const a = (actual[key]||'').trim().toLowerCase();
     const p = (pred[key]||'').trim().toLowerCase();
-    const hit = a && p && a === p;
+    let hit = a && p && a === p;
+    // "Non-Premier League winner" is right whenever the real winner isn't a PL club
+    if(!hit && p === NON_PL.toLowerCase() && (key === 'fa_cup' || key === 'carabao_cup') && a){
+      hit = !TEAMS.some(t => t.toLowerCase() === a);
+    }
     if(hit) pts += 3;
     rows.push({ label: label + (hit ? ' — ' + pred[key] : ' — ' + (pred[key]||'—')), pts: hit?3:0, miss: !hit });
   });
