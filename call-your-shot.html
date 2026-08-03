@@ -111,6 +111,9 @@ h1 em{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:90
 .ld-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18px}
 .ld-close{background:transparent;border:1px solid var(--line-2);color:var(--mute);border-radius:5px;padding:7px 12px;font:600 10px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
 .ld-close:hover{color:var(--ink);border-color:var(--mute)}
+.peek{color:var(--gold);cursor:pointer;border-bottom:1px dotted var(--gold-deep)}
+.peek-box{margin-top:16px;padding:16px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface2)}
+.peek-head{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16px;margin-bottom:10px;color:var(--gold)}
 .tick{color:var(--green);font-weight:600}
 .nope{color:var(--mute-2)}
 .mini-table{width:100%;border-collapse:collapse;margin-top:10px}
@@ -225,8 +228,10 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
     </div>
 
     <div class="card">
-      <button class="btn btn-wide" id="save-btn" onclick="savePredictions()">Save my predictions</button>
-      <div class="lock-note" id="save-note">You can keep editing right up to kick-off. After that it's sealed until May.</div>
+      <button class="btn btn-ghost btn-wide" id="save-btn" onclick="savePredictions()">Save progress</button>
+      <div class="lock-note" id="save-note">Save as often as you like. Nothing is final until you lock in.</div>
+      <button class="btn btn-wide" id="lock-btn" style="margin-top:14px" onclick="lockIn()" disabled>Lock it in</button>
+      <div class="lock-note" id="lock-hint">Fill in all twenty positions and all eight picks to lock in.</div>
     </div>
 
   </div>
@@ -338,6 +343,7 @@ function teamOptions(selected, extra){
 /* Rebuild every table dropdown so a club already placed elsewhere
    disappears from the list. Clearing a row puts it back in the pool. */
 function refreshTableOptions(){
+  setTimeout(updateLockButton, 0);
   const chosen = new Set();
   for(let i=1;i<=20;i++){
     const v = document.getElementById('tp-'+i).value;
@@ -390,15 +396,8 @@ function checkDupes(){
 }
 
 /* ---------- save ---------- */
-async function savePredictions(){
-  if(!currentUser){ goSignIn(); return; }
-  if(isLocked()){ toast('Predictions closed at kick-off.', true); return; }
-
-  const table = readTable();
-  if(table.some(t=>!t)){ toast('Every position needs a team.', true); return; }
-  if(!checkDupes()){ toast('Each club can only appear once.', true); return; }
-
-  const fields = {
+function collectFields(){
+  return {
     fa_cup:       $('fa-cup').value,
     carabao_cup:  $('carabao').value,
     champions_lg: $('ucl').value.trim(),
@@ -408,13 +407,28 @@ async function savePredictions(){
     player_year:  $('poty').value.trim(),
     young_year:   $('young').value.trim()
   };
-  for(const k in fields){
-    if(!fields[k]){ toast('Fill in every pick before saving.', true); return; }
-  }
+}
 
-  const btn = $('save-btn');
-  btn.disabled = true; btn.textContent = 'Saving…';
+function isComplete(){
+  const t = readTable();
+  if(t.some(x=>!x)) return false;
+  const f = collectFields();
+  for(const k in f){ if(!f[k]) return false; }
+  return true;
+}
 
+function updateLockButton(){
+  const btn = $('lock-btn');
+  if(!btn) return;
+  const ok = isComplete();
+  btn.disabled = !ok;
+  $('lock-hint').textContent = ok
+    ? 'Everything is filled in. Locking is final — but it lets you see everyone else.'
+    : 'Fill in all twenty positions and all eight picks to lock in.';
+}
+
+async function writeRow(rowExtra, quiet){
+  const table = readTable();
   const row = Object.assign({
     user_id: currentUser.id,
     season: SEASON,
@@ -422,25 +436,54 @@ async function savePredictions(){
     display_name: (currentUser.user_metadata &&
       (currentUser.user_metadata.full_name || currentUser.user_metadata.display_name)) || null,
     table_pred: table
-  }, fields);
+  }, collectFields(), rowExtra || {});
 
-  try{
-    const res = await fetch(SS_URL + '/rest/v1/cys_predictions?on_conflict=user_id', {
-      method: 'POST',
-      headers: Object.assign(headers(true), { Prefer: 'resolution=merge-duplicates,return=representation' }),
-      body: JSON.stringify(row)
-    });
-    if(!res.ok){
-      const t = await res.text();
-      toast('Could not save. ' + (t.slice(0,80) || res.status), true);
-    } else {
-      existing = row;
-      toast('Locked in. You can still edit until kick-off.');
-    }
-  }catch(e){
-    toast('Network error while saving.', true);
+  const res = await fetch(SS_URL + '/rest/v1/cys_predictions?on_conflict=user_id', {
+    method: 'POST',
+    headers: Object.assign(headers(true), { Prefer: 'resolution=merge-duplicates,return=representation' }),
+    body: JSON.stringify(row)
+  });
+  if(!res.ok){
+    const t = await res.text();
+    if(!quiet) toast('Could not save. ' + (t.slice(0,80) || res.status), true);
+    return null;
   }
-  btn.disabled = false; btn.textContent = 'Save my predictions';
+  existing = row;
+  return row;
+}
+
+/* Save progress — partial is fine, come back later */
+async function savePredictions(){
+  if(!currentUser){ goSignIn(); return; }
+  if(isLocked()){ toast('Predictions closed at kick-off.', true); return; }
+  if(existing && existing.locked){ toast('You have already locked in.', true); return; }
+  if(!checkDupes()){ toast('Each club can only appear once.', true); return; }
+
+  const btn = $('save-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const ok = await writeRow({ locked:false });
+  if(ok) toast('Progress saved. Come back any time before kick-off.');
+  btn.disabled = false; btn.textContent = 'Save progress';
+  updateLockButton();
+}
+
+/* Lock in — final, and unlocks everyone else's predictions */
+async function lockIn(){
+  if(!currentUser){ goSignIn(); return; }
+  if(isLocked()){ toast('Predictions closed at kick-off.', true); return; }
+  if(!isComplete()){ toast('Fill everything in before locking.', true); return; }
+  if(!checkDupes()){ toast('Each club can only appear once.', true); return; }
+  if(!confirm('Lock your predictions in?\n\nYou will not be able to change them, but you will be able to see everyone else\'s.')) return;
+
+  const btn = $('lock-btn');
+  btn.disabled = true; btn.textContent = 'Locking…';
+  const ok = await writeRow({ locked:true });
+  btn.disabled = false; btn.textContent = 'Lock it in';
+  if(ok){
+    toast('Locked in. You can now see everyone else.');
+    boot();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
 }
 
 /* ---------- leagues ---------- */
@@ -599,6 +642,9 @@ async function openGlobal(){
 }
 
 function renderStandings(panel, title, rows, isGlobal){
+  const iAmLocked = !!(existing && existing.locked);
+  const canSee = iAmLocked || isLocked();
+
   let html = '<div class="ld-head"><div class="ld-title">'+title+'</div>'
            + '<button class="ld-close" onclick="closeLeague()">Close</button></div>';
 
@@ -606,29 +652,65 @@ function renderStandings(panel, title, rows, isGlobal){
     html += '<div class="lock-note">Nobody here yet.'
          +  (isGlobal ? ' Be the first to lock a prediction in.' : ' Share the code and get some people in.')
          +  '</div>';
-    panel.innerHTML = html;
+    panel.innerHTML = html; return;
+  }
+
+  html += '<div class="lock-note" style="margin-bottom:10px">'
+       +  (canSee
+            ? 'Tap anyone who has locked in to see their full predictions.'
+            : 'Lock your own predictions in and you will be able to open everyone else\'s.')
+       +  '</div>';
+
+  html += '<table class="mini-table"><thead><tr><th>#</th><th>Member</th><th style="text-align:right">Locked in</th></tr></thead><tbody>';
+  rows.forEach((r,i)=>{
+    const me = r.user_id === currentUser.id;
+    const openable = r.is_locked && (canSee || me);
+    const nameCell = openable
+      ? '<span class="peek" onclick="viewPrediction(\''+r.user_id+'\',\''+String(r.display_name).replace(/'/g,"\\'")+'\')">'+r.display_name+(me?' (you)':'')+'</span>'
+      : r.display_name + (me?' (you)':'');
+    html += '<tr'+(me?' class="you"':'')+'>'
+         +  '<td>'+(i+1)+'</td>'
+         +  '<td'+(me?' class="you"':'')+'>'+nameCell+'</td>'
+         +  '<td style="text-align:right">'+(r.is_locked ? '<span class="tick">Yes</span>' : '<span class="nope">Not yet</span>')+'</td>'
+         +  '</tr>';
+  });
+  html += '</tbody></table><div id="peek-panel"></div>';
+  panel.innerHTML = html;
+}
+
+/* Open somebody's full prediction */
+async function viewPrediction(uid, name){
+  const host = document.getElementById('peek-panel');
+  if(!host) return;
+  host.innerHTML = '<div class="lock-note">Loading '+name+'\'s picks…</div>';
+  let row = null;
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/cys_predictions?user_id=eq.' + uid +
+      '&season=eq.' + SEASON + '&select=*', { headers: headers(false) });
+    const rows = r.ok ? await r.json() : [];
+    row = rows.length ? rows[0] : null;
+  }catch(e){}
+
+  if(!row){
+    host.innerHTML = '<div class="lock-note">Could not open those predictions. '
+      + 'You can only see people who have locked in, once you have locked in yourself.</div>';
     return;
   }
 
-  const locked = isLocked();
-  html += '<div class="lock-note" style="margin-bottom:10px">'
-       +  (locked
-            ? 'Predictions are open to view now the season has started. Scores appear once the final results are in.'
-            : 'Picks stay hidden until kick-off, so nobody can copy. For now you can see who has locked theirs in.')
-       +  '</div>';
-
-  html += '<table class="mini-table"><thead><tr><th>#</th><th>Member</th><th style="text-align:right">'
-       +  (locked ? 'Status' : 'Locked in') + '</th></tr></thead><tbody>';
-  rows.forEach((r,i)=>{
-    const me = r.user_id === currentUser.id;
-    html += '<tr'+(me?' class="you"':'')+'>'
-         +  '<td>'+(i+1)+'</td>'
-         +  '<td'+(me?' class="you"':'')+'>'+r.display_name+(me?' (you)':'')+'</td>'
-         +  '<td style="text-align:right">'+(r.has_entry ? '<span class="tick">Yes</span>' : '<span class="nope">Not yet</span>')+'</td>'
-         +  '</tr>';
+  let html = '<div class="peek-box"><div class="peek-head">'+name+'\'s call</div>';
+  for(let i=0;i<20;i++){
+    const band = bandFor(i+1);
+    html += '<div class="row"><div class="pos '+band+'">'+(i+1)+'</div>'
+         +  '<div style="flex:1;padding:9px 12px;font-size:13.5px">'+(row.table_pred[i]||'—')+'</div></div>';
+  }
+  [['FA Cup',row.fa_cup],['Carabao Cup',row.carabao_cup],['Champions League',row.champions_lg],
+   ['Golden Boot',row.golden_boot],['Playmaker',row.playmaker],['Golden Glove',row.golden_glove],
+   ['Player of the Season',row.player_year],['Young Player',row.young_year]].forEach(([l,v])=>{
+    html += '<div class="bd-row"><span style="color:var(--mute)">'+l+'</span><span>'+(v||'—')+'</span></div>';
   });
-  html += '</tbody></table>';
-  panel.innerHTML = html;
+  html += '</div>';
+  host.innerHTML = html;
+  host.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function closeLeague(){
@@ -707,7 +789,7 @@ function showLockedView(){
     return;
   }
   let html = '<div class="card"><h2>Your picks are sealed</h2>'
-    + '<div class="sub">Locked at kick-off. Come back at the end of the season to see how you did.</div>';
+    + '<div class="sub">Sealed. Come back at the end of the season to see how you did — and open anyone else\'s from your leagues below.</div>';
   html += '<div style="margin-bottom:16px">';
   for(let i=0;i<20;i++){
     const band = bandFor(i+1);
@@ -761,6 +843,12 @@ async function boot(){
     return;
   }
 
+  // Already locked in? Show the sealed view even though the deadline hasn't passed.
+  if(existing && existing.locked){
+    showLockedView();
+    return;
+  }
+
   // open for editing
   $('form-area').style.display = '';
   buildTable(existing ? existing.table_pred : null);
@@ -771,8 +859,9 @@ async function boot(){
     $('glove').value      = existing.golden_glove || '';
     $('poty').value       = existing.player_year || '';
     $('young').value      = existing.young_year || '';
-    $('save-note').textContent = 'Saved. You can keep changing it right up to kick-off.';
+    $('save-note').textContent = 'Saved. Keep editing until you lock in.';
   }
+  updateLockButton();
 }
 
 boot();
