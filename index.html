@@ -199,33 +199,34 @@ html,body{font-family:'Sora',sans-serif}
     <div id="ss-member-widget"></div>
   </div>
 </nav>
-<!-- WC Final giveaway banner -->
-<a href="wc-final-giveaway.html" id="gv-banner" style="display:block;text-decoration:none;background:linear-gradient(100deg,#151C2B 0%,#243050 55%,#3A2E08 100%);border-bottom:1px solid #8A6E18;position:relative;overflow:hidden">
+<!-- Call Your Shot — Premier League 2026/27 -->
+<a href="call-your-shot.html" id="cys-banner" style="display:block;text-decoration:none;background:linear-gradient(100deg,#0A0A0C 0%,#1A2033 55%,#3A2E08 100%);border-bottom:1px solid #8A6E18">
   <div style="max-width:1060px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-    <div style="flex:1;min-width:220px">
-      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:#F5C842;margin-bottom:6px">Giveaway · Closes at kickoff</div>
-      <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(19px,3.4vw,27px);letter-spacing:-.02em;color:#F1EBD9;line-height:1.1">Predict the World Cup final, win a <span style="color:#F5C842">£50 Nike voucher</span></div>
-      <div style="font-size:12.5px;color:#9FB0CC;margin-top:5px">One entry per member. Free to enter.</div>
+    <div style="flex:1;min-width:240px">
+      <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#C29B28;margin-bottom:6px">Premier League 2026/27 · New</div>
+      <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(21px,3.4vw,27px);color:#F1EBD9;letter-spacing:-.02em;line-height:1.1">Call your <span style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;color:#f5c842">shot</span></div>
+      <div style="font-size:13px;color:#8FA0BD;margin-top:5px;line-height:1.5">Predict the whole table, the cups and every award. Lock it in before kick-off, then see everyone else's.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:16px">
-      <div style="text-align:right">
-        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#7C8398;margin-bottom:3px">Closes in</div>
-        <div id="gv-cd" style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:17px;color:#F5C842;letter-spacing:-.01em">—</div>
-      </div>
-      <span style="background:#F5C842;color:#151C2B;font-family:'Sora',sans-serif;font-weight:800;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:13px 24px;border-radius:6px;white-space:nowrap">Enter now</span>
+    <div style="text-align:right">
+      <div id="cys-cd" style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#f5c842">&nbsp;</div>
+      <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#6B7B98;margin-top:3px">until lock-in</div>
+      <span style="display:inline-block;margin-top:10px;background:#f5c842;color:#151C2B;font-family:'Sora',sans-serif;font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:10px 18px;border-radius:7px">Make your picks</span>
     </div>
   </div>
 </a>
 <script>
 (function(){
-  var KO = new Date('2026-07-19T19:00:00Z');
-  var el = document.getElementById('gv-cd');
-  var banner = document.getElementById('gv-banner');
+  var LOCK = new Date('2026-08-22T11:30:00Z');
   function tick(){
-    var ms = KO - new Date();
-    if(ms <= 0){ if(banner) banner.style.display='none'; return; }
+    var ms = LOCK - new Date();
+    var el = document.getElementById('cys-cd');
+    var banner = document.getElementById('cys-banner');
+    if(ms <= 0){
+      if(el) el.textContent = 'Locked';
+      return;
+    }
     var d = Math.floor(ms/86400000), h = Math.floor(ms/3600000)%24, m = Math.floor(ms/60000)%60;
-    if(el) el.textContent = (d>0? d+'d ':'') + h+'h ' + m+'m';
+    if(el) el.textContent = (d>0 ? d+'d ' : '') + h+'h ' + m+'m';
   }
   tick(); setInterval(tick, 30000);
 })();
