@@ -103,6 +103,16 @@ h1 em{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:90
 .league-name{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16px}
 .league-meta{font-size:11.5px;color:var(--mute);margin-top:2px}
 .code-chip{font:700 12px/1 'Sora',sans-serif;letter-spacing:.16em;background:var(--surface2);border:1px solid var(--line-2);color:var(--gold);padding:8px 12px;border-radius:5px;cursor:pointer}
+.lg-click{cursor:pointer}
+.lg-main{flex:1;min-width:0}
+.lg-arrow{font:700 10px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-deep);border-radius:5px;padding:8px 12px}
+#league-detail{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.ld-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.ld-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18px}
+.ld-close{background:transparent;border:1px solid var(--line-2);color:var(--mute);border-radius:5px;padding:7px 12px;font:600 10px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.ld-close:hover{color:var(--ink);border-color:var(--mute)}
+.tick{color:var(--green);font-weight:600}
+.nope{color:var(--mute-2)}
 .mini-table{width:100%;border-collapse:collapse;margin-top:10px}
 .mini-table th{text-align:left;font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2);padding:8px 6px;border-bottom:1px solid var(--line)}
 .mini-table td{padding:10px 6px;border-bottom:1px solid var(--line);font-size:13.5px}
@@ -230,6 +240,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
     <div class="sub">Start one for your mates, or join theirs with a code. Everyone's picks stay hidden until kick-off.</div>
     <div id="new-code" style="display:none"></div>
     <div id="league-list"></div>
+    <div id="league-detail" style="display:none"></div>
     <div class="two" style="margin-top:16px">
       <div class="field">
         <label for="new-league">Start a league</label>
@@ -513,22 +524,117 @@ async function loadLeagues(){
     myLeagues = r.ok ? await r.json() : [];
   }catch(e){ myLeagues = []; }
 
-  const host = $('league-list');
-  if(!myLeagues.length){
-    host.innerHTML = '<div class="lock-note">You are not in a league yet. Start one below and send the code to your mates.</div>';
-    return;
-  }
+  // Entrant count for the global row
+  let globalCount = null;
+  try{
+    const g = await fetch(SS_URL + '/rest/v1/rpc/cys_entrant_count', {
+      method:'POST', headers: headers(true), body: '{}'
+    });
+    if(g.ok) globalCount = await g.json();
+  }catch(e){}
+
   let html = '';
+
+  // Global league always sits at the top
+  html += '<div class="league-row lg-click" onclick="openGlobal()">'
+       +  '<div><div class="league-name">Global league</div>'
+       +  '<div class="league-meta">Everyone who has called it'
+       +  (globalCount !== null ? ' · ' + globalCount + ' entered' : '') + '</div></div>'
+       +  '<span class="lg-arrow">View</span></div>';
+
   myLeagues.forEach(m=>{
     const lg = m.cys_leagues;
     if(!lg) return;
     html += '<div class="league-row">'
-         +  '<div><div class="league-name">'+lg.name+'</div>'
-         +  '<div class="league-meta">Share this code to invite people</div></div>'
-         +  '<button class="code-chip" onclick="copyCode(\''+lg.code+'\')">'+lg.code+'</button>'
+         +  '<div class="lg-main lg-click" onclick="openLeague(\''+lg.id+'\',\''+String(lg.name).replace(/'/g,"\\'")+'\')">'
+         +  '<div class="league-name">'+lg.name+'</div>'
+         +  '<div class="league-meta">Tap to see who is in</div></div>'
+         +  '<button class="code-chip" onclick="event.stopPropagation();copyCode(\''+lg.code+'\')">'+lg.code+'</button>'
          +  '</div>';
   });
-  host.innerHTML = html;
+
+  if(!myLeagues.length){
+    html += '<div class="lock-note">You have not made a league of your own yet. Start one below and send the code to your mates.</div>';
+  }
+  document.getElementById('league-list').innerHTML = html;
+}
+
+/* ---------- league detail ---------- */
+async function openLeague(id, name){
+  const panel = document.getElementById('league-detail');
+  panel.style.display = '';
+  panel.innerHTML = '<div class="ld-head"><div class="ld-title">'+name+'</div>'
+    + '<button class="ld-close" onclick="closeLeague()">Close</button></div>'
+    + '<div class="lock-note">Loading…</div>';
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  let rows = [];
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/rpc/cys_league_members_view', {
+      method:'POST', headers: headers(true), body: JSON.stringify({ lg: id })
+    });
+    rows = r.ok ? await r.json() : [];
+  }catch(e){ rows = []; }
+
+  renderStandings(panel, name, rows, false);
+}
+
+async function openGlobal(){
+  const panel = document.getElementById('league-detail');
+  panel.style.display = '';
+  panel.innerHTML = '<div class="ld-head"><div class="ld-title">Global league</div>'
+    + '<button class="ld-close" onclick="closeLeague()">Close</button></div>'
+    + '<div class="lock-note">Loading…</div>';
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  let rows = [];
+  try{
+    const r = await fetch(SS_URL + '/rest/v1/rpc/cys_global_view', {
+      method:'POST', headers: headers(true), body: '{}'
+    });
+    rows = r.ok ? await r.json() : [];
+  }catch(e){ rows = []; }
+  rows = rows.map(x=>({ user_id:x.user_id, display_name:x.display_name, has_entry:true }));
+  renderStandings(panel, 'Global league', rows, true);
+}
+
+function renderStandings(panel, title, rows, isGlobal){
+  let html = '<div class="ld-head"><div class="ld-title">'+title+'</div>'
+           + '<button class="ld-close" onclick="closeLeague()">Close</button></div>';
+
+  if(!rows.length){
+    html += '<div class="lock-note">Nobody here yet.'
+         +  (isGlobal ? ' Be the first to lock a prediction in.' : ' Share the code and get some people in.')
+         +  '</div>';
+    panel.innerHTML = html;
+    return;
+  }
+
+  const locked = isLocked();
+  html += '<div class="lock-note" style="margin-bottom:10px">'
+       +  (locked
+            ? 'Predictions are open to view now the season has started. Scores appear once the final results are in.'
+            : 'Picks stay hidden until kick-off, so nobody can copy. For now you can see who has locked theirs in.')
+       +  '</div>';
+
+  html += '<table class="mini-table"><thead><tr><th>#</th><th>Member</th><th style="text-align:right">'
+       +  (locked ? 'Status' : 'Locked in') + '</th></tr></thead><tbody>';
+  rows.forEach((r,i)=>{
+    const me = r.user_id === currentUser.id;
+    html += '<tr'+(me?' class="you"':'')+'>'
+         +  '<td>'+(i+1)+'</td>'
+         +  '<td'+(me?' class="you"':'')+'>'+r.display_name+(me?' (you)':'')+'</td>'
+         +  '<td style="text-align:right">'+(r.has_entry ? '<span class="tick">Yes</span>' : '<span class="nope">Not yet</span>')+'</td>'
+         +  '</tr>';
+  });
+  html += '</tbody></table>';
+  panel.innerHTML = html;
+}
+
+function closeLeague(){
+  const p = document.getElementById('league-detail');
+  p.style.display = 'none';
+  p.innerHTML = '';
 }
 
 function copyCode(code){
