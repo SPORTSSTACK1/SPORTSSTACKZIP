@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/favicon.png" type="image/png" sizes="96x96"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:title" content="Quiz of the Week No. 10 | SportsStack"/>
+<meta property="og:description" content="20 questions on the week just gone in sport. New quiz every Tuesday."/>
+<meta name="description" content="Quiz of the Week No. 10. Twenty questions on a quiet week in sport, with more history than usual. Our hardest yet. Free, no sign-up."/>
+<meta property="og:image" content="https://sportsstack.com.au/LOGO.jpeg"/>
+<meta property="og:url" content="https://sportsstack.com.au/weekly-quiz-8"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:image" content="https://sportsstack.com.au/LOGO.jpeg"/>
+<link rel="canonical" href="https://sportsstack.com.au/weekly-quiz-8"/>
+<title>Quiz of the Week No. 10 | SportsStack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-TL0NM71G5M');
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root{
+  --bg:#1B2334;--surface:#242E44;--surface2:#2A3550;--line:#2E3A54;--line-2:#3B4869;
+  --gold:#F5C842;--gold-dim:#C29B28;--gold-deep:#8A6E18;
+  --ink:#EDF1F8;--ink-2:#B9C4D8;--mute:#8FA0BD;--mute-2:#6B7B98;
+  --green:#4ADE80;--green-bg:rgba(74,222,128,.16);
+  --red:#F87171;--red-bg:rgba(248,113,113,.16);
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);overflow:hidden;font-family:'Sora',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.screen.active{opacity:1;pointer-events:all}
+.home-link{position:fixed;top:14px;left:16px;z-index:50;display:flex;align-items:center;gap:8px;text-decoration:none;opacity:.7;transition:opacity .15s}
+.home-link:hover{opacity:1}
+.home-link img{display:block;border-radius:6px}
+.home-link span{font:700 10px/1 'Sora',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#8FA0BD}
+@media(max-width:520px){.home-link span{display:none}}
+#title-screen{padding:24px}
+.dateline{font:700 10px/1 'Sora',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.dateline:before,.dateline:after{content:"";width:26px;height:1px;background:var(--gold-deep)}
+.title-issue{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(44px,11vw,76px);line-height:.9;letter-spacing:-.03em;color:var(--ink);text-align:center;margin-bottom:6px}
+.title-issue em{font-style:italic;font-weight:400;color:var(--gold)}
+.title-date{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:15px;color:var(--mute);margin-bottom:30px;text-align:center}
+.title-blurb{font-family:'Fraunces',Georgia,serif;font-size:14.5px;color:var(--ink-2);text-align:center;max-width:470px;line-height:1.7;margin-bottom:32px}
+.start-btn{font:800 12px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--gold);color:#151C2B;border:none;padding:17px 46px;border-radius:6px;cursor:pointer;transition:background .15s,transform .12s}
+.start-btn:hover{background:#FCE28A;transform:translateY(-1px)}
+#quiz-screen{padding:0;align-items:stretch;justify-content:stretch}
+.quiz-inner{display:flex;flex-direction:column;width:100%;height:100%;max-width:740px;margin:0 auto;padding-top:56px}
+.scorecard{display:flex;gap:3px;padding:0 20px 12px;flex-shrink:0}
+.sc-cell{flex:1;height:6px;background:var(--line);border-radius:2px;transition:background .25s,transform .25s}
+.sc-cell.correct{background:var(--green)}
+.sc-cell.wrong{background:var(--red)}
+.sc-cell.current{background:var(--gold);transform:scaleY(2.2)}
+.sc-cell.pop{animation:cellPop .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes cellPop{0%{transform:scaleY(1)}45%{transform:scaleY(2.6)}100%{transform:scaleY(1)}}
+.quiz-meta{display:flex;align-items:baseline;justify-content:space-between;padding:0 20px 14px;flex-shrink:0;border-bottom:1px solid var(--line)}
+.qm-count{font:700 10px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.qm-count b{color:var(--ink);font-weight:800}
+.qm-score{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:17px;color:var(--gold);letter-spacing:-.01em}
+.qm-score small{color:var(--mute-2);font-weight:400}
+.quiz-body{flex:1;display:flex;flex-direction:column;padding:22px 20px 10px;gap:16px;overflow-y:auto;min-height:0}
+.q-text{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:clamp(19px,3.4vw,28px);line-height:1.28;letter-spacing:-.015em;color:var(--ink)}
+.q-answers{display:flex;flex-direction:column;gap:9px;padding-bottom:8px}
+.ans-btn{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);cursor:pointer;transition:background .15s,border-color .15s;text-align:left;width:100%;font-family:'Sora',sans-serif}
+.ans-btn:hover:not(.locked){background:var(--surface2);border-color:var(--mute-2)}
+.ans-btn.answered-correct,.ans-btn.reveal-correct{background:var(--green-bg);border-color:var(--green)}
+.ans-btn.answered-wrong{background:var(--red-bg);border-color:var(--red)}
+.ans-btn.locked{cursor:default;pointer-events:none}
+.ans-label{font:800 12px/1 'Sora',sans-serif;color:var(--mute-2);flex-shrink:0;width:16px;letter-spacing:.04em}
+.ans-btn.answered-correct .ans-label,.ans-btn.reveal-correct .ans-label{color:var(--green)}
+.ans-btn.answered-wrong .ans-label{color:var(--red)}
+.ans-text{font:500 15px/1.35 'Sora',sans-serif;color:var(--ink)}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;padding:10px 20px 16px;flex-shrink:0;border-top:1px solid var(--line);gap:12px}
+.nav-btn{width:38px;height:38px;border-radius:6px;background:transparent;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .15s,background .15s;flex-shrink:0}
+.nav-btn:hover:not(:disabled){border-color:var(--gold);background:var(--surface)}
+.nav-btn:disabled{opacity:.25;cursor:default}
+.nav-btn svg{width:16px;height:16px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.nav-hint{font:500 11px/1 'Sora',sans-serif;color:var(--mute-2);letter-spacing:.06em;text-align:center}
+#score-screen{padding:24px}
+.score-kicker{font:700 10px/1 'Sora',sans-serif;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:14px}
+.score-number{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(72px,17vw,112px);line-height:.85;letter-spacing:-.04em;color:var(--gold)}
+.score-denom{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(18px,4vw,26px);color:var(--mute);margin-bottom:22px}
+.score-card{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:290px;width:100%;margin-bottom:22px}
+.scc{aspect-ratio:1;border-radius:3px;background:var(--line)}
+.scc.correct{background:var(--green)}
+.scc.wrong{background:var(--red)}
+.score-msg{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(15px,2.6vw,19px);color:var(--ink-2);margin-bottom:30px;max-width:380px;text-align:center;line-height:1.45}
+.score-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.score-share-btn{font:800 11px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;background:var(--gold);color:#151C2B;border:none;padding:15px 34px;border-radius:6px;cursor:pointer;transition:background .15s}
+.score-share-btn:hover{background:#FCE28A}
+.score-replay-btn{font:800 11px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;background:transparent;color:var(--ink);border:1px solid var(--line-2);padding:15px 34px;border-radius:6px;cursor:pointer;transition:border-color .15s,color .15s}
+.score-replay-btn:hover{border-color:var(--gold);color:var(--gold)}
+.copied-msg{font:500 12px/1 'Sora',sans-serif;color:var(--green);margin-top:14px;min-height:16px;text-align:center;letter-spacing:.04em}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Title screen scrolls now that the leaderboard sits under it */
+#title-screen{padding:0!important;display:block!important;overflow-y:auto}
+#title-screen .title-inner{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 24px 48px}
+
+/* Leaderboard — deliberately quiet, the scorecard is the loud part */
+.lb{width:100%;max-width:420px;margin-top:36px;border-top:1px solid var(--line);padding-top:18px}
+.lb-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.lb-title{font:700 10px/1 'Sora',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim)}
+.lb-count{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:12px;color:var(--mute-2)}
+.lb-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(46,58,84,.55)}
+.lb-row:last-child{border-bottom:none}
+.lb-rank{font:700 10px/1 'Sora',sans-serif;color:var(--mute-2);width:16px;flex-shrink:0}
+.lb-name{flex:1;font:500 13.5px/1.2 'Sora',sans-serif;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-score{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;color:var(--gold);letter-spacing:-.01em}
+.lb-score small{color:var(--mute-2);font-weight:400;font-size:11px}
+.lb-row.me .lb-name{color:var(--gold)}
+.lb-row.me .lb-rank{color:var(--gold)}
+.lb-empty{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13px;color:var(--mute-2);padding:8px 0}
+.q-explain{margin-top:14px;padding:13px 16px;border-radius:8px;background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.22);border-left:2px solid var(--gold);font-family:'Fraunces',Georgia,serif;font-size:14px;line-height:1.55;color:#D8DEEC;animation:explainIn .3s ease both}
+.q-explain b{font-family:'Sora',sans-serif;font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim,#C29B28);display:block;margin-bottom:5px}
+@keyframes explainIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div class="screen active" id="title-screen">
+ <div class="title-inner">
+  <div class="dateline">Quiz of the Week</div>
+  <div class="title-issue">No. <em>10</em></div>
+  <div class="title-date">Week ending 5 August 2026</div>
+  <p class="title-blurb">We have hit a quiet spell. Wimbledon is done, the Tour is done, the World Cup is done and league football has not restarted. Basketball, the NFL and European rugby are all in the off-season. So there is more history than usual in this one, which probably makes it the hardest so far. Anything over 14 is very impressive.</p>
+  <button class="start-btn" onclick="startQuiz()">Start the quiz</button>
+
+  <div class="lb" id="lb">
+    <div class="lb-head">
+      <span class="lb-title">Scores this week</span>
+      <span class="lb-count" id="lb-count"></span>
+    </div>
+    <div id="lb-rows"><div class="lb-empty">Loading…</div></div>
+  </div>
+ </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div class="screen" id="quiz-screen">
+  <div class="quiz-inner">
+    <div class="scorecard" id="scorecard"></div>
+    <div class="quiz-meta">
+      <div class="qm-count">Question <b id="qm-num">1</b> of <span id="qm-total">20</span></div>
+      <div class="qm-score" id="live-score">0 <small>/ 0</small></div>
+    </div>
+    <div class="quiz-body">
+      <div class="q-text" id="q-text">Loading…</div>
+      <div class="q-answers" id="q-answers">
+        <button class="ans-btn" id="ans-a" onclick="selectAnswer(0)">
+          <span class="ans-label">A</span><span class="ans-text" id="ans-a-text">Answer A</span>
+        </button>
+        <button class="ans-btn" id="ans-b" onclick="selectAnswer(1)">
+          <span class="ans-label">B</span><span class="ans-text" id="ans-b-text">Answer B</span>
+        </button>
+        <button class="ans-btn" id="ans-c" onclick="selectAnswer(2)">
+          <span class="ans-label">C</span><span class="ans-text" id="ans-c-text">Answer C</span>
+        </button>
+      </div>
+      <div class="q-explain" id="q-explain" hidden></div>
+    </div>
+    <div class="quiz-nav">
+      <button class="nav-btn" id="nav-prev" onclick="goTo(currentQ-1)" disabled aria-label="Previous question">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="nav-hint" id="nav-hint">Pick an answer to continue</div>
+      <button class="nav-btn" id="nav-next" onclick="goTo(currentQ+1)" disabled aria-label="Next question">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SCORE SCREEN -->
+<div class="screen" id="score-screen">
+  <div class="score-kicker">Quiz of the Week · No. 10</div>
+  <div class="score-number" id="score-number">0</div>
+  <div class="score-denom" id="score-denom">out of 20</div>
+  <div class="score-card" id="score-card"></div>
+  <div class="score-msg" id="score-msg"></div>
+  <div class="score-btns">
+    <button class="score-share-btn" onclick="shareScore()">Copy your scorecard</button>
+    <button class="score-replay-btn" onclick="restartQuiz()">Play again</button>
+  </div>
+  <div class="copied-msg" id="copied-msg"></div>
+</div>
+
+<a href="index.html" class="home-link" aria-label="SportsStack home">
+  <img src="LOGO.jpeg" alt="" width="30" height="30"/>
+  <span>SportsStack</span>
+</a>
+
+<script>
+
+const QUESTIONS = [
+  { image:"", q:"Which MLB team completed a blockbuster deadline trade for Tigers ace Tarik Skubal?", a:"New York Mets", b:"Los Angeles Dodgers", c:"New York Yankees", correct:1, explain:"Detroit sent the two-time reigning AL Cy Young winner to LA on 1 August for prospects Zyhir Hope, River Ryan and Brady Smith, rather than lose him for nothing in free agency." },
+  { image:"", q:"Who took over as England Test cricket captain this week?", a:"Harry Brook", b:"Ollie Pope", c:"Joe Root", correct:2, explain:"Root returns for a second stint, after Ben Stokes retired from international cricket and Brendon McCullum was sacked. Stephen Fleming comes in as head coach. Root led England in a record 64 Tests first time round." },
+  { image:"", q:"What is the only sport to have been played on the moon?", a:"Golf", b:"Javelin", c:"Baseball", correct:0, explain:"Alan Shepard smuggled a six-iron head aboard Apollo 14 in 1971, attached it to a sample collection tool and hit two balls one-handed in a pressurised suit. He claimed the second went miles and miles. It went about forty yards." },
+  { image:"", q:"IPL owners have rebranded several Hundred teams. Which of these is NOT a real team in the 2026 competition?", a:"Manchester Super Giants", b:"Capitals Southampton", c:"Sunrisers Leeds", correct:1, explain:"Three teams were renamed: Oval Invincibles became MI London, Northern Superchargers became Sunrisers Leeds and Manchester Originals became Manchester Super Giants. Southern Brave are part-owned by the Delhi Capitals group but kept their name." },
+  { image:"", q:"Three of the greatest of all time, all still going. But who is the oldest?", a:"LeBron James", b:"Cristiano Ronaldo", c:"Lionel Messi", correct:0, explain:"LeBron was born on 30 December 1984, five weeks before Ronaldo on 5 February 1985. Messi is the baby of the three, born in June 1987." },
+  { image:"", q:"Erling Haaland announced himself by scoring how many goals in a single under-20 international between Norway and Honduras?", a:"5", b:"7", c:"9", correct:2, explain:"Nine goals in a 12-0 win at the 2019 Under-20 World Cup, and he was substituted before the end. Norway still went out in the group stage." },
+  { image:"", q:"Before Hollywood, Jason Statham represented England at the Commonwealth Games in which sport?", a:"Diving", b:"Boxing", c:"Fencing", correct:0, explain:"Statham spent twelve years in Britain's national diving squad and finished eighth in the 10m platform at the 1990 Commonwealth Games in Auckland." },
+  { image:"", q:"Chelsea defender Trevoh Chalobah completed a move to which Serie A club this week?", a:"Atalanta", b:"Como", c:"Bologna", correct:1, explain:"Como continue their ambitious rebuild under Cesc Fabregas, adding Premier League experience at the back." },
+  { image:"", q:"Jordan Henderson has joined Chelsea. Which Dutch club did he play for before Brentford?", a:"PSV Eindhoven", b:"Feyenoord", c:"Ajax", correct:2, explain:"Henderson's route since Liverpool has been unusual: Al-Ettifaq in Saudi Arabia, then Ajax, then Brentford, and now Stamford Bridge at 36." },
+  { image:"", q:"How many managers will take charge of a new Premier League club on the opening weekend, a record for the competition?", a:"5", b:"8", c:"12", correct:1, explain:"Opta confirmed eight, the most in any season excluding promoted clubs and the inaugural 1992-93 campaign. Four of the traditional big six start afresh, leaving Mikel Arteta as the league's longest-serving manager." },
+  { image:"", q:"Agent Eddie Hearn says rugby union star Henry Pollock's next contract should be worth how much a year?", a:"250,000 pounds", b:"1 million pounds", c:"5 million pounds", correct:1, explain:"Pollock currently earns around 150,000 pounds a year. Hearn, better known for boxing, signed him to Matchroom in March and argues he is a seven-figure player on commercial pull alone." },
+  { image:"", q:"Who has thrown the most passing touchdowns in NFL history?", a:"Peyton Manning", b:"Drew Brees", c:"Tom Brady", correct:2, explain:"Brady finished with 649 in the regular season, ahead of Brees and Manning. Add the playoffs and the gap becomes one nobody is closing soon." },
+  { image:"", q:"Los Angeles hosts the 2028 Olympics. When did the city last host a Games?", a:"1984", b:"1968", c:"1996", correct:0, explain:"The 1984 Games turned a profit of over 200 million dollars after Montreal 1976 had nearly bankrupted its host city, and effectively rescued the Olympic movement's finances." },
+  { image:"", q:"How many players are in a standard men's field lacrosse team?", a:"10", b:"12", c:"15", correct:0, explain:"Ten a side: a goalkeeper, three defenders, three midfielders and three attackers. Women's field lacrosse uses twelve." },
+  { image:"", q:"What is the longest-standing world record in athletics?", a:"Men's discus", b:"Women's 800m", c:"Men's mile", correct:1, explain:"Jarmila Kratochvilova's 1:53.28 has stood since July 1983, more than forty years. No woman has been within a second of it this century." },
+  { image:"", q:"The 1980 film Raging Bull centres on which sport?", a:"Boxing", b:"Baseball", c:"Wrestling", correct:0, explain:"Scorsese's film about middleweight Jake LaMotta won Robert De Niro the Best Actor Oscar. He gained around sixty pounds to play LaMotta in his later years." },
+  { image:"", q:"Which English club has won the most European Cup and Champions League titles?", a:"Manchester United", b:"Liverpool", c:"Nottingham Forest", correct:1, explain:"Liverpool have six, ahead of Manchester United's three. Nottingham Forest's two came in successive years under Brian Clough, having won the league only once." },
+  { image:"", q:"What is the highest possible checkout in darts?", a:"170", b:"180", c:"501", correct:0, explain:"Treble twenty, treble twenty, bullseye. Known as the big fish, and because the bull has to finish it, no higher checkout exists." },
+  { image:"", q:"How many innings are there in a regulation game of baseball?", a:"7", b:"9", c:"11", correct:1, explain:"Nine, unless the scores are level, in which case extra innings continue until somebody leads at the end of one. The longest professional game ran to 33." },
+  { image:"", q:"Which NHL franchise has won the most Stanley Cup titles?", a:"Toronto Maple Leafs", b:"Detroit Red Wings", c:"Montreal Canadiens", correct:2, explain:"Montreal have 24, including five in a row from 1956 to 1960. Toronto are next on 13, though they have not won since 1967." }
+];
+
+const MSGS = [
+  [0,5,   "A brutal one to start on. The history questions catch everybody."],
+  [6,9,   "Respectable, given how obscure some of those were."],
+  [10,13, "Solid. You are reading past the back page."],
+  [14,16, "Very impressive. That was the target and you cleared it."],
+  [17,18, "Outstanding. Genuinely hard quiz, that."],
+  [19,20, "Nothing left to teach you. Absurd score on this one."],
+];
+
+let currentQ = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+let score = 0;
+let answered = 0;
+
+function buildScorecard(){
+  const c = document.getElementById('scorecard');
+  c.innerHTML = '';
+  QUESTIONS.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'sc-cell' + (i===0?' current':'');
+    d.onclick = ()=>{ if(answers[i]!==null || i<=answered) goTo(i); };
+    c.appendChild(d);
+  });
+}
+
+function startQuiz(){
+  answers = new Array(QUESTIONS.length).fill(null);
+  score = 0; answered = 0; currentQ = 0;
+  buildScorecard();
+  showScreen('quiz-screen');
+  renderQ(0);
+}
+
+function restartQuiz(){
+  answers = new Array(QUESTIONS.length).fill(null);
+  score = 0; answered = 0; currentQ = 0;
+  buildScorecard();
+  showScreen('title-screen');
+}
+
+function renderQ(i){
+  const q = QUESTIONS[i];
+  const done = answers[i] !== null;
+  document.getElementById('qm-num').textContent = i+1;
+  var qt=document.getElementById('qm-total'); if(qt) qt.textContent = QUESTIONS.length;
+  document.getElementById('live-score').innerHTML = score + ' <small>/ ' + answered + '</small>';
+  document.getElementById('q-text').textContent = q.q;
+
+  const ids   = ['ans-a','ans-b','ans-c'];
+  const texts = ['ans-a-text','ans-b-text','ans-c-text'];
+  const opts  = [q.a, q.b, q.c];
+  ids.forEach((id,j)=>{
+    const btn = document.getElementById(id);
+    document.getElementById(texts[j]).textContent = opts[j];
+    btn.className = 'ans-btn';
+    if(done){
+      btn.classList.add('locked');
+      if(j === q.correct) btn.classList.add(answers[i]===q.correct ? 'answered-correct' : 'reveal-correct');
+      if(j === answers[i] && answers[i] !== q.correct) btn.classList.add('answered-wrong');
+    }
+  });
+
+  const ex = document.getElementById('q-explain');
+  if(ex){
+    if(done && q.explain){
+      ex.innerHTML = '<b>Did you know</b>' + q.explain;
+      ex.hidden = false;
+    } else {
+      ex.hidden = true;
+    }
+  }
+
+  document.getElementById('nav-prev').disabled = (i===0);
+  const nx = document.getElementById('nav-next');
+  const allDone = answers.every(a=>a!==null);
+  const isLast = (i === QUESTIONS.length-1);
+  if(nx){
+    if(isLast && done){
+      // On the last (answered) question: offer results.
+      nx.disabled = false;
+      nx.textContent = 'See results';
+      nx.onclick = showScore;
+    } else {
+      nx.textContent = 'Next';
+      nx.onclick = function(){ goTo(currentQ+1); };
+      nx.disabled = !(done && i < QUESTIONS.length-1);
+    }
+  }
+  const hint = document.getElementById('nav-hint');
+  if(hint){
+    if(!done) hint.textContent = 'Pick an answer to continue';
+    else if(isLast) hint.textContent = allDone ? 'Tap to see your result' : 'Finish the rest to see your result';
+    else hint.textContent = 'Read the note, then tap Next';
+  }
+
+  document.querySelectorAll('.sc-cell').forEach((d,j)=>{
+    d.className = 'sc-cell';
+    if(answers[j]!==null){
+      d.classList.add(answers[j]===QUESTIONS[j].correct ? 'correct' : 'wrong');
+    }
+    if(j===i && answers[j]===null) d.classList.add('current');
+  });
+}
+
+function selectAnswer(choice){
+  if(answers[currentQ] !== null) return;
+  const q = QUESTIONS[currentQ];
+  answers[currentQ] = choice;
+  answered++;
+  if(choice === q.correct) score++;
+  const cell = document.querySelectorAll('.sc-cell')[currentQ];
+  renderQ(currentQ);
+  if(cell){ cell.classList.add('pop'); setTimeout(()=>cell.classList.remove('pop'), 400); }
+  // Answer stays on screen with its anecdote; renderQ decides the Next/Results button.
+}
+
+function goTo(i){
+  if(i<0 || i>=QUESTIONS.length) return;
+  if(i > answered && answers[i]===null) return;
+  currentQ = i;
+  renderQ(i);
+}
+
+function showScore(){
+  var numEl = document.getElementById('score-number');
+  var msgEl = document.getElementById('score-msg');
+  var copEl = document.getElementById('copied-msg');
+  if(numEl) numEl.textContent = score;
+  var denomEl = document.getElementById('score-denom');
+  if(denomEl) denomEl.textContent = 'out of ' + QUESTIONS.length;
+
+  var card = document.getElementById('score-card');
+  if(card){
+    card.innerHTML = '';
+    answers.forEach(function(a,i){
+      var d = document.createElement('div');
+      d.className = 'scc' + (a===null ? '' : (a===QUESTIONS[i].correct ? ' correct' : ' wrong'));
+      card.appendChild(d);
+    });
+  }
+
+  var msg = MSGS.find(function(m){ return score>=m[0] && score<=m[1]; });
+  if(msgEl) msgEl.textContent = msg ? msg[2] : '';
+  if(copEl) copEl.textContent = '';
+
+  if(typeof saveResult === 'function'){
+    saveResult('weekly-quiz-10','Quiz of the Week #10',score,QUESTIONS.length,true);
+  } else {
+    console.warn('saveResult unavailable — sportstack-member.js did not load, score not saved');
+  }
+  showScreen('score-screen');
+  setTimeout(loadLeaderboard, 1200);
+}
+
+function shareScore(){
+  const cells = answers.map((a,i)=> a===null ? '\u2B1C' : (a===QUESTIONS[i].correct ? '\uD83D\uDFE9' : '\uD83D\uDFE5'));
+  const half = Math.ceil(cells.length/2);
+  const line1 = cells.slice(0,half).join('');
+  const line2 = cells.slice(half).join('');
+  const txt = 'SportsStack \u2014 Quiz of the Week No. 10\n'
+    + score + '/' + QUESTIONS.length + '\n\n'
+    + line1 + '\n' + line2 + '\n\n'
+    + 'sportsstack.com.au/weekly-quiz-10.html';
+  copyText(txt, ()=>{
+    document.getElementById('copied-msg').textContent = 'Copied. Paste it wherever you like.';
+    setTimeout(()=>document.getElementById('copied-msg').textContent='', 3500);
+  });
+}
+
+function copyText(txt, cb){
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(cb).catch(()=>fallbackCopy(txt,cb));
+  } else { fallbackCopy(txt,cb); }
+}
+function fallbackCopy(txt,cb){
+  const ta=document.createElement('textarea');
+  ta.value=txt; ta.style.cssText='position:fixed;top:-9999px;left:-9999px';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try{document.execCommand('copy');if(cb)cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+}
+
+buildScorecard();
+
+/* ── Leaderboard ─────────────────────────────────────────── */
+
+function ssLocalUserId(){
+  try{
+    if(typeof ssUser !== 'undefined' && ssUser && ssUser.id) return ssUser.id;
+    var keys = Object.keys(localStorage).filter(function(k){
+      return k.indexOf('sb-') === 0 || (k.indexOf('supabase') > -1 && k.indexOf('auth') > -1);
+    });
+    for(var i=0;i<keys.length;i++){
+      var s = JSON.parse(localStorage.getItem(keys[i]));
+      var u = s && (s.user || (s.session && s.session.user));
+      if(u && u.id) return u.id;
+    }
+  }catch(e){}
+  return null;
+}
+var LB_URL = 'https://syntfyfsyjiuowclarpf.supabase.co';
+var LB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+const QUIZ_SLUG = 'weekly-quiz-10';
+
+async function loadLeaderboard(){
+  const rowsEl = document.getElementById('lb-rows');
+  const cntEl  = document.getElementById('lb-count');
+  if(!rowsEl) return;
+  
+  try{
+    const hdrs = { 'apikey': LB_KEY, 'Authorization': 'Bearer ' + LB_KEY };
+    const [rRes, pRes] = await Promise.all([
+      fetch(LB_URL + '/rest/v1/quiz_results?quiz_slug=eq.' + QUIZ_SLUG + '&completed=eq.true&select=user_id,score,total,time_seconds&order=score.desc&limit=200', {headers:hdrs}),
+      fetch(LB_URL + '/rest/v1/profiles?select=id,username', {headers:hdrs})
+    ]);
+    let results  = await rRes.json();
+    let profiles = await pRes.json();
+    if(!Array.isArray(results)) results = [];
+    if(!Array.isArray(profiles)) profiles = [];
+
+    if(!results.length){
+      rowsEl.innerHTML = '<div class="lb-empty">Nobody has played yet. Be the first.</div>';
+      if(cntEl) cntEl.textContent = '';
+      return;
+    }
+
+    const names = {};
+    profiles.forEach(p=>{ names[p.id] = p.username || 'Anonymous'; });
+
+    // Best attempt per member, then score desc, then quicker time first
+    const best = {};
+    results.forEach(r=>{
+      const prev = best[r.user_id];
+      if(!prev || r.score > prev.score) best[r.user_id] = r;
+    });
+    const board = Object.values(best).sort((x,y)=>{
+      if(y.score !== x.score) return y.score - x.score;
+      const tx = x.time_seconds == null ? Infinity : x.time_seconds;
+      const ty = y.time_seconds == null ? Infinity : y.time_seconds;
+      return tx - ty;
+    });
+
+    var me = ssLocalUserId();
+
+    if(cntEl) cntEl.textContent = board.length + (board.length === 1 ? ' player' : ' players');
+
+    rowsEl.innerHTML = board.slice(0,10).map((r,i)=>{
+      const mine = me && r.user_id === me;
+      const nm = (names[r.user_id] || 'Anonymous').replace(/[<>&]/g, '');
+      return '<div class="lb-row' + (mine ? ' me' : '') + '">'
+        + '<span class="lb-rank">' + (i+1) + '</span>'
+        + '<span class="lb-name">' + nm + (mine ? ' (you)' : '') + '</span>'
+        + '<span class="lb-score">' + r.score + ' <small>/ ' + (r.total || 20) + '</small></span>'
+        + '</div>';
+    }).join('');
+  }catch(e){
+    rowsEl.innerHTML = '<div class="lb-empty">Could not load scores.</div>';
+  }
+}
+
+setTimeout(loadLeaderboard, 600);
+document.addEventListener('ss:signedIn', loadLeaderboard);
+
+</script>
+<script src="sportstack-member.js?v=4"></script>
+<script src="xp-system.js"></script>
+</body>
+</html>
