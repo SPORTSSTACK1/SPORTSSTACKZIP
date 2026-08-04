@@ -438,14 +438,26 @@ async function writeRow(rowExtra, quiet){
     table_pred: table
   }, collectFields(), rowExtra || {});
 
+  if(!accessToken){
+    if(!quiet) toast('You appear to be signed out. Try signing in again.', true);
+    return null;
+  }
+
   const res = await fetch(SS_URL + '/rest/v1/cys_predictions?on_conflict=user_id', {
     method: 'POST',
     headers: Object.assign(headers(true), { Prefer: 'resolution=merge-duplicates,return=representation' }),
     body: JSON.stringify(row)
   });
   if(!res.ok){
-    const t = await res.text();
-    if(!quiet) toast('Could not save. ' + (t.slice(0,80) || res.status), true);
+    let msg = 'Could not save.';
+    try{
+      const err = JSON.parse(await res.text());
+      if(err.code === '42501')      msg = 'The database refused that. If you have already locked in, your picks cannot be changed.';
+      else if(err.code === '23514') msg = 'Something in the prediction is not valid. Check all twenty positions are filled.';
+      else if(err.message)          msg = 'Could not save: ' + err.message.slice(0,90);
+    }catch(e){ msg = 'Could not save (' + res.status + ').'; }
+    if(!quiet) toast(msg, true);
+    console.warn('[CallYourShot] save failed', res.status);
     return null;
   }
   existing = row;
