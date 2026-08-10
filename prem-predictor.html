@@ -1,326 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="Prem Predictor 2026–27 — a free sports quiz on SportsStack. Play against the clock, no sign-up needed."/>
-<meta property="og:description" content="Prem Predictor 2026–27 — a free sports quiz on SportsStack. Play against the clock, no sign-up needed."/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<meta name="description" content="Predict all ten Premier League scorelines every gameweek. 3 points for the exact score, 1 for the right result. Global table plus private leagues with your mates. Free."/>
+<meta property="og:title" content="Prem Predictor — Premier League 2026/27 | SportsStack"/>
+<meta property="og:description" content="Predict all ten scorelines every gameweek. Climb the global table or start a league with your mates."/>
+<meta property="og:url" content="https://sportsstack.com.au/prem-predictor"/>
+<meta property="og:type" content="website"/>
 <link rel="canonical" href="https://sportsstack.com.au/prem-predictor"/>
-<title>Prem Predictor 2026–27 — SportsStack</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=Barlow:wght@400;600&display=swap" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>Prem Predictor — Premier League 2026/27 Score Predictions | SportsStack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
-:root{--bg:#04080f;--surface:#080f1c;--s2:#0d1a2e;--border:#0d2040;--gold:#f5c842;--text:#e8f0fe;--muted:#3a5a7a;--red:#ef4444;--green:#22c55e;--blue:#3b82f6;--purple:#8b5cf6}
+:root{
+  --bg:#F4F6FB;--surface:#FFFFFF;--surface2:#EEF2F9;--surface3:#E4EAF4;
+  --line:#DFE5F0;--line-2:#CBD5E7;
+  --ink:#151C2B;--ink-2:#33405A;--mute:#5F6E8C;--mute-2:#8695B0;
+  --gold:#E8B424;--gold-dim:#B98A12;--gold-deep:#8A6E18;
+  --green:#1FA463;--green-bg:#E4F5EC;--red:#E0524B;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;padding-bottom:100px}
-nav{position:sticky;top:0;z-index:100;background:rgba(4,8,15,.97);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{text-decoration:none;display:block;flex-shrink:0}
-.nav-links a{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;padding:6px 12px;border-radius:6px;text-decoration:none;border:1px solid var(--border);color:var(--text);background:var(--s2);margin-left:6px}
-.nav-links a.gold{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+body{background:var(--bg);color:var(--ink);font-family:'Sora',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+nav{position:sticky;top:0;z-index:900;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:56px}
+nav a.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:14px}
+nav img{height:32px;width:32px;border-radius:7px;object-fit:contain}
+.btn-lb{font:700 11px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;padding:8px 14px;border:1px solid var(--line-2);border-radius:6px}
 
-.page-head{padding:22px 16px 10px;text-align:center}
-.page-head h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(26px,5vw,46px);font-weight:900;font-style:italic;color:var(--gold);line-height:1}
-.page-head p{color:var(--muted);font-size:13px;margin-top:5px}
+.wrap{max-width:660px;margin:0 auto;padding:28px 16px 80px}
+.kicker{font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.kicker:before{content:"";width:26px;height:1px;background:var(--gold-dim)}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(34px,8vw,54px);line-height:.96;letter-spacing:-.03em;margin-bottom:10px}
+h1 em{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;color:var(--gold-dim);font-size:1.02em}
+.lede{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:15px;line-height:1.6;color:var(--mute);max-width:52ch;margin-bottom:18px}
 
-/* Progress + Hint */
-.top-strip{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;max-width:700px;margin:0 auto 6px}
-.progress-pill{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--muted)}
-.progress-pill span{color:var(--gold)}
-.hint-text{font-size:12px;color:var(--muted);font-style:italic}
+.tabs{display:flex;gap:6px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+.tab{flex:1;padding:12px 8px;text-align:center;background:none;border:none;border-bottom:2px solid transparent;font:700 11px/1 'Sora',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);cursor:pointer}
+.tab.active{color:var(--ink);border-bottom-color:var(--gold)}
 
-/* Locked banner */
-.locked-banner{background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.25);border-radius:8px;padding:10px 16px;text-align:center;font-size:13px;color:var(--gold);max-width:700px;margin:0 auto 10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;box-shadow:0 1px 2px rgba(21,28,43,.03)}
+.card h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:20px;margin-bottom:3px}
+.card .sub{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:12.5px;color:var(--mute);margin-bottom:14px}
 
-/* Table wrapper */
-.table-wrap{max-width:700px;margin:0 auto;padding:0 12px}
+.gwbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.gwbar .gwtitle{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.01em}
+.gwbar .deadline{font:600 11px/1.4 'Sora',sans-serif;color:var(--gold-dim);text-align:right}
+.gwbar .deadline.closed{color:var(--red)}
+.gwnav{display:flex;gap:6px}
+.gwnav button{background:var(--surface2);border:1px solid var(--line-2);border-radius:6px;width:34px;height:30px;cursor:pointer;color:var(--ink);font-size:14px}
+.gwnav button:disabled{opacity:.4;cursor:default}
 
-/* Zone legend */
-.legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;padding:0 4px}
-.legend-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
-.legend-dot{width:10px;height:10px;border-radius:50%}
+.fx{display:flex;align-items:center;gap:8px;padding:11px 0;border-bottom:1px solid var(--line)}
+.fx:last-child{border-bottom:none}
+.fx .team{flex:1;font-size:13.5px;font-weight:500;min-width:0}
+.fx .team.h{text-align:right}
+.fx .team.a{text-align:left}
+.fx .score-in{display:flex;align-items:center;gap:6px}
+.fx input{width:38px;height:38px;text-align:center;font:700 16px/1 'Sora',sans-serif;border:1px solid var(--line-2);border-radius:7px;background:var(--surface2);color:var(--ink);outline:none}
+.fx input:focus{border-color:var(--gold);background:#fff}
+.fx input:disabled{opacity:.85;background:var(--surface3)}
+.fx .dash{color:var(--mute-2);font-weight:700}
+.fx .actual{font-size:10.5px;color:var(--mute);text-align:center;margin-top:3px;min-height:12px}
+.fx.correct{background:var(--green-bg);margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:6px}
+.fx .pts{width:26px;text-align:center;font:800 12px/1 'Sora',sans-serif;color:var(--green)}
+.fx .pts.zero{color:var(--mute-2)}
 
-/* Position row */
-.pred-row{display:grid;grid-template-columns:36px 6px 1fr auto;align-items:center;gap:6px;margin-bottom:4px}
-.pos-num{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;color:var(--muted);text-align:right}
-.zone-bar{width:6px;height:44px;border-radius:3px;flex-shrink:0}
-.zone-cl{background:#3b82f6}
-.zone-el{background:#f97316}
-.zone-conf{background:#22c55e}
-.zone-mid{background:rgba(255,255,255,.08)}
-.zone-rel{background:#ef4444}
+.btn{display:inline-block;padding:14px 24px;border:none;border-radius:7px;font:800 12px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;background:var(--gold);color:#3A2E00;transition:background .15s}
+.btn:hover{background:#F5CA43}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-wide{width:100%}
+.btn-ghost{background:transparent;color:var(--gold-dim);border:1px solid var(--line-2)}
+.btn-ghost:hover{background:var(--surface2)}
+.note{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:12.5px;color:var(--mute);margin-top:10px;line-height:1.5}
 
-/* Team card */
-.team-card{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:0 12px;height:44px;cursor:pointer;transition:background .12s,border-color .12s,transform .1s;user-select:none;-webkit-user-select:none}
-.team-card:hover{background:var(--s2);border-color:var(--muted)}
-.team-card.selected{background:rgba(245,200,66,.15);border-color:var(--gold);transform:scale(1.01)}
-.team-card.selected .team-name{color:var(--gold)}
-.team-card.empty{border-style:dashed;border-color:rgba(255,255,255,.12);cursor:default}
-.team-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;flex:1}
-.team-zone-label{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:6px;text-transform:uppercase;letter-spacing:.07em}
-.label-cl{background:rgba(59,130,246,.15);color:#60a5fa}
-.label-el{background:rgba(249,115,22,.15);color:#fb923c}
-.label-conf{background:rgba(34,197,94,.15);color:#4ade80}
-.label-rel{background:rgba(239,68,68,.15);color:#fca5a5}
+.gate{text-align:center;padding:34px 20px}
+.gate p{font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--mute);margin-bottom:16px;font-size:14px}
 
-/* Arrows */
-.arrows{display:flex;flex-direction:column;gap:2px}
-.arr-btn{background:none;border:1px solid var(--border);border-radius:4px;color:var(--muted);cursor:pointer;font-size:11px;padding:2px 6px;line-height:1;transition:background .1s}
-.arr-btn:hover{background:var(--s2);color:var(--text)}
+.mini-table{width:100%;border-collapse:collapse}
+.mini-table th{text-align:left;font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute-2);padding:9px 6px;border-bottom:1px solid var(--line)}
+.mini-table td{padding:11px 6px;border-bottom:1px solid var(--line);font-size:13.5px}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table .rank{width:30px;color:var(--mute);font-weight:700}
+.mini-table .pts{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.mini-table .you td{color:var(--gold-dim);font-weight:700}
+.mini-table .you{background:rgba(232,180,36,.07)}
 
-/* Zone dividers */
-.zone-divider{height:1px;background:var(--border);margin:6px 0;max-width:700px;margin-left:auto;margin-right:auto}
-.zone-label-row{text-align:center;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;padding:2px 0 6px}
+.league-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.league-row:last-child{border-bottom:none}
+.lg-click{cursor:pointer}
+.lg-main{flex:1;min-width:0}
+.league-name{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16px}
+.league-meta{font-size:11.5px;color:var(--mute);margin-top:2px}
+.code-chip{font:700 12px/1 'Sora',sans-serif;letter-spacing:.16em;background:var(--surface2);border:1px solid var(--line-2);color:var(--gold-dim);padding:8px 12px;border-radius:5px;cursor:pointer}
+.newcode{background:var(--green-bg);border:1px solid #B7E3CA;border-left:2px solid var(--green);border-radius:8px;padding:15px;margin-bottom:14px;text-align:center}
+.newcode-label{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-2);margin-bottom:8px}
+.newcode-chip{font:900 22px/1 'Barlow Condensed',sans-serif;letter-spacing:.22em;background:transparent;border:none;color:var(--green);cursor:pointer}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+.field label{display:block;font:700 10px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.field input{width:100%;padding:11px 13px;background:var(--surface2);border:1px solid var(--line-2);border-radius:6px;color:var(--ink);font-family:'Sora',sans-serif;font-size:14px;outline:none}
+.field input:focus{border-color:var(--gold);background:#fff}
 
-/* Fixed bottom bar */
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(4,8,15,.97);border-top:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:50}
-.btn-next{background:var(--gold);color:var(--bg);border:none;border-radius:10px;padding:12px 32px;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:900;cursor:pointer;transition:opacity .15s}
-.btn-next:disabled{opacity:.35;cursor:default}
-.btn-save{background:var(--s2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:12px 22px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;cursor:pointer}
-.save-msg{font-size:12px;color:var(--muted);text-align:right}
-.save-msg.ok{color:var(--green)}
+.ld-head{display:flex;align-items:center;justify-content:space-between;margin:16px 0 8px}
+.ld-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18px}
+.ld-close{background:transparent;border:1px solid var(--line-2);color:var(--mute);border-radius:5px;padding:7px 12px;font:600 10px/1 'Sora',sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
 
-/* Auth banner */
-.auth-banner{max-width:700px;margin:12px auto;background:var(--surface);border:1.5px solid rgba(245,200,66,.25);border-radius:10px;padding:14px;text-align:center}
-.auth-banner h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--gold);margin-bottom:6px}
-.auth-banner p{font-size:13px;color:var(--muted);margin-bottom:10px}
-.btn-auth{background:var(--gold);color:var(--bg);border:none;border-radius:7px;padding:9px 22px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:var(--ink);border:1px solid #2A3550;color:#fff;padding:13px 20px;border-radius:8px;font-size:13.5px;opacity:0;transition:all .28s;z-index:1000;max-width:90vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.err{background:#B23A34;border-color:#B23A34}
+
+.foot{text-align:center;margin-top:24px}
+.foot a{color:var(--mute);font-size:12.5px;text-decoration:none}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+
 <nav>
-  <a href="index.html" class="nav-logo"><img src="LOGO.jpeg" alt="SportsStack" width="48" height="48" style="display:block;border-radius:8px"/></a>
-  <div class="nav-links">
-    <a href="prem-leaderboard.html" class="gold">Leaderboard</a>
-    <a href="prem-bonus.html">Awards →</a>
-  </div>
+  <a class="brand" href="index.html"><img src="LOGO.jpeg" alt="SportsStack"/> SportsStack</a>
+  <a class="btn-lb" href="call-your-shot.html">Call Your Shot</a>
 </nav>
 
-<div class="page-head">
-  <h1>⚽ Prem Predictor 2026–27</h1>
-  <p>Tap a team to select it, then tap another to swap — arrange all 20 teams in your predicted order</p>
-</div>
+<div class="wrap">
+  <div class="kicker">Premier League 2026/27 · Every gameweek</div>
+  <h1>Prem <em>Predictor</em></h1>
+  <p class="lede">Predict all ten scorelines, every gameweek. Three points for the exact score, one for the right result. Climb the global table or start a league with your mates.</p>
 
-<div id="auth-banner-wrap"></div>
-<div id="locked-wrap"></div>
-
-<div class="top-strip">
-  <div class="progress-pill">Placed: <span id="placed-count">0</span> / 20</div>
-  <div class="hint-text" id="hint-text">Tap a team to select it</div>
-</div>
-
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Champions League</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>Europa League</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Conference League</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Relegation</div>
-</div>
-
-<div class="table-wrap" id="table-wrap">
-  <!-- Rows generated by JS -->
-</div>
-
-<div class="bottom-bar">
-  <div>
-    <button class="btn-save" id="btn-save" onclick="savePicks()">💾 Save</button>
-    <div class="save-msg" id="save-msg"></div>
+  <div class="tabs">
+    <button class="tab active" id="tab-predict" onclick="showTab('predict')">Predict</button>
+    <button class="tab" id="tab-table" onclick="showTab('table')">Table</button>
+    <button class="tab" id="tab-leagues" onclick="showTab('leagues')">Leagues</button>
   </div>
-  <button class="btn-next" id="btn-next" onclick="goNext()" disabled>Awards & Save →</button>
+
+  <div class="card gate" id="gate" style="display:none">
+    <h2>Sign in to play</h2>
+    <p>Your predictions and points are saved to your SportsStack account.</p>
+    <button class="btn" onclick="goSignIn()">Sign in or create an account</button>
+  </div>
+
+  <div id="pane-predict" style="display:none">
+    <div class="card">
+      <div class="gwbar">
+        <div class="gwtitle" id="gw-title">Gameweek</div>
+        <div>
+          <div class="deadline" id="gw-deadline">&nbsp;</div>
+          <div class="gwnav" style="margin-top:6px;justify-content:flex-end">
+            <button id="gw-prev" onclick="changeGw(-1)">&lsaquo;</button>
+            <button id="gw-next" onclick="changeGw(1)">&rsaquo;</button>
+          </div>
+        </div>
+      </div>
+      <div id="fixtures"></div>
+      <button class="btn btn-wide" id="save-btn" style="margin-top:16px" onclick="savePredictions()">Save predictions</button>
+      <div class="note" id="save-note">You can change these any time before the deadline.</div>
+    </div>
+  </div>
+
+  <div id="pane-table" style="display:none">
+    <div class="card">
+      <h2>Global table</h2>
+      <div class="sub">Everyone playing, ranked on total points.</div>
+      <div id="global-standings"><div class="note">Loading…</div></div>
+    </div>
+  </div>
+
+  <div id="pane-leagues" style="display:none">
+    <div class="card">
+      <h2>Your leagues</h2>
+      <div class="sub">Start one for your mates, or join with a code.</div>
+      <div id="new-code" style="display:none"></div>
+      <div id="league-list"></div>
+      <div id="league-detail" style="display:none"></div>
+      <div class="two" style="margin-top:16px">
+        <div class="field">
+          <label for="new-league">Start a league</label>
+          <input id="new-league" type="text" placeholder="Name it" maxlength="34" autocomplete="off"/>
+          <button class="btn btn-ghost btn-wide" style="margin-top:8px" onclick="createLeague()">Create</button>
+        </div>
+        <div class="field">
+          <label for="join-code">Join with a code</label>
+          <input id="join-code" type="text" placeholder="e.g. PUB4KX" maxlength="10" autocomplete="off" style="text-transform:uppercase"/>
+          <button class="btn btn-ghost btn-wide" style="margin-top:8px" onclick="joinLeague()">Join</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><a href="index.html">← Back to SportsStack</a></div>
 </div>
 
-<script src="sportstack-member.js?v=4"></script>
+<div class="toast" id="toast"></div>
+
 <script>
-const SS_URL='https://syntfyfsyjiuowclarpf.supabase.co';
-const SS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+const SS_URL = 'https://syntfyfsyjiuowclarpf.supabase.co';
+const SS_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+const sb = (window.supabase && window.supabase.createClient)
+  ? window.supabase.createClient(SS_URL, SS_KEY) : null;
+const SEASON = '2026-27';
 
-// 2026-27 Premier League teams (alphabetical default order)
-const DEFAULT_TEAMS = [
-  'Arsenal','Aston Villa','Bournemouth','Brentford','Brighton',
-  'Chelsea','Coventry City','Crystal Palace','Everton','Fulham',
-  'Hull City','Ipswich Town','Leeds United','Liverpool',
-  'Manchester City','Manchester United','Newcastle United',
-  'Nottingham Forest','Sunderland','Tottenham Hotspur'
-];
+let currentUser=null, accessToken=null, viewGw=1, currentGw=1, maxGw=1, fixturesByGw={}, myPredictions={};
 
-// Zone config (position → zone)
-function getZone(pos){
-  if(pos<=5)  return {cls:'cl',  label:'UCL',  bar:'zone-cl'};
-  if(pos<=7)  return {cls:'el',  label:'UEL',  bar:'zone-el'};
-  if(pos===8) return {cls:'conf',label:'UECL', bar:'zone-conf'};
-  if(pos<=17) return {cls:'mid', label:'',     bar:'zone-mid'};
-  return            {cls:'rel',  label:'REL',  bar:'zone-rel'};
-}
+function $(id){ return document.getElementById(id); }
+function goSignIn(){ location.href='auth.html?next=prem-predictor.html'; }
+function headers(json){ const h={apikey:SS_KEY,Authorization:'Bearer '+(accessToken||SS_KEY)}; if(json)h['Content-Type']='application/json'; return h; }
+function toast(m,e){ const t=$('toast'); t.textContent=m; t.className='toast show'+(e?' err':''); setTimeout(()=>t.className='toast'+(e?' err':''),3200); }
 
-let order = [...DEFAULT_TEAMS]; // current predicted table
-let selected = null;            // index of selected position (0-based)
-let isLocked = false;
-let currentUser = null;
-let accessToken = null;
-
-async function init(){
-  await loadConfig();
-  await loadSession();
-  buildTable();
-  updateProgress();
-}
-
-async function loadConfig(){
+function localSession(){
   try{
-    const r=await fetch(`${SS_URL}/rest/v1/prem_config?id=eq.1&select=*`,{headers:{'apikey':SS_KEY,'Authorization':'Bearer '+SS_KEY}});
-    const d=await r.json();
-    if(d.length&&d[0].teams&&d[0].teams.length){
-      // Update teams list from config
-      const configTeams=d[0].teams;
-      order=configTeams.slice();
+    const keys=Object.keys(localStorage).filter(k=>k.indexOf('sb-')===0||(k.indexOf('supabase')>-1&&k.indexOf('auth')>-1));
+    for(const k of keys){
+      const s=JSON.parse(localStorage.getItem(k));
+      const u=s&&(s.user||(s.session&&s.session.user));
+      const t=s&&(s.access_token||(s.session&&s.session.access_token));
+      if(u)return{user:u,token:t};
     }
-    if(d.length&&d[0].is_locked){
-      isLocked=true;
-      document.getElementById('locked-wrap').innerHTML=
-        '<div class="locked-banner" style="max-width:700px;margin:0 auto 10px">🔒 Predictions are locked — the 2026-27 season has started</div>';
+  }catch(e){}
+  return null;
+}
+
+function showTab(which){
+  ['predict','table','leagues'].forEach(t=>{
+    $('pane-'+t).style.display = (t===which)?'':'none';
+    $('tab-'+t).classList.toggle('active', t===which);
+  });
+  if(which==='table') loadGlobalTable();
+  if(which==='leagues') loadLeagues();
+}
+
+function fmtDeadline(iso){
+  const d=new Date(iso);
+  return d.toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'})
+       + ', ' + d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+}
+
+async function loadFixtures(){
+  try{
+    const r=await fetch(SS_URL+'/rest/v1/pp_fixtures?season=eq.'+SEASON+'&select=*&order=gameweek.asc,match_order.asc',{headers:headers(false)});
+    const rows=r.ok?await r.json():[];
+    fixturesByGw={};
+    rows.forEach(f=>{ (fixturesByGw[f.gameweek]=fixturesByGw[f.gameweek]||[]).push(f); });
+    const gws=Object.keys(fixturesByGw).map(Number);
+    maxGw = gws.length?Math.max(...gws):1;
+    currentGw = maxGw;
+    for(const gw of gws.sort((a,b)=>a-b)){
+      if(fixturesByGw[gw].some(f=>f.home_score===null||f.away_score===null)){ currentGw=gw; break; }
     }
-    if(d.length&&d[0].lock_date){
-      const ld=new Date(d[0].lock_date);
-      const now=new Date();
-      if(ld>now){
-        const days=Math.ceil((ld-now)/86400000);
-        document.querySelector('.page-head p').textContent=
-          `Predictions lock in ${days} day${days!==1?'s':''} — before the season kicks off`;
-      }
-    }
+    viewGw=currentGw;
+  }catch(e){ fixturesByGw={}; }
+}
+
+async function loadMyPredictions(){
+  myPredictions={};
+  if(!currentUser) return;
+  try{
+    const r=await fetch(SS_URL+'/rest/v1/pp_predictions?user_id=eq.'+currentUser.id+'&select=fixture_id,home_pred,away_pred',{headers:headers(false)});
+    const rows=r.ok?await r.json():[];
+    rows.forEach(p=>{ myPredictions[p.fixture_id]={h:p.home_pred,a:p.away_pred}; });
   }catch(e){}
 }
 
-async function loadSession(){
-  try{
-    const keys=Object.keys(localStorage).filter(k=>k.includes('supabase')&&k.includes('auth'));
-    if(!keys.length){showAuthBanner();return;}
-    const s=JSON.parse(localStorage.getItem(keys[0]));
-    currentUser=s?.user||s?.session?.user;
-    accessToken=s?.access_token||s?.session?.access_token;
-    if(!currentUser){showAuthBanner();return;}
-    // Load existing picks
-    const r=await fetch(`${SS_URL}/rest/v1/prem_table_picks?user_id=eq.${currentUser.id}&select=*`,
-      {headers:{'apikey':SS_KEY,'Authorization':'Bearer '+accessToken}});
-    const d=await r.json();
-    if(d.length&&d[0].table_order&&d[0].table_order.length===20){
-      order=d[0].table_order.slice();
-      if(d[0].locked) isLocked=true;
+function gwLocked(gw){
+  const fx=fixturesByGw[gw]; if(!fx||!fx.length) return true;
+  const first=Math.min(...fx.map(f=>new Date(f.deadline).getTime()));
+  return Date.now()>=first;
+}
+
+function renderFixtures(){
+  const fx=fixturesByGw[viewGw]||[];
+  const gws=Object.keys(fixturesByGw).map(Number);
+  const minGw=gws.length?Math.min(...gws):1;
+  $('gw-title').textContent='Gameweek '+viewGw;
+  $('gw-prev').disabled=(viewGw<=minGw);
+  $('gw-next').disabled=(viewGw>=maxGw);
+
+  const locked=gwLocked(viewGw);
+  const dl=fx.length?fmtDeadline(fx[0].deadline):'';
+  const dlEl=$('gw-deadline');
+  dlEl.textContent = locked ? 'Locked' : 'Locks '+dl;
+  dlEl.classList.toggle('closed', locked);
+
+  let html='';
+  fx.forEach(f=>{
+    const mine=myPredictions[f.id];
+    const played=(f.home_score!==null&&f.away_score!==null);
+    let cls='fx', pts='', actual='';
+    if(played && mine){
+      const exact=(mine.h===f.home_score&&mine.a===f.away_score);
+      const result=(Math.sign(mine.h-mine.a)===Math.sign(f.home_score-f.away_score));
+      const p=exact?3:(result?1:0);
+      if(p>0) cls+=' correct';
+      pts='<div class="pts'+(p===0?' zero':'')+'">'+p+'</div>';
+    } else {
+      pts='<div class="pts" style="color:transparent">0</div>';
     }
-  }catch(e){showAuthBanner();}
-}
-
-function showAuthBanner(){
-  document.getElementById('auth-banner-wrap').innerHTML=
-    '<div class="auth-banner"><h3>Sign in to save your prediction</h3>'+
-    '<p>Free to join — save your table prediction and compete on the leaderboard</p>'+
-    '<button class="btn-auth" onclick="document.dispatchEvent(new CustomEvent(\'ss:showSignIn\'))">Sign In / Join Free</button></div>';
-}
-
-function buildTable(){
-  const wrap=document.getElementById('table-wrap');
-  wrap.innerHTML='';
-  order.forEach((team,i)=>{
-    const pos=i+1;
-    const zone=getZone(pos);
-    // Zone divider labels
-    if(pos===1)  addDivider(wrap,'Champions League (Top 5)');
-    if(pos===6)  addDivider(wrap,'Europa League');
-    if(pos===8)  addDivider(wrap,'Conference League');
-    if(pos===9)  addDivider(wrap,'');
-    if(pos===18) addDivider(wrap,'Relegation Zone');
-    const row=document.createElement('div');
-    row.className='pred-row';
-    row.id='row-'+i;
-    const isSelected=(selected===i);
-    row.innerHTML=
-      `<div class="pos-num">${pos}</div>`+
-      `<div class="zone-bar ${zone.bar}"></div>`+
-      `<div class="team-card${isSelected?' selected':''}${!team?' empty':''}" onclick="tapTeam(${i})"`+
-      ` id="tc-${i}">`+
-      `<span class="team-name">${team||'— pick a team'}</span>`+
-      (zone.label?`<span class="team-zone-label label-${zone.cls}">${zone.label}</span>`:'')+
-      `</div>`+
-      `<div class="arrows">`+
-      `<button class="arr-btn" onclick="moveUp(${i})" ${isLocked||i===0?'disabled':''}>▲</button>`+
-      `<button class="arr-btn" onclick="moveDown(${i})" ${isLocked||i===19?'disabled':''}>▼</button>`+
-      `</div>`;
-    wrap.appendChild(row);
+    if(played) actual='Actual: '+f.home_score+'–'+f.away_score;
+    const dis=(locked||played)?' disabled':'';
+    html+='<div class="'+cls+'">'
+       + '<div class="team h">'+f.home+'</div>'
+       + '<div>'
+       +   '<div class="score-in">'
+       +     '<input type="number" min="0" max="99" id="h-'+f.id+'" value="'+(mine?mine.h:'')+'"'+dis+' inputmode="numeric"/>'
+       +     '<span class="dash">&ndash;</span>'
+       +     '<input type="number" min="0" max="99" id="a-'+f.id+'" value="'+(mine?mine.a:'')+'"'+dis+' inputmode="numeric"/>'
+       +   '</div>'
+       +   '<div class="actual">'+actual+'</div>'
+       + '</div>'
+       + '<div class="team a">'+f.away+'</div>'
+       + pts
+       + '</div>';
   });
+  $('fixtures').innerHTML=html || '<div class="note">No fixtures loaded for this gameweek yet.</div>';
+
+  const btn=$('save-btn');
+  btn.style.display = (locked||!currentUser) ? 'none' : '';
+  $('save-note').textContent = locked
+    ? 'This gameweek is locked.'
+    : 'You can change these any time before the deadline.';
 }
 
-function addDivider(wrap, label){
-  const d=document.createElement('div');
-  d.className='zone-divider';
-  wrap.appendChild(d);
-  if(label){
-    const l=document.createElement('div');
-    l.className='zone-label-row';
-    l.textContent=label;
-    wrap.appendChild(l);
+function changeGw(delta){
+  const gws=Object.keys(fixturesByGw).map(Number);
+  if(!gws.length) return;
+  const nv=viewGw+delta;
+  if(nv<Math.min(...gws)||nv>maxGw) return;
+  viewGw=nv; renderFixtures();
+}
+
+async function savePredictions(){
+  if(!currentUser){ goSignIn(); return; }
+  if(gwLocked(viewGw)){ toast('This gameweek is locked.',true); return; }
+  const fx=fixturesByGw[viewGw]||[];
+  const rows=[];
+  for(const f of fx){
+    const hv=$('h-'+f.id).value, av=$('a-'+f.id).value;
+    if(hv===''||av==='') continue;
+    rows.push({user_id:currentUser.id,fixture_id:f.id,home_pred:parseInt(hv,10),away_pred:parseInt(av,10)});
   }
-}
+  if(!rows.length){ toast('Enter at least one score.',true); return; }
 
-function tapTeam(idx){
-  if(isLocked) return;
-  if(selected===null){
-    selected=idx;
-    document.getElementById('hint-text').textContent='Now tap the position you want to swap with';
-  } else if(selected===idx){
-    selected=null;
-    document.getElementById('hint-text').textContent='Tap a team to select it';
-  } else {
-    // Swap
-    const tmp=order[selected];
-    order[selected]=order[idx];
-    order[idx]=tmp;
-    selected=null;
-    document.getElementById('hint-text').textContent='Tap a team to select it';
-  }
-  buildTable();
-  updateProgress();
-}
-
-function moveUp(idx){
-  if(isLocked||idx===0) return;
-  const tmp=order[idx-1];order[idx-1]=order[idx];order[idx]=tmp;
-  selected=null;buildTable();updateProgress();
-}
-function moveDown(idx){
-  if(isLocked||idx===19) return;
-  const tmp=order[idx+1];order[idx+1]=order[idx];order[idx]=tmp;
-  selected=null;buildTable();updateProgress();
-}
-
-function updateProgress(){
-  const placed=order.filter(t=>t&&t.trim()).length;
-  document.getElementById('placed-count').textContent=placed;
-  const btn=document.getElementById('btn-next');
-  if(btn) btn.disabled=(placed<20||!currentUser);
-}
-
-async function savePicks(){
-  if(!currentUser){setMsg('Sign in to save','');return;}
-  setMsg('Saving…','');
+  const btn=$('save-btn'); btn.disabled=true; btn.textContent='Saving…';
   try{
-    const body=JSON.stringify({user_id:currentUser.id,table_order:order,updated_at:new Date().toISOString()});
-    const r=await fetch(`${SS_URL}/rest/v1/prem_table_picks`,{
-      method:'POST',headers:{'apikey':SS_KEY,'Authorization':'Bearer '+accessToken,
-        'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},
-      body});
-    r.ok?setMsg('✓ Saved!','ok'):setMsg('Error — try again','');
-  }catch(e){setMsg('Error — try again','');}
+    await fetch(SS_URL+'/rest/v1/pp_players?on_conflict=user_id',{
+      method:'POST',headers:Object.assign(headers(true),{Prefer:'resolution=merge-duplicates'}),
+      body:JSON.stringify({user_id:currentUser.id,email:currentUser.email||null,
+        display_name:(currentUser.user_metadata&&(currentUser.user_metadata.full_name||currentUser.user_metadata.display_name))||null})
+    });
+    const res=await fetch(SS_URL+'/rest/v1/pp_predictions?on_conflict=user_id,fixture_id',{
+      method:'POST',headers:Object.assign(headers(true),{Prefer:'resolution=merge-duplicates'}),
+      body:JSON.stringify(rows)
+    });
+    if(!res.ok){
+      let msg='Could not save.';
+      try{ const e=JSON.parse(await res.text()); if(e.message) msg='Could not save: '+e.message.slice(0,80); }catch(x){}
+      toast(msg,true);
+    } else {
+      rows.forEach(r=>myPredictions[r.fixture_id]={h:r.home_pred,a:r.away_pred});
+      toast('Predictions saved.');
+    }
+  }catch(e){ toast('Network error.',true); }
+  btn.disabled=false; btn.textContent='Save predictions';
 }
 
-function goNext(){
-  // Save current state to sessionStorage so bonus page can read it
-  sessionStorage.setItem('prem_table',JSON.stringify(order));
-  savePicks().then(()=>window.location.href='prem-bonus.html');
+function renderStandings(host, rows){
+  if(!rows.length){ host.innerHTML='<div class="note">No points yet. They appear once results are in.</div>'; return; }
+  let html='<table class="mini-table"><thead><tr><th class="rank">#</th><th>Player</th><th style="text-align:right">Pld</th><th style="text-align:right">Pts</th></tr></thead><tbody>';
+  rows.forEach((r,i)=>{
+    const me=r.user_id===(currentUser&&currentUser.id);
+    html+='<tr'+(me?' class="you"':'')+'><td class="rank">'+(i+1)+'</td>'
+       + '<td>'+r.display_name+(me?' (you)':'')+'</td>'
+       + '<td style="text-align:right;color:var(--mute)">'+r.played+'</td>'
+       + '<td class="pts">'+r.points+'</td></tr>';
+  });
+  html+='</tbody></table>';
+  host.innerHTML=html;
 }
 
-function setMsg(msg,cls){
-  const el=document.getElementById('save-msg');
-  el.textContent=msg;el.className='save-msg'+(cls?' '+cls:'');
+async function loadGlobalTable(){
+  const host=$('global-standings');
+  try{
+    const r=await fetch(SS_URL+'/rest/v1/rpc/pp_standings',{method:'POST',headers:headers(true),body:'{}'});
+    renderStandings(host, r.ok?await r.json():[]);
+  }catch(e){ host.innerHTML='<div class="note">Could not load the table.</div>'; }
 }
 
-init();
+function makeCode(){ const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s=''; for(let i=0;i<6;i++)s+=c[Math.floor(Math.random()*c.length)]; return s; }
+
+async function createLeague(){
+  if(!currentUser){ goSignIn(); return; }
+  const name=$('new-league').value.trim();
+  if(!name){ toast('Give the league a name.',true); return; }
+  const code=makeCode();
+  try{
+    const res=await fetch(SS_URL+'/rest/v1/pp_leagues',{method:'POST',
+      headers:Object.assign(headers(true),{Prefer:'return=representation'}),
+      body:JSON.stringify({code,name,owner_id:currentUser.id,season:SEASON})});
+    if(!res.ok){ toast('Could not create the league.',true); return; }
+    const created=(await res.json())[0];
+    await fetch(SS_URL+'/rest/v1/pp_league_members',{method:'POST',
+      headers:Object.assign(headers(true),{Prefer:'resolution=merge-duplicates'}),
+      body:JSON.stringify({league_id:created.id,user_id:currentUser.id})});
+    $('new-league').value='';
+    $('new-code').innerHTML='<div class="newcode"><div class="newcode-label">'+created.name+' is live. Send this code to your mates.</div><button class="newcode-chip" onclick="copyCode(\''+created.code+'\')">'+created.code+'</button></div>';
+    $('new-code').style.display='';
+    loadLeagues();
+  }catch(e){ toast('Network error.',true); }
+}
+
+async function joinLeague(){
+  if(!currentUser){ goSignIn(); return; }
+  const code=$('join-code').value.trim().toUpperCase();
+  if(!code){ toast('Enter a league code.',true); return; }
+  try{
+    const r=await fetch(SS_URL+'/rest/v1/pp_leagues?code=eq.'+encodeURIComponent(code)+'&select=id,name',{headers:headers(false)});
+    const rows=r.ok?await r.json():[];
+    if(!rows.length){ toast('No league with that code.',true); return; }
+    const res=await fetch(SS_URL+'/rest/v1/pp_league_members',{method:'POST',
+      headers:Object.assign(headers(true),{Prefer:'resolution=merge-duplicates'}),
+      body:JSON.stringify({league_id:rows[0].id,user_id:currentUser.id})});
+    if(!res.ok){ toast('Could not join.',true); return; }
+    $('join-code').value='';
+    toast('Joined '+rows[0].name);
+    loadLeagues();
+  }catch(e){ toast('Network error.',true); }
+}
+
+async function loadLeagues(){
+  if(!currentUser) return;
+  let mine=[];
+  try{
+    const r=await fetch(SS_URL+'/rest/v1/pp_league_members?user_id=eq.'+currentUser.id+'&select=league_id,pp_leagues(id,name,code)',{headers:headers(false)});
+    mine=r.ok?await r.json():[];
+  }catch(e){}
+  let html='';
+  if(!mine.length){
+    html='<div class="note">You are not in a league yet. Start one below and send the code to your mates.</div>';
+  } else {
+    mine.forEach(m=>{
+      const lg=m.pp_leagues; if(!lg) return;
+      html+='<div class="league-row"><div class="lg-main lg-click" onclick="openLeague(\''+lg.id+'\',\''+String(lg.name).replace(/'/g,"\\'")+'\')">'
+         + '<div class="league-name">'+lg.name+'</div><div class="league-meta">Tap to see the table</div></div>'
+         + '<button class="code-chip" onclick="event.stopPropagation();copyCode(\''+lg.code+'\')">'+lg.code+'</button></div>';
+    });
+  }
+  $('league-list').innerHTML=html;
+}
+
+async function openLeague(id,name){
+  const panel=$('league-detail'); panel.style.display='';
+  panel.innerHTML='<div class="ld-head"><div class="ld-title">'+name+'</div><button class="ld-close" onclick="closeLeague()">Close</button></div><div class="note">Loading…</div>';
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  let rows=[];
+  try{
+    const r=await fetch(SS_URL+'/rest/v1/rpc/pp_league_standings',{method:'POST',headers:headers(true),body:JSON.stringify({lg:id})});
+    rows=r.ok?await r.json():[];
+  }catch(e){}
+  let html='<div class="ld-head"><div class="ld-title">'+name+'</div><button class="ld-close" onclick="closeLeague()">Close</button></div>';
+  const tmp=document.createElement('div'); renderStandings(tmp,rows); html+=tmp.innerHTML;
+  panel.innerHTML=html;
+}
+function closeLeague(){ const p=$('league-detail'); p.style.display='none'; p.innerHTML=''; }
+function copyCode(code){ if(navigator.clipboard) navigator.clipboard.writeText(code).then(()=>toast('Code copied: '+code)); else toast('Code: '+code); }
+
+async function boot(){
+  const s=localSession();
+  currentUser=s?s.user:null; accessToken=s?s.token:null;
+  await loadFixtures();
+  if(!currentUser){
+    $('gate').style.display='';
+    $('pane-predict').style.display='';
+    renderFixtures();
+    return;
+  }
+  await loadMyPredictions();
+  $('pane-predict').style.display='';
+  renderFixtures();
+}
+boot();
 </script>
+<script src="sportstack-member.js?v=4"></script>
 </body>
 </html>
