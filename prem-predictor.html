@@ -163,9 +163,14 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
   </div>
 
   <div id="pane-table" style="display:none">
+    <div class="card" id="gw-board-card">
+      <h2 id="gw-board-title">Last gameweek</h2>
+      <div class="sub">Top scorers from the most recent completed gameweek.</div>
+      <div id="gw-standings"><div class="note">Loading…</div></div>
+    </div>
     <div class="card">
-      <h2>Global table</h2>
-      <div class="sub">Everyone playing, ranked on total points.</div>
+      <h2>Overall table</h2>
+      <div class="sub">Everyone playing, ranked on total points across the season.</div>
       <div id="global-standings"><div class="note">Loading…</div></div>
     </div>
   </div>
@@ -387,6 +392,28 @@ async function loadGlobalTable(){
     const r=await fetch(SS_URL+'/rest/v1/rpc/pp_standings',{method:'POST',headers:headers(true),body:'{}'});
     renderStandings(host, r.ok?await r.json():[]);
   }catch(e){ host.innerHTML='<div class="note">Could not load the table.</div>'; }
+  loadGwBoard();
+}
+
+async function loadGwBoard(){
+  const card=$('gw-board-card'), host=$('gw-standings'), title=$('gw-board-title');
+  try{
+    // which gameweek was last completed?
+    const g=await fetch(SS_URL+'/rest/v1/rpc/pp_last_completed_gw',{method:'POST',headers:headers(true),body:'{}'});
+    const gw = g.ok ? await g.json() : null;
+    if(!gw){
+      // no completed gameweek yet — hide the board rather than show an empty one
+      if(card) card.style.display='none';
+      return;
+    }
+    if(card) card.style.display='';
+    if(title) title.textContent='Gameweek '+gw+' — top scorers';
+    const r=await fetch(SS_URL+'/rest/v1/rpc/pp_gw_standings',{method:'POST',headers:headers(true),body:JSON.stringify({gw:gw})});
+    const rows = r.ok ? await r.json() : [];
+    if(!rows.length){ host.innerHTML='<div class="note">No scores in yet for that gameweek.</div>'; return; }
+    // show top 10 of the week
+    renderStandings(host, rows.slice(0,10));
+  }catch(e){ if(card) card.style.display='none'; }
 }
 
 function makeCode(){ const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s=''; for(let i=0;i<6;i++)s+=c[Math.floor(Math.random()*c.length)]; return s; }
