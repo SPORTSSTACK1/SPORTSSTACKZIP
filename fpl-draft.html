@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<meta name="description" content="Free FPL-style snake draft simulator. Draft against up to 9 computer managers, build the best Premier League squad, and see which players the community picks most. No sign-up."/>
+<meta property="og:title" content="FPL Draft Simulator — SportsStack"/>
+<meta property="og:description" content="Snake-draft a Premier League squad against the computer. See which players get drafted most."/>
+<meta property="og:url" content="https://sportsstack.com.au/fpl-draft"/>
+<meta property="og:type" content="website"/>
+<link rel="canonical" href="https://sportsstack.com.au/fpl-draft"/>
+<title>FPL Draft Simulator — Snake Draft a Premier League Squad | SportsStack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TL0NM71G5M"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-TL0NM71G5M');</script>
+<style>
+:root{
+  --bg:#0A0F1E;--surface:#141C30;--surface2:#1B2438;--line:#26314A;--line2:#33405C;
+  --ink:#EDF1F8;--ink2:#B7C2D8;--mute:#7C8AA6;--mute2:#5A6784;
+  --gold:#F5C842;--gold-dim:#C79A28;
+  --gk:#f59e0b;--def:#3b82f6;--mid:#22c55e;--fwd:#ef4444;
+  --you:#F5C842;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Sora',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+nav{position:sticky;top:0;z-index:900;background:rgba(10,15,30,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:56px}
+nav a.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:14px}
+nav img{height:32px;width:32px;border-radius:7px;object-fit:contain}
+.nav-link{font:700 11px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim);text-decoration:none;padding:8px 14px;border:1px solid var(--line2);border-radius:6px}
+
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 80px}
+.kicker{font:700 9.5px/1 'Sora',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.kicker:before{content:"";width:26px;height:1px;background:var(--gold-dim)}
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(38px,8vw,64px);line-height:.9;letter-spacing:.01em;text-transform:uppercase;margin-bottom:10px}
+h1 span{color:var(--gold)}
+.lede{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:15px;line-height:1.6;color:var(--ink2);max-width:56ch;margin-bottom:22px}
+
+/* setup panel */
+.setup{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px}
+.setup h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:20px;margin-bottom:4px}
+.setup .sub{font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:13px;color:var(--mute);margin-bottom:18px}
+.field{margin-bottom:18px}
+.field label{display:block;font:700 10px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:9px}
+.stepper{display:flex;align-items:center;gap:14px}
+.stepper button{width:44px;height:44px;border-radius:9px;border:1px solid var(--line2);background:var(--surface2);color:var(--ink);font-size:22px;cursor:pointer;transition:background .15s}
+.stepper button:hover{background:var(--line)}
+.stepper .val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;min-width:44px;text-align:center}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:70px;padding:11px 8px;border-radius:8px;border:1px solid var(--line2);background:var(--surface2);color:var(--ink2);font:600 13px/1 'Sora',sans-serif;cursor:pointer;transition:all .15s}
+.seg button.on{background:var(--gold);color:#2A2200;border-color:var(--gold);font-weight:700}
+.btn{display:inline-block;padding:15px 26px;border:none;border-radius:8px;font:800 12px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;background:var(--gold);color:#2A2200;transition:background .15s}
+.btn:hover{background:#ffd75a}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-wide{width:100%}
+
+/* draft board */
+.board{display:none}
+.status{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:56px;z-index:100}
+.status .now{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase}
+.status .now em{font-style:normal;color:var(--gold)}
+.status .rnd{font:600 11px/1.3 'Sora',sans-serif;color:var(--mute);text-align:right}
+.status.yourturn{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+
+.layout{display:grid;grid-template-columns:1fr 340px;gap:16px}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+
+/* pool */
+.pool{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.posfilter{display:flex;gap:6px;margin-bottom:12px}
+.posfilter button{flex:1;padding:9px 6px;border-radius:7px;border:1px solid var(--line2);background:var(--surface2);color:var(--ink2);font:700 11px/1 'Sora',sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.posfilter button.on{color:#fff}
+.posfilter button.on[data-pos="ALL"]{background:var(--mute2);border-color:var(--mute2)}
+.posfilter button.on[data-pos="GK"]{background:var(--gk);border-color:var(--gk)}
+.posfilter button.on[data-pos="DEF"]{background:var(--def);border-color:var(--def)}
+.posfilter button.on[data-pos="MID"]{background:var(--mid);border-color:var(--mid)}
+.posfilter button.on[data-pos="FWD"]{background:var(--fwd);border-color:var(--fwd)}
+.search{width:100%;padding:11px 13px;background:var(--surface2);border:1px solid var(--line2);border-radius:7px;color:var(--ink);font-family:'Sora',sans-serif;font-size:14px;outline:none;margin-bottom:12px}
+.search:focus{border-color:var(--gold)}
+.plist{max-height:60vh;overflow-y:auto;display:flex;flex-direction:column;gap:5px}
+.prow{display:flex;align-items:center;gap:10px;padding:10px 11px;background:var(--surface2);border:1px solid var(--line);border-radius:8px;cursor:pointer;transition:border-color .15s}
+.prow:hover{border-color:var(--gold)}
+.prow.disabled{opacity:.32;pointer-events:none}
+.pos-badge{font:800 9px/1 'Sora',sans-serif;letter-spacing:.05em;padding:4px 6px;border-radius:4px;color:#fff;min-width:34px;text-align:center}
+.pos-GK{background:var(--gk)}.pos-DEF{background:var(--def)}.pos-MID{background:var(--mid)}.pos-FWD{background:var(--fwd)}
+.pname{flex:1;min-width:0}
+.pname .nm{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pname .cl{font-size:11px;color:var(--mute)}
+.ppop{font:700 10px/1 'Sora',sans-serif;color:var(--gold-dim);white-space:nowrap}
+.pick-tag{font:800 9px/1 'Sora',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:5px 8px}
+
+/* my squad */
+.squad{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;align-self:start}
+.squad h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;margin-bottom:12px}
+.squad-group{margin-bottom:12px}
+.squad-group .glabel{font:700 9px/1 'Sora',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:6px;display:flex;justify-content:space-between}
+.slot{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;margin-bottom:4px;font-size:12.5px;background:var(--surface2);border:1px solid var(--line)}
+.slot.empty{border-style:dashed;color:var(--mute2);font-style:italic}
+.slot .sc{font-size:10px;color:var(--mute)}
+.tabs2{display:flex;gap:6px;margin-bottom:12px}
+.tabs2 button{flex:1;padding:9px;border-radius:7px;border:1px solid var(--line2);background:var(--surface2);color:var(--ink2);font:700 10px/1 'Sora',sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.tabs2 button.on{background:var(--gold);color:#2A2200;border-color:var(--gold)}
+.mgrpick{font-size:12px;padding:6px 9px;border-radius:6px;margin-bottom:4px;background:var(--surface2);border:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}
+.mgrpick .rr{color:var(--mute);font-size:10px}
+
+/* results */
+.results{display:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;margin-top:16px}
+.grade-big{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:72px;line-height:1;color:var(--gold);text-align:center}
+.grade-cap{text-align:center;font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--ink2);margin:6px 0 20px}
+.stand{width:100%;border-collapse:collapse;margin-top:8px}
+.stand th{text-align:left;font:700 9px/1 'Sora',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);padding:8px 6px;border-bottom:1px solid var(--line)}
+.stand td{padding:9px 6px;border-bottom:1px solid var(--line);font-size:13px}
+.stand tr.you td{color:var(--gold);font-weight:700}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:#0d1424;border:1px solid var(--line2);color:var(--ink);padding:13px 20px;border-radius:8px;font-size:13.5px;opacity:0;transition:all .28s;z-index:1000}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.foot{text-align:center;margin-top:28px}
+.foot a{color:var(--mute);font-size:12.5px;text-decoration:none}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="index.html"><img src="LOGO.jpeg" alt="SportsStack"/> SportsStack</a>
+  <a class="nav-link" href="index.html">Home</a>
+</nav>
+
+<div class="wrap">
+  <div class="kicker">Premier League · Mock Draft</div>
+  <h1>FPL <span>Draft</span></h1>
+  <p class="lede">Snake-draft a Premier League squad against the computer. Take turns picking, no two managers can hold the same player, and the board learns which players the community drafts most and floats them to the top.</p>
+
+  <!-- SETUP -->
+  <div class="setup" id="setup">
+    <h2>Set up your draft</h2>
+    <div class="sub">Pick how many managers, then draft.</div>
+    <div class="field">
+      <label>Managers (you + computers)</label>
+      <div class="stepper">
+        <button onclick="stepMgr(-1)" aria-label="Fewer managers">-</button>
+        <div class="val" id="mgr-val">4</div>
+        <button onclick="stepMgr(1)" aria-label="More managers">+</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Your draft position</label>
+      <div class="seg" id="slot-seg"></div>
+    </div>
+    <button class="btn btn-wide" onclick="startDraft()">Start draft</button>
+  </div>
+
+  <!-- BOARD -->
+  <div class="board" id="board">
+    <div class="status" id="status">
+      <div class="now" id="now-pick">&nbsp;</div>
+      <div class="rnd" id="rnd-info">&nbsp;</div>
+    </div>
+    <div class="layout">
+      <div class="pool">
+        <div class="posfilter" id="posfilter"></div>
+        <input class="search" id="search" type="text" placeholder="Search players…" oninput="renderPool()" autocomplete="off"/>
+        <div class="plist" id="plist"></div>
+      </div>
+      <div class="squad">
+        <div class="tabs2">
+          <button id="t-me" class="on" onclick="squadTab('me')">My squad</button>
+          <button id="t-log" onclick="squadTab('log')">Draft log</button>
+        </div>
+        <div id="squad-me"></div>
+        <div id="squad-log" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="grade-big" id="grade">A</div>
+    <div class="grade-cap" id="grade-cap"></div>
+    <div id="final-squad"></div>
+    <table class="stand"><thead><tr><th>#</th><th>Manager</th><th style="text-align:right">Squad rating</th></tr></thead><tbody id="stand-body"></tbody></table>
+    <button class="btn btn-wide" style="margin-top:20px" onclick="location.reload()">New draft</button>
+  </div>
+
+  <div class="foot"><a href="index.html">← Back to SportsStack</a></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SS_URL='https://syntfyfsyjiuowclarpf.supabase.co';
+const SS_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5bnRmeWZzeWppdW93Y2xhcnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODgwNzgsImV4cCI6MjA5NTk2NDA3OH0.jQVBQo7tnv1RBEnCdzZCIvx8vVjsaXWRfZ3VNm1__Ig';
+
+// Player pool (rank = array order = analytical strength). Popularity loaded from Supabase.
+const PLAYERS = [
+  {n:"David Raya",c:"Arsenal",p:"GK"},
+  {n:"Gianluigi Donnarumma",c:"Man City",p:"GK"},
+  {n:"Robert Sánchez",c:"Chelsea",p:"GK"},
+  {n:"Alisson",c:"Liverpool",p:"GK"},
+  {n:"Bart Verbruggen",c:"Brighton",p:"GK"},
+  {n:"Giorgi Mamardashvili",c:"Liverpool",p:"GK"},
+  {n:"Emiliano Martínez",c:"Chelsea",p:"GK"},
+  {n:"Nick Pope",c:"Newcastle",p:"GK"},
+  {n:"Jordan Pickford",c:"Everton",p:"GK"},
+  {n:"Guglielmo Vicario",c:"Tottenham",p:"GK"},
+  {n:"André Onana",c:"Man Utd",p:"GK"},
+  {n:"Caoimhín Kelleher",c:"Brentford",p:"GK"},
+  {n:"Djordje Petrovic",c:"Bournemouth",p:"GK"},
+  {n:"Mads Hermansen",c:"West Ham",p:"GK"},
+  {n:"Dean Henderson",c:"Crystal Palace",p:"GK"},
+  {n:"James Trafford",c:"Man City",p:"GK"},
+  {n:"Filip Jørgensen",c:"Chelsea",p:"GK"},
+  {n:"Mark Flekken",c:"Leeds",p:"GK"},
+  {n:"Robin Roefs",c:"Sunderland",p:"GK"},
+  {n:"Sam Johnstone",c:"Wolves",p:"GK"},
+  {n:"William Saliba",c:"Arsenal",p:"DEF"},
+  {n:"Josko Gvardiol",c:"Man City",p:"DEF"},
+  {n:"Marc Guéhi",c:"Man City",p:"DEF"},
+  {n:"Jurriën Timber",c:"Arsenal",p:"DEF"},
+  {n:"Gabriel",c:"Arsenal",p:"DEF"},
+  {n:"Virgil van Dijk",c:"Liverpool",p:"DEF"},
+  {n:"Cristian Romero",c:"Tottenham",p:"DEF"},
+  {n:"Micky van de Ven",c:"Tottenham",p:"DEF"},
+  {n:"Piero Hincapié",c:"Arsenal",p:"DEF"},
+  {n:"Murillo",c:"Nott'm Forest",p:"DEF"},
+  {n:"Maxence Lacroix",c:"Crystal Palace",p:"DEF"},
+  {n:"Marc Cucurella",c:"Chelsea",p:"DEF"},
+  {n:"Malick Thiaw",c:"Newcastle",p:"DEF"},
+  {n:"Ibrahima Konaté",c:"Liverpool",p:"DEF"},
+  {n:"Rayan Aït-Nouri",c:"Man City",p:"DEF"},
+  {n:"Jan Paul van Hecke",c:"Brighton",p:"DEF"},
+  {n:"Jarrad Branthwaite",c:"Everton",p:"DEF"},
+  {n:"Trevoh Chalobah",c:"Chelsea",p:"DEF"},
+  {n:"Lisandro Martínez",c:"Man Utd",p:"DEF"},
+  {n:"Ezri Konsa",c:"Aston Villa",p:"DEF"},
+  {n:"Jeremie Frimpong",c:"Liverpool",p:"DEF"},
+  {n:"Jakub Kiwior",c:"Arsenal",p:"DEF"},
+  {n:"Pedro Porro",c:"Tottenham",p:"DEF"},
+  {n:"Sven Botman",c:"Newcastle",p:"DEF"},
+  {n:"Ferdi Kadıoğlu",c:"Brighton",p:"DEF"},
+  {n:"Nathan Collins",c:"Brentford",p:"DEF"},
+  {n:"Ian Maatsen",c:"Aston Villa",p:"DEF"},
+  {n:"Djed Spence",c:"Tottenham",p:"DEF"},
+  {n:"Wesley Fofana",c:"Chelsea",p:"DEF"},
+  {n:"Matthijs de Ligt",c:"Man Utd",p:"DEF"},
+  {n:"Diogo Dalot",c:"Man Utd",p:"DEF"},
+  {n:"Neco Williams",c:"Nott'm Forest",p:"DEF"},
+  {n:"Ben White",c:"Arsenal",p:"DEF"},
+  {n:"Calvin Bassey",c:"Fulham",p:"DEF"},
+  {n:"Chris Richards",c:"Crystal Palace",p:"DEF"},
+  {n:"Ethan Ampadu",c:"Leeds",p:"DEF"},
+  {n:"Milos Kerkez",c:"Liverpool",p:"DEF"},
+  {n:"Tino Livramento",c:"Newcastle",p:"DEF"},
+  {n:"Lewis Hall",c:"Newcastle",p:"DEF"},
+  {n:"Nikola Milenković",c:"Nott'm Forest",p:"DEF"},
+  {n:"Tyrick Mitchell",c:"Crystal Palace",p:"DEF"},
+  {n:"Levi Colwill",c:"Chelsea",p:"DEF"},
+  {n:"Cristhian Mosquera",c:"Arsenal",p:"DEF"},
+  {n:"Myles Lewis-Skelly",c:"Arsenal",p:"DEF"},
+  {n:"Destiny Udogie",c:"Tottenham",p:"DEF"},
+  {n:"Malo Gusto",c:"Chelsea",p:"DEF"},
+  {n:"Kevin Danso",c:"Tottenham",p:"DEF"},
+  {n:"Dan Burn",c:"Newcastle",p:"DEF"},
+  {n:"Joachim Andersen",c:"Fulham",p:"DEF"},
+  {n:"Antonee Robinson",c:"Fulham",p:"DEF"},
+  {n:"Noussair Mazraoui",c:"Man Utd",p:"DEF"},
+  {n:"Vitaliy Mykolenko",c:"Everton",p:"DEF"},
+  {n:"James Tarkowski",c:"Everton",p:"DEF"},
+  {n:"Dan Ballard",c:"Sunderland",p:"DEF"},
+  {n:"Joe Rodon",c:"Leeds",p:"DEF"},
+  {n:"Nathan Aké",c:"Man City",p:"DEF"},
+  {n:"Rúben Dias",c:"Man City",p:"DEF"},
+  {n:"Manuel Akanji",c:"Man City",p:"DEF"},
+  {n:"Aaron Wan-Bissaka",c:"West Ham",p:"DEF"},
+  {n:"Konstantinos Mavropanos",c:"West Ham",p:"DEF"},
+  {n:"Axel Disasi",c:"West Ham",p:"DEF"},
+  {n:"Taylor Harwood-Bellis",c:"Southampton",p:"DEF"},
+  {n:"Jurrien Timber",c:"Arsenal",p:"DEF"},
+  {n:"Declan Rice",c:"Arsenal",p:"MID"},
+  {n:"Dominik Szoboszlai",c:"Liverpool",p:"MID"},
+  {n:"Cole Palmer",c:"Chelsea",p:"MID"},
+  {n:"Moisés Caicedo",c:"Chelsea",p:"MID"},
+  {n:"Morgan Rogers",c:"Aston Villa",p:"MID"},
+  {n:"Enzo Fernández",c:"Chelsea",p:"MID"},
+  {n:"Ryan Gravenberch",c:"Liverpool",p:"MID"},
+  {n:"Florian Wirtz",c:"Liverpool",p:"MID"},
+  {n:"Rayan Cherki",c:"Man City",p:"MID"},
+  {n:"Sandro Tonali",c:"Tottenham",p:"MID"},
+  {n:"Elliot Anderson",c:"Nott'm Forest",p:"MID"},
+  {n:"Martín Zubimendi",c:"Arsenal",p:"MID"},
+  {n:"Phil Foden",c:"Man City",p:"MID"},
+  {n:"Morgan Gibbs-White",c:"Nott'm Forest",p:"MID"},
+  {n:"Alexis Mac Allister",c:"Liverpool",p:"MID"},
+  {n:"Bruno Guimarães",c:"Newcastle",p:"MID"},
+  {n:"Martin Ødegaard",c:"Arsenal",p:"MID"},
+  {n:"Eberechi Eze",c:"Arsenal",p:"MID"},
+  {n:"Reece James",c:"Chelsea",p:"MID"},
+  {n:"Bukayo Saka",c:"Arsenal",p:"MID"},
+  {n:"Jérémy Doku",c:"Man City",p:"MID"},
+  {n:"Bryan Mbeumo",c:"Man Utd",p:"MID"},
+  {n:"Cody Gakpo",c:"Liverpool",p:"MID"},
+  {n:"Kai Havertz",c:"Arsenal",p:"MID"},
+  {n:"Mohammed Kudus",c:"Tottenham",p:"MID"},
+  {n:"Amad Diallo",c:"Man Utd",p:"MID"},
+  {n:"Tijjani Reijnders",c:"Man City",p:"MID"},
+  {n:"Nico González",c:"Man City",p:"MID"},
+  {n:"James Garner",c:"Everton",p:"MID"},
+  {n:"João Gomes",c:"Wolves",p:"MID"},
+  {n:"Boubacar Kamara",c:"Aston Villa",p:"MID"},
+  {n:"Curtis Jones",c:"Liverpool",p:"MID"},
+  {n:"Jacob Ramsey",c:"Newcastle",p:"MID"},
+  {n:"Kiernan Dewsbury-Hall",c:"Everton",p:"MID"},
+  {n:"Conor Gallagher",c:"Tottenham",p:"MID"},
+  {n:"Anthony Elanga",c:"Newcastle",p:"MID"},
+  {n:"Dan Ndoye",c:"Nott'm Forest",p:"MID"},
+  {n:"Harvey Barnes",c:"Newcastle",p:"MID"},
+  {n:"Adam Wharton",c:"Crystal Palace",p:"MID"},
+  {n:"Kobbie Mainoo",c:"Man Utd",p:"MID"},
+  {n:"Nico O'Reilly",c:"Man City",p:"MID"},
+  {n:"Savinho",c:"Man City",p:"MID"},
+  {n:"Pape Matar Sarr",c:"Tottenham",p:"MID"},
+  {n:"Mason Mount",c:"Man Utd",p:"MID"},
+  {n:"Manuel Ugarte",c:"Man Utd",p:"MID"},
+  {n:"André",c:"Wolves",p:"MID"},
+  {n:"Mikkel Damsgaard",c:"Brentford",p:"MID"},
+  {n:"Enzo Le Fée",c:"Sunderland",p:"MID"},
+  {n:"Mats Wieffer",c:"Brighton",p:"MID"},
+  {n:"Yasin Ayari",c:"Brighton",p:"MID"},
+  {n:"Carlos Baleba",c:"Brighton",p:"MID"},
+  {n:"Alex Scott",c:"Bournemouth",p:"MID"},
+  {n:"Lewis Miley",c:"Newcastle",p:"MID"},
+  {n:"Emile Smith Rowe",c:"Fulham",p:"MID"},
+  {n:"Harvey Elliott",c:"Liverpool",p:"MID"},
+  {n:"James McAtee",c:"Nott'm Forest",p:"MID"},
+  {n:"Dejan Kulusevski",c:"Tottenham",p:"MID"},
+  {n:"Andrey Santos",c:"Chelsea",p:"MID"},
+  {n:"Roméo Lavia",c:"Chelsea",p:"MID"},
+  {n:"Jamie Gittens",c:"Chelsea",p:"MID"},
+  {n:"Antoine Semenyo",c:"Man City",p:"MID"},
+  {n:"Anthony Gordon",c:"Newcastle",p:"MID"},
+  {n:"Noni Madueke",c:"Arsenal",p:"MID"},
+  {n:"Gabriel Martinelli",c:"Arsenal",p:"MID"},
+  {n:"Pedro Neto",c:"Chelsea",p:"MID"},
+  {n:"Jadon Sancho",c:"Aston Villa",p:"MID"},
+  {n:"Wilson Odobert",c:"Tottenham",p:"MID"},
+  {n:"Brennan Johnson",c:"Tottenham",p:"MID"},
+  {n:"Crysencio Summerville",c:"West Ham",p:"MID"},
+  {n:"Ismaïla Sarr",c:"Crystal Palace",p:"MID"},
+  {n:"Dango Ouattara",c:"Brentford",p:"MID"},
+  {n:"Kevin Schade",c:"Brentford",p:"MID"},
+  {n:"Justin Kluivert",c:"Bournemouth",p:"MID"},
+  {n:"Marcus Tavernier",c:"Bournemouth",p:"MID"},
+  {n:"Alejandro Garnacho",c:"Chelsea",p:"MID"},
+  {n:"Oscar Bobb",c:"Man City",p:"MID"},
+  {n:"Rico Lewis",c:"Man City",p:"MID"},
+  {n:"Estêvão",c:"Chelsea",p:"MID"},
+  {n:"Facundo Buonanotte",c:"Chelsea",p:"MID"},
+  {n:"Omari Hutchinson",c:"Nott'm Forest",p:"MID"},
+  {n:"Callum Hudson-Odoi",c:"Nott'm Forest",p:"MID"},
+  {n:"Matheus Cunha",c:"Man Utd",p:"MID"},
+  {n:"Rodrigo Muniz",c:"Fulham",p:"MID"},
+  {n:"Erling Haaland",c:"Man City",p:"FWD"},
+  {n:"Alexander Isak",c:"Liverpool",p:"FWD"},
+  {n:"João Pedro",c:"Chelsea",p:"FWD"},
+  {n:"Hugo Ekitiké",c:"Liverpool",p:"FWD"},
+  {n:"Viktor Gyökeres",c:"Arsenal",p:"FWD"},
+  {n:"Igor Thiago",c:"Brentford",p:"FWD"},
+  {n:"Omar Marmoush",c:"Man City",p:"FWD"},
+  {n:"Nick Woltemade",c:"Newcastle",p:"FWD"},
+  {n:"Benjamin Sesko",c:"Man Utd",p:"FWD"},
+  {n:"Dominic Solanke",c:"Tottenham",p:"FWD"},
+  {n:"Evanilson",c:"Bournemouth",p:"FWD"},
+  {n:"Jørgen Strand Larsen",c:"Wolves",p:"FWD"},
+  {n:"Chris Wood",c:"Nott'm Forest",p:"FWD"},
+  {n:"Liam Delap",c:"Chelsea",p:"FWD"},
+  {n:"Igor Jesus",c:"Nott'm Forest",p:"FWD"},
+  {n:"Jean-Philippe Mateta",c:"Crystal Palace",p:"FWD"},
+  {n:"Yoane Wissa",c:"Newcastle",p:"FWD"},
+  {n:"Raúl Jiménez",c:"Fulham",p:"FWD"},
+  {n:"Beto",c:"Everton",p:"FWD"},
+  {n:"Thierno Barry",c:"Everton",p:"FWD"},
+  {n:"Brian Brobbey",c:"Sunderland",p:"FWD"},
+  {n:"Wilson Isidor",c:"Sunderland",p:"FWD"},
+  {n:"Randal Kolo Muani",c:"Tottenham",p:"FWD"},
+  {n:"Taty Castellanos",c:"West Ham",p:"FWD"},
+  {n:"Cameron Archer",c:"Southampton",p:"FWD"},
+  {n:"Eddie Nketiah",c:"Crystal Palace",p:"FWD"},
+  {n:"Danny Welbeck",c:"Brighton",p:"FWD"},
+  {n:"Georginio Rutter",c:"Brighton",p:"FWD"},
+  {n:"Rasmus Højlund",c:"Man Utd",p:"FWD"},
+  {n:"Joshua Zirkzee",c:"Man Utd",p:"FWD"},
+  {n:"Junior Kroupi",c:"Bournemouth",p:"FWD"},
+  {n:"Marc Guiu",c:"Chelsea",p:"FWD"},
+  {n:"Evann Guessand",c:"Crystal Palace",p:"FWD"},
+  {n:"Jay Stansfield",c:"Fulham",p:"FWD"},
+  {n:"Mathys Tel",c:"Tottenham",p:"FWD"},
+  {n:"Bernd Leno",c:"Fulham",p:"GK"},
+  {n:"Alphonse Areola",c:"West Ham",p:"GK"},
+  {n:"Łukasz Fabiański",c:"West Ham",p:"GK"},
+  {n:"Jason Steele",c:"Brighton",p:"GK"},
+  {n:"Wes Foderingham",c:"Man Utd",p:"GK"},
+  {n:"Martin Dúbravka",c:"Newcastle",p:"GK"},
+  {n:"Neto",c:"Bournemouth",p:"GK"},
+  {n:"Vicente Guaita",c:"Crystal Palace",p:"GK"},
+  {n:"Ollie Watkins",c:"Aston Villa",p:"FWD"},
+  {n:"Jarrod Bowen",c:"West Ham",p:"FWD"},
+  {n:"Michael Olise",c:"Man City",p:"FWD"},
+  {n:"Ollie McBurnie",c:"Leeds",p:"FWD"},
+  {n:"Callum Wilson",c:"West Ham",p:"FWD"},
+  {n:"Matt O'Riley",c:"Brighton",p:"MID"},
+  {n:"Kaoru Mitoma",c:"Brighton",p:"MID"},
+  {n:"João Palhinha",c:"Tottenham",p:"MID"},
+  {n:"Lucas Paquetá",c:"West Ham",p:"MID"},
+  {n:"James Maddison",c:"Tottenham",p:"MID"},
+  {n:"Bruno Fernandes",c:"Man Utd",p:"MID"},
+  {n:"Son Heung-min",c:"Tottenham",p:"FWD"},
+  {n:"Yankuba Minteh",c:"Brighton",p:"MID"}
+];
+PLAYERS.forEach((p,i)=>{ p.rank=i; p.id=i; p.taken=false; p.pop=0; });
+
+// squad shape: 2 GK, 5 DEF, 5 MID, 3 FWD = 15
+const SQUAD={GK:2,DEF:5,MID:5,FWD:3};
+const SQUAD_SIZE=15;
+const POS_ORDER=['GK','DEF','MID','FWD'];
+
+let numMgr=4, mySlot=0, managers=[], order=[], pickIdx=0, curPos='ALL';
+
+function $(id){return document.getElementById(id);}
+function toast(m){const t=$('toast');t.textContent=m;t.className='toast show';setTimeout(()=>t.className='toast',2400);}
+
+// ---- setup ----
+function stepMgr(d){ numMgr=Math.max(2,Math.min(10,numMgr+d)); $('mgr-val').textContent=numMgr; if(mySlot>=numMgr) mySlot=numMgr-1; renderSlotSeg(); }
+function renderSlotSeg(){
+  let h='';
+  for(let i=0;i<numMgr;i++) h+='<button class="'+(i===mySlot?'on':'')+'" onclick="mySlot='+i+';renderSlotSeg()">'+(i===0?'1st':i===1?'2nd':i===2?'3rd':(i+1)+'th')+'</button>';
+  $('slot-seg').innerHTML=h;
+}
+
+// ---- popularity from Supabase ----
+async function loadPopularity(){
+  try{
+    const r=await fetch(SS_URL+'/rest/v1/draft_picks?select=player_name,pick_count',{headers:{apikey:SS_KEY,Authorization:'Bearer '+SS_KEY}});
+    if(r.ok){ const rows=await r.json(); const map={}; rows.forEach(x=>map[x.player_name]=x.pick_count);
+      PLAYERS.forEach(p=>{ p.pop=map[p.n]||0; }); }
+  }catch(e){}
+}
+function bumpPopularity(name){
+  try{ fetch(SS_URL+'/rest/v1/rpc/draft_bump',{method:'POST',headers:{apikey:SS_KEY,Authorization:'Bearer '+SS_KEY,'Content-Type':'application/json'},body:JSON.stringify({name:name})}); }catch(e){}
+}
+
+// ---- draft flow ----
+async function startDraft(){
+  await loadPopularity();
+  managers=[];
+  for(let i=0;i<numMgr;i++) managers.push({name:i===mySlot?'You':'CPU '+(i+1), human:i===mySlot, squad:[], counts:{GK:0,DEF:0,MID:0,FWD:0}});
+  // snake order across SQUAD_SIZE rounds
+  order=[];
+  for(let r=0;r<SQUAD_SIZE;r++){
+    const row=[...Array(numMgr).keys()];
+    if(r%2===1) row.reverse();
+    order.push(...row);
+  }
+  pickIdx=0;
+  $('setup').style.display='none';
+  $('board').style.display='block';
+  renderPosFilter();
+  advance();
+}
+
+function currentMgr(){ return order[pickIdx]; }
+function roundNum(){ return Math.floor(pickIdx/numMgr)+1; }
+
+function advance(){
+  if(pickIdx>=order.length){ return finish(); }
+  const m=currentMgr();
+  const mgr=managers[m];
+  updateStatus();
+  renderSquad(); renderLog();
+  if(mgr.human){
+    $('status').classList.add('yourturn');
+    renderPool();
+  } else {
+    $('status').classList.remove('yourturn');
+    setTimeout(()=>cpuPick(m), 550);
+  }
+}
+
+function needsPosition(mgr){
+  // which positions still have open slots
+  return POS_ORDER.filter(p=>mgr.counts[p]<SQUAD[p]);
+}
+
+function canTake(mgr,player){
+  return !player.taken && mgr.counts[player.p]<SQUAD[player.p];
+}
+
+function doPick(m,player){
+  const mgr=managers[m];
+  player.taken=true;
+  mgr.squad.push(player);
+  mgr.counts[player.p]++;
+  if(mgr.human){ bumpPopularity(player.n); player.pop++; }
+  pickIdx++;
+  advance();
+}
+
+function cpuPick(m){
+  const mgr=managers[m];
+  const open=needsPosition(mgr);
+  // Prefer best available in a needed position. Weight by rank but add slight
+  // bias to fill scarce positions and occasional randomness so CPUs differ.
+  let candidates=PLAYERS.filter(p=>canTake(mgr,p));
+  if(!candidates.length){ pickIdx++; return advance(); }
+  // must-fill logic: if only enough picks left to fill remaining slots, force scarce position
+  const picksLeft=SQUAD_SIZE-mgr.squad.length;
+  const stillNeeded=open.reduce((s,p)=>s+(SQUAD[p]-mgr.counts[p]),0);
+  let pref=candidates;
+  if(picksLeft<=stillNeeded){
+    // prioritise the position with the biggest shortfall
+    open.sort((a,b)=>(SQUAD[b]-mgr.counts[b])-(SQUAD[a]-mgr.counts[a]));
+    const forced=open[0];
+    pref=candidates.filter(p=>p.p===forced);
+  }
+  // pick from top few by rank with a little randomness
+  pref.sort((a,b)=>a.rank-b.rank);
+  const topN=pref.slice(0,Math.min(4,pref.length));
+  const choice=topN[Math.floor(Math.random()*topN.length)];
+  doPick(m,choice);
+}
+
+// ---- UI ----
+function updateStatus(){
+  const m=currentMgr(); const mgr=managers[m];
+  $('now-pick').innerHTML = mgr.human ? 'Your pick <em>— you\'re on the clock</em>' : mgr.name+' is picking…';
+  $('rnd-info').textContent='Round '+roundNum()+' of '+SQUAD_SIZE+' · Pick '+(pickIdx+1)+' of '+order.length;
+}
+
+function renderPosFilter(){
+  const counts={ALL:0,GK:0,DEF:0,MID:0,FWD:0};
+  $('posfilter').innerHTML=['ALL','GK','DEF','MID','FWD'].map(p=>
+    '<button data-pos="'+p+'" class="'+(p===curPos?'on':'')+'" onclick="curPos=\''+p+'\';renderPosFilter();renderPool()">'+p+'</button>').join('');
+}
+
+function renderPool(){
+  const m=currentMgr(); const mgr=managers[m];
+  const human=mgr && mgr.human;
+  const q=$('search').value.trim().toLowerCase();
+  let list=PLAYERS.filter(p=>!p.taken);
+  if(curPos!=='ALL') list=list.filter(p=>p.p===curPos);
+  if(q) list=list.filter(p=>p.n.toLowerCase().includes(q)||p.c.toLowerCase().includes(q));
+  // SORT: most-drafted (popularity) first, then rank. This is the learning feature.
+  list.sort((a,b)=> (b.pop-a.pop) || (a.rank-b.rank));
+  list=list.slice(0,120);
+  let h='';
+  list.forEach(p=>{
+    const takeable=human && canTake(mgr,p);
+    const full=human && mgr.counts[p.p]>=SQUAD[p.p];
+    h+='<div class="prow'+(human&&!takeable?' disabled':'')+'" '+(takeable?'onclick="humanPick('+p.id+')"':'')+'>'
+      +'<span class="pos-badge pos-'+p.p+'">'+p.p+'</span>'
+      +'<div class="pname"><div class="nm">'+p.n+'</div><div class="cl">'+p.c+(full?' · slot full':'')+'</div></div>'
+      +(p.pop>0?'<span class="ppop">'+p.pop+' drafts</span>':'')
+      +(takeable?'<span class="pick-tag">Pick</span>':'')
+      +'</div>';
+  });
+  $('plist').innerHTML=h||'<div style="color:var(--mute);font-style:italic;padding:20px;text-align:center">No players match.</div>';
+}
+
+function humanPick(id){
+  const m=currentMgr(); const mgr=managers[m];
+  if(!mgr.human) return;
+  const player=PLAYERS[id];
+  if(!canTake(mgr,player)){ toast('You can\'t take that player.'); return; }
+  doPick(m,player);
+}
+
+function squadTab(which){
+  $('t-me').classList.toggle('on',which==='me');
+  $('t-log').classList.toggle('on',which==='log');
+  $('squad-me').style.display=which==='me'?'':'none';
+  $('squad-log').style.display=which==='log'?'':'none';
+}
+
+function renderSquad(){
+  const me=managers[mySlot];
+  let h='';
+  POS_ORDER.forEach(pos=>{
+    const have=me.squad.filter(p=>p.p===pos);
+    h+='<div class="squad-group"><div class="glabel"><span>'+({GK:'Goalkeepers',DEF:'Defenders',MID:'Midfielders',FWD:'Forwards'})[pos]+'</span><span>'+have.length+'/'+SQUAD[pos]+'</span></div>';
+    for(let i=0;i<SQUAD[pos];i++){
+      if(have[i]) h+='<div class="slot"><span class="pos-badge pos-'+pos+'">'+pos+'</span> '+have[i].n+' <span class="sc">'+have[i].c+'</span></div>';
+      else h+='<div class="slot empty">Empty '+pos+' slot</div>';
+    }
+    h+='</div>';
+  });
+  $('squad-me').innerHTML=h;
+}
+
+function renderLog(){
+  // last 20 picks, newest first
+  let h='';
+  const picks=[];
+  for(let i=0;i<pickIdx;i++){ const m=order[i]; const mgr=managers[m]; const p=mgr.squad[Math.floor(i/numMgr)]; }
+  // simpler: reconstruct from each manager's squad with pick order
+  const flat=[];
+  for(let i=0;i<pickIdx;i++){
+    const m=order[i]; const rnd=Math.floor(i/numMgr);
+    const mgr=managers[m]; const p=mgr.squad[rnd];
+    if(p) flat.push({mgr:mgr.name,human:mgr.human,p:p,round:rnd+1});
+  }
+  flat.reverse().slice(0,24).forEach(x=>{
+    h+='<div class="mgrpick"><span>'+(x.human?'<b style="color:var(--gold)">You</b>':x.mgr)+' — '+x.p.n+'</span><span class="rr">R'+x.round+'</span></div>';
+  });
+  $('squad-log').innerHTML=h||'<div style="color:var(--mute);font-style:italic;padding:12px">No picks yet.</div>';
+}
+
+// ---- results ----
+function squadRating(mgr){
+  // lower total rank = better (rank 0 is best player). Convert to a score.
+  const totalRank=mgr.squad.reduce((s,p)=>s+p.rank,0);
+  const avg=totalRank/mgr.squad.length;
+  // score out of 100: best possible avg is low; scale
+  return Math.max(0, Math.round(100 - avg*0.42));
+}
+
+function finish(){
+  $('board').style.display='none';
+  $('results').style.display='block';
+  const ratings=managers.map((m,i)=>({i,name:m.name,human:m.human,r:squadRating(m)}));
+  ratings.sort((a,b)=>b.r-a.r);
+  const me=managers[mySlot];
+  const myRating=squadRating(me);
+  const myRank=ratings.findIndex(x=>x.i===mySlot)+1;
+  // grade from rank + rating
+  let grade,cap;
+  const frac=myRank/numMgr;
+  if(myRank===1){ grade='A+'; cap='Best squad on the board. Elite drafting.'; }
+  else if(frac<=0.34){ grade='A'; cap='A top-tier squad. You drafted smart.'; }
+  else if(frac<=0.6){ grade='B'; cap='A solid, balanced squad.'; }
+  else if(frac<=0.85){ grade='C'; cap='Decent, but a few picks got away.'; }
+  else { grade='D'; cap='Tough draft. The CPUs got the better of you.'; }
+  $('grade').textContent=grade;
+  $('grade-cap').textContent=cap+' You finished '+myRank+(myRank===1?'st':myRank===2?'nd':myRank===3?'rd':'th')+' of '+numMgr+'.';
+
+  // your final squad
+  let h='<div style="margin:14px 0 6px;font-family:\'Barlow Condensed\';font-weight:900;font-size:18px;text-transform:uppercase">Your squad</div>';
+  POS_ORDER.forEach(pos=>{
+    me.squad.filter(p=>p.p===pos).forEach(p=>{
+      h+='<div class="slot"><span class="pos-badge pos-'+pos+'">'+pos+'</span> '+p.n+' <span class="sc">'+p.c+'</span></div>';
+    });
+  });
+  $('final-squad').innerHTML=h;
+
+  $('stand-body').innerHTML=ratings.map((x,i)=>
+    '<tr class="'+(x.i===mySlot?'you':'')+'"><td>'+(i+1)+'</td><td>'+(x.human?'You':x.name)+'</td><td style="text-align:right">'+x.r+'</td></tr>').join('');
+}
+
+// init
+renderSlotSeg();
+</script>
+<script src="sportstack-member.js?v=4"></script>
+</body>
+</html>
