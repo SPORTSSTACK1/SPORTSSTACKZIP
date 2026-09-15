@@ -127,6 +127,11 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 .q-explain{margin-top:14px;padding:13px 16px;border-radius:8px;background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.22);border-left:2px solid var(--gold);font-family:'Fraunces',Georgia,serif;font-size:14px;line-height:1.55;color:#D8DEEC;animation:explainIn .3s ease both}
 .q-explain b{font-family:'Sora',sans-serif;font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dim,#C29B28);display:block;margin-bottom:5px}
 @keyframes explainIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.bonus-banner{background:linear-gradient(135deg,#F5C842 0%,#E0A81E 100%);border-radius:12px;padding:20px 22px;margin-bottom:18px;text-align:center;animation:bonusIn .4s ease}
+@keyframes bonusIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.bonus-kicker{font-family:'Sora',sans-serif;font-weight:800;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#5A4300;margin-bottom:6px}
+.bonus-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:26px;text-transform:uppercase;letter-spacing:.01em;color:#2A2200;line-height:1}
 </style>
 </head>
 <body>
@@ -159,6 +164,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
       <div class="qm-score" id="live-score">0 <small>/ 0</small></div>
     </div>
     <div class="quiz-body">
+      <div class="bonus-banner" id="bonus-banner" hidden><div class="bonus-kicker">Bonus round</div><div class="bonus-name" id="bonus-name"></div></div>
       <div class="q-text" id="q-text">Loading…</div>
       <div class="q-answers" id="q-answers">
         <button class="ans-btn" id="ans-a" onclick="selectAnswer(0)">
@@ -207,7 +213,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 <script>
 
 const QUESTIONS = [
-  { image:"", q:"Which celebrity drew renewed criticism after appearing in a sports betting advert?", a:"Sydney Sweeney", b:"Margot Robbie", c:"Zendaya", correct:0, explain:"Sweeney's involvement in the campaign reignited a wider debate about celebrities lending their profile to gambling firms, a growing flashpoint in sport's relationship with betting money." },
+  { image:"", q:"Which celebrity received criticism after posing nude in a sports betting advert this week?", a:"Sydney Sweeney", b:"Margot Robbie", c:"Zendaya", correct:0, explain:"Sweeney's involvement in the campaign reignited a wider debate about celebrities lending their profile to gambling firms, a growing flashpoint in sport's relationship with betting money." },
   { image:"", q:"Sunday's Manchester derby was full of controversy. Which player was sent off in the first half?", a:"Bruno Fernandes", b:"Phil Foden", c:"Erling Haaland", correct:1, explain:"Foden was dismissed in the 23rd minute for kicking out at Bruno Fernandes. City boss Enzo Maresca argued Fernandes should have walked too for provoking it." },
   { image:"", q:"Haaland scored the winner, but Pro Ref later admitted it was a mistake. Why should the goal not have stood?", a:"Handball", b:"A foul in the build-up", c:"Offside", correct:2, explain:"Enzo Fernandez was in an offside position and interfering with play in the build-up. Pro Ref, formerly PGMOL, apologised to United, calling it an error of judgement." },
   { image:"", q:"Who won the women's US Open singles title on Saturday?", a:"Elena Rybakina", b:"Aryna Sabalenka", c:"Coco Gauff", correct:0, explain:"Rybakina beat two-time defending champion Sabalenka in three sets, ending the Belarusian's bid to become the first woman to three-peat in New York since Serena Williams." },
@@ -222,7 +228,7 @@ const QUESTIONS = [
   { image:"", q:"What was the result of the season's first Old Firm derby between Rangers and Celtic?", a:"Rangers win", b:"Celtic win", c:"A draw", correct:0, explain:"Rangers came out on top in the first Glasgow derby of the campaign, a huge early psychological blow in Scottish football's fiercest rivalry." },
   { image:"", q:"Which golfer won the Irish Open at the Trump International course in Doonbeg this weekend?", a:"Rory McIlroy", b:"Shane Lowry", c:"Padraig Harrington", correct:1, explain:"Home favourite Lowry delighted the Irish galleries with victory, a hugely popular win on a links course battered by the Atlantic wind." },
   { image:"", q:"Which NBA player is set to host Saturday Night Live at the end of this month?", a:"LeBron James", b:"Stephen Curry", c:"Jalen Brunson", correct:2, explain:"Knicks star Brunson takes on hosting duties, the latest NBA name to cross over into mainstream entertainment on the famous sketch show." },
-  { image:"", q:"NATIONALITY ROUND. What nationality is PSG winger Khvicha Kvaratskhelia?", a:"Armenian", b:"Georgian", c:"Ukrainian", correct:1, explain:"Kvaratskhelia is Georgia's brightest football export, a mercurial winger whose dribbling made him a Napoli hero before his move to Paris." },
+  { image:"", q:"What nationality is PSG winger Khvicha Kvaratskhelia?", a:"Armenian", b:"Georgian", c:"Ukrainian", correct:1, explain:"Kvaratskhelia is Georgia's brightest football export, a mercurial winger whose dribbling made him a Napoli hero before his move to Paris.", bonusStart:"Obscure Nationalities" },
   { image:"", q:"What nationality is LA Lakers star Luka Doncic?", a:"Slovenian", b:"Croatian", c:"Serbian", correct:0, explain:"Doncic is Slovenia's greatest ever basketballer, who led his country to a shock EuroBasket title as a teenager before dominating in the NBA." },
   { image:"", q:"What nationality is cricket bowler Kyle Jamieson?", a:"Australian", b:"South African", c:"New Zealander", correct:2, explain:"The towering seamer is one of New Zealand's most dangerous bowlers, using his height to extract steep bounce on helpful pitches." },
   { image:"", q:"What nationality is the reigning women's Olympic 100m champion Julien Alfred?", a:"Saint Lucian", b:"Jamaican", c:"Bahamian", correct:0, explain:"Alfred won Saint Lucia's first ever Olympic medal, a gold, a landmark moment for the tiny Caribbean island of under 200,000 people." },
@@ -276,6 +282,12 @@ function renderQ(i){
   var qt=document.getElementById('qm-total'); if(qt) qt.textContent = QUESTIONS.length;
   document.getElementById('live-score').innerHTML = score + ' <small>/ ' + answered + '</small>';
   document.getElementById('q-text').textContent = q.q;
+
+  var bb=document.getElementById('bonus-banner');
+  if(bb){
+    if(q.bonusStart){ document.getElementById('bonus-name').textContent=q.bonusStart; bb.hidden=false; }
+    else { bb.hidden=true; }
+  }
 
   const ids   = ['ans-a','ans-b','ans-c'];
   const texts = ['ans-a-text','ans-b-text','ans-c-text'];
