@@ -1669,24 +1669,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sportsstack.com.au/prem-bonus</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sportsstack.com.au/prem-leaderboard</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sportsstack.com.au/prem-predictor</loc>
-    <lastmod>2026-07-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://sportsstack.com.au/prem-rugby-teams-quiz</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
