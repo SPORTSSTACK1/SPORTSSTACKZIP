@@ -140,6 +140,7 @@ const WC_RARITY = {
 // ── World Cup Sticker Book ────────────────────────────────────────────
 
 async function awardWorldCupSticker() {
+  return; // Sticker collecting retired — existing stickers remain viewable on the profile page
   if (!ssUser || !ssClient) return;
   var slug  = location.pathname.split('/').pop().replace('.html','');
   var today = new Date().toISOString().split('T')[0];
@@ -352,6 +353,7 @@ function showStickerReveal(nation, totalOwned) {
 
 // ── Sticker availability banner ───────────────────────────────────────
 async function injectStickerBanner() {
+  return; // Sticker collecting retired
   const slug = location.pathname.split('/').pop().replace('.html','');
   if (!STICKER_SLUGS.has(slug)) return;
 
@@ -423,6 +425,7 @@ async function injectStickerBanner() {
 
 // ── First-visit sticker book welcome modal ───────────────────────────
 function showStickerWelcome() {
+  return; // Sticker collecting retired
   if (location.pathname.indexOf('index') < 0 && location.pathname !== '/' && !location.pathname.endsWith('/')) return;
   if (localStorage.getItem('ss_sticker_v2')) return;
   localStorage.setItem('ss_sticker_v2', '1');
