@@ -474,10 +474,12 @@ function showStickerWelcome() {
   const { data: { user } } = await ssClient.auth.getUser();
   ssUser = user;
   if (ssUser) { syncProfile(ssUser); loadStreak(); }
+  ssRefreshRevealButtons();
   ssClient.auth.onAuthStateChange((_e, session) => {
     ssUser = session?.user || null;
     if (ssUser) { syncProfile(ssUser); loadStreak(); }
     renderWidget();
+    ssRefreshRevealButtons();
   });
   injectWidget();
   renderWidget();
@@ -1063,4 +1065,81 @@ function ssAfterQuizComplete(slug, name, score, total) {
     }, 300);
   }
   injectEmailCapture();
+}
+
+/* ── Reveal gate ──────────────────────────────────────────────────────
+   On the "name them all" quizzes, revealing the answers to an unfinished
+   quiz now requires an account. Signed-in members reveal as before;
+   everyone else is prompted to sign in or create a free account. */
+function ssInstallRevealGate(){
+  try{
+    if (window.__ssRevealGateInstalled) return;
+    if (typeof window.giveUp !== 'function') return;
+    window.__ssRevealGateInstalled = true;
+    var _origGiveUp = window.giveUp;
+    window.giveUp = function(){
+      if (ssUser) return _origGiveUp.apply(this, arguments);
+      showRevealGate();
+      return false;
+    };
+  }catch(e){}
+}
+
+function ssRefreshRevealButtons(){
+  try{
+    var btns = Array.prototype.slice.call(document.querySelectorAll('button'))
+      .filter(function(b){ return (b.getAttribute('onclick')||'').indexOf('giveUp') > -1; });
+    btns.forEach(function(b){
+      if (!ssUser){
+        if (b.getAttribute('data-ss-reveal') === null){ b.setAttribute('data-ss-reveal', b.innerHTML); }
+        b.innerHTML = 'Sign in to reveal answers';
+      } else {
+        var orig = b.getAttribute('data-ss-reveal');
+        if (orig !== null){ b.innerHTML = orig; b.removeAttribute('data-ss-reveal'); }
+      }
+    });
+  }catch(e){}
+}
+
+function showRevealGate(){
+  if (document.getElementById('ss-reveal-gate')) return;
+  var overlay = document.createElement('div');
+  overlay.id = 'ss-reveal-gate';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,18,.82);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);animation:ssrg-fade .25s ease';
+  overlay.innerHTML = ''
+    + '<style>'
+    + '@keyframes ssrg-fade{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}'
+    + '#ss-reveal-gate .rg-box{background:#080f1c;border:1px solid rgba(245,200,66,.45);border-radius:18px;padding:32px 24px 24px;max-width:340px;width:100%;text-align:center;position:relative;box-shadow:0 0 60px rgba(245,200,66,.12)}'
+    + '#ss-reveal-gate .rg-close{position:absolute;top:14px;right:16px;background:none;border:none;color:#4a6a8a;font-size:20px;cursor:pointer;line-height:1;padding:0}'
+    + '#ss-reveal-gate .rg-close:hover{color:#e8f0fe}'
+    + '#ss-reveal-gate .rg-emoji{font-size:40px;margin-bottom:12px}'
+    + '#ss-reveal-gate .rg-head{font-family:\'Barlow Condensed\',sans-serif;font-size:22px;font-weight:900;color:#e8f0fe;margin-bottom:8px;line-height:1.1}'
+    + '#ss-reveal-gate .rg-sub{font-size:13px;color:#7a9ab8;line-height:1.55;margin-bottom:22px}'
+    + '#ss-reveal-gate .rg-sub strong{color:#a0c4d8;font-weight:600}'
+    + '#ss-reveal-gate .rg-primary{display:block;padding:14px;background:#f5c842;color:#04080f;border-radius:10px;font-family:\'Barlow Condensed\',sans-serif;font-size:17px;font-weight:900;text-decoration:none;letter-spacing:.04em;margin-bottom:10px;transition:opacity .15s}'
+    + '#ss-reveal-gate .rg-primary:hover{opacity:.9}'
+    + '#ss-reveal-gate .rg-secondary{display:block;padding:13px;background:transparent;border:1.5px solid #1a3a6a;color:#e8f0fe;border-radius:10px;font-family:\'Barlow Condensed\',sans-serif;font-size:17px;font-weight:900;text-decoration:none;letter-spacing:.04em;margin-bottom:16px;transition:border-color .15s}'
+    + '#ss-reveal-gate .rg-secondary:hover{border-color:#3a6a9a}'
+    + '#ss-reveal-gate .rg-later{background:none;border:none;color:#4a6a8a;font-size:12px;cursor:pointer;font-family:\'Barlow Condensed\',sans-serif;letter-spacing:.08em;text-transform:uppercase}'
+    + '#ss-reveal-gate .rg-later:hover{color:#7a9ab8}'
+    + '</style>'
+    + '<div class="rg-box">'
+    + '<button class="rg-close" id="ssrg-close">✕</button>'
+    + '<div class="rg-emoji">🔒</div>'
+    + '<div class="rg-head">Sign in to reveal the answers</div>'
+    + '<div class="rg-sub">Create a free account to <strong>reveal the ones you missed</strong>, save your scores and climb the community leaderboard.</div>'
+    + '<a href="auth.html?mode=signup" class="rg-primary">Create free account</a>'
+    + '<a href="auth.html" class="rg-secondary">Sign in</a>'
+    + '<button class="rg-later" id="ssrg-later">Keep playing</button>'
+    + '</div>';
+  document.body.appendChild(overlay);
+  function close(){ overlay.remove(); }
+  var c=document.getElementById('ssrg-close'); if(c) c.addEventListener('click', close);
+  var l=document.getElementById('ssrg-later'); if(l) l.addEventListener('click', close);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) close(); });
+}
+
+ssInstallRevealGate();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', ssInstallRevealGate);
 }
